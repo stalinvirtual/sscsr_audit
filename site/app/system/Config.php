@@ -7,7 +7,7 @@ class Config
   private $db_port = "5432";
   private $db_name = "sscsr_audit";
   private $db_user = "postgres";
-  private $db_password = "postgres";
+  private $db_password = "pg123";
   private $app_root = "";
   private $theme = "default";
   private $template_extension = "php";

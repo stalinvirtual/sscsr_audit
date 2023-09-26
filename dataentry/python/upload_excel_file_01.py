@@ -27,7 +27,7 @@ record_count = 0
 success_records = 0
 error_records = 0
 #db connection string
-connection = psycopg2.connect(user="postgres",password="postgres",host="localhost",port="5432",database="sscsr_audit")
+connection = psycopg2.connect(user="postgres",password="pg123",host="localhost",port="5432",database="sscsr_audit")
 cursor = connection.cursor()
 #start time-stamp
 start_time = datetime.datetime.now()

@@ -140,7 +140,7 @@ class Menu extends DB
         }
         // delete the children menu too
         //return $this->where("WHERE id = $menu_id OR menu_parent_id = $menu_id")->delete();
-        $db = pg_connect("host=localhost port=5432 dbname=sscsr user=postgres password=postgres");
+        $db = pg_connect("host=localhost port=5432 dbname=sscsr user=postgres password=pg123");
         $id = $menu_id;
         $sql2 = "DELETE FROM mstmenu WHERE id = '$id' OR menu_parent_id = '$id' ";
         $result = pg_query($sql2);

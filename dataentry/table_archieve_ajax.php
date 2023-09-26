@@ -27,7 +27,7 @@ TEXT;
         $columnCount =  $columnCountResult->column_count;
         $host = "localhost";
         $user = "postgres";
-        $password = "postgres";
+        $password = "pg123";
         $dbname = "sscsr_audit";
         $port = "5432";
         $con = pg_connect("host=$host dbname=$dbname user=$user password=$password")
