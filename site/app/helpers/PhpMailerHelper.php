@@ -140,7 +140,7 @@ class PhpMailerHelper extends PHPMailer
 
 
             if($sends==1)
-            echo '<script>("Message has been sent"); window.location.href="http://localhost/rd/sscsr/dataentry/admitcard_mail.php"
+            echo '<script>("Message has been sent"); window.location.href="http://localhost/rd/sscsr_audit/dataentry/admitcard_mail.php"
             </script>';
             } catch (phpmailerException $e) {
                 $errors[] = $e->errorMessage(); //Pretty error messages from PHPMailer

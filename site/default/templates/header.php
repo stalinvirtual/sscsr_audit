@@ -44,11 +44,7 @@ $candidateCorner = $route->site_url("IndexController/candidateCorner");
 //$sitemap = $route->site_url("IndexController/sitemap");
 
 $base_url = "http://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
-//$base_url =  "http://14.139.183.34//projects/sscsr/site/";
-//echo $base_url;
-//$base_url = "https://rtionline.tn.gov.in/rd/security_audit";
-//echo "$base_url";
-//echo $base_url."IndexController/admin_login";
+
 
 
 

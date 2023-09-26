@@ -18,7 +18,7 @@ if (!isset($_SERVER['HTTP_REFERER']) || !isset($_SESSION['sess_user'])) {
                     <div class="form-body">
                         <div data-example-id="simple-form-inline">
                             <form class="form-horizontal"
-                                action="http://localhost/rd/sscsr/site/IndexController/emailIntegration" method="post"
+                                action="http://localhost/rd/sscsr_audit/site/IndexController/emailIntegration" method="post"
                                 id="send_mail_attachment">
                                 <div class="form-group">
                                     <label for="examname" class="col-sm-2 control-label">Exam Name<font style="color:red" ;>

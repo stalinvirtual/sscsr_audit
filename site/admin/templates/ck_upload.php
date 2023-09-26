@@ -43,7 +43,7 @@ if($type == 'image'){
 		  else{
 			 $protocol = 'http';
 		  }
-          $url = $protocol . "://" . $_SERVER['SERVER_NAME'] . "/sscsr/site/uploads/" .$final_file;
+          $url = $protocol . "://" . $_SERVER['SERVER_NAME'] . "/sscsr_audit/site/uploads/" .$final_file;
 	   
 		  echo '<script>window.parent.CKEDITOR.tools.callFunction('.$funcNum.', "'.$url.'", "'.$message.'")</script>';
 	   }
@@ -87,7 +87,7 @@ if ($type == 'file') {
                 $protocol = 'http';
             }
 
-            $url = $protocol . "://" . $_SERVER['SERVER_NAME'] . "/sscsr/site/uploads/" . $final_file;
+            $url = $protocol . "://" . $_SERVER['SERVER_NAME'] . "/sscsr_audit/site/uploads/" . $final_file;
 
             echo '<script>window.parent.CKEDITOR.tools.callFunction(' . $funcNum . ', "' . $url . '", "' . $message . '")</script>';
         }

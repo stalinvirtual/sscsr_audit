@@ -132,7 +132,7 @@ $base_url =  "http://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
 								<div class="row">
 								
 									<div class="col-xs-2" style="    margin-left: 20px;">
-										<a href="http://14.139.183.34//projects/sscsr/site/IndexController/candidateCorner"><img src="images/header-icons/result.png" width="80px" style="margin-top:20px;" class="shortcut_icon"/><h6>Candidate Corner </h6></a>
+										<a href="http://14.139.183.34//sscsr_audit/site/IndexController/candidateCorner"><img src="images/header-icons/result.png" width="80px" style="margin-top:20px;" class="shortcut_icon"/><h6>Candidate Corner </h6></a>
 									</div>
 									<div class="col-xs-2">
 										<a href="#"><img src="img/emblem-dark.png" class="emblem"/></a>
@@ -225,15 +225,15 @@ $base_url =  "http://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
 									<div class="row">
 										<div class="col-lg-4">
 											<ul>
-												<li><a href="http://14.139.183.34//projects/sscsr/site/IndexController/nomination">Nomination</a></li>
-												<li><a href="http://14.139.183.34//projects/sscsr/site/IndexController/selectionpost">Selection Post</a></li>
+												<li><a href="http://14.139.183.34//sscsr_audit/site/IndexController/nomination">Nomination</a></li>
+												<li><a href="http://14.139.183.34//sscsr_audit/site/IndexController/selectionpost">Selection Post</a></li>
 												<li><a href="#">Downloads</a></li>
 												<li><a href="#">Archives</a></li>
 											</ul>
 										</div>
 										<div class="col-lg-4">
 											<ul>
-												<li><a href="http://14.139.183.34//projects/sscsr/site/IndexController/faq">FAQ</a></li>
+												<li><a href="http://14.139.183.34//sscsr_audit/site/IndexController/faq">FAQ</a></li>
 												<li><a target="_blank" href="https://ssc.nic.in/Portal/AnswerKey">Answer Key</a></li>
 												<li><a target="_blank" href="https://ssc.nic.in/Portal/Results">Result</a></li>
 												<li><a href="https://ssc.nic.in/Portal/RegionalNetwork" target="_blank">Related Websites</a></li>
@@ -266,7 +266,7 @@ $base_url =  "http://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
 											  </figure>
 											</div>	
 											<div class="cbp-l-loadMore-button">
-												<a href="http://14.139.183.34//projects/sscsr/site/IndexController/gallerypage" target="_blank" class="loadmore indexmore">VIEW ALL</a>
+												<a href="http://14.139.183.34//sscsr_audit/site/IndexController/gallerypage" target="_blank" class="loadmore indexmore">VIEW ALL</a>
 											</div>								
 											
 															

@@ -106,7 +106,7 @@ class PdfHelperPETExam extends Dompdf
                   $photo_path = $photo_path;
                } else {
                   $base_url = $GLOBALS['site_url'];
-                  $local_path = $base_url . "/sscsr/site/";
+                  $local_path = $base_url . "/sscsr_audit/site/";
                   $photo_path = $local_path . "exam_assets/photo_not_exists.png";
                }
                break;
@@ -134,7 +134,7 @@ class PdfHelperPETExam extends Dompdf
                   $sign_path = $sign_path;
                } else {
                   $base_url = $GLOBALS['site_url'];
-                  $local_path = $base_url . "/sscsr/site/";
+                  $local_path = $base_url . "/sscsr_audit/site/";
                   $photo_path = $local_path . "exam_assets/sign_not_exists.png";
                }
                break;

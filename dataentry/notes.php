@@ -1,7 +1,7 @@
 # sscsr
 Staff Selection Commission Projects
 
-$base_url = "10.163.2.160/projects/sscsr/site/"
+$base_url = "10.163.2.160/projects/sscsr_audit/site/"
 
 cgle 2019 sample reg and dob:
 
@@ -22,7 +22,7 @@ $GLOBALS['local_path']
 change current file path
 
 <iframe id="forPostyouradd" height='200%' width="100%"
-    data-src="http://localhost/sscsr/site/IndexController/admitcardpreview" src="about:blank"
+    data-src="http://localhost/sscsr_audit/site/IndexController/admitcardpreview" src="about:blank"
     class="responsive-iframe" allowfullscreen style="background:#ffffff"></iframe>
 
 
