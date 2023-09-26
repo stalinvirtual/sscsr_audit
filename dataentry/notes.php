@@ -36,7 +36,7 @@ root_logger.setLevel(logging.DEBUG)
 handler = logging.FileHandler('C:/xampp/htdocs/dataentry/log/sscsr_log.log', 'w', 'utf-8')
 
 notify.show_toast("SSCSR Data Uploading...!", "👍 Started ", duration=10, threaded=True,
-icon_path="C:/xampp/htdocs/sscsr/dataentry/images/logo/logo.ico")
+icon_path="C:/xampp/htdocs/sscsr_audit/dataentry/images/logo/logo.ico")
 
 
 # Site

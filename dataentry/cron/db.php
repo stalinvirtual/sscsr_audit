@@ -3,7 +3,7 @@
 $host = "localhost";
 $user = "postgres";
 $password = "pg123";
-$dbname = "sscsr";
+$dbname = "sscsr_audit";
 $port = "5432";
 
 try{

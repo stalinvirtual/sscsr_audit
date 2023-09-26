@@ -3,7 +3,7 @@ include 'config/db.php';
 
 require_once("functions.php");
 
-$dataBasePath = "C:/xampp/htdocs/sscsr/dataentry/data/";
+$dataBasePath = "C:/xampp/htdocs/sscsr_audit/dataentry/data/";
 
 
 

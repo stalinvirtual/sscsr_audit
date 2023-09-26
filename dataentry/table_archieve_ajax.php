@@ -38,7 +38,7 @@ TEXT;
         $host = "localhost";
         $user = "postgres";
         $password = "pg123";
-        $dbname = "sscsr";
+        $dbname = "sscsr_audit";
         $port = "5432";
         $con = pg_connect("host=$host dbname=$dbname user=$user password=$password")
             or die ("Could not connect to server\n");

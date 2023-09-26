@@ -27,7 +27,7 @@ record_count = 0
 success_records = 0
 error_records = 0
 #db connection string
-connection = psycopg2.connect(user="postgres",password="pg123",host="localhost",port="5432",database="sscsr")
+connection = psycopg2.connect(user="postgres",password="pg123",host="localhost",port="5432",database="sscsr_audit")
 cursor = connection.cursor()
 #start time-stamp
 start_time = datetime.datetime.now()
@@ -51,7 +51,7 @@ def updateRecordsData( key, value ):
 #creating LOG file
 root_logger= logging.getLogger()
 root_logger.setLevel(logging.DEBUG) 
-handler = logging.FileHandler('C:/xampp/htdocs/sscsr/dataentry/log/sscsr_log.log', 'w', 'utf-8')
+handler = logging.FileHandler('C:/xampp/htdocs/sscsr_audit/dataentry/log/sscsr_log.log', 'w', 'utf-8')
 handler.setFormatter(logging.Formatter('%(message)s')) # or whatever
 root_logger.addHandler(handler)
 if solution2.values.size != 0:
