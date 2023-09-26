@@ -51,16 +51,15 @@ echo $this->get_header();
 
 								<!-- Captcha Start-->
 
-								<!--  <label for="exampleInputEmail1">Captcha</label>
+								 <label for="exampleInputEmail1">Captcha</label>
 								<input type="text" name="captcha_code" id="captcha" class="demoInputBox form-control" placeholder="Captcha" required="" autocomplete="off">
 								<br>
-								<img src="<?php //echo $loadcaptcha; 
-											?>" style="width:100px"  id="captcha_code"/>
-								<button name="submit" class="btnRefresh" onClick="refreshCaptcha();">Refresh Captcha</button> 
+								<img src="<?php echo $loadcaptcha;?>" style="width:100px"  id="captcha_code" alt="captcha"/>
+								<button name="submit" class="btnRefresh" onClick="refreshCaptcha();"><i class="fa fa-refresh" aria-hidden="true"></i></button>
 							  <br>
-							   Captcha End
-							onClick="return Validate();"
-							-->
+							   <!-- Captcha End -->
+							<!-- onClick="return Validate();" -->
+							
 								<br>
 								<button class="btn btn-lg btn-sscsrthemecolor btn-block" type="submit" name="login" >Login</button>
 								<p class="pt-1 text-danger text-center" id="err_msg"></p>  
