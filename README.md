@@ -23,3 +23,6 @@ Files are :
 
 
  index.php file added in main Folder
+
+
+  cdn for ckeditor should be changed in edit-announcement.php and edit-page.php

@@ -67,7 +67,8 @@ echo $this->get_header(); ?>
                     <input class="form-control" type="text" name="title" id="title" required value="<?php echo $current_page['title']; ?>">
                   </div>
                 </div>
-                 <script src="dist/js/ckeditor.js"></script> 
+                 <!-- <script type="text/javascript" src="<?php echo $this->theme_url; ?>/dist/js/ckeditor.js"></script>  -->
+                 <script src="https://cdn.ckeditor.com/4.19.0/standard-all/ckeditor.js"></script> 
                 <div class="form-group row">
                   <label for="inputEmail3" class="col-sm-2 col-form-label"> Page Content  <span style='color:red'>*</span></label>
                   <div class="col-sm-10">

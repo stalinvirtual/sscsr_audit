@@ -51,7 +51,8 @@ margin: -27px 2px 3px 286px;
       <input class="form-control" type="text" name="announcement_name" id="announcement_name" required value="<?php echo @$current_announcement['announcement_name']; ?>">
     </div>
   </div>
-  <script src="dist/js/ckeditor.js"></script> 
+  <!-- <script src="dist/js/ckeditor.js"></script>  -->
+  <script src="https://cdn.ckeditor.com/4.19.0/standard-all/ckeditor.js"></script> 
   <div class="form-group row">
     <label for="inputEmail3" class="col-sm-2 col-form-label"> Announcement Content  <span style='color:red'>*</span></label>
     <div class="col-sm-10">

@@ -271,7 +271,7 @@ margin: -27px 2px 3px 286px;
             });
 
             jQuery.validator.addMethod("maxfilesize", function(value, element, param) {
-                debugger;
+                //debugger;
                 if (element.files.length > 0) {
                 return element.files[0].size <= param;
                 }
