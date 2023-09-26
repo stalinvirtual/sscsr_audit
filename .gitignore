@@ -4,5 +4,6 @@
 dataentry/config/*
 dataentry/uploaded_excel_files/*
 dataentry/important_instructions/*
+dataentry/stalin.php
 
 
