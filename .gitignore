@@ -5,5 +5,9 @@ dataentry/config/*
 dataentry/uploaded_excel_files/*
 dataentry/important_instructions/*
 dataentry/stalin.php
+dataentry/table_archieve_ajax.php
+dataentry/python/*
+site/app/models/Menu.php
+site/app/system/Config.php
 
 
