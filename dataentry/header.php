@@ -1,5 +1,4 @@
 <!DOCTYPE html>
-
 <head>
 	<title>SSCSR</title>
 	<meta name="viewport" content="width=device-width, initial-scale=1">
@@ -39,11 +38,9 @@
 		.canvasjs-chart-credit {
 			display: none;
 		}
-
 		.toolbar {
 			float: right;
 		}
-
 		/* nav.main-menu {
    overflow-y: scroll !important;
 } */
@@ -77,32 +74,27 @@
 	<link rel="stylesheet" href="css/dashboard.css">
 	<link rel="stylesheet" href="css/Chart.css">
 	<!-- <link rel="stylesheet" href="css/font-awesome.min.css">  -->
-	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+	<link rel="stylesheet" href="css/font-awesome.min.css">
 	<script src="js/bootstrap.bundle.min.js"></script>
 	<script src="js/Chart.min.js"></script>
-
 	<style>
 		.footer {
 			position: fixed;
 			bottom: 0;
 			width: 100%;
 		}
-
 		.table tfoot input {
 			width: 100%;
 			box-sizing: border-box;
 		}
-
 		.table tfoot {
 			display: table-header-group;
 		}
-
 		.brand {
 			float: left;
 			font-size: 18px;
 			line-height: 20px;
 		}
-
 		.close {
 			float: right;
 			font-size: 21px;
@@ -139,11 +131,7 @@
 	<script src="js/skycons.js"></script>
 	<!--//skycons-icons-->
 </head>
-
 <body class="dashboard-page">
-
-
-
 	<script>
 		// var idleTimeout; // Variable to store the timeout ID
 		// // Define a function to reset the timeout
@@ -170,7 +158,6 @@
 	<nav class="main-menu scrollable">
 		<li>
 			<div class="brand" style="background:white;">
-
 				<a href="#"><img class="logo img-responsive" src="images/logo/logo.png">
 					<p style=" font-size: 16px; padding-top:14px; text-align:center">
 						STAFF SELECTION COMMISSION
@@ -178,7 +165,6 @@
 					<p style=" font-size: 12px;text-align:center">
 						Southern Region, Chennai
 					</p>
-					
 				</a>
 			</div>
 		</li>

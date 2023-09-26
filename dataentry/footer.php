@@ -8,11 +8,8 @@
 <!-- //footer -->
 <script src="js/bootstrap.js"></script>
 <script src="js/proton.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.5/jquery.validate.min.js"
+<script src="js/jquery.validate.min.js"
   crossorigin="anonymous"></script>
-  <!-- <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script> -->
-  
-	
 <script type="text/javascript">
   endTime = 0;
   countdown("ten-countdown", 1, 20);
@@ -38,7 +35,6 @@
            // debugger;
            location.reload();
           } else if (!result.isConfirmed) {
-            
             window.location.href = "logout.php";
           }
         });
@@ -46,7 +42,6 @@
       setTimeout(function() {
         window.location.href = "logout.php";
       }, 30000); // This timeout is set to 30 seconds (adjust as needed)
-
       } else {
         time = new Date(msLeft);
         hours = time.getUTCHours();

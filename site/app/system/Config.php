@@ -1,7 +1,5 @@
 <?php
-
 namespace App\System;
-
 class Config
 {
   private $db_driver = "pgsql";
@@ -9,7 +7,7 @@ class Config
   private $db_port = "5432";
   private $db_name = "sscsr_audit";
   private $db_user = "postgres";
-  private $db_password = "pg123";
+  private $db_password = "postgres";
   private $app_root = "";
   private $theme = "default";
   private $template_extension = "php";
@@ -25,4 +23,3 @@ class Config
     return $this->$config_key;
   }
 }
-

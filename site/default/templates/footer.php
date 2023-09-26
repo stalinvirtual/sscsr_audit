@@ -53,8 +53,7 @@
 <script src="js/lightgallery-all.min.js"></script>
 <link href="css/jquery-ui_new.css" rel="stylesheet">
 <script src="js/jquery-ui_new.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.5/jquery.validate.min.js"
-	crossorigin="anonymous"></script>
+<script src="js/jquery.validate.min.js" crossorigin="anonymous"></script>
 <script>
 	function isNumber(evt) {
 		evt = (evt) ? evt : window.event;
@@ -537,5 +536,4 @@
 	}
 </script>
 </body>
-
 </html>

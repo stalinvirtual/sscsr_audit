@@ -18,3 +18,8 @@ Files are :
  11.All python files
  12.error.php
  13.functions.php(dataentry)
+
+ Stalin's Changes:
+
+
+ index.php file added in main Folder

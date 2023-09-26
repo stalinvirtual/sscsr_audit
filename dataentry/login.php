@@ -10,9 +10,9 @@ require_once("functions.php");
 <link rel="stylesheet" href="css/bootstrap.css">
 <link rel="icon" type="image/png" sizes="16x16" href="images/logo/logo.png">
 <!-- Include jQuery -->
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="js/jquery-3.6.0.min.js"></script>
 <!-- Include jQuery Validation plugin -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.3/jquery.validate.min.js"></script>
+<script src="js/jquery.validate.min.js"></script>
 <style>
 	@import "https://use.fontawesome.com/releases/v5.5.0/css/all.css";
 	body {
@@ -130,7 +130,6 @@ require_once("functions.php");
 							echo "class=errorMsg";
 						} ?>
 					</div>
-					
 					<input type="text" id="captcha" name="captcha" placeholder="Enter captcha" required style="margin-left: 85px;">
 					<div class="containerred">
 						<img src="captcha.php" alt="CAPTCHA"><br><br>

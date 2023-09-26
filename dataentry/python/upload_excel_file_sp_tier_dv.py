@@ -15,44 +15,31 @@ register_adapter(numpy.int64, addapt_numpy_int64)
 import datetime
 import sys
 import logging
-
-
 # Read sourcefile
 source_file = sys.argv[1]
 table_name= sys.argv[2]
-
-
 table_columns= sys.argv[3].split(',')
 exam_code= sys.argv[4]
 tier_id= sys.argv[5]
 table_value= sys.argv[6].split(',')
-
-
-
-
 alert_status = 10000
 record_count = 0
 success_records = 0
 error_records = 0
-
 #db connection string
-connection = psycopg2.connect(user="postgres",password="pg123",host="localhost",port="5432",database="sscsr_audit")
+connection = psycopg2.connect(user="postgres",password="postgres",host="localhost",port="5432",database="sscsr_audit")
 cursor = connection.cursor()
-
 #start time-stamp
 start_time = datetime.datetime.now()
 start_timestamp = str(start_time.strftime('%d-%m-%Y %H:%M:%S'))
-
 # Load the xlsx file
 excel_data_one = pd.read_excel(source_file)
 excel_data = excel_data_one.applymap(lambda x: x.strip() if isinstance(x, str) else x)
-
 # Read the values of the file in the dataframe
 data = pd.DataFrame(excel_data, columns=table_columns)
 data = data.fillna('NA')
 NeededDataColumns = data.columns
 ExcelFileDataColumns = excel_data.columns
-
 solution  = NeededDataColumns.intersection(NeededDataColumns)
 solution2 = NeededDataColumns.difference(ExcelFileDataColumns)
 def updateRecordsData( key, value ):
@@ -65,9 +52,6 @@ root_logger.setLevel(logging.DEBUG)
 handler = logging.FileHandler('C:/xampp/htdocs/sscsr_audit/dataentry/log/sscsr_log.log', 'w', 'utf-8')
 handler.setFormatter(logging.Formatter('%(message)s')) # or whatever
 root_logger.addHandler(handler)
-
-
-
 if solution2.values.size != 0:
     logging.error("Excel file column and table column are not matched")
     logging.error('not match - wrong column name',solution2.values)
@@ -90,7 +74,6 @@ updateRecordsData("process-status", "started")
 for i in data.index:
     now = datetime.datetime.now()
     curr_timestamp = str(now.strftime('%d-%m-%Y %H:%M:%S'))
-
     try:
         #convetr float into int
         reg_no = int(data['reg_no'][i])
@@ -102,10 +85,7 @@ for i in data.index:
         if data['reg_no'][i] == 'NA'  or len(str(reg_no)) != 11:
             continue
         else:
-            
             data_primary_key = str(data['exam_code'][i]).lower()+"_"+tier_id+"_"+str(reg_no)+"_"+str(roll_no)+"_"+str(post_preference)
-
-           
             #get total column count
             count = len(table_columns) +1
             query_placeholders = ', '.join(['%s'] * count )
@@ -114,14 +94,12 @@ for i in data.index:
             j=0
             for j in range(0,count-1):
                     a_list.append(data[table_columns[j]][i])
-
             #insert query
             sql = "INSERT INTO " + table_name + " VALUES (%s)" % (trimmed_query_placeholders)
            # print(sql)
             cursor.execute(sql, a_list)
             success_records = success_records + 1
             #print("Success records: ", success_records)
-    
     except Exception as err:
         error_records = error_records + 1
         err_row = i + 2
@@ -149,12 +127,10 @@ for i in data.index:
             logging.error("EXCEL ROW NO  : %s", err_row)
             error_des = "*New "+str(err)
             logging.error("error_des: %s", error_des)
-
         err_row = "Row No: " + str(err_row)
         cursor.execute("rollback")
         cursor.execute("INSERT INTO tierbasedexam__excelfile_upload_errors VALUES (%s, %s, %s, %s)", (curr_timestamp, err_row, data_primary_key, error_des.replace("\n", "")))
         connection.commit()
-
     record_count = i + 1
     updateRecordsData('processed',str(record_count))
     updateRecordsData("success", str(success_records ))

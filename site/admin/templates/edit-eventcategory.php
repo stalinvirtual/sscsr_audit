@@ -1,9 +1,6 @@
 <?php
-
 namespace App\Controllers;
-
 use App\Helpers\Helpers;
-
 Helpers::urlSecurityAudit();
 echo $this->get_header(); ?>
 <style>
@@ -24,37 +21,22 @@ margin: -27px 2px 3px 286px;
             </div>
         </div><!-- /.container-fluid -->
     </section>
-
     <!-- Main content   section div start -->
     <!-- Main content -->
-
     <section class="content">
-
         <div class="container-fluid">
-
             <div class="row">
-
                 <!-- left column -->
-
                 <div class="col-md-12">
-
                     <!-- general form elements -->
                     <!-- /.card -->
-
                     <!-- Horizontal Form -->
-
                     <div class="card card-info" style="width:75%">
-
                         <div class="card-header">
-
                             <h3 class="card-title"> Event Category Creation Forms </h3>
-
                         </div>
-
                         <!-- /.card-header -->
-
                         <!-- form start -->
-
                         <?php if (isset($errorMsg) && !empty($errorMsg)) {
                             echo '<div class="alert alert-danger errormsg">';
                             echo $errorMsg;
@@ -62,120 +44,61 @@ margin: -27px 2px 3px 286px;
                             //unset($errorMsg);
                         }
                         ?>
-
                         <form class="form-horizontal" method="post" id="event_category_form" enctype="multipart/form-data">
-
                             <div class="card-body">
-
-
-
                                 <div class="form-group row">
-
                                     <label for="inputEmail3" class="col-sm-2 col-form-label">Event Name  <span style='color:red'>*</span></label>
-
                                     <div class="col-sm-6">
                                         <textarea class="form-control exam_name" name="event_name" id="event_name"  rows="5" placeholder="Enter only 256 characters"><?php echo @$current_eventcategory['event_name']; ?></textarea>
                                     </div>
                                 </div>
-
                                 <div class="form-group row">
-
                                     <label for="inputEmail3" class="col-sm-2 col-form-label"> Effect From Date <span style='color:red'>*</span></label>
-
                                     <div class="col-sm-3">
                                         <?php
-
                                         if (@$current_eventcategory['creation_date'] == "") {
                                             $creation_date = "";
                                         } else {
                                             $creation_date = date('d-m-Y', strtotime($current_eventcategory['creation_date']));
                                         }
-
-
                                         ?>
-
                                         <input class="form-control" type="text" name="creation_date" id="creation_date" value="<?php echo $creation_date; ?>" readonly>
-
-
                                     </div>
-
                                 </div>
-
-
                                 <?php
-
-
-
                                 //echo '<pre>';
-
                                 // echo $nomination_id;
                                 //print_r($current_nomination); 
                                 ?>
-
-
-
-
-
-
                                 <input type="hidden" value="<?php echo @$current_eventcategory['event_id']; ?>" name="id" class="sp_id">
-
-
-                                
-
                             </div>
-
                             <!-- /.card-body -->
-
                             <div class="card-footer">
-
                                 <input type="submit" class="btn btn-info" name="save_event_category" value="Submit" style="margin: 0px 0px 0px -160px;" id="save_event_category">
                                 <input type="button" class="btn btn-default float-right" onclick="history.back();" value="Cancel" style="float: left !important; margin: 0px 0px 0px 310px;">
-
-
-
                             </div>
-
                             <!-- /.card-footer -->
-
                         </form>
                         <!-- <button class="btn btn-default float-right" onclick="goBack()">Cancel</button> -->
-
-
-
-
                     </div>
-
                     <!-- /.card -->
-
-
-
                 </div>
-
                 <!--/.col (left) -->
-
                 <!-- right column -->
-
-
-
                 <!-- /.row -->
-
             </div><!-- /.container-fluid -->
-
     </section>
-
     <!-- Main content section div end -->
 </div>
 <?php echo $this->get_footer(); ?>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.2/jquery.validate.min.js" crossorigin="anonymous"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.2/sweetalert.min.js"></script>
-<link href="http://code.jquery.com/ui/1.10.4/themes/ui-lightness/jquery-ui.css" rel="stylesheet">
-<script src="http://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
-
+<script src="dist/js/jquery.validate.min.js" crossorigin="anonymous"></script>
+<script src="dist/js/sweetalert.min.js"></script>
+<link href="dist/css/jquery-ui.css" rel="stylesheet">
+<script src="dist/js/jquery-ui.js"></script>
 <script>
     $.datepicker.setDefaults({
         showOn: "button",
         buttonImage: "<?php echo $this->theme_url; ?>/dist/img/datepicker.png",
-
         buttonText: "Date Picker",
         buttonImageOnly: true,
         dateFormat: 'dd-mm-yy'
@@ -186,10 +109,8 @@ margin: -27px 2px 3px 286px;
             changeYear: true, 
             yearRange: '2020:+0'
         });
-
     });
     $(document).ready(function() {
-
         $('#resume').on('change', function() {
             myfile = $(this).val();
             var ext = myfile.split('.').pop();
@@ -201,10 +122,7 @@ margin: -27px 2px 3px 286px;
                 return;
             }
         });
-
-
         var myfile = "";
-
         // $('#save-namination').click(function(e) {
         //     e.preventDefault();
         //     //$('.pdfclassupload').trigger('click');
@@ -218,17 +136,8 @@ margin: -27px 2px 3px 286px;
         //         return false;
         //     }
         //     // return true;
-
         //     $("#nomination_form").submit();
-
-
-
         // });
-
-
-
-
-
         $(document).on('click', '.add', function() {
             var html = '';
             html += '<tr>';
@@ -242,17 +151,13 @@ margin: -27px 2px 3px 286px;
             var pdfname = $(this).closest('tr').find('#pdfname').val();
             var pdf_id = $(this).closest('tr').find('#pdf_id').val();
             if (pdfname != "") {
-
                 var sp_id = $('.sp_id').val();
                 var baseurl = '<?php echo $this->route->site_url("Admin/ajaxresponseforselectionpostsforremovingfileupload"); ?>';
-
-
                 jQuery.ajax({
                     url: baseurl,
                     data: {
                         sp_id: sp_id,
                         pdf_id: pdf_id
-
                     },
                     type: 'post',
                     dataType: 'json',
@@ -260,7 +165,6 @@ margin: -27px 2px 3px 286px;
                         if (response.message == 1) {
                             //alert("Welcome")
                             window.location.href = redirecturl;
-
                         }
                     }
                 });
@@ -268,7 +172,6 @@ margin: -27px 2px 3px 286px;
             // alert(pdfname);
             $(this).closest('tr').remove();
         });
-
         $('.pdfclassupload').on('change', function() {
             myfile = $(this).val();
             var ext = myfile.split('.').pop();
@@ -278,10 +181,5 @@ margin: -27px 2px 3px 286px;
                // alert(ext);
             }
         });
-
-
-
-
-
     });
 </script>

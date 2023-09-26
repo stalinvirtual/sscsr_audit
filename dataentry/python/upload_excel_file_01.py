@@ -27,7 +27,7 @@ record_count = 0
 success_records = 0
 error_records = 0
 #db connection string
-connection = psycopg2.connect(user="postgres",password="pg123",host="localhost",port="5432",database="sscsr_audit")
+connection = psycopg2.connect(user="postgres",password="postgres",host="localhost",port="5432",database="sscsr_audit")
 cursor = connection.cursor()
 #start time-stamp
 start_time = datetime.datetime.now()
@@ -67,14 +67,12 @@ updateRecordsData("process-status", "started")
 updateRecordsData("processed", "0")
 updateRecordsData("success", "0")
 updateRecordsData("error", "0")
-
 updateRecordsData('total', str(data.index.stop))
 logging.info("Total Records: %s",data.index.stop)
 logging.info("--------------------------------Start------------------------------------------------")
 now = datetime.datetime.now()
 curr_timestamp = str(now.strftime('%d-%m-%Y %H:%M:%S'))
 logging.info("Date/Time: %s ", curr_timestamp)
-
 for i in data.index:
     now = datetime.datetime.now()
     curr_timestamp = str(now.strftime('%d-%m-%Y %H:%M:%S'))

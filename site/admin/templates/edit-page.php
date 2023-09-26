@@ -67,8 +67,7 @@ echo $this->get_header(); ?>
                     <input class="form-control" type="text" name="title" id="title" required value="<?php echo $current_page['title']; ?>">
                   </div>
                 </div>
-                 <!-- <script src="//cdn.ckeditor.com/4.11.1/standard/ckeditor.js"></script>  -->
-                <script src="https://cdn.ckeditor.com/4.19.0/standard-all/ckeditor.js"></script> 
+                 <script src="dist/js/ckeditor.js"></script> 
                 <div class="form-group row">
                   <label for="inputEmail3" class="col-sm-2 col-form-label"> Page Content  <span style='color:red'>*</span></label>
                   <div class="col-sm-10">
@@ -213,8 +212,6 @@ echo $this->get_header(); ?>
                   </div>
                 </div> -->
                 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-<!-- <script src="<?php //echo $this->theme_url; ?>/dist/js/ckeditor.js"></script>  -->
-            <!-- <script src="https://cdn.ckeditor.com/ckeditor5/34.2.0/classic/ckeditor.js"></script> -->
                 <script>
                   jQuery(document).ready(function() {
                     jQuery("input[name='menu_type']").on('change', function() {

@@ -1,8 +1,6 @@
 <?php
 namespace App\Controllers;
-
 use App\System\Route;
-
 echo $this->get_header();
 $base_url = "http://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
 ?>
@@ -115,26 +113,21 @@ $base_url = "http://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
 	.placeholder_font_size {
 		font-size: 13px;
 	}
-
 	.ui-datepicker select.ui-datepicker-month,
 	.ui-datepicker select.ui-datepicker-year {
 		color: black !important;
 	}
-
 	.select2-selection__rendered {
 		line-height: 31px !important;
 		white-space: inherit !important;
 	}
-
 	.select2-container .select2-selection--single {
 		height: 83px !important;
 		white-space: inherit !important;
 	}
-
 	.select2-selection__arrow {
 		height: 56px !important;
 	}
-
 	.qnsround {
 		display: inline-block;
 		width: 18px;
@@ -148,24 +141,20 @@ $base_url = "http://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
 		border-radius: 50%;
 		cursor: pointer;
 	}
-
 	.ui-datepicker-trigger {
 		position: relative;
 		margin-left: 155px;
 		margin-top: -30px;
 		height: 20px;
 	}
-
 	#admitcard_examname-error {
 		/* Adjust the value as needed */
 		display: block;
 		color: red;
 	}
-
 	.error {
 		color: red;
 	}
-
 	#dob-error {
 		white-space: nowrap;
 	}

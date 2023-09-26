@@ -1,7 +1,6 @@
 <?php 
 namespace App\Controllers; 
 use App\Helpers\Helpers;
-
 Helpers::urlSecurityAudit();
 echo $this->get_header(); ?>
 <style>
@@ -22,37 +21,22 @@ margin: -27px 2px 3px 286px;
             </div>
         </div><!-- /.container-fluid -->
     </section>
-
     <!-- Main content   section div start -->
     <!-- Main content -->
-
     <section class="content">
-
         <div class="container-fluid">
-
             <div class="row">
-
                 <!-- left column -->
-
                 <div class="col-md-12">
-
                     <!-- general form elements -->
                     <!-- /.card -->
-
                     <!-- Horizontal Form -->
-
                     <div class="card card-info" style="width: 75%;">
-
                         <div class="card-header">
-
                             <h3 class="card-title">Selection Post creation Form</h3>
-
                         </div>
-
                         <!-- /.card-header -->
-
                         <!-- form start -->
-
                         <?php if (isset($errorMsg) && !empty($errorMsg)) {
                             echo '<div class="alert alert-danger errormsg">';
                             echo $errorMsg;
@@ -60,14 +44,10 @@ margin: -27px 2px 3px 286px;
                             //unset($errorMsg);
                         }
                         ?>
-
                         <form class="form-horizontal" method="post" name ="selection_post_form" id="selection_post_form" enctype="multipart/form-data">
-
                             <div class="card-body">
 								<div class="form-group row">
-
                                     <label for="inputEmail3" class="col-sm-2 col-form-label">Phase  <span style='color:red'>*</span></label>
-
                                     <div class="col-sm-6">
                                         <select name="phase_id" class="form-control">
                                             <?php foreach ($phases as $key => $phase) :
@@ -81,22 +61,15 @@ margin: -27px 2px 3px 286px;
                                         </select>
                                     </div>
                                 </div>
-
                                 <div class="form-group row">
-
                                     <label for="inputEmail3" class="col-sm-2 col-form-label">Name of the Examination  <span style='color:red'>*</span></label>
-
                                     <div class="col-sm-6">
                                         <textarea class="form-control exam_name" name="exam_name" 
                                         id="exam_name" rows="5" placeholder="Enter only 256 characters"><?php echo $current_selectionpost['exam_name']; ?></textarea>
                                     </div>
                                 </div>
-                                
-                               
                                 <div class="form-group row">
-
                                     <label for="inputEmail3" class="col-sm-2 col-form-label">Category  <span style='color:red'>*</span></label>
-
                                     <div class="col-sm-6">
                                         <select name="category_id" class="form-control">
                                             <?php foreach ($categories as $key => $category) :
@@ -110,15 +83,8 @@ margin: -27px 2px 3px 286px;
                                         </select>
                                     </div>
                                 </div>
-
-
-                                
-
-
                                 <!-- <div class="form-group row">
-
                                     <label for="inputEmail3" class="col-sm-2 col-form-label">Attachment : <span style='color:red'>*</span></label>
-
                                     <div class="col-sm-10">
                                         <?php
                                         /*  $singleFile = $current_nomination['attachment'];
@@ -127,19 +93,11 @@ margin: -27px 2px 3px 286px;
                                         ?>
                                         <input class="form-control" type="file" name="attachment">
                                         <a href="<?= $file_location ?>" target="_blank"><?= $current_nomination['attachment']*/ ?></a>
-
                                     </div>
                                 </div> -->
-
-
-
-
                                 <div class="form-group row">
-
                                     <label for="inputEmail3" class="col-sm-2 col-form-label"> Effect From Date  <span style='color:red'>*</span></label>
-
                                     <div class="col-sm-3">
-
                                         <?php							
                                             if(@$current_selectionpost['effect_from_date']==""){
                                                 $effort_from_date = "";
@@ -149,19 +107,11 @@ margin: -27px 2px 3px 286px;
                                             }
                                         ?>
                                         <input class="form-control" type="text" name="effect_from_date" id="effect_from_date" value="<?php echo $effort_from_date; ?>" readonly> 
-
-
                                     </div>
-
                                 </div>
                                 <div class="form-group row">
-
                                     <label for="inputEmail3" class="col-sm-2 col-form-label"> Effect To Date  <span style='color:red'>*</span></label>
-
                                     <div class="col-sm-3">
-
-
-
                                     <?php							
                                             if(@$current_selectionpost['effect_to_date']==""){
                                                 $effect_to_date = "";
@@ -171,45 +121,25 @@ margin: -27px 2px 3px 286px;
                                             }
                                         ?>
                                         <input class="form-control" type="text" name="effect_to_date" id="effect_to_date" value="<?php echo $effect_to_date; ?>" readonly>
-
-
-
                                     </div>
-
                                 </div>
-
                                 <?php
-
-
-
                                 //echo '<pre>';
-
                                 // echo $nomination_id;
                                 //print_r($current_nomination); 
                                 ?>
-
-
-
-
                                 <div class="form-group row">
-
                                     <label for="inputEmail3" class="col-sm-2 col-form-label"> Attachment <span style='color:red'>*</span></label>
-
                                     <div class="col-sm-6">
                                         <table class="table table-bordered" id="item_table">
                                             <tr>
                                                 <th>Enter Pdf Name</th>
                                                 <th>Enter Pdf </th>
-
-
                                                 <th><button type="button" name="add" class="btn btn-success btn-sm add"><i class="fa fa-plus" aria-hidden="true"></i></button></th>
                                             </tr>
-
                                             <?php
                                             if ($selectionpost_id == 0) {
                                             } else {
-
-
                                                 foreach ($selectionpostchildlist as $key => $childlist) :
                                                     $selected = "";
                                                     if ($current_selectionpost['selection_post_id'] == $childlist->selection_post_id) {
@@ -217,100 +147,53 @@ margin: -27px 2px 3px 286px;
                                                         $uploadPath = 'selectionposts' . '/' . $childlist->attachment;
                                                         $file_location = $this->route->get_base_url() . "/" . $uploadPath; ?>
                                                         <tr>
-
                                                             <td><input type="text" name="pdf_name[]" class="form-control item_name " id="pdfname" value="<?php echo $childlist->pdf_name; ?>" />
                                                                 <input type="hidden" id="pdf_id" name="nomination_child_id[]" class="form-control item_name" value="<?php echo $childlist->selection_post_child_id; ?>" />
-
-
-
                                                             </td>
                                                             <td><input type="file" name="pdf_file[]" class="form-control item_quantity pdfselectionpost" accept="application/pdf" value="<?php echo $childlist->attachment; ?>" />
-
                                                                 <input type="text" name="pdf_files[]" class="form-control item_quantity" value="<?php echo $childlist->attachment; ?>" />
-
                                                                 <!-- <p><?php //echo $childlist->attachment; 
                                                                         ?></p> -->
                                                             </td>
                                                             <td><button type="button" name="remove" class="btn btn-danger btn-sm remove"><i class="fa fa-minus" aria-hidden="true"></i></button></td>
-
-
-
                                                             <br>
                                                         </tr>
                                                     <?php }
-
-
                                                     ?>
-
                                                 <?php endforeach; ?>
-
                                             <?php
                                                 // echo '<tr>';
                                             }
-
                                             ?>
-
                                         </table>
-
-
                                     </div>
-
                                 </div>
-
                                 <input type="hidden" value="<?php echo $current_selectionpost['selection_post_id']; ?>" name="id" class="sp_id">
-
                             </div>
-
                             <!-- /.card-body -->
-
                             <div class="card-footer">
-
         <input type="submit" class="btn btn-info" name="selectionpost" value="Submit" style="margin: 0px 0px 0px -160px;">
                                 <input type="button" class="btn btn-default float-right" onclick="history.back();" value="Cancel" style="float: left !important; margin: 0px 0px 0px 310px;">
-
-
-
                             </div>
-
                             <!-- /.card-footer -->
-
                         </form>
                         <!-- <button class="btn btn-default float-right" onclick="goBack()">Cancel</button> -->
-
-
-
-
                     </div>
-
                     <!-- /.card -->
-
-
-
                 </div>
-
                 <!--/.col (left) -->
-
                 <!-- right column -->
-
-
-
                 <!-- /.row -->
-
             </div><!-- /.container-fluid -->
-
     </section>
-
     <!-- Main content section div end -->
 </div>
 <?php echo $this->get_footer(); ?>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.2/jquery.validate.min.js" crossorigin="anonymous"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.2/sweetalert.min.js"></script>
-<link href="http://code.jquery.com/ui/1.10.4/themes/ui-lightness/jquery-ui.css" rel="stylesheet">
-<script src="http://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
-
-
+<script src="dist/js/jquery.validate.min.js" crossorigin="anonymous"></script>
+<script src="dist/js/sweetalert.min.js"></script>
+<link href="dist/css/jquery-ui.css" rel="stylesheet">
+<script src="dist/js/jquery-ui.js"></script>
 <script>
-
 $.datepicker.setDefaults({
 	showOn: "button",
 	buttonImage: "<?php echo $this->theme_url; ?>/dist/img/datepicker.png",
@@ -319,23 +202,14 @@ $.datepicker.setDefaults({
 	dateFormat: 'dd-mm-yy'  
 });
 $(function() {
-
-
 //Year Range For 2020
-	
-
 $("#effect_from_date").datepicker({
     changeMonth: true, 
     changeYear: true, 
     yearRange: '2020:+0',
     minDate: 0
  });
-
 });
-
-
-
-
 $.datepicker.setDefaults({
 	showOn: "button",
 	buttonImage: "<?php echo $this->theme_url; ?>/dist/img/datepicker.png",
@@ -344,39 +218,16 @@ $.datepicker.setDefaults({
 	dateFormat: 'dd-mm-yy'  
 });
 $(function() {
-
-
 //Year Range For 2020
-	
-
 $("#effect_to_date").datepicker({
     changeMonth: true, 
     changeYear: true, 
     yearRange: '2020:2025',
     minDate: 0
  });
-
 });
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
     $(document).ready(function() {
         var myfile = "";
-
         // $('#save-namination').click(function(e) {
         //     e.preventDefault();
         //     //$('.pdfclassupload').trigger('click');
@@ -390,14 +241,8 @@ $("#effect_to_date").datepicker({
         //         return false;
         //     }
         //     // return true;
-
         //     $("#nomination_form").submit();
-
-
-
         // });
-
-
 			$('.pdfselectionpost').on( 'change', function() {
 			   myfile= $( this ).val();
 			   var ext = myfile.split('.').pop();
@@ -409,8 +254,6 @@ $("#effect_to_date").datepicker({
 				   return;
 			   }
 			});  
-
-
         $(document).on('click', '.add', function() {
             var html = '';
             html += '<tr>';
@@ -434,7 +277,6 @@ $("#effect_to_date").datepicker({
                     maxfilesize: "File size must be less than 5 MB"
                     }
             });
-
             jQuery.validator.addMethod("maxfilesize", function(value, element, param) {
                 debugger;
                 if (element.files.length > 0) {
@@ -442,7 +284,6 @@ $("#effect_to_date").datepicker({
                 }
                 return true; // No file selected, so it's valid
             }, "File size must be less than 5 MB");
-			
 			$('.pdfselectionpost').on( 'change', function() {
 			   myfile= $( this ).val();
 			   var ext = myfile.split('.').pop();
@@ -460,17 +301,13 @@ $("#effect_to_date").datepicker({
             var pdfname = $(this).closest('tr').find('#pdfname').val();
             var pdf_id = $(this).closest('tr').find('#pdf_id').val();
             if (pdfname != "") {
-
                 var sp_id = $('.sp_id').val();
                 var baseurl = '<?php echo $this->route->site_url("Admin/ajaxresponseforselectionpostsforremovingfileupload"); ?>';
-
-
                 jQuery.ajax({
                     url: baseurl,
                     data: {
                         sp_id: sp_id,
                         pdf_id: pdf_id
-
                     },
                     type: 'post',
                     dataType: 'json',
@@ -478,7 +315,6 @@ $("#effect_to_date").datepicker({
                         if (response.message == 1) {
                             //alert("Welcome")
                             window.location.href = redirecturl;
-
                         }
                     }
                 });
@@ -486,12 +322,5 @@ $("#effect_to_date").datepicker({
             // alert(pdfname);
             $(this).closest('tr').remove();
         });
-
-        
-
-
-
-
-
     });
 </script>

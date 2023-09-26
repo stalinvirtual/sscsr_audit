@@ -1,32 +1,22 @@
 <?php
-
 require_once("config/db.php");
-
-
-
-
 if( isset( $_SERVER['HTTP_X_REQUESTED_WITH'] ) && ( $_SERVER['HTTP_X_REQUESTED_WITH'] == 'XMLHttpRequest' ) )
 {
 	//require_once("functions.php");
 	if(isset($_POST["table_name"]) && $_POST["table_name"] != 'null' )
 	{
-
         $tbl =$_POST["table_name"];
         $sql = "SELECT table_name FROM information_schema.tables where table_name = :table_name";
         $sth = $pdo->prepare($sql);
         $sth->execute([":table_name"=>$tbl]);
         $result = $sth->fetch();
         $sqlScript = "";
-
         $table  = $result->table_name;
         $query = "SELECT generate_create_table_statement( '$table' )";
         $sth = $pdo->prepare($query);
         $sth->execute();
         $row_result = $sth->fetch();
         $sqlScript .= "\n\n" . $row_result->generate_create_table_statement . ";\n\n";
-
-       
-
         $query = <<<TEXT
         select table_name, count(*) as column_count from information_schema."columns" where table_schema = 'public' 
         and table_name= :tbl GROUP by table_name order by column_count desc;
@@ -37,23 +27,19 @@ TEXT;
         $columnCount =  $columnCountResult->column_count;
         $host = "localhost";
         $user = "postgres";
-        $password = "pg123";
+        $password = "postgres";
         $dbname = "sscsr_audit";
         $port = "5432";
         $con = pg_connect("host=$host dbname=$dbname user=$user password=$password")
             or die ("Could not connect to server\n");
         $query = "SELECT * FROM $table";
         $result = pg_query($con, $query);
-
         for ($i = 0; $i < $columnCount; $i ++) {
           while ($row = pg_fetch_row($result)) {
               $sqlScript .= "INSERT INTO $table VALUES(";
               for ($j = 0; $j < $columnCount; $j ++) {
                   $row[$j] = $row[$j];
                if (isset($row[$j])) {
-
-
-
                       $sqlScript .= "'" . pg_escape_string($row[$j]) . "'";
                   } else {
                       $sqlScript .= '""';
@@ -65,7 +51,6 @@ TEXT;
               $sqlScript .= ");\n";
           }
       }
-
       if(!empty($sqlScript))
       {
         $database_name = "archieves";
@@ -87,16 +72,9 @@ TEXT;
           // flush();
          // readfile($backup_file_name);
          // exec('rm ' . $backup_file_name); 
-
           require_once("config/db1.php");
-          
-
           $sql = file_get_contents($backup_file_name);
-       
           if($pdo->exec($sql)){
-
-
-
           $message = array(
             'response' => array(
               'status' => 'success',
@@ -107,30 +85,11 @@ TEXT;
           );
           echo json_encode($message);  
         }
-
-
-         
-      
-        
-         
-       
       }  
-
-
-	
 	}
-
-
-  
- 
-
 }
 else{
-	
 	header("Location: index.php"); 
 	exit();
 }
-
-
-
 ?>

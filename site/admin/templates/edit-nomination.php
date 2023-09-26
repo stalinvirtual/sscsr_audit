@@ -180,11 +180,11 @@ margin: -27px 2px 3px 286px;
     <!-- Main content section div end -->
 </div>
 <?php echo $this->get_footer(); ?>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.5/jquery.validate.min.js"
-    crossorigin="anonymous"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.2/sweetalert.min.js"></script>
-<link href="http://code.jquery.com/ui/1.10.4/themes/ui-lightness/jquery-ui.css" rel="stylesheet">
-<script src="http://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
+    <script src="dist/js/jquery.validate.min.js"
+        crossorigin="anonymous"></script>
+    <script src="dist/js/sweetalert.min.js"></script>
+    <link href="dist/css/jquery-ui.css" rel="stylesheet">
+    <script src="dist/js/jquery-ui.js"></script>
 <script>
     $.datepicker.setDefaults({
         showOn: "button",

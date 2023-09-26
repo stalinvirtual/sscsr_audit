@@ -1,10 +1,7 @@
 <?php
-
 namespace App\Models;
-
 use App\System\DB\DB;
 use App\System\Route;
-
 class Menu extends DB
 {
     private $table_name = 'mstmenu';
@@ -12,7 +9,6 @@ class Menu extends DB
     {
         parent::__construct('mstmenu', 'id');
     }
-
     public function getAllPublishedMenus($parent_id = 0)
     {
         $results  = $this->select("c.*,p.menu_name as parent_name")
@@ -35,7 +31,6 @@ class Menu extends DB
            // $this->last_query;
            // exit;
         $route = new Route();
-
         foreach ($menus as $key => $menu) {
             if ($menu->menu_type == '2') {
                 $menu->menu_full_url = $menu->menu_link;
@@ -48,7 +43,6 @@ class Menu extends DB
         }
         return $menus;
     }
-
     public function getFooterMenusForPublish($parent_id = 0)
     {
         $menus = $this->select()
@@ -56,11 +50,7 @@ class Menu extends DB
             ->where(['status' => 1, 'is_footer_menu' => 'true'])
             ->order_by("menu_order")
             ->get_list();
-
-
-
         $route = new Route();
-
         foreach ($menus as $key => $menu) {
             if ($menu->menu_type == '2') {
                 $menu->menu_full_url = $menu->menu_link;
@@ -73,7 +63,6 @@ class Menu extends DB
         }
         return $menus;
     }
-
     public function getMenus($parent_id = 0)
     {
         $menus = $this->select()
@@ -82,8 +71,6 @@ class Menu extends DB
             ->order_by("menu_order")
             ->get_list();
         $route = new Route();
-
-
         foreach ($menus as $key => $menu) {
             if ($menu->menu_type == '2') {
                 $menu->menu_full_url = $menu->menu_link;
@@ -102,10 +89,7 @@ class Menu extends DB
             ->from($this->table_name)
             ->order_by("menu_order")
             ->get_list();
-           
         $route = new Route();
-
-
         foreach ($menus as $key => $menu) {
             if ($menu->menu_type == '2') {
                 $menu->menu_full_url = $menu->menu_link;
@@ -151,30 +135,20 @@ class Menu extends DB
     }
     public function deleteMenu($menu_id = 0)
     {
-
         if ($menu_id == 1) { // Home or Root menu cannot be deleted
             return false;
         }
         // delete the children menu too
         //return $this->where("WHERE id = $menu_id OR menu_parent_id = $menu_id")->delete();
-
-
-        $db = pg_connect("host=localhost port=5432 dbname=sscsr user=postgres password=pg123");
-
+        $db = pg_connect("host=localhost port=5432 dbname=sscsr user=postgres password=postgres");
         $id = $menu_id;
-
         $sql2 = "DELETE FROM mstmenu WHERE id = '$id' OR menu_parent_id = '$id' ";
-
         $result = pg_query($sql2);
-
-
         if (!$result) {
             return false;
         } else {
-
             return true;
         }
-
         //$deletemenu =  $this->where("WHERE id = $menu_id OR menu_parent_id = $menu_id")->delete();
         //echo $this->last_query;
         //exit;
@@ -183,28 +157,20 @@ class Menu extends DB
     //reorder main menu
     public function reorderMenus()
     {
-
-
-
         $menus = $this->select()
             ->from($this->table_name)
             ->where(['menu_parent_id' => '0'])
             ->order_by("menu_order")
             ->get_list();
-
         return $menus;
     }
     public function updatereorderMenu($data = array(), $menu_id = 0)
     {
         return $this->update($data, ['id' => $menu_id]);
     }
-
     //reorder sub menu
-
     public function reorderSubMenus()
     {
-
-
         $menus  = $this->select("c.*, p.menu_name as parent_name")
       ->from("mstmenu c")
       ->join("mstmenu p ", "c.menu_parent_id=p.id", " LEFT JOIN")
@@ -217,29 +183,21 @@ class Menu extends DB
     {
         return $this->update($data, ['id' => $menu_id]);
     }
-
     public function lastInsertedID()
     {
         //echo $alias . " ===";
         $menu =  $this->select("MAX(menu_order)")->from($this->table_name)->get_one();
-
         //echo $this->last_query;
         //exit;
         return $menu;
     }
-
     public function updateState($data = array(), $id = 0)
     {
         return $this->update($data, ['id' => $id]);
     }
-
-
  //reorder sub menu
-
  public function reorderSubMenusNew()
  {
-
-
      $menus  = $this->select("distinct c.menu_parent_id,p.menu_name as parent_name")
    ->from("mstmenu c")
    ->join("mstmenu p ", "c.menu_parent_id=p.id", " LEFT JOIN")
@@ -248,28 +206,17 @@ class Menu extends DB
    ->get_list();
      return $menus;
  }
-
  public function reorderSubMenusNewById($id)
  {
-
-
      $menus  = $this->select("*")
    ->from("mstmenu ")
    ->where(["menu_parent_id"=>$id])
    ->order_by("menu_order asc")
    ->get_list();
-
      return $menus;
  }
-
  public function updatereorderSubMenuNew($data = array(), $menu_id = 0)
     {
         return $this->update($data, ['id' => $menu_id]);
     }
-
-
-
-
-
-   
 }

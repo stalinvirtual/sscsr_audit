@@ -155,7 +155,6 @@ $base_url = "http://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
 				margin-top: -67px;
 				height: 20px;
 			}
-		
 	#examname-error {
 		/* Adjust the value as needed */
 		display: block;
@@ -168,7 +167,6 @@ $base_url = "http://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
 		}
 		#dob-error {
 		white-space: nowrap;
-		
 		}
 		.select2-container {
     width: 100% !important;
@@ -182,10 +180,9 @@ $base_url = "http://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
 	<script src="js/select2.min.js"></script>
 	<link href="css/lightgallery.css" rel="stylesheet">
 	<script src="js/lightgallery-all.min.js"></script>
-	<link href="http://code.jquery.com/ui/1.10.4/themes/ui-lightness/jquery-ui.css" rel="stylesheet">
-	<script src="http://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.5/jquery.validate.min.js"
-    crossorigin="anonymous"></script>
+	<link href="dist/css/jquery-ui.css" rel="stylesheet">
+	<script src="dist/js/jquery-ui.js"></script>
+	<script src="dist/js/jquery.validate.min.js" crossorigin="anonymous"></script>
 	<style>
 		.qnsround {
 			display: inline-block;
@@ -218,7 +215,6 @@ $base_url = "http://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
 					yearRange: '1965:2015'
 				});
 			});
-		
 			var baseurl = '<?php echo $this->route->site_url("IndexController/getTierBasedExamDetailsCardPreview/q/2"); ?>';
 			$('#examname').select2();
 			$('#examname').select2({
@@ -299,7 +295,6 @@ $base_url = "http://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
 				}
 			});
 		});
-
 		$(document).ready(function() {
 		$("#admit_card_preview_from").validate({
 			rules: {
