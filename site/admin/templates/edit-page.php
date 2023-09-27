@@ -62,94 +62,33 @@ echo $this->get_header(); ?>
             <form class="form-horizontal" method="post" enctype="multipart/form-data">
               <div class="card-body">
                 <div class="form-group row">
-                  <label for="inputEmail3" class="col-sm-2 col-form-label">Title  <span style='color:red'>*</span></label>
+                  <label for="inputEmail3" class="col-sm-2 col-form-label">Title <span
+                      style='color:red'>*</span></label>
                   <div class="col-sm-10">
-                    <input class="form-control" type="text" name="title" id="title" required value="<?php echo $current_page['title']; ?>">
+                    <input class="form-control" type="text" name="title" id="title" required
+                      value="<?php echo $current_page['title']; ?>">
                   </div>
                 </div>
-                 <!-- <script type="text/javascript" src="<?php echo $this->theme_url; ?>/dist/js/ckeditor.js"></script>  -->
-                 <script src="https://cdn.ckeditor.com/4.19.0/standard-all/ckeditor.js"></script> 
                 <div class="form-group row">
-                  <label for="inputEmail3" class="col-sm-2 col-form-label"> Page Content  <span style='color:red'>*</span></label>
+                  <label for="inputEmail3" class="col-sm-2 col-form-label"> Page Content <span
+                      style='color:red'>*</span></label>
                   <div class="col-sm-10">
-                    <textarea class="form-control" type="text" name="page_content" required><?php echo $current_page['page_content']; ?>
+                    <textarea class="form-control" type="text" name="page_content" id="page_content" required><?php echo $current_page['page_content']; ?>
                     </textarea>
+                    <script src="dist/js/jquery.min.js"></script>
+                    <script src="dist/ckeditor/ckeditor.js" type="text/javascript"></script>
                     <script type="text/javascript">
-                      //CKEDITOR.replace('page_content');
-                      //CKEDITOR.addCss('.cke_editable { font-size: 15px; padding: 2em; }');
                       CKEDITOR.replace('page_content', {
-      toolbar: [{
-          name: 'document',
-          items: ['Print','Source','PageBreak']
-        },
-        {
-          name: 'clipboard',
-          items: ['Undo', 'Redo']
-        },
-        {
-          name: 'styles',
-          items: ['Format', 'Font', 'FontSize']
-        },
-        {
-          name: 'colors',
-          items: ['TextColor', 'BGColor']
-        },
-        {
-          name: 'align',
-          items: ['JustifyLeft', 'JustifyCenter', 'JustifyRight', 'JustifyBlock']
-        },
-        '/',
-        {
-          name: 'basicstyles',
-          items: ['Bold', 'Italic', 'Underline', 'Strike', 'RemoveFormat', 'CopyFormatting']
-        },
-        {
-          name: 'links',
-          items: ['Link', 'Unlink']
-        },
-        {
-          name: 'paragraph',
-          items: ['NumberedList', 'BulletedList', '-', 'Outdent', 'Indent', '-', 'Blockquote']
-        },
-        {
-          name: 'insert',
-          items: ['Image', 'Table']
-        },
-        {
-          name: 'tools',
-          items: ['Maximize']
-        },
-        {
-          name: 'editing',
-          items: ['Scayt']
-        }
-      ],
-      extraAllowedContent: 'h3{clear};h2{line-height};h2 h3{margin-left}',
-      // Adding drag and drop image upload.
-      extraPlugins: 'print,format,font,colorbutton,justify,uploadimage,colordialog,tableresize',
-      uploadUrl: '/apps/ckfinder/3.4.5/core/connector/php/connector.php?command=QuickUpload&type=Files&responseType=json',
-      // Configure your file manager integration. This example uses CKFinder 3 for PHP.
-         filebrowserUploadUrl:'<?php echo $list_ckeditor_link_file; ?>',
+                        filebrowserUploadUrl:'<?php echo $list_ckeditor_link_file; ?>',
          filebrowserImageUploadUrl: '<?php echo $list_ckeditor_link_image; ?>',
          filebrowserUploadMethod: 'form',
-      height: 200,
-      removeDialogTabs: 'image:advanced;link:advanced',
-      removeButtons: 'PasteFromWord'
-    });
-                      // CKEDITOR.replace('page_content', {
-                      //   extraPlugins: 'editorplaceholder',
-                      //   editorplaceholder: 'Start typing here...',
-                      //   removeButtons: 'PasteFromWord',
-                      //   filebrowserUploadUrl:'<?php //echo $list_ckeditor_link_file;?>',
-                      //   filebrowserImageUploadUrl: '<?php //echo $list_ckeditor_link_image;?>',
-                      //   filebrowserUploadMethod: 'form',
-                      // });
-                     // CKEDITOR.config.extraPlugins = 'colorbutton';
+                      });
                     </script>
                   </div>
                 </div>
                 <div class="form-group row" style="display:none">
-                  <label for="inputEmail3" class="col-sm-2 col-form-label"> Category : <span style='color:red'>*</span></label>
+                  <label for="inputEmail3" class="col-sm-2 col-form-label"> Category : <span
+                      style='color:red'>*</span></label>
                   <div class="col-sm-10">
                     <select name="category_id" class="form-control">
                       <?php foreach ([1 => 'Root'] as $key => $value):
@@ -158,14 +97,17 @@ echo $this->get_header(); ?>
                           $selected = "selected=\"selected\"";
                         }
                         ?>
-                          <option <?php echo $selected; ?> value="<?php echo $key; ?>"><?php echo $value; ?></option>
+                        <option <?php echo $selected; ?> value="<?php echo $key; ?>">
+                          <?php echo $value; ?>
+                        </option>
                       <?php endforeach; ?>
                     </select>
                     <!--<input class="form-control" type="text" name="category_id" required value="<?php echo $current_page['category_id']; ?>">-->
                   </div>
                 </div>
                 <div class="form-group row" style="display:none">
-                  <label for="inputEmail3" class="col-sm-2 col-form-label"> Language Code:<span style='color:red'>*</span></label>
+                  <label for="inputEmail3" class="col-sm-2 col-form-label"> Language Code:<span
+                      style='color:red'>*</span></label>
                   <div class="col-sm-10">
                     <select name="language_code" class="form-control">
                       <?php foreach (['en' => 'English', 'hi' => 'Hindi'] as $key => $value):
@@ -174,14 +116,17 @@ echo $this->get_header(); ?>
                           $selected = "selected=\"selected\"";
                         }
                         ?>
-                          <option <?php echo $selected; ?> value="<?php echo $key; ?>"><?php echo $value; ?></option>
+                        <option <?php echo $selected; ?> value="<?php echo $key; ?>">
+                          <?php echo $value; ?>
+                        </option>
                       <?php endforeach; ?>
                     </select>
                     <!-- <input class="form-control" type="text" name="language_code" required value="<?php echo $current_page['language_code']; ?>">-->
                   </div>
                 </div>
                 <div class="form-group row" style="display:none">
-                  <label for="inputEmail3" class="col-sm-2 col-form-label"> Status:<span style='color:red'>*</span></label>
+                  <label for="inputEmail3" class="col-sm-2 col-form-label"> Status:<span
+                      style='color:red'>*</span></label>
                   <div class="col-sm-10">
                     <select name="status" class="form-control">
                       <?php foreach ([0 => 'Unpublished', 1 => 'Published'] as $key => $value):
@@ -190,7 +135,9 @@ echo $this->get_header(); ?>
                           $selected = "selected=\"selected\"";
                         }
                         ?>
-                          <option <?php echo $selected; ?> value="<?php echo $key; ?>"><?php echo $value; ?></option>
+                        <option <?php echo $selected; ?> value="<?php echo $key; ?>">
+                          <?php echo $value; ?>
+                        </option>
                       <?php endforeach; ?>
                     </select>
                     <!-- <input class="form-control" type="text" name="language_code" required value="<?php echo $current_page['language_code']; ?>">-->
@@ -214,8 +161,8 @@ echo $this->get_header(); ?>
                 </div> -->
                 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
                 <script>
-                  jQuery(document).ready(function() {
-                    jQuery("input[name='menu_type']").on('change', function() {
+                  jQuery(document).ready(function () {
+                    jQuery("input[name='menu_type']").on('change', function () {
                       if (jQuery(this).val() == 1) {
                         jQuery(".article-container").show();
                       } else {
@@ -229,8 +176,10 @@ echo $this->get_header(); ?>
               </div>
               <!-- /.card-body -->
               <div class="card-footer">
-                <input type="submit" class="btn btn-info" name="save-page" value="Submit"  style="margin: 0px 0px 0px -160px;">
-                <input type="button" class="btn btn-default float-right" onclick="history.back();" value="Cancel" style="float: left !important; margin: 0px 0px 0px 310px;">
+                <input type="submit" class="btn btn-info" name="save-page" value="Submit"
+                  style="margin: 0px 0px 0px -160px;">
+                <input type="button" class="btn btn-default float-right" onclick="history.back();" value="Cancel"
+                  style="float: left !important; margin: 0px 0px 0px 310px;">
               </div>
               <!-- /.card-footer -->
             </form>

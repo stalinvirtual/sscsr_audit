@@ -1,13 +1,3 @@
-/* -- DO NOT REMOVE --
- * jQuery MDTimePicker v1.0 plugin
- * 
- * Author: Dionlee Uy
- * Email: dionleeuy@gmail.com
- *
- * Date: Tuesday, August 28 2017
- *
- * @requires jQuery
- * -- DO NOT REMOVE -- */
 if (typeof jQuery === 'undefined') { throw new Error('MDTimePicker: This plugin requires jQuery'); }
 +function ($) {
 	var MDTP_DATA = "mdtimepicker", HOUR_START_DEG = 120, MIN_START_DEG = 90, END_DEG = 360, HOUR_DEG_INCR = 30, MIN_DEG_INCR = 6,

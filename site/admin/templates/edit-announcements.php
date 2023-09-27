@@ -8,6 +8,7 @@ margin: -27px 2px 3px 286px;
     width: 20px;
 }
 </style>
+
 <!-- Content Wrapper. Contains page content -->
 <div class="content-wrapper">
     <!-- Content Header (Page header) -->
@@ -51,68 +52,22 @@ margin: -27px 2px 3px 286px;
       <input class="form-control" type="text" name="announcement_name" id="announcement_name" required value="<?php echo @$current_announcement['announcement_name']; ?>">
     </div>
   </div>
-  <!-- <script src="dist/js/ckeditor.js"></script>  -->
-  <script src="https://cdn.ckeditor.com/4.19.0/standard-all/ckeditor.js"></script> 
+ 
   <div class="form-group row">
     <label for="inputEmail3" class="col-sm-2 col-form-label"> Announcement Content  <span style='color:red'>*</span></label>
     <div class="col-sm-10">
-      <textarea class="form-control" type="text" name="announcement_content" id="announcement_content"required><?php echo @$current_announcement['announcement_content']; ?>
+      <textarea class="form-control" type="text" name="announcement_content" id="announcement_content" required><?php echo @$current_announcement['announcement_content']; ?>
       </textarea>
-      <script type="text/javascript">
-// CKEDITOR.on('instanceReady', function(ev) {
-//         var editor = ev.editor;
-//         editor.on('paste', function(even) {
-//           // even.data.dataValue = '';
-//             even.cancel();
-//         });
-//      });
-        //CKEDITOR.replace('page_content');
-        CKEDITOR.addCss('.cke_editable { font-size: 15px; padding: 2em; }');
+      <script src="dist/js/jquery.min.js"></script>
+<script src="dist/ckeditor/ckeditor.js" type="text/javascript"></script>
+    <script  type="text/javascript">
         CKEDITOR.replace('announcement_content', {
-toolbar: [
-{
-name: 'clipboard',
-items: ['Undo', 'Redo']
-},
-{
-name: 'styles',
-items: ['Format', 'Font', 'FontSize']
-},
-{
-name: 'colors',
-items: ['TextColor', 'BGColor']
-},
-'/',
-{
-name: 'basicstyles',
-items: ['Bold', 'Italic', 'Underline', 'Strike', 'RemoveFormat', 'CopyFormatting']
-},
-{
-name: 'links',
-items: ['Link', 'Unlink']
-},
-{
-name: 'tools',
-items: ['Maximize']
-},
-{
-name: 'editing',
-items: ['Scayt']
-}
-],
-extraAllowedContent: 'h3{clear};h2{line-height};h2 h3{margin-left}',
-// Adding drag and drop image upload.
-extraPlugins: 'print,format,font,colorbutton,justify,uploadimage,colordialog,tableresize',
-uploadUrl: '/apps/ckfinder/3.4.5/core/connector/php/connector.php?command=QuickUpload&type=Files&responseType=json',
-// Configure your file manager integration. This example uses CKFinder 3 for PHP.
-filebrowserUploadUrl:'<?php echo $list_ckeditor_link_file; ?>',
+            filebrowserUploadUrl:'<?php echo $list_ckeditor_link_file; ?>',
 filebrowserImageUploadUrl: '<?php echo $list_ckeditor_link_image; ?>',
 filebrowserUploadMethod: 'form',
-height: 200,
-removeDialogTabs: 'image:advanced;link:advanced',
-removeButtons: 'PasteFromWord'
-});
-      </script>
+        });
+    </script>
+
     </div>
   </div>
   <div class="form-group row">
@@ -141,7 +96,7 @@ else{
     <input class="form-control" type="text" name="effect_to_date" id="effect_to_date" value="<?php echo @$effect_to_date; ?>" readonly>
 </div>
 </div>
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+ 
   <input type="hidden" value="<?php echo $current_announcement['announcement_id']; ?>" name="announcement_id">
 </div>
 <!-- /.card-body -->
@@ -162,10 +117,12 @@ else{
     <!-- Main content section div end -->
 </div>
 <?php echo $this->get_footer(); ?>
+
 <script src="dist/js/jquery.validate.min.js" crossorigin="anonymous"></script>
 <script src="dist/js/sweetalert.min.js"></script>
 <link href="dist/css/jquery-ui.css" rel="stylesheet">
 <script src="dist/js/jquery-ui.js"></script>
+
 <script>
 $.datepicker.setDefaults({
 showOn: "button",

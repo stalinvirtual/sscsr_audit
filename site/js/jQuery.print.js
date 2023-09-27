@@ -1,8 +1,3 @@
-/* @license 
- * jQuery.print, version 1.6.0
- *  (c) Sathvik Ponangi, Doers' Guild
- * Licence: CC-By (http://creativecommons.org/licenses/by/3.0/)
- *--------------------------------------------------------------------------*/
 (function ($) {
     "use strict";
     // A nice closure for our definitions
