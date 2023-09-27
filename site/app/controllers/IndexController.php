@@ -1,5 +1,7 @@
 <?php
+
 namespace App\Controllers;
+
 use App\System\Route;
 use App\Helpers\Helpers;
 use App\Helpers\PdfHelper;
@@ -27,6 +29,7 @@ use App\Models\ImportantLinks as ImportantLinks;
 use App\Models\Knowyourstatus as Knowyourstatus;
 use App\Models\Nominationchild as Nominationchild;
 use App\Models\Selectionpostschild as Selectionpostschild;
+
 error_reporting(0);
 class IndexController extends FrontEndController
 {
@@ -104,30 +107,37 @@ class IndexController extends FrontEndController
 	public function login()
 	{
 		$errorMsg = "";
-		if (isset($_POST['login'])) {
-			// check captcha here
-			 if (false == $this->checkCaptcha($_POST['captcha_code'])) {
-				 $errorMsg = "Invalid Captcha";
-				 return ['errorMsg' => $errorMsg];
-			 }
-			if (!empty($_POST['username']) && !empty($_POST['password'])) {
-				$decyptedusername = Helpers::encrypt_with_cryptoJS_and_decrypt_with_php($_POST['username']);
-				$decyptedpassword = Helpers::encrypt_with_cryptoJS_and_decrypt_with_php($_POST['password']);
-				$username = Helpers::cleanData(trim($decyptedusername));
-				$password = Helpers::cleanData(trim($decyptedpassword));
-				$md5Password = md5($password);
-				$user = new User();
-				if ($user->authenticate($username, $md5Password)) {
-					$route = new Route();
-					//print_r($_SESSION);
-					$route->redirect($route->site_url("Admin/dashboard/?action=listnominations"));
-				} else {
-					$errorMsg = "Wrong Username or password";
+		if (isset($_POST['csrf_token']) && hash_equals($_SESSION['csrf_token'], $_POST['csrf_token'])) { //CSRF Token if Start
+
+			if (isset($_POST['login'])) {
+				// check captcha here
+				if (false == $this->checkCaptcha($_POST['captcha_code'])) {
+					$errorMsg = "Invalid Captcha";
+					return ['errorMsg' => $errorMsg];
 				}
-			}else{
-				$errorMsg = "Invalid credentials";
+				if (!empty($_POST['username']) && !empty($_POST['password'])) {
+					$decyptedusername = Helpers::encrypt_with_cryptoJS_and_decrypt_with_php($_POST['username']);
+					$decyptedpassword = Helpers::encrypt_with_cryptoJS_and_decrypt_with_php($_POST['password']);
+					$username = Helpers::cleanData(trim($decyptedusername));
+					$password = Helpers::cleanData(trim($decyptedpassword));
+					$md5Password = md5($password);
+					$user = new User();
+					if ($user->authenticate($username, $md5Password)) {
+						$route = new Route();
+						//print_r($_SESSION);
+						$route->redirect($route->site_url("Admin/dashboard/?action=listnominations"));
+					} else {
+						$errorMsg = "Wrong Username or password";
+					}
+				} else {
+					$errorMsg = "Invalid credentials";
+				}
 			}
-		}
+		} //CSRF Token If End
+		else { //CSRF Token else Start
+
+			$errorMsg = "Invalid CSRF Token";
+		} //CSRF Token else end
 		if (isset($_GET['logout']) && $_GET['logout'] == true) {
 			session_destroy();
 			$route = new Route();
@@ -219,7 +229,7 @@ class IndexController extends FrontEndController
 					if ($admitcard_model->updateAcPrint($tablename, $acprint_data, $updateId)) {
 						PdfHelperDVExam::genereateAndDVDownloadAdminCard($data);
 					}
-				//if exam type is DV -endf
+					//if exam type is DV -endf
 			}
 		}
 		$data['ilinkforFirstFourRow'] = Helpers::getImporantLinksFirstFourRow();
@@ -252,7 +262,7 @@ class IndexController extends FrontEndController
 				default:
 					//if exam type is DV -start
 					PdfHelperDVExam::genereateAndDVDownloadAdminCard($data);
-				//if exam type is DV -end
+					//if exam type is DV -end
 			}
 		}
 		$data['ilinkforFirstFourRow'] = Helpers::getImporantLinksFirstFourRow();
@@ -308,32 +318,40 @@ class IndexController extends FrontEndController
 	public function getknowyourstatus()
 	{
 		$errorMsg = "";
-		if (isset($_POST['kyas'])) {
-			$register_number = trim($_POST['register_number']);
-			$dob = trim($_POST['dob']);
-			$table_name = trim($_POST['table_name']);
-			$data_array = array(
-				"register_number" => $register_number,
-				"dob" => $dob,
-				"table_name" => $table_name
-			);
-			$data = explode('_', $table_name);
-			if ($data[0] == 'phase') {
-				$exam_year = strtoupper($data[3]);
-			} else {
-				$exam_year = strtoupper($data[1]);
+		if (isset($_POST['csrf_token']) && hash_equals($_SESSION['csrf_token'], $_POST['csrf_token'])) {  // CSRF Token IF start
+			if (isset($_POST['kyas'])) {
+				$register_number = trim($_POST['register_number']);
+				$dob = trim($_POST['dob']);
+				$table_name = trim($_POST['table_name']);
+				$data_array = array(
+					"register_number" => $register_number,
+					"dob" => $dob,
+					"table_name" => $table_name
+				);
+				$data = explode('_', $table_name);
+				if ($data[0] == 'phase') {
+					$exam_year = strtoupper($data[3]);
+				} else {
+					$exam_year = strtoupper($data[1]);
+				}
+				$kyas = new Exam();
+				//$this->printr($kyasresults);
+				if ($kyas->getKyas($data_array)) {
+					$kyasresults = $kyas->getKyas($data_array);
+					$kyascount = $kyas->getCountKyas($data_array);
+					$examname_by_year = $kyas->examNamebyYear($table_name);
+					return ['kyasresults' => $kyasresults, 'count' => $kyascount, 'examname' => $examname_by_year, 'year' => $exam_year];
+				} else {
+					$errorMsg = "Your credentials are NOT correct. Please try with correct credentials";
+				}
 			}
-			$kyas = new Exam();
-			//$this->printr($kyasresults);
-			if ($kyas->getKyas($data_array)) {
-				$kyasresults = $kyas->getKyas($data_array);
-				$kyascount = $kyas->getCountKyas($data_array);
-				$examname_by_year = $kyas->examNamebyYear($table_name);
-				return ['kyasresults' => $kyasresults, 'count' => $kyascount, 'examname' => $examname_by_year, 'year' => $exam_year];
-			} else {
-				$errorMsg = "Your credentials are NOT correct. Please try with correct credentials";
-			}
-		}
+		} // CSRF Token IF end
+		else { // CSRF Token else start
+
+			$errorMsg = "CSRF Token is Invalid";
+		} // CSRF Token else start
+
+
 		return ['errorMsg' => $errorMsg];
 	}
 	public function nomination()
@@ -795,58 +813,65 @@ class IndexController extends FrontEndController
 	public function getKnowYourVenueDetails()
 	{
 		$errorMsg = "";
-		if (isset($_POST['admit_card'])) {
-			$register_number = trim($_POST['register_number']);
-			$dob = trim($_POST['dob']);
-			$examname = trim($_POST['examname']);
-			$examname = explode('_', $examname);
-			// $examname = explode('_',$examname);
-			// $exam_value = $examname[0].'_'.$examname[1].'_'.$examname[2];
-			// $exam_type = $examname[2];
-			// $tier_id = $examname[3];
-			if ($examname[0] == 'phase') {
-				$exam_value = $examname[0] . '_' . $examname[1] . '_' . $examname[2] . '_' . $examname[3] . '_' . $examname[4];
-				$exam_type = $examname[4];
-				$tier_id = $examname[5];
-			} else {
-				$exam_value = $examname[0] . '_' . $examname[1] . '_' . $examname[2];
-				$exam_type = $examname[2];
-				$tier_id = $examname[3];
-			}
-			$roll_no = isset($_POST['roll_number']) ? trim($_POST['roll_number']) : null;
-			$post_preference = isset($_POST['post_preference_one']) ? trim($_POST['post_preference_one']) : null;
-			//$roll_no =  trim($_POST['dob'])? "Adult" : "Not Adult"
-			$data_array = array(
-				"table_name" => $exam_value,
-				"register_number" => $register_number,
-				"dob" => $dob,
-				"tier_id" => $tier_id,
-				"roll_no" => $roll_no,
-				"post_preference" => $post_preference
-			);
-			// echo "<pre>";
-			// print_r($data_array);
-			// exit;
-			$admitcard = new Admitcard();
-			if ($admitcard->getAdmitcardforTierPreview($data_array)) {
-				$admitcardresults = $admitcard->getAdmitcardforTierPreview($data_array);
-				$kyas = new Exam();
-				$table_name = trim($exam_value);
-				$examname_by_year = $kyas->examNamebyYear($table_name);
-				$data = explode('_', $exam_value);
-				if ($data[0] == 'phase') {
-					$exam_year = strtoupper($data[3]);
+
+		// Verify CSRF token
+		if (isset($_POST['csrf_token']) && hash_equals($_SESSION['csrf_token'], $_POST['csrf_token'])) {
+			if (isset($_POST['admit_card'])) {
+				$register_number = trim($_POST['register_number']);
+				$dob = trim($_POST['dob']);
+				$examname = trim($_POST['examname']);
+				$examname = explode('_', $examname);
+				// $examname = explode('_',$examname);
+				// $exam_value = $examname[0].'_'.$examname[1].'_'.$examname[2];
+				// $exam_type = $examname[2];
+				// $tier_id = $examname[3];
+				if ($examname[0] == 'phase') {
+					$exam_value = $examname[0] . '_' . $examname[1] . '_' . $examname[2] . '_' . $examname[3] . '_' . $examname[4];
+					$exam_type = $examname[4];
+					$tier_id = $examname[5];
 				} else {
-					$exam_year = strtoupper($data[1]);
+					$exam_value = $examname[0] . '_' . $examname[1] . '_' . $examname[2];
+					$exam_type = $examname[2];
+					$tier_id = $examname[3];
 				}
-				//$exam_name = $admitcard->getExamName($examname );
-				$array = (array) $admitcardresults;
-				$count = count($array);
-				return ['admitcardresults' => $admitcardresults, 'count' => $count, 'examname' => $examname_by_year, 'year' => $exam_year, "exam_type" => $exam_type];
-			} else {
-				$errorMsg = "Your credentials are NOT correct. Please try with correct credentials";
+				$roll_no = isset($_POST['roll_number']) ? trim($_POST['roll_number']) : null;
+				$post_preference = isset($_POST['post_preference_one']) ? trim($_POST['post_preference_one']) : null;
+				//$roll_no =  trim($_POST['dob'])? "Adult" : "Not Adult"
+				$data_array = array(
+					"table_name" => $exam_value,
+					"register_number" => $register_number,
+					"dob" => $dob,
+					"tier_id" => $tier_id,
+					"roll_no" => $roll_no,
+					"post_preference" => $post_preference
+				);
+				// echo "<pre>";
+				// print_r($data_array);
+				// exit;
+				$admitcard = new Admitcard();
+				if ($admitcard->getAdmitcardforTierPreview($data_array)) {
+					$admitcardresults = $admitcard->getAdmitcardforTierPreview($data_array);
+					$kyas = new Exam();
+					$table_name = trim($exam_value);
+					$examname_by_year = $kyas->examNamebyYear($table_name);
+					$data = explode('_', $exam_value);
+					if ($data[0] == 'phase') {
+						$exam_year = strtoupper($data[3]);
+					} else {
+						$exam_year = strtoupper($data[1]);
+					}
+					//$exam_name = $admitcard->getExamName($examname );
+					$array = (array) $admitcardresults;
+					$count = count($array);
+					return ['admitcardresults' => $admitcardresults, 'count' => $count, 'examname' => $examname_by_year, 'year' => $exam_year, "exam_type" => $exam_type];
+				} else {
+					$errorMsg = "Your credentials are NOT correct. Please try with correct credentials";
+				}
 			}
+		} else {
+			$errorMsg = "Invalid CSRF Token";
 		}
+
 		return ['errorMsg' => $errorMsg];
 	}
 	/**
@@ -889,7 +914,7 @@ class IndexController extends FrontEndController
 				default:
 					//if exam type is DV -start
 					PdfHelperDVExam::genereateAndDVDownloadAdminCard($data);
-				//if exam type is DV -end
+					//if exam type is DV -end
 			}
 		}
 	}

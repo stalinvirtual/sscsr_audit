@@ -2,6 +2,16 @@
 namespace App\Controllers;
 use App\System\Route;
 echo $this->get_header();
+//$csrfToken = bin2hex(random_bytes(32));
+//$_SESSION['csrf_token'] = $csrfToken;
+if (!isset($_SESSION)) {
+    session_start();
+}
+
+if (!isset($_SESSION['csrf_token'])) {
+    $_SESSION['csrf_token'] = bin2hex(random_bytes(32)); // Generate a random token
+}
+$csrfToken = $_SESSION['csrf_token'];
 $base_url =  "http://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
 ?>
 <section class="buttons">
@@ -56,6 +66,7 @@ $base_url =  "http://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
 										<label for="dob">Date of Birth</label>
 										<input class="form-control placeholder_font_size" name="dob" id="dob" value="" readonly type="text" required>
 									</div>
+									<input type="hidden" name="csrf_token" value="<?php echo $csrfToken; ?>">
 							 </div>
 							  <button class="btn btn-lg btn-sscsrthemecolor btn-block" type="submit" name="kyas">Know your Application Status</button>   
 							</form>

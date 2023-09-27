@@ -1,16 +1,16 @@
 <?php
-
 namespace App\Controllers;
-
 use App\System\Route;
-
 echo $this->get_header();
 $base_url =  "http://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
-
-
  $url = basename(parse_url($base_url, PHP_URL_PATH));
-
-
+ if (!isset($_SESSION)) {
+    session_start();
+}
+if (!isset($_SESSION['csrf_token'])) {
+    $_SESSION['csrf_token'] = bin2hex(random_bytes(32)); // Generate a random token
+}
+$csrfToken = $_SESSION['csrf_token'];
 ?>
 <section class="buttons">
 	<div class="container">
@@ -28,7 +28,6 @@ $base_url =  "http://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
 	<div class="container" id="main">
 		<div class="row">
 			<div class="col-lg-1">
-				
 			</div>
 			<div class="col-lg-10">
 				<div style="margin-bottom:50px">
@@ -41,7 +40,6 @@ $base_url =  "http://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
 										  echo '</div>';
 										  //unset($errorMsg);
 										}
-
 										$route = new Route();
 										//$loadcaptcha = $route->site_url("Api/loadcaptcha");
 										?>
@@ -55,14 +53,12 @@ $base_url =  "http://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
 								</select>
 									</div>
 							  </div>
-							
 							  <div class="form-group row">
 									<div class="col-lg-6">
 										<label for="ex3">Registration Number</label>
 										<input class="form-control"  autocomplete="off" name="register_number" id="username" maxlength="11" value="" type="text" placeholder="Registration Number" onkeypress="return isNumber(event)" required>
 									</div>
 							 </div>
-							  
 							    <!-- <label for="exampleInputEmail1">Register Number</label>
 							  <input type="text" class="form-control" placeholder="Application Number" name="register_number" id = "username" required="" autocomplete="off" />
 							  <br> -->
@@ -74,10 +70,8 @@ $base_url =  "http://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
 										<input class="form-control placeholder_font_size" name="dob" id="dob" value="" readonly type="text" required>
 									</div>
 							 </div>
-
-
-							 
 							  <br>
+							  <input type="hidden" name="csrf_token" value="<?php echo $csrfToken; ?>">
 							  <button class="btn btn-lg btn-sscsrthemecolor btn-block" type="submit" name="admit_card">Know your Date and City of Exam </button>   
 							</form>
 						  </div>
@@ -85,25 +79,21 @@ $base_url =  "http://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
 				</div>
 			</div>
 			<div class="col-lg-1">
-				
 			</div>
 		</div>
 	</div>
 </section>
 <?php include "footer2.php";?>
 <style>
-	
 	.form-control{
     height: 39px !important;
 	}
-
 .select2-selection__rendered {
     line-height: 31px !important;
 	white-space: inherit !important;
 }
 .select2-container .select2-selection--single {
 	height: 83px !important;
-
 	white-space: inherit !important;
 }
 .select2-selection__arrow {
@@ -120,33 +110,26 @@ $base_url =  "http://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
     margin-left: 155px;
 	margin-top: -30px;
     height: 20px;
-
 }
-	
 #city_examname-error{
 	   /* Adjust the value as needed */
 	  display: block;
 	  color: red;
-	  
 	}
 	.error{
 		color: red;
 	}
 	#dob-error {
 	   white-space: nowrap;
-	   
 	}
  </style>
  <script>
 	 $(document).ready(function() {
 		var select2Dropdown = $("#city_examname");
-
 // Custom error message for invalid selection
 var errorMessage = 'Please select any exam  option from the list.';
-
 // When the button is clicked, check if the select2 dropdown is invalid
 $('.btn-sscsrthemecolor').on('click', function() {
-
   if (select2Dropdown[0].validity.valueMissing) {
 	// Set the custom error message for "required" validation
 	select2Dropdown[0].setCustomValidity(errorMessage);
@@ -156,15 +139,11 @@ $('.btn-sscsrthemecolor').on('click', function() {
   }
 });
 	 });
-
 	 $(document).ready(function() {
 		$("#know_your_venue_details_form").validate({
-			
 			rules: {
 				examname: {
 					required: true,
-					
-
 				},
 				register_number: {
 					required: true,
@@ -175,13 +154,10 @@ $('.btn-sscsrthemecolor').on('click', function() {
           			required: true,
           			//isBeforeCurrentDate: true
         		}
-
-
 			},
 			messages: {
 				examname: {
 					required: "Please select a exam name",
-					
 				},
 				register_number: {
 					required: "Please enter your register number",
@@ -191,7 +167,6 @@ $('.btn-sscsrthemecolor').on('click', function() {
 				dob: {
           			required: "Please enter your date of birth"
         		}
-
 			},
 					errorPlacement: function(error, element) {
 						if (element.attr("name") === "dob") {
@@ -209,11 +184,6 @@ $('.btn-sscsrthemecolor').on('click', function() {
 				form.submit();
 			}
 		});
-
-		
-		
     });
  </script>
-
-
 <?php echo $this->get_footer(); ?>

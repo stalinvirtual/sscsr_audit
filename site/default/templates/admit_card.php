@@ -3,6 +3,14 @@ namespace App\Controllers;
 use App\System\Route;
 echo $this->get_header();
 $base_url = "http://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
+if (!isset($_SESSION)) {
+    session_start();
+}
+
+if (!isset($_SESSION['csrf_token'])) {
+    $_SESSION['csrf_token'] = bin2hex(random_bytes(32)); // Generate a random token
+}
+$csrfToken = $_SESSION['csrf_token'];
 ?>
 <style>
 	.form-control {
@@ -96,6 +104,7 @@ $base_url = "http://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
 											readonly type="text" required>
 									</div>
 								</div>
+								<input type="hidden" name="csrf_token" value="<?php echo $csrfToken; ?>">
 								<button class="btn btn-lg btn-sscsrthemecolor btn-block" type="submit"
 									name="admit_card">Download Admit Card</button>
 							</form>

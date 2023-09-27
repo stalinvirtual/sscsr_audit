@@ -5,6 +5,14 @@ namespace App\Controllers;
 use App\System\Route;
 
 echo $this->get_header();
+if (!isset($_SESSION)) {
+    session_start();
+}
+
+if (!isset($_SESSION['csrf_token'])) {
+    $_SESSION['csrf_token'] = bin2hex(random_bytes(32)); // Generate a random token
+}
+$csrfToken = $_SESSION['csrf_token'];
 ?>
 <section class="buttons">
 	<div class="container">
@@ -59,7 +67,7 @@ echo $this->get_header();
 							  <br>
 							   <!-- Captcha End -->
 							<!-- onClick="return Validate();" -->
-							
+							<input type="hidden" name="csrf_token" value="<?php echo $csrfToken; ?>">
 								<br>
 								<button class="btn btn-lg btn-sscsrthemecolor btn-block" type="submit" name="login" >Login</button>
 								<p class="pt-1 text-danger text-center" id="err_msg"></p>  
