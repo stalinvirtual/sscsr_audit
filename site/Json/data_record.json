@@ -1,5 +1,5 @@
 {
-    "errorMsg": "",
+    "errorMsg": "Invalid CSRF Token",
     "nominations": {},
     "nominationchildlist": [],
     "nominations_latest_news": {},

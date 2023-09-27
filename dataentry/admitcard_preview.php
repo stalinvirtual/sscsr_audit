@@ -24,16 +24,9 @@ if (!isset($_SERVER['HTTP_REFERER']) || !isset($_SESSION['sess_user'])) {
 					</div>
 					<div class="form-body">
 						<div class="row">
-							<div class="col-md-12 form-group videoWrapper">
-								<!-- <iframe id="forPostyouradd" height='200%' width="100%"
-									data-src="<?php //echo $base_url; ?>/sscsr_audit/site/IndexController/admitcardpreview"
-									src="about:blank" class="responsive-iframe" allowfullscreen
-									style="background:#faebeb"></iframe> -->
+							<div class="col-md-12 form-group videoWrapper" style="background:#faebeb">
 
-									<object style="background:#faebeb"  data-src="/sscsr_audit/site/IndexController/admitcardpreview" type="text/html" width="100%" height="200%">
-    <!-- Alternative content in case the object tag is not supported -->
-</object> 
-
+<object width="100%" height="650px" data="/sscsr_audit/site/IndexController/admitcardpreview" ></object>
 							</div>
 						</div>
 					</div>
@@ -45,16 +38,7 @@ if (!isset($_SERVER['HTTP_REFERER']) || !isset($_SESSION['sess_user'])) {
 }
 ?>
 <?php include('footer.php'); ?>
-<script type="text/javascript">
 
-	$(document).ready(function () {
-
-
-		var iframe = $("#forPostyouradd");
-		iframe.attr("src", iframe.data("src"));
-
-	});
-</script>
 
 <style>
 	.videoWrapper {
