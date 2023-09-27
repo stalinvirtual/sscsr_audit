@@ -7,10 +7,8 @@ $base_url =  "http://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
  if (!isset($_SESSION)) {
     session_start();
 }
-if (!isset($_SESSION['csrf_token'])) {
-    $_SESSION['csrf_token'] = bin2hex(random_bytes(32)); // Generate a random token
-}
-$csrfToken = $_SESSION['csrf_token'];
+$csrfToken = bin2hex(random_bytes(32));
+$_SESSION['csrf_token'] = $csrfToken;
 ?>
 <section class="buttons">
 	<div class="container">
