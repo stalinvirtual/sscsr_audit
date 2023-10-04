@@ -934,7 +934,7 @@ if (isset($_POST['csrf_token']) && hash_equals($_SESSION['csrf_token'], $_POST['
 
 	}
 } else {
-	$errorMsg = "Invalid CSRF Token";
+	$errorMsg = "";
 }
 	
 		return ['errorMsg' => $errorMsg];

@@ -107,6 +107,7 @@ class IndexController extends FrontEndController
 	public function login()
 	{
 		$errorMsg = "";
+
 		if (isset($_POST['csrf_token']) && hash_equals($_SESSION['csrf_token'], $_POST['csrf_token'])) { //CSRF Token if Start
 
 			if (isset($_POST['login'])) {
@@ -136,7 +137,7 @@ class IndexController extends FrontEndController
 		} //CSRF Token If End
 		else { //CSRF Token else Start
 
-			$errorMsg = "Invalid CSRF Token";
+			$errorMsg = "";
 		} //CSRF Token else end
 		if (isset($_GET['logout']) && $_GET['logout'] == true) {
 			session_destroy();
@@ -348,7 +349,7 @@ class IndexController extends FrontEndController
 		} // CSRF Token IF end
 		else { // CSRF Token else start
 
-			$errorMsg = "CSRF Token is Invalid";
+			$errorMsg = "";
 		} // CSRF Token else start
 
 
@@ -869,7 +870,7 @@ class IndexController extends FrontEndController
 				}
 			}
 		} else {
-			$errorMsg = "Invalid CSRF Token";
+			$errorMsg = "";
 		}
 
 		return ['errorMsg' => $errorMsg];
