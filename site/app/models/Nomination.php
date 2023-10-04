@@ -79,8 +79,7 @@ class Nomination extends DB
             ->where(['p_status' => '1'])
             ->order_by('P.effect_from_date desc')
             ->get_list();
-            // echo $this->last_query;
-            // exit;
+           
         $lastinsertid = (object)$fetch_all;
         return $lastinsertid;
     }

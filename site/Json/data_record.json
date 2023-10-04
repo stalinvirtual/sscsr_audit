@@ -7,61 +7,35 @@
     "selectionposts_latest_news": {},
     "selectpostschildlist_latest_news": [
         {
-            "selection_post_child_id": "59",
-            "selection_post_id": "46",
+            "selection_post_child_id": 59,
+            "selection_post_id": 46,
             "pdf_name": "Sample Pdf",
             "attachment": "97206-test2.pdf",
-            "status": "1"
+            "status": 1
         },
         {
-            "selection_post_child_id": "60",
-            "selection_post_id": "47",
+            "selection_post_child_id": 60,
+            "selection_post_id": 47,
             "pdf_name": "test",
             "attachment": "93700-test2.pdf",
-            "status": "1"
+            "status": 1
         },
         {
-            "selection_post_child_id": "61",
-            "selection_post_id": "48",
+            "selection_post_child_id": 61,
+            "selection_post_id": 48,
             "pdf_name": "Test PDF",
             "attachment": "33196-test2-(1).pdf",
-            "status": "1"
+            "status": 1
         },
         {
-            "selection_post_child_id": "62",
-            "selection_post_id": "49",
+            "selection_post_child_id": 62,
+            "selection_post_id": 49,
             "pdf_name": "",
             "attachment": "2438-sms.pdf",
-            "status": "1"
+            "status": 1
         }
     ],
     "notices_latest_news": [
-        {
-            "notice_id": "33",
-            "pdf_name": "Important Notice about Helpdesk Facility for grievances of Applicants",
-            "attachment": "11678-important_notice_29082023-about-tollfree-phone-number.pdf",
-            "effect_from_date": "2023-09-05",
-            "effect_to_date": "2023-12-05",
-            "p_status": "1",
-            "category_id": "8",
-            "creation_date": "2023-09-05 09:01:32",
-            "category_name": "OTHERS"
-        }
-    ],
-    "tenders_latest_news": [],
-    "announcements_latest_news": [],
-    "notices": [
-        {
-            "notice_id": "33",
-            "pdf_name": "Important Notice about Helpdesk Facility for grievances of Applicants",
-            "attachment": "11678-important_notice_29082023-about-tollfree-phone-number.pdf",
-            "effect_from_date": "2023-09-05",
-            "effect_to_date": "2023-12-05",
-            "p_status": "1",
-            "category_id": "8",
-            "creation_date": "2023-09-05 09:01:32",
-            "category_name": "OTHERS"
-        },
         {
             "notice_id": "36",
             "pdf_name": "Corrigendum Notice - Constables (Executive) in Delhi Police Examination 2023",
@@ -83,45 +57,93 @@
             "category_id": "6",
             "creation_date": "2023-09-05 09:14:56",
             "category_name": "CONSTABLE"
+        },
+        {
+            "notice_id": "33",
+            "pdf_name": "Important Notice about Helpdesk Facility for grievances of Applicants",
+            "attachment": "11678-important_notice_29082023-about-tollfree-phone-number.pdf",
+            "effect_from_date": "2023-09-05",
+            "effect_to_date": "2023-12-05",
+            "p_status": "1",
+            "category_id": 8,
+            "creation_date": "2023-09-05 09:01:32",
+            "category_name": "OTHERS"
+        }
+    ],
+    "tenders_latest_news": [],
+    "announcements_latest_news": [],
+    "notices": [
+        {
+            "notice_id": 33,
+            "pdf_name": "Important Notice about Helpdesk Facility for grievances of Applicants",
+            "attachment": "11678-important_notice_29082023-about-tollfree-phone-number.pdf",
+            "effect_from_date": "2023-09-05",
+            "effect_to_date": "2023-12-05",
+            "p_status": "1",
+            "category_id": 8,
+            "creation_date": "2023-09-05 09:01:32",
+            "category_name": "OTHERS"
+        },
+        {
+            "notice_id": 36,
+            "pdf_name": "Corrigendum Notice - Constables (Executive) in Delhi Police Examination 2023",
+            "attachment": "7755-constables-executive-examination-2023-corrigendum-dt1092023.pdf",
+            "effect_from_date": "2023-09-05",
+            "effect_to_date": "2023-09-30",
+            "p_status": "1",
+            "category_id": 6,
+            "creation_date": "2023-09-05 09:16:05",
+            "category_name": "CONSTABLE"
+        },
+        {
+            "notice_id": 35,
+            "pdf_name": "Notice of Constable (Executive) in Delhi Police Examination 2023 ",
+            "attachment": "75696-constables-executive-examination-2023-noticedt01092023.pdf",
+            "effect_from_date": "2023-09-05",
+            "effect_to_date": "2023-09-30",
+            "p_status": "1",
+            "category_id": 6,
+            "creation_date": "2023-09-05 09:14:56",
+            "category_name": "CONSTABLE"
         }
     ],
     "ilinkforFirstFourRow": [
         {
-            "id": "118",
+            "id": 118,
             "link_name": "SSC HQ website",
             "menu_link": "https:\/\/ssc.nic.in\/",
             "creation_date": "2022-07-12 00:00:00",
-            "status": "1"
+            "status": 1
         },
         {
-            "id": "119",
+            "id": 119,
             "link_name": "Archives",
             "menu_link": "IndexController\/nominationarchives",
             "creation_date": "2022-08-25 00:00:00",
-            "status": "1"
+            "status": 1
         },
         {
-            "id": "117",
+            "id": 117,
             "link_name": "SSC(SR) Old website",
             "menu_link": "http:\/\/www.sscsr.gov.in",
             "creation_date": "2022-06-28 00:00:00",
-            "status": "1"
+            "status": 1
         },
         {
-            "id": "121",
+            "id": 121,
             "link_name": "National Career Service",
             "menu_link": "https:\/\/www.ncs.gov.in\/",
             "creation_date": "2023-07-25 00:00:00",
-            "status": "1"
+            "status": 1
         }
     ],
     "ilinkforAfterFirstFourRow": [],
     "gallery_id_based_images": {
         "0": {
-            "gallery_id": "63",
-            "event_id": "20",
+            "gallery_id": 63,
+            "event_id": 20,
             "year": "2023",
-            "image_id": "99",
+            "image_id": 99,
             "image_path": "15881-17357-2021-01-28.jpg",
             "event_name": "General"
         }
