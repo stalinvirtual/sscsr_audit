@@ -1,6 +1,15 @@
 <?php
 require_once("config/db.php");
 require_once("functions.php");
+session_start();
+
+// Generate a CSRF token and store it in the session
+if (!isset($_SESSION['csrf_token']) || !isset($_POST['submit'])) {
+    // Generate a new CSRF token and store it in the session
+    $_SESSION['csrf_token'] = bin2hex(random_bytes(32));
+}
+
+$csrf_token = $_SESSION['csrf_token'];
 ?>
 <!doctype html>
 <html>
@@ -134,6 +143,8 @@ require_once("functions.php");
 					<div class="containerred">
 						<img src="captcha.php" alt="CAPTCHA"><br><br>
 					</div>
+					<input type="hidden" name="csrf_token" value="<?php echo $csrf_token; ?>">
+
 					<input value="Submit" class="btn" type="submit" name="submit">
 				</form>
 			</div>
@@ -143,6 +154,10 @@ require_once("functions.php");
 	</div>
 	<?php
 	if (isset($_POST['submit'])) {
+		if (!hash_equals($_SESSION['csrf_token'], $_POST['csrf_token'])) {
+			// Token mismatch, handle the error (e.g., log it or display an error message)
+			die("CSRF token verification failed.");
+		}
 		$user = trim($_POST["user"]);
 		$user = cleanData($user);
 		$pass = trim($_POST["pass"]);
@@ -217,6 +232,7 @@ require_once("functions.php");
 			}
 		}
 	   }//captcha 
+	   $_SESSION['csrf_token'] = bin2hex(random_bytes(32));
 	}
 	?>
 </body>
