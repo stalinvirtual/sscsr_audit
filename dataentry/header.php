@@ -12,6 +12,7 @@
 			window.scrollTo(0, 1);
 		}
 	</script>
+
 	<!-- bootstrap-css -->
 	<link rel="stylesheet" href="css/bootstrap.css">
 	<!-- //bootstrap-css -->
@@ -41,9 +42,9 @@
 		.toolbar {
 			float: right;
 		}
-		/* nav.main-menu {
+		 nav.main-menu {
    overflow-y: scroll !important;
-} */
+} 
 	</style>
 	<link href="css/select2.min.css" rel="stylesheet" />
 	<!-- <script src="js/select2.js"></script>
@@ -73,8 +74,8 @@
 	<!-- //dashboard links-->
 	<link rel="stylesheet" href="css/dashboard.css">
 	<link rel="stylesheet" href="css/Chart.css">
-	<!-- <link rel="stylesheet" href="css/font-awesome.min.css">  -->
-	<link rel="stylesheet" href="css/font-awesome.min.css">
+	<link rel="stylesheet" href="css/fontawesome.min.css"> 
+	 
 	<script src="js/bootstrap.bundle.min.js"></script>
 	<script src="js/Chart.min.js"></script>
 	<style>
