@@ -580,8 +580,23 @@ var current_yearabove5 = d.getFullYear() + 5;	// Day		[dd]	(1 - 31)
                 contentType:false,  
                 processData:false,  
            }).done(function (data) {
-			 console.log(data); 
-			notifier = setInterval(getNotification, 2000);
+			if(data == "error_file"){
+				debugger;
+				
+				Swal.fire('Browse file is differ From Decrypted Value');
+				$("#uploading_header_text").html("");
+				$("#loader").hide();
+				$(".progress").hide();
+				$(".progress-3").hide();
+				$("#overlay").fadeOut();
+				$(".donot_refresh_div").hide();
+			 }
+			 else{
+				console.log(data);
+				notifier = setInterval(getNotification, 2000);
+			 }
+			  
+			
 			});
 		}
 	else{
