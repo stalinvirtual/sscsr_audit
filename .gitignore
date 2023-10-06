@@ -9,5 +9,7 @@ dataentry/table_archieve_ajax.php
 dataentry/python/*
 site/app/models/Menu.php
 site/app/system/Config.php
+site/Json/*
+dataentry/log/sscsr_log.log
 
 
