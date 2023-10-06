@@ -240,6 +240,9 @@ p.count {
     border-radius: 20px;
     font-size: unset;
 }
+.error{
+	color:red;
+}
 </style>
 <?php
 }
@@ -558,32 +561,100 @@ var current_yearabove5 = d.getFullYear() + 5;	// Day		[dd]	(1 - 31)
 					}
 				});
 		});
-	  $('#upload_exam_details').on('submit', function(event){  
-           event.preventDefault();  
-		   var examname 	= $('#examname option:selected').val();//cgl
-		   var exam_year 	= $('#exam_year').val();//2021
-		   var table_format = $('#selectedTableFormat option:selected').val();//kyas
-		   var selectedtier = $('#selectedtier option:selected').val();// tier (1)
-		   var no_of_days   = $('#no_of_days').val();// tier (1)
-		   $("#uploading_header_info").html("");
-		   if( examname!='' && selectedtier !='' && exam_year !='' && table_format !=''){
-			$("#loader").show(); 
-			$("#overlay").fadeIn();
-			$(".progress").hide();
-			$("#processing-bar").css("width", "0%").attr("aria-valuenow", 0).html(`0%`);
-			$(".progress-3").show();
-			$("#uploading_header_text").html("Data Reading .....");
-           $.ajax({  
-                url:"upload_excel_file_ajax.php",  
-                method:"POST",  
-                data:new FormData(this),  
-                contentType:false,  
-                processData:false,  
-           }).done(function (data) {
-			if(data == "error_file"){
+		$("#upload_exam_details").validate({
+			rules: {
+				examname: {
+					required: true
+				},
+				exam_year: {
+					required: true,
+					digits: true,
+					min: <?php echo date('Y') - 5; ?>,
+					max: <?php echo date('Y') + 5; ?>
+				},
+				selectedTableFormat: {
+					required: true
+				},
+				selectedtier: {
+					required: true
+				},
+				no_of_days: {
+					required: true
+				},
+				excel_file_attachment: {
+					required: true
+				}
+			},
+			messages: {
+				examname: {
+					required: "Please select an Exam Name."
+				},
+				exam_year: {
+					required: "Please enter a valid Year.",
+					digits: "Please enter a valid Year.",
+					min: "Year must be at least <?php echo date('Y') - 5; ?>.",
+					max: "Year must be at most <?php echo date('Y') + 5; ?>."
+				},
+				selectedTableFormat: {
+					required: "Please select a Table Format."
+				},
+				selectedtier: {
+					required: "Please select the tier."
+				},
+				no_of_days: {
+					required: "Please select the no.of days"
+				},
+				excel_file_attachment: {
+					required: "Please select the excel file to upload"
+				}
+			},
+			errorPlacement: function (error, element) {
+				if (element.attr("name") === "examname") {
+					// Place the error message after the image tag
+					error.insertAfter(element.next("span.select2"));
+				} else if (element.attr("name") === "selectedtier") {
+					// Place the error message after the Select2 element
+					error.insertAfter(element.next("span.select2"));
+				}
+				else if (element.attr("name") === "selectedTableFormat") {
+					// Place the error message after the Select2 element
+					error.insertAfter(element.next("span.select2"));
+				}
+				else {
+					// Use the default error placement for other fields
+					error.insertAfter(element);
+				}
+			},
+			submitHandler: function(form) {
+        var examname = $('#examname option:selected').val();
+        var exam_year = $('#exam_year').val();
+        var table_format = $('#selectedTableFormat option:selected').val();
+        var selectedtier = $('#selectedtier option:selected').val();
+        var no_of_days = $('#no_of_days').val();
+        $("#uploading_header_info").html("");
+        if (examname != '' && selectedtier != '' && exam_year != '' && table_format != '') {
+            $("#loader").show();
+            $("#overlay").fadeIn();
+            $(".progress").hide();
+            $("#processing-bar").css("width", "0%").attr("aria-valuenow", 0).html(`0%`);
+            $(".progress-3").show();
+            $("#uploading_header_text").html("Data Reading .....");
+            $.ajax({
+                url: "upload_excel_file_ajax.php",
+                method: "POST",
+                data: new FormData(form),
+                contentType: false,
+                processData: false,
+            }).done(function(data) {
 				debugger;
+				if(data == "error_file"){
+				//debugger;
+				swal.fire({
+					title: 'Browse file is differ From Decrypted Value',
+                        }).then(function() {
+                            location.reload();
+                        });
 				
-				Swal.fire('Browse file is differ From Decrypted Value');
 				$("#uploading_header_text").html("");
 				$("#loader").hide();
 				$(".progress").hide();
@@ -595,14 +666,54 @@ var current_yearabove5 = d.getFullYear() + 5;	// Day		[dd]	(1 - 31)
 				console.log(data);
 				notifier = setInterval(getNotification, 2000);
 			 }
+            });
+        }
+    }
+			
+		});
+	//   $('#upload_exam_details').on('submit', function(event){  
+    //        event.preventDefault();  
+	// 	   var examname 	= $('#examname option:selected').val();//cgl
+	// 	   var exam_year 	= $('#exam_year').val();//2021
+	// 	   var table_format = $('#selectedTableFormat option:selected').val();//kyas
+	// 	   var selectedtier = $('#selectedtier option:selected').val();// tier (1)
+	// 	   var no_of_days   = $('#no_of_days').val();// tier (1)
+	// 	   $("#uploading_header_info").html("");
+	// 	   if( examname!='' && selectedtier !='' && exam_year !='' && table_format !=''){
+	// 		$("#loader").show(); 
+	// 		$("#overlay").fadeIn();
+	// 		$(".progress").hide();
+	// 		$("#processing-bar").css("width", "0%").attr("aria-valuenow", 0).html(`0%`);
+	// 		$(".progress-3").show();
+	// 		$("#uploading_header_text").html("Data Reading .....");
+    //        $.ajax({  
+    //             url:"upload_excel_file_ajax.php",  
+    //             method:"POST",  
+    //             data:new FormData(this),  
+    //             contentType:false,  
+    //             processData:false,  
+    //        }).done(function (data) {
+	// 		if(data == "error_file"){
+	// 			debugger;
+				
+	// 			Swal.fire('Browse file is differ From Decrypted Value');
+	// 			$("#uploading_header_text").html("");
+	// 			$("#loader").hide();
+	// 			$(".progress").hide();
+	// 			$(".progress-3").hide();
+	// 			$("#overlay").fadeOut();
+	// 			$(".donot_refresh_div").hide();
+	// 		 }
+	// 		 else{
+	// 			console.log(data);
+	// 			notifier = setInterval(getNotification, 2000);
+	// 		 }
 			  
 			
-			});
-		}
-	else{
-		alert("Please fill the reqired ( *) fields !")
-	} 
-      });  
+	// 		});
+	// 	}
+	
+    //   });  
  });  
 function getNotification(){
 	$.ajax({

@@ -410,7 +410,7 @@ $(document).ready(function() {
                             icon: data.response.status,
                         }).then(function() {
                             location.reload();
-                        });;
+                        });
                     }
                 });
             } 
