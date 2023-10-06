@@ -4,10 +4,20 @@ session_start();
 if (!isset($_SERVER['HTTP_REFERER']) && empty($_SERVER['HTTP_REFERER']) || !isset($_SESSION['sess_user'])) {
 	header("Location: login.php");
 } else {
+	
+
 	?>
 	<?php
 
-	include('header.php'); ?>
+	include('header.php');
+	
+// Generate a CSRF token and store it in the session
+if (!isset($_SESSION['csrf_token']) || !isset($_POST['submit'])) {
+    // Generate a new CSRF token and store it in the session
+    $_SESSION['csrf_token'] = bin2hex(random_bytes(32));
+}
+
+ $csrf_token = $_SESSION['csrf_token']; ?>
 	<div class="main-grid">
 		<div class="panel panel-widget forms-panel">
 			<div class="forms">
@@ -86,7 +96,7 @@ if (!isset($_SERVER['HTTP_REFERER']) && empty($_SERVER['HTTP_REFERER']) || !isse
 										</select>
 									</div>
 								</div>
-
+								<input type="hidden" name="csrf_token" id="csrf_token" value="<?php echo $csrf_token; ?>">
 								<button class="btn w3ls-button hvr-icon-down col-5"> Create</button>
 
 							</form>
@@ -200,7 +210,8 @@ if (!isset($_SERVER['HTTP_REFERER']) && empty($_SERVER['HTTP_REFERER']) || !isse
 
 <script type="text/javascript" language="javascript">
 	$(document).ready(function () {
-
+// alert($('#csrf_token').val());
+// alert(jsVariable);
 		const d = new Date();
 
 		d.getMonth() + 1; // Month	[mm]	(1 - 12)

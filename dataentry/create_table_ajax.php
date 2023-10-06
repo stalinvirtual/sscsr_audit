@@ -3,8 +3,13 @@ require_once("config/db.php");
 require_once("functions.php");
 
 
-
+session_start();
 if (isset($_SERVER['HTTP_X_REQUESTED_WITH']) && ($_SERVER['HTTP_X_REQUESTED_WITH'] == 'XMLHttpRequest')) {
+	if (!hash_equals($_SESSION['csrf_token'], $_POST['csrf_token'])) {
+	
+		// Token mismatch, handle the error (e.g., log it or display an error message)
+		die($_POST['csrf_token']."CSRF token verification failed." .$_SESSION['csrf_token']);
+	}
 	$table_type = substr(cleanData($_POST['selectedTableFormat']), 3);
 
 	$table_name = cleanData($_POST['examname']) . '_' . cleanData($_POST['exam_year']) . '_' . $table_type;
@@ -151,6 +156,7 @@ if (isset($_SERVER['HTTP_X_REQUESTED_WITH']) && ($_SERVER['HTTP_X_REQUESTED_WITH
 				'title' => $title
 			)
 		);
+		
 	} catch (Exception $e) {
 
 
@@ -174,6 +180,7 @@ if (isset($_SERVER['HTTP_X_REQUESTED_WITH']) && ($_SERVER['HTTP_X_REQUESTED_WITH
 			);
 		}
 	}
+	
 	echo json_encode($message);
 } else {
 	header("Location: index.php");
