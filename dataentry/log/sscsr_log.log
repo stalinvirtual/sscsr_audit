@@ -1,4 +1,14 @@
 Excel file column and table column are matched
-Total Records: 36349
+Total Records: 50
 --------------------------------Start------------------------------------------------
-Date/Time: 05-10-2023 14:13:48 
+Date/Time: 06-10-2023 16:33:43 
+--------------------------------------------------------------------------------------
+--------------------------------Result------------------------------------------------
+No of Records Processed       : 50
+Records imported successfuly  : 50
+Records not-imported (Errors) : 0
+Start Time                    : 06-10-2023 16:33:43
+End Time                      : 06-10-2023 16:33:43
+Time Taken                    : 0:00:00.254461
+Time Taken in Minutes         : 0 mins
+--------------------------------End--------------------------------------------------
