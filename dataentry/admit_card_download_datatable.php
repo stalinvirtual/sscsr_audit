@@ -5,7 +5,13 @@ if (!isset($_SERVER['HTTP_REFERER']) && empty($_SERVER['HTTP_REFERER']) || !isse
 } else {
 	?>
 	<?php
-	include('header.php'); ?>
+	include('header.php');
+	if (!isset($_SESSION['csrf_token']) || !isset($_POST['submit'])) {
+		// Generate a new CSRF token and store it in the session
+		$_SESSION['csrf_token'] = bin2hex(random_bytes(32));
+	}
+	
+	$csrf_token = $_SESSION['csrf_token'];  ?>
 	<style>
 		.loader-mask {
 			position: fixed;
@@ -170,6 +176,7 @@ if (!isset($_SERVER['HTTP_REFERER']) && empty($_SERVER['HTTP_REFERER']) || !isse
 									<div id="table_exits" class=" col-sm-4">
 									</div>
 								</div>
+								<input type="hidden" name="csrf_token" id="csrf_token" value="<?php echo $csrf_token; ?>">
 								<button class="btn w3ls-button hvr-icon-down col-5" id="admit_submit_button"
 									style="margin: 10px 0px 0px 329px;">
 									Download</button>
@@ -485,6 +492,7 @@ $("#creating_master_tables").on('submit', function (e) {
 		var download_options = $('input[name="download_options"]:checked').val();
 		// var download_options = 0;
 		var selectedtier = $('#selectedtier option:selected').val();
+		var csrf_token = $('#csrf_token').val();
 		if (table_format == 'is_kyas') {
 			var tablefor = 'Application Status Details';
 		} else {
@@ -497,6 +505,7 @@ $("#creating_master_tables").on('submit', function (e) {
 				exam_year: exam_year,
 				download_options: download_options,
 				selectedtier: selectedtier,
+				csrf_token:csrf_token
 			}).done(function (data) {
 				//loader stop
 				var res = JSON.parse(data);

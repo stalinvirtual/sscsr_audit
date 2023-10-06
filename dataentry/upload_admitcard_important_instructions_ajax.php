@@ -1,8 +1,13 @@
 <?php 
 require_once("config/db.php");
+session_start();
 if( isset( $_SERVER['HTTP_X_REQUESTED_WITH'] ) && ( $_SERVER['HTTP_X_REQUESTED_WITH'] == 'XMLHttpRequest' ) )
 {
 		require_once("functions.php");
+		if (!hash_equals($_SESSION['csrf_token'], $_POST['csrf_token'])) {
+			// Token mismatch, handle the error (e.g., log it or display an error message)
+			die("CSRF token verification failed.");
+		}
 		$important_instructions_id =  cleanData($_POST['examname']).cleanData($_POST['exam_year']).'_'.cleanData($_POST['selectedtier']);
 		$exam_code = cleanData($_POST['examname']).cleanData($_POST['exam_year']);
 		$exam_code = strtolower($exam_code);
@@ -62,7 +67,7 @@ if( isset( $_SERVER['HTTP_X_REQUESTED_WITH'] ) && ( $_SERVER['HTTP_X_REQUESTED_W
 						'title' => 'Important Instruction'
 					)
 				);
-				
+				$_SESSION['csrf_token'] = bin2hex(random_bytes(32));
 				
 			}
 			catch (Exception $e)

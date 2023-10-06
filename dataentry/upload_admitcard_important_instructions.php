@@ -9,7 +9,15 @@ else
 ?>
 <?php 
 
-include('header.php'); ?>
+include('header.php');	
+// Generate a CSRF token and store it in the session
+if (!isset($_SESSION['csrf_token']) || !isset($_POST['submit'])) {
+    // Generate a new CSRF token and store it in the session
+    $_SESSION['csrf_token'] = bin2hex(random_bytes(32));
+}
+
+$csrf_token = $_SESSION['csrf_token']; 
+ ?>
 <div class="main-grid">
 	<div class="panel panel-widget forms-panel">
 		<div class="forms">
@@ -53,7 +61,7 @@ include('header.php'); ?>
 									<input type="file" required="true" name="image_file_attachment"  id="excel_file" accept="application/pdf"/>		
 								</div> 
 							</div>				
-					
+                            <input type="hidden" name="csrf_token" value="<?php echo $csrf_token; ?>">
 							<button class="btn w3ls-button hvr-icon-down col-5" id="upload_excel"> Upload</button>
 						</form>  
 					</div>

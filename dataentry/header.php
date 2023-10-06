@@ -74,7 +74,7 @@
 	<!-- //dashboard links-->
 	<link rel="stylesheet" href="css/dashboard.css">
 	<link rel="stylesheet" href="css/Chart.css">
-	<link rel="stylesheet" href="css/fontawesome.min.css"> 
+	<link rel="stylesheet" href="css/fontawesome/css/all.css"> 
 	 
 	<script src="js/bootstrap.bundle.min.js"></script>
 	<script src="js/Chart.min.js"></script>
