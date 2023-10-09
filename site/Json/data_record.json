@@ -1,77 +1,10 @@
 {
     "errorMsg": "",
-    "nominations": {
-        "0": {
-            "nomination_id": 1089,
-            "exam_name": "Nomination for db testing",
-            "category_id": 1,
-            "effect_from_date": "2023-10-04",
-            "effect_to_date": "2023-10-11",
-            "creation_date": "2023-10-04 11:52:25",
-            "p_status": "1",
-            "category_name": "CGL"
-        }
-    },
-    "nominationchildlist": [
-        {
-            "nomination_child_id": 1062,
-            "nomination_id": 1089,
-            "pdf_name": "Nomi pdf1",
-            "attachment": "97017-71000191031.pdf",
-            "status": 1
-        },
-        {
-            "nomination_child_id": 1063,
-            "nomination_id": 1089,
-            "pdf_name": "Nomi pdf2",
-            "attachment": "7902-10005986840.pdf",
-            "status": 1
-        }
-    ],
-    "nominations_latest_news": {
-        "0": {
-            "nomination_id": 1089,
-            "exam_name": "Nomination for db testing",
-            "category_id": 1,
-            "effect_from_date": "2023-10-04",
-            "effect_to_date": "2023-10-11",
-            "creation_date": "2023-10-04 11:52:25",
-            "p_status": "1",
-            "category_name": "CGL"
-        }
-    },
-    "nominationchildlist_latest_news": [
-        {
-            "nomination_child_id": 1062,
-            "nomination_id": 1089,
-            "pdf_name": "Nomi pdf1",
-            "attachment": "97017-71000191031.pdf",
-            "status": 1
-        },
-        {
-            "nomination_child_id": 1063,
-            "nomination_id": 1089,
-            "pdf_name": "Nomi pdf2",
-            "attachment": "7902-10005986840.pdf",
-            "status": 1
-        }
-    ],
-    "selectionposts_latest_news": {
-        "0": {
-            "selection_post_id": 55,
-            "exam_name": "Test selection post",
-            "department_id": null,
-            "post_id": null,
-            "category_id": 10,
-            "phase_id": 12,
-            "effect_from_date": "2023-10-04",
-            "effect_to_date": "2023-10-18",
-            "p_status": "1",
-            "creation_date": "2023-10-04 11:53:58",
-            "category_name": "Notices",
-            "phase_name": "Phase - XI"
-        }
-    },
+    "nominations": {},
+    "nominationchildlist": [],
+    "nominations_latest_news": {},
+    "nominationchildlist_latest_news": [],
+    "selectionposts_latest_news": {},
     "selectpostschildlist_latest_news": [
         {
             "selection_post_child_id": 59,
@@ -100,27 +33,9 @@
             "pdf_name": "",
             "attachment": "2438-sms.pdf",
             "status": 1
-        },
-        {
-            "selection_post_child_id": 70,
-            "selection_post_id": 55,
-            "pdf_name": "test pdf",
-            "attachment": "5949-71000191031.pdf",
-            "status": 1
         }
     ],
     "notices_latest_news": [
-        {
-            "notice_id": 37,
-            "pdf_name": "Exemption notice -Skill test",
-            "attachment": "84086-important_notice_cgle_2022_24042023.pdf",
-            "effect_from_date": "2023-10-04",
-            "effect_to_date": "2023-10-26",
-            "p_status": "1",
-            "category_id": 1,
-            "creation_date": "2023-10-04 09:20:12",
-            "category_name": "CGL"
-        },
         {
             "notice_id": 33,
             "pdf_name": "Important Notice about Helpdesk Facility for grievances of Applicants",
@@ -133,40 +48,9 @@
             "category_name": "OTHERS"
         }
     ],
-    "tenders_latest_news": [
-        {
-            "tender_id": 209,
-            "pdf_name": "test tender",
-            "attachment": "9812-71000191031.pdf",
-            "effect_from_date": "2023-10-04",
-            "effect_to_date": "2023-10-19",
-            "p_status": "1",
-            "creation_date": "2023-10-04 11:55:59"
-        }
-    ],
-    "announcements_latest_news": [
-        {
-            "announcement_id": 200,
-            "announcement_name": "cgle annnounce",
-            "announcement_content": "<p><a href=\"http:\/\/10.163.2.181:8080\/sscsr_audit\/site\/IndexController\/knowyourstatus\">Cgle announcement<\/a><\/p>\r\n",
-            "effect_from_date": "2023-10-04",
-            "effect_to_date": "2023-10-18",
-            "p_status": "1",
-            "creation_date": "2023-10-04 11:57:05"
-        }
-    ],
+    "tenders_latest_news": [],
+    "announcements_latest_news": [],
     "notices": [
-        {
-            "notice_id": 37,
-            "pdf_name": "Exemption notice -Skill test",
-            "attachment": "84086-important_notice_cgle_2022_24042023.pdf",
-            "effect_from_date": "2023-10-04",
-            "effect_to_date": "2023-10-26",
-            "p_status": "1",
-            "category_id": 1,
-            "creation_date": "2023-10-04 09:20:12",
-            "category_name": "CGL"
-        },
         {
             "notice_id": 33,
             "pdf_name": "Important Notice about Helpdesk Facility for grievances of Applicants",

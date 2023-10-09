@@ -283,13 +283,13 @@ TEXT;
        }
        $sql = "INSERT INTO archives.mstselectionpostarchivestbl (selection_post_id, exam_name,category_id,phase_id,effect_from_date, effect_to_date, p_status, date_archived ) 
        SELECT selection_post_id, exam_name, category_id,phase_id,effect_from_date, effect_to_date, '0', NOW()
-      FROM public.mstselectionposttbl WHERE selection_post_id IN ($selection_post_id)";
-       $delete_row = $this->execute($sql);
+      FROM public.mstselectionposttbl WHERE selection_post_id IN (:selection_post_id)";
+       $delete_row = $this->insert_archieves($sql,$selection_post_id);
        $sql1 = "INSERT INTO archives.mstselectionpostarchiveschildtbl(
         selection_post_id, pdf_name, attachment, status)
         SELECT selection_post_id, pdf_name, attachment, '0'
-      FROM public.mstselectionpostchildtbl WHERE selection_post_id IN ($selection_post_id)";
-       $childtable_insert =  $this->execute($sql1);
+      FROM public.mstselectionpostchildtbl WHERE selection_post_id IN (:selection_post_id)";
+       $childtable_insert =  $this->insert_archieves($sql1,$selection_post_id);
        $delId = explode(",", $selection_post_id);
        foreach ($delId as $val) {
            $this->delete($val);

@@ -4658,6 +4658,9 @@ HTML;
             ## Fetch records
             $model = new Nomination();
             $checkId =  $model->checkNominationId($id);
+         //   print_r($checkId);
+          //  exit;
+
             $checkIdCount = $checkId->checkid;
             if ($checkIdCount > 0) {
                 $deleteQuery =  $model->deleteNomination($id);

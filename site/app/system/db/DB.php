@@ -1,17 +1,13 @@
 <?php
-
 namespace App\System\DB;
-
 define("DB_OBJECT", "1");
 define("DB_ARRAY", "2");
 define("DB_ASSOC", "3");
 define("DB_ROW", "4");
 define("DB_DRIVER_MYSQL", "MYSQL");
 define("DB_DRIVER_PGSQL", "PGSQL");
-
 use Exception;
 use App\System\Config;
-
 class DB
 {
     private $driver;
@@ -61,6 +57,12 @@ class DB
         }
         $this->where = $where;
         return  implode(" AND ", $where_array);
+    }
+    public function insert_archieves($sql,$id){
+        $insertNominationStmt = $this->pdo->prepare($sql);
+        $insertNominationStmt->bindParam(':nomination_id', $id);
+        $insertNominationResult = $insertNominationStmt->execute();
+        return  $insertNominationResult;
     }
     public function insert($data)
     {
@@ -307,7 +309,7 @@ class DB
             $this->params[] = $id;
         }
         if ($where_str != null) {
-            $this->query  = "DELETE FROM {$this->table} ;";
+            $this->query  = "DELETE FROM {$this->table} $where_str;";
             $stmt =  $this->pdo->prepare($this->query);
             $params = $this->params;
             $this->params = [];
@@ -316,9 +318,7 @@ class DB
             return false;
         }
     }
-
     //New functions From New File on 03 oct 2023 by stalin
-
     public function wherecondition($str)
     {
         $this->query .= " AND   $str";
@@ -375,6 +375,5 @@ class DB
             return false;
         }
     }
-
     //New functions From New File on 03 oct 2023 by stalin
 }
