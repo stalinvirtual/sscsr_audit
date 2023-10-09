@@ -7,8 +7,21 @@ if (!isset($_SERVER['HTTP_REFERER']) || !isset($_SESSION['sess_user'])) {
 } else {
 	?>
 	<!-- header -->
-	<?php include('header.php'); ?>
+	<?php include('header.php'); 
+	// Generate a CSRF token and store it in the session
+if (!isset($_SESSION['csrf_token']) || !isset($_POST['submit'])) {
+    // Generate a new CSRF token and store it in the session
+    $_SESSION['csrf_token'] = bin2hex(random_bytes(32));
+}
+
+ $csrf_token = $_SESSION['csrf_token']; ?>
+
 	<script src="js/validatehtml.js"></script>
+	<style>
+		.error{
+			color:red;
+		}
+		</style>
 	<div class="main-grid">
 		<!-- ADD Modal -->
 		<div class="modal fade" id="addStudent" role="dialog">
@@ -29,7 +42,7 @@ if (!isset($_SERVER['HTTP_REFERER']) || !isset($_SESSION['sess_user'])) {
 											<h4>Add New Exam Details :</h4>
 										</div>
 										<div class="form-body">
-											<form class="form-horizontal">
+											<form class="form-horizontal" id="add_exam_form">
 												<input type="hidden" id="exam_id" name="exam_id" value="exam_id">
 												<div class="form-group">
 													<label for="examname" class="col-sm-4 control-label">Exam Name<font
@@ -51,7 +64,7 @@ if (!isset($_SERVER['HTTP_REFERER']) || !isset($_SESSION['sess_user'])) {
 													</div>
 												</div>
 												<div class="exam_short_name_validation"></div>
-
+												<input type="hidden" name="csrf_token" id="csrf_token" value="<?php echo $csrf_token; ?>">
 												<div class="col-sm-offset">
 													<button type="button" class="btn btn-default w3ls-button"
 														id="addNewStudent">Save</button>
@@ -151,6 +164,7 @@ if (!isset($_SERVER['HTTP_REFERER']) || !isset($_SESSION['sess_user'])) {
 			var exam_id = $('#exam_id').val();
 			var exam_name = $('#exam_name').val();
 			var exam_short_name = $('#exam_short_name').val();
+			var csrf_token = $('#csrf_token').val();
 			$.ajax({
 				url: "exam_update_ajax.php",
 				type: "POST",
@@ -158,7 +172,8 @@ if (!isset($_SERVER['HTTP_REFERER']) || !isset($_SESSION['sess_user'])) {
 				data: {
 					exam_id: exam_id,
 					exam_name: exam_name,
-					exam_short_name: exam_short_name
+					exam_short_name: exam_short_name,
+					csrf_token: csrf_token
 				},
 				success: function (dataResult) {
 					swal.fire({
@@ -196,26 +211,18 @@ if (!isset($_SERVER['HTTP_REFERER']) || !isset($_SESSION['sess_user'])) {
 
 		//Add new Exam details
 		$("#addNewStudent").on('click', function () {
-
+			
 			var examname = $('#exam_name').val();
 			var exam_short_name = $('#exam_short_name').val();
-			if (stringLengthCheck(examname, 15, 500, 'Exam Name') == true) {
-				var examname = examname;
-			}
-			else {
-				var examname = '';
-			}
-			if (stringLengthCheck(exam_short_name, 2, 25, 'Exam Code') == true) {
-				var exam_short_name = exam_short_name;
-			}
-			else {
-				var exam_short_name = '';
-			}
+			var csrf_token = $('#csrf_token').val();
+			
 			if (examname != '' && exam_short_name != '') {
 				$.ajax({
 					url: "add_new_exam.php",
 					method: "POST",
-					data: { examname: examname, exam_short_name: exam_short_name },
+					data: { examname: examname, 
+						exam_short_name: exam_short_name,
+						csrf_token: csrf_token },
 					dataType: "json",
 				}).done(function (data) {
 					swal.fire({
@@ -228,9 +235,9 @@ if (!isset($_SERVER['HTTP_REFERER']) || !isset($_SESSION['sess_user'])) {
 					});
 				});
 			}
-			else {
-				alert("Please fill the reqired ( *) fields !")
-			}
+			
 		});
 	});
 </script>
+
+

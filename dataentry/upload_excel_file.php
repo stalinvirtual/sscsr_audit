@@ -5,11 +5,18 @@ if(!isset($_SERVER['HTTP_REFERER']) || !isset($_SESSION['sess_user'])){
 }
 else
 {
+	
 ?>
 <?php 
 require_once("config/db.php");
 require_once("functions.php");
-include('header.php'); ?>
+include('header.php'); 
+if (!isset($_SESSION['csrf_token']) || !isset($_POST['submit'])) {
+	// Generate a new CSRF token and store it in the session
+	$_SESSION['csrf_token'] = bin2hex(random_bytes(32));
+}
+
+$csrf_token = $_SESSION['csrf_token']; ?>
 <script>
 	 var notifier   ;
 </script>
@@ -79,7 +86,8 @@ include('header.php'); ?>
 								</div> 
 								<div id="excel_file_exists" class=" col-sm-4" style="margin-top:10px">
 								</div>	
-							</div>	
+							</div>
+							<input type="hidden" name="csrf_token" value="<?php echo $csrf_token; ?>">	
 							<button class="btn w3ls-button hvr-icon-down col-5" id="upload_excel"> Upload</button>
 								<?php
 									 $sql = "SELECT tracker_value as pstatus FROM  excel_upload_tracker where tracker_name ='process-status' ";

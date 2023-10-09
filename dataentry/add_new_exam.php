@@ -2,6 +2,11 @@
 require_once("config/db.php");
 if (isset($_SERVER['HTTP_X_REQUESTED_WITH']) && ($_SERVER['HTTP_X_REQUESTED_WITH'] == 'XMLHttpRequest')) {
 	require_once("functions.php");
+	session_start();
+	if (!hash_equals($_SESSION['csrf_token'], $_POST['csrf_token'])) {
+		// Token mismatch, handle the error (e.g., log it or display an error message)
+		die("CSRF token verification failed.");
+	}
 	$exam_name = cleanData($_POST['examname']);
 	//$exam_name = htmlspecialchars($exam_name);
 	$exam_short_name = strtolower(cleanData($_POST['exam_short_name']));
