@@ -13,9 +13,7 @@ if (!isset($_SESSION['csrf_token']) || !isset($_POST['submit'])) {
     // Generate a new CSRF token and store it in the session
     $_SESSION['csrf_token'] = bin2hex(random_bytes(32));
 }
-
  $csrf_token = $_SESSION['csrf_token']; ?>
-
 	<script src="js/validatehtml.js"></script>
 	<style>
 		.error{
@@ -49,7 +47,7 @@ if (!isset($_SESSION['csrf_token']) || !isset($_POST['submit'])) {
 															style="color:red" ;>*</font> </label>
 													<div class="col-sm-6">
 														<textarea name="exam_name" class="form-control" id="exam_name"
-															placeholder="Enter Exam Name" rows="4" cols="50"></textarea>
+															placeholder="Enter Exam Name" rows="4" cols="50" maxlength="100"></textarea>
 													</div>
 												</div>
 												<div class="exam_name_validation"></div>
@@ -59,7 +57,7 @@ if (!isset($_SESSION['csrf_token']) || !isset($_POST['submit'])) {
 													<div class="col-sm-6">
 														<div class='input-group'>
 															<input type="text" id="exam_short_name" name="exam_short_name"
-																class="form-control" placeholder="Like (chsl,cgl)" value="">
+																class="form-control" placeholder="Like (chsl,cgl)" value="" maxlength="20">
 														</div>
 													</div>
 												</div>
@@ -95,7 +93,6 @@ if (!isset($_SESSION['csrf_token']) || !isset($_POST['submit'])) {
 								<h4>List of Exam </h4>
 							</div>
 							<div class="col-md-2">
-
 							</div>
 							<div class="col-md-2 form-group">
 								<button class="btn w3ls-button hvr-icon-float-away col-24" data-toggle="modal"
@@ -115,10 +112,9 @@ if (!isset($_SESSION['csrf_token']) || !isset($_POST['submit'])) {
 }
 ?>
 <?php include('footer.php'); ?>
-
 <script type="text/javascript">
-	validateHtml("exam_name");
-	validateHtml("exam_short_name");
+	//validateHtml("exam_name");
+	//validateHtml("exam_short_name");
 	$("#updateStudent").hide();
 	$(document).ready(function () {
 		// load exam	
@@ -127,9 +123,7 @@ if (!isset($_SESSION['csrf_token']) || !isset($_POST['submit'])) {
 			method: "GET",
 			success: function (data) {
 				$('#examdata').html(data);
-
 				$(document).on("click", ".edit", function () {
-
 					var id = $(this).attr("id");
 					$.ajax({
 						url: "exam_edit.php",
@@ -139,7 +133,6 @@ if (!isset($_SESSION['csrf_token']) || !isset($_POST['submit'])) {
 							exam_name: id
 						},
 						success: function (res) {
-
 							var data1 = JSON.parse(res);
 							$('#exam_id').val(data1[0].exam_name);
 							$('#exam_name').val(data1[0].exam_name);
@@ -151,15 +144,12 @@ if (!isset($_SESSION['csrf_token']) || !isset($_POST['submit'])) {
 				});
 			}
 		});
-
 		$("#addexam").on('click', function () {
 			$('#exam_name').val("");
 			$('#exam_short_name').val("");
 			$("#updateStudent").hide();
 			$("#addNewStudent").show();
 		});
-
-
 		$(document).on("click", "#updateStudent", function () {
 			var exam_id = $('#exam_id').val();
 			var exam_name = $('#exam_name').val();
@@ -183,7 +173,6 @@ if (!isset($_SESSION['csrf_token']) || !isset($_POST['submit'])) {
 						showCancelButton: false,
 						confirmButtonText: 'OK',
 						allowOutsideClick: false,
-
 					}).then(function (result) {
 						if (result.value) {
 							window.location.reload();
@@ -198,46 +187,73 @@ if (!isset($_SESSION['csrf_token']) || !isset($_POST['submit'])) {
 						showCancelButton: false,
 						confirmButtonText: 'OK',
 						allowOutsideClick: false,
-
 					}).then(function (result) {
 						if (result.value) {
 							window.location.reload();
 						}
 					})
 				}
-
 			});
 		});
-
 		//Add new Exam details
-		$("#addNewStudent").on('click', function () {
-			
-			var examname = $('#exam_name').val();
-			var exam_short_name = $('#exam_short_name').val();
-			var csrf_token = $('#csrf_token').val();
-			
-			if (examname != '' && exam_short_name != '') {
-				$.ajax({
-					url: "add_new_exam.php",
-					method: "POST",
-					data: { examname: examname, 
-						exam_short_name: exam_short_name,
-						csrf_token: csrf_token },
-					dataType: "json",
-				}).done(function (data) {
-					swal.fire({
-						showCloseButton: true,
-						title: data.response.title,
-						text: data.response.message,
-						icon: data.response.status,
-					}).then(function () {
-						location.reload();
-					});
-				});
-			}
-			
-		});
+//Jquery Validation Part
+ // Initialize the form validation
+ 		$("#add_exam_form").validate({
+                rules: {
+					exam_name: {
+                        required: true,
+                        restrictedChars: true // Use the custom validation rule
+                    },
+                    exam_short_name: {
+                        required: true,
+                    }
+                },
+                messages: {
+					exam_name: {
+                        required: "Please enter your Exam Name",
+                        restrictedChars: "Special characters are not allowed."
+                    },
+                    exam_short_name: {
+                        required: "Please enter your short name",
+                    }
+                },
+                submitHandler: function (form) {
+                    // Form is valid, perform AJAX submission
+					var examname = $('#exam_name').val();
+				    var exam_short_name = $('#exam_short_name').val();
+			        var csrf_token = $('#csrf_token').val();
+					if (examname != '' && exam_short_name != '') {
+					//	debugger;
+						$.ajax({
+							url: "add_new_exam.php",
+							method: "POST",
+							data: { examname: examname, 
+								exam_short_name: exam_short_name,
+								csrf_token: csrf_token },
+							dataType: "json",
+						}).done(function (data) {
+							swal.fire({
+								showCloseButton: true,
+								title: data.response.title,
+								text: data.response.message,
+								icon: data.response.status,
+							}).then(function () {
+								location.reload();
+							});
+						});
+					}
+                    // Form is valid, perform AJAX submission
+                }
+            });
+			$.validator.addMethod("restrictedChars", function (value, element) {
+                // Define the restricted characters
+                var restrictedChars = /[@#$%^*<>;:=_?~,{}\\]/;
+                return !restrictedChars.test(value);
+            }, "Special characters are not allowed.");
+            // Handle form submission on button click
+            $("#addNewStudent").on("click", function () {
+                $("#add_exam_form").submit(); // Trigger form submission
+            });
+//Jquery Validation Part
 	});
 </script>
-
-
