@@ -238,7 +238,7 @@ echo $str;
        }
        $sql = "INSERT INTO archives.noticesarchivestbl (notice_id,category_id, pdf_name, effect_to_date, p_status, date_archived ) 
        SELECT notice_id, category_id,pdf_name, effect_to_date, '0', NOW()
-      FROM public.notices WHERE notice_id IN (:notice_id)";
+      FROM public.notices WHERE notice_id IN (:id)";
        $delete_row = $this->insert_archieves($sql,$notice_id);
        
        $delId = explode(",", $notice_id);

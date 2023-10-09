@@ -60,7 +60,7 @@ class DB
     }
     public function insert_archieves($sql,$id){
         $insertNominationStmt = $this->pdo->prepare($sql);
-        $insertNominationStmt->bindParam(':nomination_id', $id);
+        $insertNominationStmt->bindParam(':id', $id);
         $insertNominationResult = $insertNominationStmt->execute();
         return  $insertNominationResult;
     }
