@@ -3,7 +3,12 @@ namespace App\Controllers;
 use App\Helpers\Helpers;
 Helpers::urlSecurityAudit();
 
-echo $this->get_header(); ?>
+echo $this->get_header(); 
+if (!isset($_SESSION)) {
+    session_start();
+  }
+  $csrfToken = bin2hex(random_bytes(32));
+  $_SESSION['csrf_token'] = $csrfToken;?>
 <!-- Content Wrapper. Contains page content -->
 
 <style>
@@ -163,6 +168,7 @@ margin: -27px 2px 3px 286px;
                             </div>
                             <!-- /.card-body -->
                             <div class="card-footer">
+                            <input type="hidden" name="csrf_token" value="<?php echo $csrfToken; ?>">
                                 <input type="submit" class="btn btn-info" name="save-nomination" value="Submit" style="margin: 0px 0px 0px -160px;" id="save-namination">
                                 <input type="button" class="btn btn-default float-right" onclick="history.back();" style="float: left !important; margin: 0px 0px 0px 310px;"  value="Cancel">
                             </div>
