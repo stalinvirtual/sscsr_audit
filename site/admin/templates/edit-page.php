@@ -9,6 +9,7 @@ if (!isset($_SESSION)) {
 $csrfToken = bin2hex(random_bytes(32));
 $_SESSION['csrf_token'] = $csrfToken;
  ?>
+
 <!-- Content Wrapper. Contains page content -->
 <div class="content-wrapper">
   <!-- Content Header (Page header) -->
@@ -65,7 +66,7 @@ $_SESSION['csrf_token'] = $csrfToken;
                 </div>
                 <!-- /.card-footer 
                 </form> -->
-            <form class="form-horizontal" method="post" enctype="multipart/form-data">
+            <form class="form-horizontal" method="post" enctype="multipart/form-data" id="page_form">
               <div class="card-body">
                 <div class="form-group row">
                   <label for="inputEmail3" class="col-sm-2 col-form-label">Title <span
@@ -127,7 +128,7 @@ $_SESSION['csrf_token'] = $csrfToken;
                         </option>
                       <?php endforeach; ?>
                     </select>
-                    <!-- <input class="form-control" type="text" name="language_code" required value="<?php echo $current_page['language_code']; ?>">-->
+                    <!-- <input class="form-control" type="text" name="language_code" required value="<?php// echo $current_page['language_code']; ?>">-->
                   </div>
                 </div>
                 <div class="form-group row" style="display:none">
@@ -146,7 +147,7 @@ $_SESSION['csrf_token'] = $csrfToken;
                         </option>
                       <?php endforeach; ?>
                     </select>
-                    <!-- <input class="form-control" type="text" name="language_code" required value="<?php echo $current_page['language_code']; ?>">-->
+                    <!-- <input class="form-control" type="text" name="language_code" required value="<?php// echo $current_page['language_code']; ?>">-->
                   </div>
                 </div>
                 <!-- <div class="form-group row article-container">
@@ -201,4 +202,8 @@ $_SESSION['csrf_token'] = $csrfToken;
   </section>
   <!-- Main content section div end -->
 </div>
+<script src="dist/js/jquery.validate.min.js" crossorigin="anonymous"></script>
+<script src="dist/js/sweetalert.min.js"></script>
+<link href="dist/css/jquery-ui.css" rel="stylesheet">
+<script src="dist/js/jquery-ui.js"></script>
 <?php echo $this->get_footer(); ?>

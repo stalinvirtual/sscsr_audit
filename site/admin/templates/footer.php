@@ -66,7 +66,7 @@
  <script src="<?php echo $this->theme_url; ?>/plugins/datatables-buttons/js/buttons.colVis.min.js"></script>
 
  <script src="<?php echo $this->theme_url; ?>/dist/js/sweetalert.min.js"></script>
-
+ 
 
  <link rel="stylesheet" href="<?php echo $this->theme_url; ?>/dist/css/custom.css">
 

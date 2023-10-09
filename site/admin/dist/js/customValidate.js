@@ -1,7 +1,65 @@
 /***   Debarred List Page Validation    ***/
 
 $(document).ready(function () {
+// menu
+$("#menu_form").validate({
+  rules: {
+    is_footer_menu: {
+      required: true
+    },
+    menu_type: {
+      required: true
+    },
+    menu_link: {
+      required: true
+    },
+    menu_name: {
+      required: true
+    }
+    // Add more rules as needed
+  },
+  messages: {
+    is_footer_menu: {
+      required: "Please select an option"
+    },
+    menu_type: {
+      required: "Please select an option"
+    },
+    menu_link: {
+      required: "Please enter a link"
+    },
+    menu_name: {
+      required: "Please enter a menu name"
+    }
+    // Add more messages as needed
+  },
+ 
+});
 
+//page
+
+$("#page_form").validate({
+  rules: {
+    title: {
+      required: true
+    },
+    page_content: {
+      required: true,
+     
+    },
+   
+  },
+  messages: {
+    title: {
+      required: "Please enter a title"
+    },
+    page_content: {
+      required: "Please enter page content",
+      
+    },
+  },
+  
+});
   // phase Master
 
   $('#phase_master_form').validate({ // initialize the plugin

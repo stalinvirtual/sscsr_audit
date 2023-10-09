@@ -65,7 +65,7 @@ $_SESSION['csrf_token'] = $csrfToken;
                 </div>
                 <!-- /.card-footer 
                 </form> -->
-            <form class="form-horizontal" method="post" enctype="multipart/form-data">
+            <form class="form-horizontal" method="post" enctype="multipart/form-data" id="menu_form">
               <div class="card-body">
 				<div class="form-group row">
                   <label for="inputEmail3" class="col-sm-4 col-form-label"> Is Footer Menu<span style='color:red'>*</span></label>
@@ -227,6 +227,8 @@ $_SESSION['csrf_token'] = $csrfToken;
 	display:none !important;
 }
 </style>
+<script src="dist/js/jquery.validate.min.js"
+        crossorigin="anonymous"></script>
 <script>
 function getval(sel)
 {

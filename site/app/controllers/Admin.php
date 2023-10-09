@@ -2629,6 +2629,7 @@ HTML;
     private function saveFaq()
     {
         $message = $message_type = "";
+        if (isset($_POST['csrf_token']) && hash_equals($_SESSION['csrf_token'], $_POST['csrf_token'])) {  
         if (isset($_POST['save_faq'])) {
             $faq_id = isset($_POST['id']) ? $_POST['id'] : 0;
             $effect_from_date = date('Y-m-d', strtotime(Helpers::cleanData($_POST['effect_from_date'])));
@@ -2666,6 +2667,7 @@ HTML;
             $_SESSION['notification'] = ['message' => $message, 'message_type' => $message_type];
             $this->route->redirect($this->route->site_url("Admin/dashboard/?action=listoffaq"));
         }
+    }
     }
     public function deleteFaq()
     {
@@ -4120,6 +4122,7 @@ TEXT;
     private function saveAnnouncement()
     {
         $message = $message_type = "";
+        if (isset($_POST['csrf_token']) && hash_equals($_SESSION['csrf_token'], $_POST['csrf_token'])) {
         if (isset($_POST['save_announcement'])) {
             $announcement_id = isset($_POST['announcement_id']) ? $_POST['announcement_id'] : 0;
             $announcement_name = $_POST['announcement_name'];
@@ -4154,6 +4157,7 @@ TEXT;
             $_SESSION['notification'] = ['message' => $message, 'message_type' => $message_type];
             $this->route->redirect($this->route->site_url("Admin/dashboard/?action=listofannouncements"));
         }
+    }
     }
     public function deleteAnnouncement()
     {
