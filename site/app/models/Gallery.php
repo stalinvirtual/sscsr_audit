@@ -266,7 +266,7 @@ TEXT;
 //             // echo $this->last_query;
 //         }
 //echo $this->last_query;
-        return $getlist;
+       // return $getlist;
     }
     public function checkGalleryId($id)
     {
@@ -284,12 +284,12 @@ TEXT;
         }
         $sql = "INSERT INTO archives.mstgalleryarchivestbl (gallery_id, event_id,year, p_status, date_archived ) 
        SELECT gallery_id, event_id, year,  '0', NOW()
-      FROM public.mstgallerytbl WHERE gallery_id IN (:gallery_id)";
+      FROM public.mstgallerytbl WHERE gallery_id IN (:id)";
         $delete_row = $this->insert_archieves($sql, $gallery_id);
         $sql1 = "INSERT INTO archives.mstgalleryarchiveschildtbl(
         gallery_id, image_path,  status)
         SELECT gallery_id, image_path,  '0'
-      FROM public.mstgallerychildtbl WHERE gallery_id IN (:gallery_id)";
+      FROM public.mstgallerychildtbl WHERE gallery_id IN (:id)";
         $childtable_insert = $this->insert_archieves($sql1, $gallery_id);
         $delId = explode(",", $gallery_id);
         foreach ($delId as $val) {

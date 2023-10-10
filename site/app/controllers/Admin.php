@@ -1145,7 +1145,7 @@ class Admin extends BackEndController
                 // exit;
                 $selectionpost_id = isset($_POST['id']) ? $_POST['id'] : 0;
                 // echo  $selectionpost_id;
-                //exit;
+                // exit;
                 $selectionpost = new \App\Models\Selectionpost();
                 $examname = str_replace("'", "''", Helpers::cleanData($_POST['exam_name']));
                 $selectionpost_data = [

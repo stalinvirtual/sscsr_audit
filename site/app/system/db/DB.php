@@ -206,7 +206,7 @@ class DB
             $this->limit($rows_per_page, $page_no);
         }
         $stmt = $this->pdo->prepare($this->query);
-        // echo $this->query."<br>";
+        //echo $this->query."<br>";
          // exit;
         $stmt->execute($this->params);
         $this->params = [];

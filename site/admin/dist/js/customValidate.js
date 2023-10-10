@@ -38,28 +38,32 @@ $("#menu_form").validate({
 
 //page
 
-$("#page_form").validate({
-  rules: {
-    title: {
-      required: true
-    },
-    page_content: {
-      required: true,
-     
-    },
-   
-  },
-  messages: {
-    title: {
-      required: "Please enter a title"
-    },
-    page_content: {
-      required: "Please enter page content",
-      
-    },
-  },
-  
-});
+
+    $("#edit_page_form").validate({
+        rules: {
+            title: {
+                required: true
+            },
+            page_content: {
+                required: true
+            }
+            // Add rules for other fields here
+        },
+        messages: {
+            title: {
+                required: "Please enter a title"
+            },
+            page_content: {
+                required: "Please enter page content"
+            }
+            // Add messages for other fields here
+        },
+        submitHandler: function (form) {
+            form.submit(); // Submit the form if it passes validation
+        }
+    });
+
+
   // phase Master
 
   $('#phase_master_form').validate({ // initialize the plugin
@@ -70,8 +74,6 @@ $("#page_form").validate({
       },
       creation_date: "required",
      
-      attachment: "required",
-
 
     },
     // Specify validation error messages
@@ -81,10 +83,16 @@ $("#page_form").validate({
         maxlength: "Your Phase Name must be maximum 256 characters long"
       },
       creation_date: "Please Enter   Date",
-      
-      attachment: "Please provide a Attachment.",
 
-    },
+    },errorPlacement: function(error, element) {
+      if (element.attr("name") === "creation_date") {
+  // Place the error message after the image tag
+  error.insertAfter(element.next("img.ui-datepicker-trigger"));
+  } else {
+  // Use the default error placement for other fields
+  error.insertAfter(element);
+  }
+  },
     // Make sure the form is submitted to the destination defined
     // in the "action" attribute of the form when valid
      submitHandler: function (form) {
@@ -107,7 +115,9 @@ $("#page_form").validate({
         required: true,
         maxlength: 256
       },
-      effort_from_date: "required",
+      effect_from_date: {
+        required : true
+      },
      
       attachment: "required",
 
@@ -119,11 +129,21 @@ $("#page_form").validate({
         required: "Please Enter Debarred List Name",
         maxlength: "Your Exam Name must be maximum 256 characters long"
       },
-      effort_from_date: "Please Enter  From Date",
+      effect_from_date:{
+        required : "Please Enter  From Date",
+      },
       
       attachment: "Please provide a Attachment.",
 
-    },
+    },errorPlacement: function(error, element) {
+      if (element.attr("name") === "effect_from_date") {
+  // Place the error message after the image tag
+  error.insertAfter(element.next("img.ui-datepicker-trigger"));
+  } else {
+  // Use the default error placement for other fields
+  error.insertAfter(element);
+  }
+  },
     // Make sure the form is submitted to the destination defined
     // in the "action" attribute of the form when valid
      submitHandler: function (form) {
@@ -193,15 +213,6 @@ $('#nomination_form').validate({ // initialize the plugin
     //  },
     
 
-    
-
-   
-    
-    
-
-
-
-
 
   },
   // Specify validation error messages
@@ -219,14 +230,19 @@ $('#nomination_form').validate({ // initialize the plugin
     attachment: "Please provide a Attachment.",
    
 
-   
-
-    
-
   },
-  //errorClass: "invalid",
-  // Make sure the form is submitted to the destination defined
-  // in the "action" attribute of the form when valid
+  errorPlacement: function(error, element) {
+    if (element.attr("name") === "effect_from_date") {
+// Place the error message after the image tag
+error.insertAfter(element.next("img.ui-datepicker-trigger"));
+} else if (element.attr("name") === "effect_to_date") {
+// Place the error message after the Select2 element
+error.insertAfter(element.next("img.ui-datepicker-trigger"));
+} else {
+// Use the default error placement for other fields
+error.insertAfter(element);
+}
+},
   submitHandler: function (form) {
     
     form.submit();
@@ -402,7 +418,9 @@ $(document).ready(function () {
         required: true,
         maxlength: 256
       },
-      effort_from_date: "required",
+      effect_from_date: {
+        required :true
+      },
       effect_to_date: {
         required: true,
         greaterSelectionPost: "#effort_from_date"
@@ -417,7 +435,9 @@ $(document).ready(function () {
         required: "Please Enter Selection Post  Name",
         maxlength: "Your Exam Name must be maximum 256 characters long"
       },
-      effort_from_date: "Please Enter  From Date",
+      effect_from_date: {
+        required :"Please Enter  From Date"
+      } ,
       effect_to_date:
       {
         required: "Please Enter To Date",
@@ -425,7 +445,18 @@ $(document).ready(function () {
       },
       attachment: "Please provide a Attachment.",
 
-    },
+    }, errorPlacement: function(error, element) {
+      if (element.attr("name") === "effect_from_date") {
+  // Place the error message after the image tag
+  error.insertAfter(element.next("img.ui-datepicker-trigger"));
+  } else if (element.attr("name") === "effect_to_date") {
+  // Place the error message after the Select2 element
+  error.insertAfter(element.next("img.ui-datepicker-trigger"));
+  } else {
+  // Use the default error placement for other fields
+  error.insertAfter(element);
+  }
+  },
     // Make sure the form is submitted to the destination defined
     // in the "action" attribute of the form when valid
     submitHandler: function (form) {
@@ -434,7 +465,7 @@ $(document).ready(function () {
   });
   jQuery.validator.addMethod("greaterSelectionPost", function (value, element, params) {
 
-  
+
 
     var startDate = document.getElementById("effort_from_date").value;
     var startDate = startDate.split("-").reverse().join("-");
@@ -538,7 +569,18 @@ $(document).ready(function () {
         maxfilesize: "File size must be less than 5 MB"
         }
 
-    },
+    }, errorPlacement: function(error, element) {
+      if (element.attr("name") === "effect_from_date") {
+  // Place the error message after the image tag
+  error.insertAfter(element.next("img.ui-datepicker-trigger"));
+  } else if (element.attr("name") === "effect_to_date") {
+  // Place the error message after the Select2 element
+  error.insertAfter(element.next("img.ui-datepicker-trigger"));
+  } else {
+  // Use the default error placement for other fields
+  error.insertAfter(element);
+  }
+  },
     // Make sure the form is submitted to the destination defined
     // in the "action" attribute of the form when valid
      submitHandler: function (form) {
@@ -662,7 +704,18 @@ $(document).ready(function () {
         maxfilesize: "File size must be less than 5 MB"
         }
 
-    },
+    }, errorPlacement: function(error, element) {
+      if (element.attr("name") === "effect_from_date") {
+  // Place the error message after the image tag
+  error.insertAfter(element.next("img.ui-datepicker-trigger"));
+  } else if (element.attr("name") === "effect_to_date") {
+  // Place the error message after the Select2 element
+  error.insertAfter(element.next("img.ui-datepicker-trigger"));
+  } else {
+  // Use the default error placement for other fields
+  error.insertAfter(element);
+  }
+  },
     // Make sure the form is submitted to the destination defined
     // in the "action" attribute of the form when valid
      submitHandler: function (form) {
@@ -751,10 +804,11 @@ $(document).ready(function () {
 	  
 	  url:true
 	  },
+    creation_date:{
+      required:true,
+    }
      
-
-
-    },
+ },
     // Specify validation error messages
     messages: {
       link_name: {
@@ -767,9 +821,19 @@ $(document).ready(function () {
         required: "Please Enter Link  URL ",
         url: "Please Enter Valid URL"
       },
-      
+      creation_date:{
+        required:"Please select creation date",
+      }
 
-    },
+    },errorPlacement: function(error, element) {
+      if (element.attr("name") === "creation_date") {
+  // Place the error message after the image tag
+  error.insertAfter(element.next("img.ui-datepicker-trigger"));
+  } else {
+  // Use the default error placement for other fields
+  error.insertAfter(element);
+  }
+  },
     // Make sure the form is submitted to the destination defined
     // in the "action" attribute of the form when valid
      submitHandler: function (form) {
@@ -897,7 +961,15 @@ $(document).ready(function () {
       },
       creation_date: "Please Enter  Creation  Date"
 
-    },
+    },errorPlacement: function(error, element) {
+      if (element.attr("name") === "creation_date") {
+  // Place the error message after the image tag
+  error.insertAfter(element.next("img.ui-datepicker-trigger"));
+  } else {
+  // Use the default error placement for other fields
+  error.insertAfter(element);
+  }
+  },
     // Make sure the form is submitted to the destination defined
     // in the "action" attribute of the form when valid
     submitHandler: function (form) {
@@ -947,25 +1019,30 @@ $(document).ready(function () {
   //  Form id 
     
   
-  // $('#editgallery_form').validate({ // initialize the plugin
-  //   rules: {
+  $('#editgallery_form').validate({ // initialize the plugin
+    rules: {
+      // Other form fields...
 
-  //     image_file: {
-  //       required: true,
-  //       extension: "jpg|jpeg|png|ico|bmp"
-  //     }
-  //   },
-  //   // Specify validation error messages
-  //   messages: {
-  //     image_file: "Please Enter Image File"
-  
-  //   },
-  //   // Make sure the form is submitted to the destination defined
-  //   // in the "action" attribute of the form when valid
-  //   submitHandler: function (form) {
-  //     form.submit();
-  //   }
-  // });
+      // Validate at least one file is selected
+      'image_file[]': {
+          required: true,
+          extension: 'png|jpg|jpeg|gif' // Add allowed file extensions here
+      },
+  },
+  messages: {
+      // Other form field messages...
+
+      'image_file[]': {
+          required: 'Please select at least one image file.',
+          extension: 'Please upload a valid image file (png, jpg, jpeg, gif).'
+      }
+  },
+    // Make sure the form is submitted to the destination defined
+    // in the "action" attribute of the form when valid
+    submitHandler: function (form) {
+      form.submit();
+    }
+  });
   
   
   
@@ -1078,7 +1155,15 @@ $(document).ready(function () {
       effect_from_date: "Please Enter  From Date",
       
   
-    },
+    }, errorPlacement: function(error, element) {
+      if (element.attr("name") === "effect_from_date") {
+  // Place the error message after the image tag
+  error.insertAfter(element.next("img.ui-datepicker-trigger"));
+  }else {
+  // Use the default error placement for other fields
+  error.insertAfter(element);
+  }
+  },
     // Make sure the form is submitted to the destination defined
     // in the "action" attribute of the form when valid
     submitHandler: function (form) {
@@ -1186,7 +1271,18 @@ $(document).ready(function () {
       },
     
 
-    },
+    }, errorPlacement: function(error, element) {
+      if (element.attr("name") === "effect_from_date") {
+  // Place the error message after the image tag
+  error.insertAfter(element.next("img.ui-datepicker-trigger"));
+  } else if (element.attr("name") === "effect_to_date") {
+  // Place the error message after the Select2 element
+  error.insertAfter(element.next("img.ui-datepicker-trigger"));
+  } else {
+  // Use the default error placement for other fields
+  error.insertAfter(element);
+  }
+  },
     // Make sure the form is submitted to the destination defined
     // in the "action" attribute of the form when valid
      submitHandler: function (form) {

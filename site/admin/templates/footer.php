@@ -16,13 +16,15 @@
  <!-- ./wrapper -->
 
  <!-- jQuery -->
+ <script type="text/javascript" src="<?php echo $this->theme_url; ?>/dist/js/jquery-3.5.1.js"></script>
  <script src="<?php echo $this->theme_url; ?>/plugins/jquery/jquery.min.js"></script>
  <!-- jQuery UI 1.11.4 -->
  <script src="<?php echo $this->theme_url; ?>/plugins/jquery-ui/jquery-ui.min.js"></script>
  <!-- Resolve conflict in jQuery UI tooltip with Bootstrap tooltip -->
 
 
-
+<script src="<?php echo $this->theme_url; ?>/dist/js/jquery.validate.min.js"
+        crossorigin="anonymous"></script>
  <script>
      $.widget.bridge('uibutton', $.ui.button)
  </script>

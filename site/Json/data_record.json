@@ -1,63 +1,10 @@
 {
     "errorMsg": "",
-    "nominations": {
-        "0": {
-            "nomination_id": 1092,
-            "exam_name": "Combined Graduate Level Examination 2022- List of candidates nominated",
-            "category_id": 1,
-            "effect_from_date": "2023-10-09",
-            "effect_to_date": "2023-10-13",
-            "creation_date": "2023-10-09 11:58:53",
-            "p_status": "1",
-            "category_name": "CGL"
-        }
-    },
-    "nominationchildlist": [
-        {
-            "nomination_child_id": 1066,
-            "nomination_id": 1092,
-            "pdf_name": "nomination list",
-            "attachment": "60258-cgl2022-examination-nomination-list-dt14072023.pdf",
-            "status": 1
-        }
-    ],
-    "nominations_latest_news": {
-        "0": {
-            "nomination_id": 1092,
-            "exam_name": "Combined Graduate Level Examination 2022- List of candidates nominated",
-            "category_id": 1,
-            "effect_from_date": "2023-10-09",
-            "effect_to_date": "2023-10-13",
-            "creation_date": "2023-10-09 11:58:53",
-            "p_status": "1",
-            "category_name": "CGL"
-        }
-    },
-    "nominationchildlist_latest_news": [
-        {
-            "nomination_child_id": 1066,
-            "nomination_id": 1092,
-            "pdf_name": "nomination list",
-            "attachment": "60258-cgl2022-examination-nomination-list-dt14072023.pdf",
-            "status": 1
-        }
-    ],
-    "selectionposts_latest_news": {
-        "0": {
-            "selection_post_id": 55,
-            "exam_name": "Test selection post",
-            "department_id": null,
-            "post_id": null,
-            "category_id": 10,
-            "phase_id": 12,
-            "effect_from_date": "2023-10-04",
-            "effect_to_date": "2023-10-18",
-            "p_status": "1",
-            "creation_date": "2023-10-04 11:53:58",
-            "category_name": "Notices",
-            "phase_name": "Phase - XI"
-        }
-    },
+    "nominations": {},
+    "nominationchildlist": [],
+    "nominations_latest_news": {},
+    "nominationchildlist_latest_news": [],
+    "selectionposts_latest_news": {},
     "selectpostschildlist_latest_news": [
         {
             "selection_post_child_id": 59,
@@ -88,17 +35,31 @@
             "status": 1
         },
         {
-            "selection_post_child_id": 70,
-            "selection_post_id": 55,
-            "pdf_name": "test pdf",
-            "attachment": "5949-71000191031.pdf",
+            "selection_post_child_id": 72,
+            "selection_post_id": 57,
+            "pdf_name": "One",
+            "attachment": "44312-stalin-sept-mpr.pdf",
             "status": 1
         },
         {
-            "selection_post_child_id": 71,
-            "selection_post_id": 56,
-            "pdf_name": "test pdf",
-            "attachment": "33657-71000191031.pdf",
+            "selection_post_child_id": 73,
+            "selection_post_id": 57,
+            "pdf_name": "two ",
+            "attachment": "31189-stalin-sept-mpr.pdf",
+            "status": 1
+        },
+        {
+            "selection_post_child_id": 75,
+            "selection_post_id": 59,
+            "pdf_name": "ssfg",
+            "attachment": "79090-test2.pdf",
+            "status": 1
+        },
+        {
+            "selection_post_child_id": 76,
+            "selection_post_id": 60,
+            "pdf_name": "Test",
+            "attachment": "36793-test2.pdf",
             "status": 1
         }
     ],
@@ -116,17 +77,7 @@
         }
     ],
     "tenders_latest_news": [],
-    "announcements_latest_news": [
-        {
-            "announcement_id": 206,
-            "announcement_name": "application status",
-            "announcement_content": "<p><a href=\"http:\/\/14.139.183.34\/sscsr\/site\/IndexController\/knowyourstatus\">CGLE 2023 - application status<\/a><\/p>\r\n",
-            "effect_from_date": "2023-10-09",
-            "effect_to_date": "2023-10-12",
-            "p_status": "1",
-            "creation_date": "2023-10-09 12:07:53"
-        }
-    ],
+    "announcements_latest_news": [],
     "notices": [
         {
             "notice_id": 33,
