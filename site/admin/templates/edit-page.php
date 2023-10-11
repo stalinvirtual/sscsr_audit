@@ -82,8 +82,8 @@ $_SESSION['csrf_token'] = $csrfToken;
                   <div class="col-sm-10">
                     <textarea class="form-control" type="text" name="page_content" id="page_content" required><?php echo $current_page['page_content']; ?>
                     </textarea>
-                    <script src="dist/js/jquery.min.js"></script>
-                    <script src="dist/ckeditor/ckeditor.js" type="text/javascript"></script>
+                    <script src="<?php echo $this->theme_url; ?>/dist/js/jquery.min.js"></script>
+                    <script src="<?php echo $this->theme_url; ?>/dist/ckeditor/ckeditor.js" type="text/javascript"></script>
                     <script type="text/javascript">
                       CKEDITOR.replace('page_content', {
                         filebrowserUploadUrl: '<?php echo $list_ckeditor_link_file; ?>',
@@ -201,7 +201,59 @@ $_SESSION['csrf_token'] = $csrfToken;
 </div>
 
 <?php echo $this->get_footer(); ?>
-<script src="dist/js/jquery.validate.min.js" crossorigin="anonymous"></script>
-<script src="dist/js/sweetalert.min.js"></script>
-<link href="dist/css/jquery-ui.css" rel="stylesheet">
-<script src="dist/js/jquery-ui.js"></script>
+<script src="<?php echo $this->theme_url; ?>/dist/js/jquery.validate.min.js"
+        crossorigin="anonymous"></script>
+    <script src="<?php echo $this->theme_url; ?>/dist/js/sweetalert.min.js"></script>
+    <link href="<?php echo $this->theme_url; ?>/dist/css/jquery-ui.css" rel="stylesheet">
+    <script src="<?php echo $this->theme_url; ?>/dist/js/jquery-ui.js"></script>
+    <script>
+
+    $(document).ready(function () {
+
+//page
+
+
+    $("#edit_page_form").validate({
+      ignore: [],
+        rules: {
+            title: {
+                required: true
+            },
+            page_content: {
+                required: function(textarea) {
+                  CKEDITOR.instances[textarea.id].updateElement();
+                  var editorcontent = textarea.value.replace(/<[^>]*>/gi, '');
+                  return editorcontent.length === 0;
+                 }
+               }
+            // Add rules for other fields here
+        },
+        messages: {
+            title: {
+                required: "Please enter a title"
+            },
+              page_content: {
+                required: "Please enter page content"
+              }
+            // Add messages for other fields here
+        },
+        errorPlacement: function (error, element) {
+        if (element.attr("id") === "page_content") {
+            // Assuming you want to display CKEditor errors below the CKEditor field
+            error.insertAfter("#cke_page_content");
+        } else {
+            // For other fields, display errors as usual
+            error.insertAfter(element);
+        }
+    },
+        submitHandler: function (form) {
+            form.submit(); // Submit the form if it passes validation
+        }
+
+        // Manually trigger validation when CKEditor content changes
+    
+    });
+  
+});
+
+    </script>

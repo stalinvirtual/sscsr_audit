@@ -59,11 +59,6 @@ class DB
         return  implode(" AND ", $where_array);
     }
     public function insert_archieves($sql,$id){
-
-        // $insertNominationStmt = $this->pdo->prepare($sql);
-        // $insertNominationStmt->bindParam(':id', $id, \PDO::PARAM_INT);
-        // $insertNominationResult = $insertNominationStmt->execute();
-        // return  $insertNominationResult;
         try {
             $insertNominationStmt = $this->pdo->prepare($sql);
             $insertNominationStmt->bindParam(':id', $id, \PDO::PARAM_INT);

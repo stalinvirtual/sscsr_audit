@@ -198,10 +198,11 @@ margin: -27px 2px 3px 286px;
     <!-- Main content section div end -->
 </div>
 <?php echo $this->get_footer(); ?>
-<script src="dist/js/jquery.validate.min.js" crossorigin="anonymous"></script>
-<script src="dist/js/sweetalert.min.js"></script>
-<link href="dist/css/jquery-ui.css" rel="stylesheet">
-<script src="dist/js/jquery-ui.js"></script>
+<script src="<?php echo $this->theme_url; ?>/dist/js/jquery.validate.min.js"
+        crossorigin="anonymous"></script>
+    <script src="<?php echo $this->theme_url; ?>/dist/js/sweetalert.min.js"></script>
+    <link href="<?php echo $this->theme_url; ?>/dist/css/jquery-ui.css" rel="stylesheet">
+    <script src="<?php echo $this->theme_url; ?>/dist/js/jquery-ui.js"></script>
 <script>
     $.datepicker.setDefaults({
         showOn: "button",
@@ -241,24 +242,90 @@ margin: -27px 2px 3px 286px;
         });
     });
     $(document).ready(function() {
+
+//Validation
+
+  //  Form id 
+  function validateImages() {
+    var imageInputs = $('input[type="file"]');
+    var imageCount = 0;
+
+    imageInputs.each(function() {
+        if ($(this).val() !== "") {
+            imageCount++;
+        }
+    });
+
+    return imageCount > 0;
+}
+  
+  $('#editgallery_form').validate({ // initialize the plugin
+    rules: {
+      // Other form fields...
+
+      // Validate at least one file is selected
+      'image_file[]': {
+          required: true,
+          extension: 'png|jpg|jpeg|gif' // Add allowed file extensions here
+      },
+  },
+  messages: {
+      // Other form field messages...
+
+      'image_file[]': {
+          required: 'Please select at least one image file.',
+          extension: 'Please upload a valid image file (png, jpg, jpeg, gif).'
+      }
+  },
+    // Make sure the form is submitted to the destination defined
+    // in the "action" attribute of the form when valid
+    submitHandler: function (form) {
+     
+     
+      if (!validateImages()) {
+        e.preventDefault(); // Prevent form submission
+        swal("Please upload at least one image", "", "warning");
+      }
+      else{
+        form.submit();
+      }
+    }
+  });
+  
+  
+  
+  $("#editgallery_form").on("submit", function(){
+  });
+//Validation
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+       
         // $('#imageclassupload').on('change', function() {
         // });
         var myfile = "";
-        // $('#save-namination').click(function(e) {
-        //     e.preventDefault();
-        //     //$('.pdfclassupload').trigger('click');
-        //     var exam_name = $('.exam_name').val();
-        //     if (exam_name == "") {
-        //         swal('Please Enter Exam Name');
-        //         return false;
-        //     }
-        //     if (exam_name.length <= 256) {} else {
-        //         swal('Please Enter Below 256 Characters');
-        //         return false;
-        //     }
-        //     // return true;
-        //     $("#nomination_form").submit();
-        // });
+           // Function to check if at least one image file is selected
+   
+
+         // Form submission handler
+    // $('#editgallery_form').submit(function(e) {
+        
+    // });
         $(document).on('click', '.add', function() {
             var html = '';
             html += '<tr>';
@@ -313,4 +380,6 @@ margin: -27px 2px 3px 286px;
             }
         });
     });
+
+
 </script>

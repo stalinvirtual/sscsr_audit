@@ -38,34 +38,7 @@ $("#menu_form").validate({
  
 });
 
-//page
 
-
-    $("#edit_page_form").validate({
-        rules: {
-            title: {
-                required: true,
-                maxlength:100
-            },
-            page_content: {
-                required: true
-            }
-            // Add rules for other fields here
-        },
-        messages: {
-            title: {
-                required: "Please enter a title",
-                maxlength: "Title should not exceed 100 characters of length"
-            },
-            page_content: {
-                required: "Please enter page content"
-            }
-            // Add messages for other fields here
-        },
-        submitHandler: function (form) {
-            form.submit(); // Submit the form if it passes validation
-        }
-    });
 
 
   // phase Master
@@ -139,7 +112,8 @@ $("#menu_form").validate({
       
       attachment: "Please provide a Attachment.",
 
-    },errorPlacement: function(error, element) {
+    },
+    errorPlacement: function(error, element) {
       if (element.attr("name") === "effect_from_date") {
   // Place the error message after the image tag
   error.insertAfter(element.next("img.ui-datepicker-trigger"));
@@ -416,120 +390,6 @@ $("#nomination_form").on("submit", function(){
 
 
 
-/***  Selection Post Validation    ***/
-
-
-$(document).ready(function () {
-
-  $('#selection_post_form').validate({ // initialize the plugin
-    rules: {
-      exam_name: {
-        required: true,
-        maxlength: 256
-      },
-      effect_from_date: {
-        required :true
-      },
-      effect_to_date: {
-        required: true,
-        greaterSelectionPost: "#effort_from_date"
-      }, 
-      'pdf_name[]': {
-        required: true
-    },
-    'pdf_file[]': {
-        required: true,
-        extension: 'pdf'
-    }
-
-
-    },
-    // Specify validation error messages
-    messages: {
-      exam_name: {
-        required: "Please Enter Selection Post  Name",
-        maxlength: "Your Exam Name must be maximum 256 characters long"
-      },
-      effect_from_date: {
-        required :"Please Enter  From Date"
-      } ,
-      effect_to_date:
-      {
-        required: "Please Enter To Date",
-        greaterSelectionPost: "Must be greater than From date"
-      },
-      'pdf_name[]': {
-        required: "Please enter a PDF name"
-    },
-    'pdf_file[]': {
-        required: "Please select a PDF file",
-        extension: "Please upload a valid PDF file"
-    }
-
-    }, errorPlacement: function(error, element) {
-      if (element.attr("name") === "effect_from_date") {
-  // Place the error message after the image tag
-  error.insertAfter(element.next("img.ui-datepicker-trigger"));
-  } else if (element.attr("name") === "effect_to_date") {
-  // Place the error message after the Select2 element
-  error.insertAfter(element.next("img.ui-datepicker-trigger"));
-  } else {
-  // Use the default error placement for other fields
-  error.insertAfter(element);
-  }
-  },
-    // Make sure the form is submitted to the destination defined
-    // in the "action" attribute of the form when valid
-    submitHandler: function (form) {
-      form.submit();
-    }
-  });
-  jQuery.validator.addMethod("greaterSelectionPost", function (value, element, params) {
-
-
-
-    var startDate = document.getElementById("effort_from_date").value;
-    var startDate = startDate.split("-").reverse().join("-");
-    var endDate = document.getElementById("effect_to_date").value;
-    var endDate = endDate.split("-").reverse().join("-");
-    var startDateParseData = Date.parse(startDate) ;
-    var endDateParseData = Date.parse(endDate) ;
-  return this.optional(element) || endDateParseData >= startDateParseData;
-}, 'Must be greater than start date.');
-  
-  
-  $("#selection_post_form").on("submit", function(){
-  });
-  
-  }); 
-  
-
-/***************** Selection Post field validation below ****************/	
-
-// $('#exam_name').on("cut copy paste",function(e) {
-//   e.preventDefault();
-// });
-
-$("#exam_name").keypress(function (e) {
- 
- 
-  var regex = new RegExp('^[a-zA-Z0-9 _.,(),-]*$');
-  
-  var key = String.fromCharCode(!event.charcode ? event.which : event.charcode);
-  
-  if(!regex.test(key)){
-
-
-  event.preventDefault();
-  return false;
-  }
-     
-   });
-
-
-  
-
-/***   Selection Post Page Validation    ***/
 
 
 
@@ -958,7 +818,18 @@ $("#title").keypress(function (e) {
 
 /*****    Page Validation */
 
+function validateImages() {
+  var imageInputs = $('input[type="file"]');
+  var imageCount = 0;
 
+  imageInputs.each(function() {
+      if ($(this).val() !== "") {
+          imageCount++;
+      }
+  });
+
+  return imageCount > 0;
+}
 
 
 
@@ -1034,44 +905,7 @@ $(document).ready(function () {
 
 //Photo gallery
 
-$(document).ready(function () {
 
-
-  //  Form id 
-    
-  
-  $('#editgallery_form').validate({ // initialize the plugin
-    rules: {
-      // Other form fields...
-
-      // Validate at least one file is selected
-      'image_file[]': {
-          required: true,
-          extension: 'png|jpg|jpeg|gif' // Add allowed file extensions here
-      },
-  },
-  messages: {
-      // Other form field messages...
-
-      'image_file[]': {
-          required: 'Please select at least one image file.',
-          extension: 'Please upload a valid image file (png, jpg, jpeg, gif).'
-      }
-  },
-    // Make sure the form is submitted to the destination defined
-    // in the "action" attribute of the form when valid
-    submitHandler: function (form) {
-      form.submit();
-    }
-  });
-  
-  
-  
-  $("#editgallery_form").on("submit", function(){
-  });
-  
-  });
-  
   
 //Photo gallery
 
@@ -1082,6 +916,12 @@ $(document).ready(function () {
 
 //  Category Form
 $(document).ready(function () {
+  $('#editgallery_form').submit(function(e) {
+    if (!validateImages()) {
+      e.preventDefault(); // Prevent form submission
+      swal("Please upload at least one image", "", "warning");
+  }
+  });
 
   $('#category_form').validate({ // initialize the plugin
     rules: {
@@ -1255,93 +1095,7 @@ $(document).ready(function () {
 
 /***  Announcement Validation    ***/
 
-$(document).ready(function () {
 
-  $('#announcementForm').validate({ // initialize the plugin
-      rules: {
-      announcement_name: {
-        required: true,
-        maxlength: 100
-      },
-      announcement_content: {
-        required: true,
-        maxlength: 256,
-        minlength:3
-      },
-      effect_from_date: "required",
-      effect_to_date: {
-        required: true,
-        greaterAnnouncement: "#effect_from_date"
-      },
-      },
-    // Specify validation error messages
-   messages: {
-    announcement_name: {
-        required: "Please Enter Announcement Name",
-        maxlength: "Your Announcement Name must be maximum 100 characters long"
-      },
-      announcement_content: {
-        required: "Please Enter Announcement Content",
-        maxlength: "Your Announcement Content must be maximum 256 characters long"
-      },
-      effect_from_date: "Please Enter  From Date",
-      effect_to_date:
-      {
-        required: "Please Enter To Date",
-        greaterAnnouncement: "Must be greater than From date"
-      },
-    
-
-    }, errorPlacement: function(error, element) {
-      if (element.attr("name") === "effect_from_date") {
-  // Place the error message after the image tag
-  error.insertAfter(element.next("img.ui-datepicker-trigger"));
-  } else if (element.attr("name") === "effect_to_date") {
-  // Place the error message after the Select2 element
-  error.insertAfter(element.next("img.ui-datepicker-trigger"));
-  } else {
-  // Use the default error placement for other fields
-  error.insertAfter(element);
-  }
-  },
-    // Make sure the form is submitted to the destination defined
-    // in the "action" attribute of the form when valid
-     submitHandler: function (form) {
-      form.submit();
-    }
-  });
-  jQuery.validator.addMethod("greaterAnnouncement", function (value, element, params) {
-
-  
-
-      var startDate = document.getElementById("effect_from_date").value;
-      var startDate = startDate.split("-").reverse().join("-");
-
-
-
-      var endDate = document.getElementById("effect_to_date").value;
-
-      var endDate = endDate.split("-").reverse().join("-");
-
-
-      
-
-
-
-      var startDateParseData = Date.parse(startDate) ;
-      var endDateParseData = Date.parse(endDate) ;
-
-
-
-
-    return this.optional(element) || endDateParseData >= startDateParseData;
-  }, 'Must be greater than start date.');
-  
-  
-  $("#announcementForm").on("submit", function(){
-  });
-  
-  }); 
 
 
 /***************** Announcement validation below ****************/	

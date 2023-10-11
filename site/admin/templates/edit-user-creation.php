@@ -108,10 +108,11 @@
     <!-- Main content section div end -->
 </div>
 <?php echo $this->get_footer(); ?>
-<script src="dist/js/jquery.validate.min.js" crossorigin="anonymous"></script>
-<script src="dist/js/sweetalert.min.js"></script>
-<link href="dist/css/jquery-ui.css" rel="stylesheet">
-<script src="dist/js/jquery-ui.js"></script>
+<script src="<?php echo $this->theme_url; ?>/dist/js/jquery.validate.min.js"
+        crossorigin="anonymous"></script>
+    <script src="<?php echo $this->theme_url; ?>/dist/js/sweetalert.min.js"></script>
+    <link href="<?php echo $this->theme_url; ?>/dist/css/jquery-ui.css" rel="stylesheet">
+    <script src="<?php echo $this->theme_url; ?>/dist/js/jquery-ui.js"></script>
 <script>
 $.datepicker.setDefaults({
 showOn: "button",
