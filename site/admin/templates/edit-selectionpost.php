@@ -69,7 +69,7 @@ margin: -27px 2px 3px 286px;
                                 <div class="form-group row">
                                     <label for="inputEmail3" class="col-sm-2 col-form-label">Name of the Examination  <span style='color:red'>*</span></label>
                                     <div class="col-sm-6">
-                                        <textarea class="form-control exam_name" name="exam_name" 
+                                        <textarea class="form-control exam_name" required name="exam_name" 
                                         id="exam_name" rows="5" placeholder="Enter only 256 characters"><?php echo $current_selectionpost['exam_name']; ?></textarea>
                                     </div>
                                 </div>
@@ -195,10 +195,11 @@ margin: -27px 2px 3px 286px;
     <!-- Main content section div end -->
 </div>
 <?php echo $this->get_footer(); ?>
-<script src="dist/js/jquery.validate.min.js" crossorigin="anonymous"></script>
-<script src="dist/js/sweetalert.min.js"></script>
-<link href="dist/css/jquery-ui.css" rel="stylesheet">
-<script src="dist/js/jquery-ui.js"></script>
+<script src="<?php echo $this->theme_url; ?>/dist/js/jquery.validate.min.js"
+        crossorigin="anonymous"></script>
+    <script src="<?php echo $this->theme_url; ?>/dist/js/sweetalert.min.js"></script>
+    <link href="<?php echo $this->theme_url; ?>/dist/css/jquery-ui.css" rel="stylesheet">
+    <script src="<?php echo $this->theme_url; ?>/dist/js/jquery-ui.js"></script>
 <script>
 $.datepicker.setDefaults({
 	showOn: "button",

@@ -59,10 +59,15 @@ class DB
         return  implode(" AND ", $where_array);
     }
     public function insert_archieves($sql,$id){
-        $insertNominationStmt = $this->pdo->prepare($sql);
-        $insertNominationStmt->bindParam(':id', $id);
-        $insertNominationResult = $insertNominationStmt->execute();
-        return  $insertNominationResult;
+        try {
+            $insertNominationStmt = $this->pdo->prepare($sql);
+            $insertNominationStmt->bindParam(':id', $id, \PDO::PARAM_INT);
+            $insertNominationResult = $insertNominationStmt->execute();
+            return $insertNominationResult;
+        } catch (\PDOException $e) {
+            // Handle the exception, e.g., log the error or return a specific value indicating failure.
+            return false;
+        }
     }
     public function insert($data)
     {
