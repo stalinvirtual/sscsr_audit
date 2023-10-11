@@ -1,0 +1,2014 @@
+
+<!-- saved from url=(0058)http://10.163.2.181:8080/sscsr_audit/site/Admin/edittender -->
+<html lang="en" style="height: auto;"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><style type="text/css">.swal-icon--error{border-color:#f27474;-webkit-animation:animateErrorIcon .5s;animation:animateErrorIcon .5s}.swal-icon--error__x-mark{position:relative;display:block;-webkit-animation:animateXMark .5s;animation:animateXMark .5s}.swal-icon--error__line{position:absolute;height:5px;width:47px;background-color:#f27474;display:block;top:37px;border-radius:2px}.swal-icon--error__line--left{-webkit-transform:rotate(45deg);transform:rotate(45deg);left:17px}.swal-icon--error__line--right{-webkit-transform:rotate(-45deg);transform:rotate(-45deg);right:16px}@-webkit-keyframes animateErrorIcon{0%{-webkit-transform:rotateX(100deg);transform:rotateX(100deg);opacity:0}to{-webkit-transform:rotateX(0deg);transform:rotateX(0deg);opacity:1}}@keyframes animateErrorIcon{0%{-webkit-transform:rotateX(100deg);transform:rotateX(100deg);opacity:0}to{-webkit-transform:rotateX(0deg);transform:rotateX(0deg);opacity:1}}@-webkit-keyframes animateXMark{0%{-webkit-transform:scale(.4);transform:scale(.4);margin-top:26px;opacity:0}50%{-webkit-transform:scale(.4);transform:scale(.4);margin-top:26px;opacity:0}80%{-webkit-transform:scale(1.15);transform:scale(1.15);margin-top:-6px}to{-webkit-transform:scale(1);transform:scale(1);margin-top:0;opacity:1}}@keyframes animateXMark{0%{-webkit-transform:scale(.4);transform:scale(.4);margin-top:26px;opacity:0}50%{-webkit-transform:scale(.4);transform:scale(.4);margin-top:26px;opacity:0}80%{-webkit-transform:scale(1.15);transform:scale(1.15);margin-top:-6px}to{-webkit-transform:scale(1);transform:scale(1);margin-top:0;opacity:1}}.swal-icon--warning{border-color:#f8bb86;-webkit-animation:pulseWarning .75s infinite alternate;animation:pulseWarning .75s infinite alternate}.swal-icon--warning__body{width:5px;height:47px;top:10px;border-radius:2px;margin-left:-2px}.swal-icon--warning__body,.swal-icon--warning__dot{position:absolute;left:50%;background-color:#f8bb86}.swal-icon--warning__dot{width:7px;height:7px;border-radius:50%;margin-left:-4px;bottom:-11px}@-webkit-keyframes pulseWarning{0%{border-color:#f8d486}to{border-color:#f8bb86}}@keyframes pulseWarning{0%{border-color:#f8d486}to{border-color:#f8bb86}}.swal-icon--success{border-color:#a5dc86}.swal-icon--success:after,.swal-icon--success:before{content:"";border-radius:50%;position:absolute;width:60px;height:120px;background:#fff;-webkit-transform:rotate(45deg);transform:rotate(45deg)}.swal-icon--success:before{border-radius:120px 0 0 120px;top:-7px;left:-33px;-webkit-transform:rotate(-45deg);transform:rotate(-45deg);-webkit-transform-origin:60px 60px;transform-origin:60px 60px}.swal-icon--success:after{border-radius:0 120px 120px 0;top:-11px;left:30px;-webkit-transform:rotate(-45deg);transform:rotate(-45deg);-webkit-transform-origin:0 60px;transform-origin:0 60px;-webkit-animation:rotatePlaceholder 4.25s ease-in;animation:rotatePlaceholder 4.25s ease-in}.swal-icon--success__ring{width:80px;height:80px;border:4px solid hsla(98,55%,69%,.2);border-radius:50%;box-sizing:content-box;position:absolute;left:-4px;top:-4px;z-index:2}.swal-icon--success__hide-corners{width:5px;height:90px;background-color:#fff;padding:1px;position:absolute;left:28px;top:8px;z-index:1;-webkit-transform:rotate(-45deg);transform:rotate(-45deg)}.swal-icon--success__line{height:5px;background-color:#a5dc86;display:block;border-radius:2px;position:absolute;z-index:2}.swal-icon--success__line--tip{width:25px;left:14px;top:46px;-webkit-transform:rotate(45deg);transform:rotate(45deg);-webkit-animation:animateSuccessTip .75s;animation:animateSuccessTip .75s}.swal-icon--success__line--long{width:47px;right:8px;top:38px;-webkit-transform:rotate(-45deg);transform:rotate(-45deg);-webkit-animation:animateSuccessLong .75s;animation:animateSuccessLong .75s}@-webkit-keyframes rotatePlaceholder{0%{-webkit-transform:rotate(-45deg);transform:rotate(-45deg)}5%{-webkit-transform:rotate(-45deg);transform:rotate(-45deg)}12%{-webkit-transform:rotate(-405deg);transform:rotate(-405deg)}to{-webkit-transform:rotate(-405deg);transform:rotate(-405deg)}}@keyframes rotatePlaceholder{0%{-webkit-transform:rotate(-45deg);transform:rotate(-45deg)}5%{-webkit-transform:rotate(-45deg);transform:rotate(-45deg)}12%{-webkit-transform:rotate(-405deg);transform:rotate(-405deg)}to{-webkit-transform:rotate(-405deg);transform:rotate(-405deg)}}@-webkit-keyframes animateSuccessTip{0%{width:0;left:1px;top:19px}54%{width:0;left:1px;top:19px}70%{width:50px;left:-8px;top:37px}84%{width:17px;left:21px;top:48px}to{width:25px;left:14px;top:45px}}@keyframes animateSuccessTip{0%{width:0;left:1px;top:19px}54%{width:0;left:1px;top:19px}70%{width:50px;left:-8px;top:37px}84%{width:17px;left:21px;top:48px}to{width:25px;left:14px;top:45px}}@-webkit-keyframes animateSuccessLong{0%{width:0;right:46px;top:54px}65%{width:0;right:46px;top:54px}84%{width:55px;right:0;top:35px}to{width:47px;right:8px;top:38px}}@keyframes animateSuccessLong{0%{width:0;right:46px;top:54px}65%{width:0;right:46px;top:54px}84%{width:55px;right:0;top:35px}to{width:47px;right:8px;top:38px}}.swal-icon--info{border-color:#c9dae1}.swal-icon--info:before{width:5px;height:29px;bottom:17px;border-radius:2px;margin-left:-2px}.swal-icon--info:after,.swal-icon--info:before{content:"";position:absolute;left:50%;background-color:#c9dae1}.swal-icon--info:after{width:7px;height:7px;border-radius:50%;margin-left:-3px;top:19px}.swal-icon{width:80px;height:80px;border-width:4px;border-style:solid;border-radius:50%;padding:0;position:relative;box-sizing:content-box;margin:20px auto}.swal-icon:first-child{margin-top:32px}.swal-icon--custom{width:auto;height:auto;max-width:100%;border:none;border-radius:0}.swal-icon img{max-width:100%;max-height:100%}.swal-title{color:rgba(0,0,0,.65);font-weight:600;text-transform:none;position:relative;display:block;padding:13px 16px;font-size:27px;line-height:normal;text-align:center;margin-bottom:0}.swal-title:first-child{margin-top:26px}.swal-title:not(:first-child){padding-bottom:0}.swal-title:not(:last-child){margin-bottom:13px}.swal-text{font-size:16px;position:relative;float:none;line-height:normal;vertical-align:top;text-align:left;display:inline-block;margin:0;padding:0 10px;font-weight:400;color:rgba(0,0,0,.64);max-width:calc(100% - 20px);overflow-wrap:break-word;box-sizing:border-box}.swal-text:first-child{margin-top:45px}.swal-text:last-child{margin-bottom:45px}.swal-footer{text-align:right;padding-top:13px;margin-top:13px;padding:13px 16px;border-radius:inherit;border-top-left-radius:0;border-top-right-radius:0}.swal-button-container{margin:5px;display:inline-block;position:relative}.swal-button{background-color:#7cd1f9;color:#fff;border:none;box-shadow:none;border-radius:5px;font-weight:600;font-size:14px;padding:10px 24px;margin:0;cursor:pointer}.swal-button:not([disabled]):hover{background-color:#78cbf2}.swal-button:active{background-color:#70bce0}.swal-button:focus{outline:none;box-shadow:0 0 0 1px #fff,0 0 0 3px rgba(43,114,165,.29)}.swal-button[disabled]{opacity:.5;cursor:default}.swal-button::-moz-focus-inner{border:0}.swal-button--cancel{color:#555;background-color:#efefef}.swal-button--cancel:not([disabled]):hover{background-color:#e8e8e8}.swal-button--cancel:active{background-color:#d7d7d7}.swal-button--cancel:focus{box-shadow:0 0 0 1px #fff,0 0 0 3px rgba(116,136,150,.29)}.swal-button--danger{background-color:#e64942}.swal-button--danger:not([disabled]):hover{background-color:#df4740}.swal-button--danger:active{background-color:#cf423b}.swal-button--danger:focus{box-shadow:0 0 0 1px #fff,0 0 0 3px rgba(165,43,43,.29)}.swal-content{padding:0 20px;margin-top:20px;font-size:medium}.swal-content:last-child{margin-bottom:20px}.swal-content__input,.swal-content__textarea{-webkit-appearance:none;background-color:#fff;border:none;font-size:14px;display:block;box-sizing:border-box;width:100%;border:1px solid rgba(0,0,0,.14);padding:10px 13px;border-radius:2px;transition:border-color .2s}.swal-content__input:focus,.swal-content__textarea:focus{outline:none;border-color:#6db8ff}.swal-content__textarea{resize:vertical}.swal-button--loading{color:transparent}.swal-button--loading~.swal-button__loader{opacity:1}.swal-button__loader{position:absolute;height:auto;width:43px;z-index:2;left:50%;top:50%;-webkit-transform:translateX(-50%) translateY(-50%);transform:translateX(-50%) translateY(-50%);text-align:center;pointer-events:none;opacity:0}.swal-button__loader div{display:inline-block;float:none;vertical-align:baseline;width:9px;height:9px;padding:0;border:none;margin:2px;opacity:.4;border-radius:7px;background-color:hsla(0,0%,100%,.9);transition:background .2s;-webkit-animation:swal-loading-anim 1s infinite;animation:swal-loading-anim 1s infinite}.swal-button__loader div:nth-child(3n+2){-webkit-animation-delay:.15s;animation-delay:.15s}.swal-button__loader div:nth-child(3n+3){-webkit-animation-delay:.3s;animation-delay:.3s}@-webkit-keyframes swal-loading-anim{0%{opacity:.4}20%{opacity:.4}50%{opacity:1}to{opacity:.4}}@keyframes swal-loading-anim{0%{opacity:.4}20%{opacity:.4}50%{opacity:1}to{opacity:.4}}.swal-overlay{position:fixed;top:0;bottom:0;left:0;right:0;text-align:center;font-size:0;overflow-y:auto;background-color:rgba(0,0,0,.4);z-index:10000;pointer-events:none;opacity:0;transition:opacity .3s}.swal-overlay:before{content:" ";display:inline-block;vertical-align:middle;height:100%}.swal-overlay--show-modal{opacity:1;pointer-events:auto}.swal-overlay--show-modal .swal-modal{opacity:1;pointer-events:auto;box-sizing:border-box;-webkit-animation:showSweetAlert .3s;animation:showSweetAlert .3s;will-change:transform}.swal-modal{width:478px;opacity:0;pointer-events:none;background-color:#fff;text-align:center;border-radius:5px;position:static;margin:20px auto;display:inline-block;vertical-align:middle;-webkit-transform:scale(1);transform:scale(1);-webkit-transform-origin:50% 50%;transform-origin:50% 50%;z-index:10001;transition:opacity .2s,-webkit-transform .3s;transition:transform .3s,opacity .2s;transition:transform .3s,opacity .2s,-webkit-transform .3s}@media (max-width:500px){.swal-modal{width:calc(100% - 20px)}}@-webkit-keyframes showSweetAlert{0%{-webkit-transform:scale(1);transform:scale(1)}1%{-webkit-transform:scale(.5);transform:scale(.5)}45%{-webkit-transform:scale(1.05);transform:scale(1.05)}80%{-webkit-transform:scale(.95);transform:scale(.95)}to{-webkit-transform:scale(1);transform:scale(1)}}@keyframes showSweetAlert{0%{-webkit-transform:scale(1);transform:scale(1)}1%{-webkit-transform:scale(.5);transform:scale(.5)}45%{-webkit-transform:scale(1.05);transform:scale(1.05)}80%{-webkit-transform:scale(.95);transform:scale(.95)}to{-webkit-transform:scale(1);transform:scale(1)}}</style><style type="text/css">.swal-icon--error{border-color:#f27474;-webkit-animation:animateErrorIcon .5s;animation:animateErrorIcon .5s}.swal-icon--error__x-mark{position:relative;display:block;-webkit-animation:animateXMark .5s;animation:animateXMark .5s}.swal-icon--error__line{position:absolute;height:5px;width:47px;background-color:#f27474;display:block;top:37px;border-radius:2px}.swal-icon--error__line--left{-webkit-transform:rotate(45deg);transform:rotate(45deg);left:17px}.swal-icon--error__line--right{-webkit-transform:rotate(-45deg);transform:rotate(-45deg);right:16px}@-webkit-keyframes animateErrorIcon{0%{-webkit-transform:rotateX(100deg);transform:rotateX(100deg);opacity:0}to{-webkit-transform:rotateX(0deg);transform:rotateX(0deg);opacity:1}}@keyframes animateErrorIcon{0%{-webkit-transform:rotateX(100deg);transform:rotateX(100deg);opacity:0}to{-webkit-transform:rotateX(0deg);transform:rotateX(0deg);opacity:1}}@-webkit-keyframes animateXMark{0%{-webkit-transform:scale(.4);transform:scale(.4);margin-top:26px;opacity:0}50%{-webkit-transform:scale(.4);transform:scale(.4);margin-top:26px;opacity:0}80%{-webkit-transform:scale(1.15);transform:scale(1.15);margin-top:-6px}to{-webkit-transform:scale(1);transform:scale(1);margin-top:0;opacity:1}}@keyframes animateXMark{0%{-webkit-transform:scale(.4);transform:scale(.4);margin-top:26px;opacity:0}50%{-webkit-transform:scale(.4);transform:scale(.4);margin-top:26px;opacity:0}80%{-webkit-transform:scale(1.15);transform:scale(1.15);margin-top:-6px}to{-webkit-transform:scale(1);transform:scale(1);margin-top:0;opacity:1}}.swal-icon--warning{border-color:#f8bb86;-webkit-animation:pulseWarning .75s infinite alternate;animation:pulseWarning .75s infinite alternate}.swal-icon--warning__body{width:5px;height:47px;top:10px;border-radius:2px;margin-left:-2px}.swal-icon--warning__body,.swal-icon--warning__dot{position:absolute;left:50%;background-color:#f8bb86}.swal-icon--warning__dot{width:7px;height:7px;border-radius:50%;margin-left:-4px;bottom:-11px}@-webkit-keyframes pulseWarning{0%{border-color:#f8d486}to{border-color:#f8bb86}}@keyframes pulseWarning{0%{border-color:#f8d486}to{border-color:#f8bb86}}.swal-icon--success{border-color:#a5dc86}.swal-icon--success:after,.swal-icon--success:before{content:"";border-radius:50%;position:absolute;width:60px;height:120px;background:#fff;-webkit-transform:rotate(45deg);transform:rotate(45deg)}.swal-icon--success:before{border-radius:120px 0 0 120px;top:-7px;left:-33px;-webkit-transform:rotate(-45deg);transform:rotate(-45deg);-webkit-transform-origin:60px 60px;transform-origin:60px 60px}.swal-icon--success:after{border-radius:0 120px 120px 0;top:-11px;left:30px;-webkit-transform:rotate(-45deg);transform:rotate(-45deg);-webkit-transform-origin:0 60px;transform-origin:0 60px;-webkit-animation:rotatePlaceholder 4.25s ease-in;animation:rotatePlaceholder 4.25s ease-in}.swal-icon--success__ring{width:80px;height:80px;border:4px solid hsla(98,55%,69%,.2);border-radius:50%;box-sizing:content-box;position:absolute;left:-4px;top:-4px;z-index:2}.swal-icon--success__hide-corners{width:5px;height:90px;background-color:#fff;padding:1px;position:absolute;left:28px;top:8px;z-index:1;-webkit-transform:rotate(-45deg);transform:rotate(-45deg)}.swal-icon--success__line{height:5px;background-color:#a5dc86;display:block;border-radius:2px;position:absolute;z-index:2}.swal-icon--success__line--tip{width:25px;left:14px;top:46px;-webkit-transform:rotate(45deg);transform:rotate(45deg);-webkit-animation:animateSuccessTip .75s;animation:animateSuccessTip .75s}.swal-icon--success__line--long{width:47px;right:8px;top:38px;-webkit-transform:rotate(-45deg);transform:rotate(-45deg);-webkit-animation:animateSuccessLong .75s;animation:animateSuccessLong .75s}@-webkit-keyframes rotatePlaceholder{0%{-webkit-transform:rotate(-45deg);transform:rotate(-45deg)}5%{-webkit-transform:rotate(-45deg);transform:rotate(-45deg)}12%{-webkit-transform:rotate(-405deg);transform:rotate(-405deg)}to{-webkit-transform:rotate(-405deg);transform:rotate(-405deg)}}@keyframes rotatePlaceholder{0%{-webkit-transform:rotate(-45deg);transform:rotate(-45deg)}5%{-webkit-transform:rotate(-45deg);transform:rotate(-45deg)}12%{-webkit-transform:rotate(-405deg);transform:rotate(-405deg)}to{-webkit-transform:rotate(-405deg);transform:rotate(-405deg)}}@-webkit-keyframes animateSuccessTip{0%{width:0;left:1px;top:19px}54%{width:0;left:1px;top:19px}70%{width:50px;left:-8px;top:37px}84%{width:17px;left:21px;top:48px}to{width:25px;left:14px;top:45px}}@keyframes animateSuccessTip{0%{width:0;left:1px;top:19px}54%{width:0;left:1px;top:19px}70%{width:50px;left:-8px;top:37px}84%{width:17px;left:21px;top:48px}to{width:25px;left:14px;top:45px}}@-webkit-keyframes animateSuccessLong{0%{width:0;right:46px;top:54px}65%{width:0;right:46px;top:54px}84%{width:55px;right:0;top:35px}to{width:47px;right:8px;top:38px}}@keyframes animateSuccessLong{0%{width:0;right:46px;top:54px}65%{width:0;right:46px;top:54px}84%{width:55px;right:0;top:35px}to{width:47px;right:8px;top:38px}}.swal-icon--info{border-color:#c9dae1}.swal-icon--info:before{width:5px;height:29px;bottom:17px;border-radius:2px;margin-left:-2px}.swal-icon--info:after,.swal-icon--info:before{content:"";position:absolute;left:50%;background-color:#c9dae1}.swal-icon--info:after{width:7px;height:7px;border-radius:50%;margin-left:-3px;top:19px}.swal-icon{width:80px;height:80px;border-width:4px;border-style:solid;border-radius:50%;padding:0;position:relative;box-sizing:content-box;margin:20px auto}.swal-icon:first-child{margin-top:32px}.swal-icon--custom{width:auto;height:auto;max-width:100%;border:none;border-radius:0}.swal-icon img{max-width:100%;max-height:100%}.swal-title{color:rgba(0,0,0,.65);font-weight:600;text-transform:none;position:relative;display:block;padding:13px 16px;font-size:27px;line-height:normal;text-align:center;margin-bottom:0}.swal-title:first-child{margin-top:26px}.swal-title:not(:first-child){padding-bottom:0}.swal-title:not(:last-child){margin-bottom:13px}.swal-text{font-size:16px;position:relative;float:none;line-height:normal;vertical-align:top;text-align:left;display:inline-block;margin:0;padding:0 10px;font-weight:400;color:rgba(0,0,0,.64);max-width:calc(100% - 20px);overflow-wrap:break-word;box-sizing:border-box}.swal-text:first-child{margin-top:45px}.swal-text:last-child{margin-bottom:45px}.swal-footer{text-align:right;padding-top:13px;margin-top:13px;padding:13px 16px;border-radius:inherit;border-top-left-radius:0;border-top-right-radius:0}.swal-button-container{margin:5px;display:inline-block;position:relative}.swal-button{background-color:#7cd1f9;color:#fff;border:none;box-shadow:none;border-radius:5px;font-weight:600;font-size:14px;padding:10px 24px;margin:0;cursor:pointer}.swal-button:not([disabled]):hover{background-color:#78cbf2}.swal-button:active{background-color:#70bce0}.swal-button:focus{outline:none;box-shadow:0 0 0 1px #fff,0 0 0 3px rgba(43,114,165,.29)}.swal-button[disabled]{opacity:.5;cursor:default}.swal-button::-moz-focus-inner{border:0}.swal-button--cancel{color:#555;background-color:#efefef}.swal-button--cancel:not([disabled]):hover{background-color:#e8e8e8}.swal-button--cancel:active{background-color:#d7d7d7}.swal-button--cancel:focus{box-shadow:0 0 0 1px #fff,0 0 0 3px rgba(116,136,150,.29)}.swal-button--danger{background-color:#e64942}.swal-button--danger:not([disabled]):hover{background-color:#df4740}.swal-button--danger:active{background-color:#cf423b}.swal-button--danger:focus{box-shadow:0 0 0 1px #fff,0 0 0 3px rgba(165,43,43,.29)}.swal-content{padding:0 20px;margin-top:20px;font-size:medium}.swal-content:last-child{margin-bottom:20px}.swal-content__input,.swal-content__textarea{-webkit-appearance:none;background-color:#fff;border:none;font-size:14px;display:block;box-sizing:border-box;width:100%;border:1px solid rgba(0,0,0,.14);padding:10px 13px;border-radius:2px;transition:border-color .2s}.swal-content__input:focus,.swal-content__textarea:focus{outline:none;border-color:#6db8ff}.swal-content__textarea{resize:vertical}.swal-button--loading{color:transparent}.swal-button--loading~.swal-button__loader{opacity:1}.swal-button__loader{position:absolute;height:auto;width:43px;z-index:2;left:50%;top:50%;-webkit-transform:translateX(-50%) translateY(-50%);transform:translateX(-50%) translateY(-50%);text-align:center;pointer-events:none;opacity:0}.swal-button__loader div{display:inline-block;float:none;vertical-align:baseline;width:9px;height:9px;padding:0;border:none;margin:2px;opacity:.4;border-radius:7px;background-color:hsla(0,0%,100%,.9);transition:background .2s;-webkit-animation:swal-loading-anim 1s infinite;animation:swal-loading-anim 1s infinite}.swal-button__loader div:nth-child(3n+2){-webkit-animation-delay:.15s;animation-delay:.15s}.swal-button__loader div:nth-child(3n+3){-webkit-animation-delay:.3s;animation-delay:.3s}@-webkit-keyframes swal-loading-anim{0%{opacity:.4}20%{opacity:.4}50%{opacity:1}to{opacity:.4}}@keyframes swal-loading-anim{0%{opacity:.4}20%{opacity:.4}50%{opacity:1}to{opacity:.4}}.swal-overlay{position:fixed;top:0;bottom:0;left:0;right:0;text-align:center;font-size:0;overflow-y:auto;background-color:rgba(0,0,0,.4);z-index:10000;pointer-events:none;opacity:0;transition:opacity .3s}.swal-overlay:before{content:" ";display:inline-block;vertical-align:middle;height:100%}.swal-overlay--show-modal{opacity:1;pointer-events:auto}.swal-overlay--show-modal .swal-modal{opacity:1;pointer-events:auto;box-sizing:border-box;-webkit-animation:showSweetAlert .3s;animation:showSweetAlert .3s;will-change:transform}.swal-modal{width:478px;opacity:0;pointer-events:none;background-color:#fff;text-align:center;border-radius:5px;position:static;margin:20px auto;display:inline-block;vertical-align:middle;-webkit-transform:scale(1);transform:scale(1);-webkit-transform-origin:50% 50%;transform-origin:50% 50%;z-index:10001;transition:opacity .2s,-webkit-transform .3s;transition:transform .3s,opacity .2s;transition:transform .3s,opacity .2s,-webkit-transform .3s}@media (max-width:500px){.swal-modal{width:calc(100% - 20px)}}@-webkit-keyframes showSweetAlert{0%{-webkit-transform:scale(1);transform:scale(1)}1%{-webkit-transform:scale(.5);transform:scale(.5)}45%{-webkit-transform:scale(1.05);transform:scale(1.05)}80%{-webkit-transform:scale(.95);transform:scale(.95)}to{-webkit-transform:scale(1);transform:scale(1)}}@keyframes showSweetAlert{0%{-webkit-transform:scale(1);transform:scale(1)}1%{-webkit-transform:scale(.5);transform:scale(.5)}45%{-webkit-transform:scale(1.05);transform:scale(1.05)}80%{-webkit-transform:scale(.95);transform:scale(.95)}to{-webkit-transform:scale(1);transform:scale(1)}}</style><style type="text/css">.swal-icon--error{border-color:#f27474;-webkit-animation:animateErrorIcon .5s;animation:animateErrorIcon .5s}.swal-icon--error__x-mark{position:relative;display:block;-webkit-animation:animateXMark .5s;animation:animateXMark .5s}.swal-icon--error__line{position:absolute;height:5px;width:47px;background-color:#f27474;display:block;top:37px;border-radius:2px}.swal-icon--error__line--left{-webkit-transform:rotate(45deg);transform:rotate(45deg);left:17px}.swal-icon--error__line--right{-webkit-transform:rotate(-45deg);transform:rotate(-45deg);right:16px}@-webkit-keyframes animateErrorIcon{0%{-webkit-transform:rotateX(100deg);transform:rotateX(100deg);opacity:0}to{-webkit-transform:rotateX(0deg);transform:rotateX(0deg);opacity:1}}@keyframes animateErrorIcon{0%{-webkit-transform:rotateX(100deg);transform:rotateX(100deg);opacity:0}to{-webkit-transform:rotateX(0deg);transform:rotateX(0deg);opacity:1}}@-webkit-keyframes animateXMark{0%{-webkit-transform:scale(.4);transform:scale(.4);margin-top:26px;opacity:0}50%{-webkit-transform:scale(.4);transform:scale(.4);margin-top:26px;opacity:0}80%{-webkit-transform:scale(1.15);transform:scale(1.15);margin-top:-6px}to{-webkit-transform:scale(1);transform:scale(1);margin-top:0;opacity:1}}@keyframes animateXMark{0%{-webkit-transform:scale(.4);transform:scale(.4);margin-top:26px;opacity:0}50%{-webkit-transform:scale(.4);transform:scale(.4);margin-top:26px;opacity:0}80%{-webkit-transform:scale(1.15);transform:scale(1.15);margin-top:-6px}to{-webkit-transform:scale(1);transform:scale(1);margin-top:0;opacity:1}}.swal-icon--warning{border-color:#f8bb86;-webkit-animation:pulseWarning .75s infinite alternate;animation:pulseWarning .75s infinite alternate}.swal-icon--warning__body{width:5px;height:47px;top:10px;border-radius:2px;margin-left:-2px}.swal-icon--warning__body,.swal-icon--warning__dot{position:absolute;left:50%;background-color:#f8bb86}.swal-icon--warning__dot{width:7px;height:7px;border-radius:50%;margin-left:-4px;bottom:-11px}@-webkit-keyframes pulseWarning{0%{border-color:#f8d486}to{border-color:#f8bb86}}@keyframes pulseWarning{0%{border-color:#f8d486}to{border-color:#f8bb86}}.swal-icon--success{border-color:#a5dc86}.swal-icon--success:after,.swal-icon--success:before{content:"";border-radius:50%;position:absolute;width:60px;height:120px;background:#fff;-webkit-transform:rotate(45deg);transform:rotate(45deg)}.swal-icon--success:before{border-radius:120px 0 0 120px;top:-7px;left:-33px;-webkit-transform:rotate(-45deg);transform:rotate(-45deg);-webkit-transform-origin:60px 60px;transform-origin:60px 60px}.swal-icon--success:after{border-radius:0 120px 120px 0;top:-11px;left:30px;-webkit-transform:rotate(-45deg);transform:rotate(-45deg);-webkit-transform-origin:0 60px;transform-origin:0 60px;-webkit-animation:rotatePlaceholder 4.25s ease-in;animation:rotatePlaceholder 4.25s ease-in}.swal-icon--success__ring{width:80px;height:80px;border:4px solid hsla(98,55%,69%,.2);border-radius:50%;box-sizing:content-box;position:absolute;left:-4px;top:-4px;z-index:2}.swal-icon--success__hide-corners{width:5px;height:90px;background-color:#fff;padding:1px;position:absolute;left:28px;top:8px;z-index:1;-webkit-transform:rotate(-45deg);transform:rotate(-45deg)}.swal-icon--success__line{height:5px;background-color:#a5dc86;display:block;border-radius:2px;position:absolute;z-index:2}.swal-icon--success__line--tip{width:25px;left:14px;top:46px;-webkit-transform:rotate(45deg);transform:rotate(45deg);-webkit-animation:animateSuccessTip .75s;animation:animateSuccessTip .75s}.swal-icon--success__line--long{width:47px;right:8px;top:38px;-webkit-transform:rotate(-45deg);transform:rotate(-45deg);-webkit-animation:animateSuccessLong .75s;animation:animateSuccessLong .75s}@-webkit-keyframes rotatePlaceholder{0%{-webkit-transform:rotate(-45deg);transform:rotate(-45deg)}5%{-webkit-transform:rotate(-45deg);transform:rotate(-45deg)}12%{-webkit-transform:rotate(-405deg);transform:rotate(-405deg)}to{-webkit-transform:rotate(-405deg);transform:rotate(-405deg)}}@keyframes rotatePlaceholder{0%{-webkit-transform:rotate(-45deg);transform:rotate(-45deg)}5%{-webkit-transform:rotate(-45deg);transform:rotate(-45deg)}12%{-webkit-transform:rotate(-405deg);transform:rotate(-405deg)}to{-webkit-transform:rotate(-405deg);transform:rotate(-405deg)}}@-webkit-keyframes animateSuccessTip{0%{width:0;left:1px;top:19px}54%{width:0;left:1px;top:19px}70%{width:50px;left:-8px;top:37px}84%{width:17px;left:21px;top:48px}to{width:25px;left:14px;top:45px}}@keyframes animateSuccessTip{0%{width:0;left:1px;top:19px}54%{width:0;left:1px;top:19px}70%{width:50px;left:-8px;top:37px}84%{width:17px;left:21px;top:48px}to{width:25px;left:14px;top:45px}}@-webkit-keyframes animateSuccessLong{0%{width:0;right:46px;top:54px}65%{width:0;right:46px;top:54px}84%{width:55px;right:0;top:35px}to{width:47px;right:8px;top:38px}}@keyframes animateSuccessLong{0%{width:0;right:46px;top:54px}65%{width:0;right:46px;top:54px}84%{width:55px;right:0;top:35px}to{width:47px;right:8px;top:38px}}.swal-icon--info{border-color:#c9dae1}.swal-icon--info:before{width:5px;height:29px;bottom:17px;border-radius:2px;margin-left:-2px}.swal-icon--info:after,.swal-icon--info:before{content:"";position:absolute;left:50%;background-color:#c9dae1}.swal-icon--info:after{width:7px;height:7px;border-radius:50%;margin-left:-3px;top:19px}.swal-icon{width:80px;height:80px;border-width:4px;border-style:solid;border-radius:50%;padding:0;position:relative;box-sizing:content-box;margin:20px auto}.swal-icon:first-child{margin-top:32px}.swal-icon--custom{width:auto;height:auto;max-width:100%;border:none;border-radius:0}.swal-icon img{max-width:100%;max-height:100%}.swal-title{color:rgba(0,0,0,.65);font-weight:600;text-transform:none;position:relative;display:block;padding:13px 16px;font-size:27px;line-height:normal;text-align:center;margin-bottom:0}.swal-title:first-child{margin-top:26px}.swal-title:not(:first-child){padding-bottom:0}.swal-title:not(:last-child){margin-bottom:13px}.swal-text{font-size:16px;position:relative;float:none;line-height:normal;vertical-align:top;text-align:left;display:inline-block;margin:0;padding:0 10px;font-weight:400;color:rgba(0,0,0,.64);max-width:calc(100% - 20px);overflow-wrap:break-word;box-sizing:border-box}.swal-text:first-child{margin-top:45px}.swal-text:last-child{margin-bottom:45px}.swal-footer{text-align:right;padding-top:13px;margin-top:13px;padding:13px 16px;border-radius:inherit;border-top-left-radius:0;border-top-right-radius:0}.swal-button-container{margin:5px;display:inline-block;position:relative}.swal-button{background-color:#7cd1f9;color:#fff;border:none;box-shadow:none;border-radius:5px;font-weight:600;font-size:14px;padding:10px 24px;margin:0;cursor:pointer}.swal-button:not([disabled]):hover{background-color:#78cbf2}.swal-button:active{background-color:#70bce0}.swal-button:focus{outline:none;box-shadow:0 0 0 1px #fff,0 0 0 3px rgba(43,114,165,.29)}.swal-button[disabled]{opacity:.5;cursor:default}.swal-button::-moz-focus-inner{border:0}.swal-button--cancel{color:#555;background-color:#efefef}.swal-button--cancel:not([disabled]):hover{background-color:#e8e8e8}.swal-button--cancel:active{background-color:#d7d7d7}.swal-button--cancel:focus{box-shadow:0 0 0 1px #fff,0 0 0 3px rgba(116,136,150,.29)}.swal-button--danger{background-color:#e64942}.swal-button--danger:not([disabled]):hover{background-color:#df4740}.swal-button--danger:active{background-color:#cf423b}.swal-button--danger:focus{box-shadow:0 0 0 1px #fff,0 0 0 3px rgba(165,43,43,.29)}.swal-content{padding:0 20px;margin-top:20px;font-size:medium}.swal-content:last-child{margin-bottom:20px}.swal-content__input,.swal-content__textarea{-webkit-appearance:none;background-color:#fff;border:none;font-size:14px;display:block;box-sizing:border-box;width:100%;border:1px solid rgba(0,0,0,.14);padding:10px 13px;border-radius:2px;transition:border-color .2s}.swal-content__input:focus,.swal-content__textarea:focus{outline:none;border-color:#6db8ff}.swal-content__textarea{resize:vertical}.swal-button--loading{color:transparent}.swal-button--loading~.swal-button__loader{opacity:1}.swal-button__loader{position:absolute;height:auto;width:43px;z-index:2;left:50%;top:50%;-webkit-transform:translateX(-50%) translateY(-50%);transform:translateX(-50%) translateY(-50%);text-align:center;pointer-events:none;opacity:0}.swal-button__loader div{display:inline-block;float:none;vertical-align:baseline;width:9px;height:9px;padding:0;border:none;margin:2px;opacity:.4;border-radius:7px;background-color:hsla(0,0%,100%,.9);transition:background .2s;-webkit-animation:swal-loading-anim 1s infinite;animation:swal-loading-anim 1s infinite}.swal-button__loader div:nth-child(3n+2){-webkit-animation-delay:.15s;animation-delay:.15s}.swal-button__loader div:nth-child(3n+3){-webkit-animation-delay:.3s;animation-delay:.3s}@-webkit-keyframes swal-loading-anim{0%{opacity:.4}20%{opacity:.4}50%{opacity:1}to{opacity:.4}}@keyframes swal-loading-anim{0%{opacity:.4}20%{opacity:.4}50%{opacity:1}to{opacity:.4}}.swal-overlay{position:fixed;top:0;bottom:0;left:0;right:0;text-align:center;font-size:0;overflow-y:auto;background-color:rgba(0,0,0,.4);z-index:10000;pointer-events:none;opacity:0;transition:opacity .3s}.swal-overlay:before{content:" ";display:inline-block;vertical-align:middle;height:100%}.swal-overlay--show-modal{opacity:1;pointer-events:auto}.swal-overlay--show-modal .swal-modal{opacity:1;pointer-events:auto;box-sizing:border-box;-webkit-animation:showSweetAlert .3s;animation:showSweetAlert .3s;will-change:transform}.swal-modal{width:478px;opacity:0;pointer-events:none;background-color:#fff;text-align:center;border-radius:5px;position:static;margin:20px auto;display:inline-block;vertical-align:middle;-webkit-transform:scale(1);transform:scale(1);-webkit-transform-origin:50% 50%;transform-origin:50% 50%;z-index:10001;transition:opacity .2s,-webkit-transform .3s;transition:transform .3s,opacity .2s;transition:transform .3s,opacity .2s,-webkit-transform .3s}@media (max-width:500px){.swal-modal{width:calc(100% - 20px)}}@-webkit-keyframes showSweetAlert{0%{-webkit-transform:scale(1);transform:scale(1)}1%{-webkit-transform:scale(.5);transform:scale(.5)}45%{-webkit-transform:scale(1.05);transform:scale(1.05)}80%{-webkit-transform:scale(.95);transform:scale(.95)}to{-webkit-transform:scale(1);transform:scale(1)}}@keyframes showSweetAlert{0%{-webkit-transform:scale(1);transform:scale(1)}1%{-webkit-transform:scale(.5);transform:scale(.5)}45%{-webkit-transform:scale(1.05);transform:scale(1.05)}80%{-webkit-transform:scale(.95);transform:scale(.95)}to{-webkit-transform:scale(1);transform:scale(1)}}</style>
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Staff Selection Commision</title>
+
+    <!-- Google Font: Source Sans Pro -->
+    <link rel="stylesheet" href="./Staff Selection Commision_files/font.css">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="./Staff Selection Commision_files/all.min.css">
+    <!-- Ionicons -->
+    <link rel="stylesheet" href="./Staff Selection Commision_files/ionicons.min.css">
+    <!-- Tempusdominus Bootstrap 4 -->
+    <link rel="stylesheet" href="./Staff Selection Commision_files/tempusdominus-bootstrap-4.min.css">
+    <!-- iCheck -->
+    <link rel="stylesheet" href="./Staff Selection Commision_files/icheck-bootstrap.min.css">
+    <!-- JQVMap -->
+    <!-- <link rel="stylesheet" href="http://10.163.2.181:8080/sscsr_audit/site/admin/plugins/jqvmap/jqvmap.min.css"> -->
+    <!-- Theme style -->
+    <link rel="stylesheet" href="./Staff Selection Commision_files/adminlte.min.css">
+
+    <!-- overlayScrollbars -->
+    <link rel="stylesheet" href="./Staff Selection Commision_files/OverlayScrollbars.min.css">
+    <!-- Daterange picker -->
+    <link rel="stylesheet" href="./Staff Selection Commision_files/daterangepicker.css">
+    <!-- summernote -->
+    <link rel="stylesheet" href="./Staff Selection Commision_files/summernote-bs4.min.css">
+    <!-- DataTables -->
+    <link rel="stylesheet" href="./Staff Selection Commision_files/dataTables.bootstrap4.min.css">
+    <link rel="stylesheet" href="./Staff Selection Commision_files/responsive.bootstrap4.min.css">
+    <link rel="stylesheet" href="./Staff Selection Commision_files/buttons.bootstrap4.min.css">
+    <link rel="stylesheet" href="./Staff Selection Commision_files/custom.css">
+
+
+
+
+
+    <!--<script src="/dist/js/custom.js"></script>-->
+
+
+
+
+
+
+
+
+
+</head>
+
+<body class="sidebar-mini layout-fixed" style="height: auto;">
+    <div class="wrapper">
+
+        <!-- Preloader -->
+        <div class="preloader flex-column justify-content-center align-items-center" style="height: 0px;">
+            <img class="animation__shake" src="./Staff Selection Commision_files/AdminLTELogo.png" alt="AdminLTELogo" height="60" width="60" style="display: none;">
+        </div>
+
+        <!-- Navbar -->
+        <nav class="main-header navbar navbar-expand navbar-white navbar-light">
+            <!-- Left navbar links -->
+            <ul class="navbar-nav">
+                <li class="nav-item">
+                    <a class="nav-link" data-widget="pushmenu" href="http://10.163.2.181:8080/sscsr_audit/site/Admin/edittender#" role="button"><i class="fas fa-bars"></i></a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" target="_blank" href="http://10.163.2.181:8080/sscsr_audit/site/Admin/edittender#"><i class="fa fa-globe" aria-hidden="true"></i></a>
+                </li>
+
+            </ul>
+
+            <!-- Right navbar links -->
+            <ul class="navbar-nav ml-auto">
+                <!-- Navbar Search -->
+
+
+                <!-- Messages Dropdown Menu -->
+
+                <!-- Notifications Dropdown Menu -->
+
+                <!-- login-->
+                                <li class="nav-item dropdown user user-menu">
+
+                    <a href="http://10.163.2.181:8080/sscsr_audit/site/Admin/edittender#" class="nav-link dropdown-toggle" data-toggle="dropdown">
+                        <img src="./Staff Selection Commision_files/admin.png" class="user-image img-circle elevation-2 alt=" user="" image"="">
+                        <span class="hidden-xs">sscadmin</span>
+                        <span class="hidden-xs">(admin)</span>
+
+
+                    </a>
+                    <ul class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
+                        <!-- User image -->
+
+                        <!-- Menu Body -->
+
+                        <!-- Menu Footer-->
+                        <li class="user-footer">
+
+                            <div class="row">
+                                <div class="col-3 text-center">
+
+                                </div>
+                                <div class="col-6 text-center">
+                                    <a href="http://10.163.2.181:8080/sscsr_audit/site/Admin/logout" class="btn btn-default btn-flat">Sign out</a>
+                                </div>
+                                <div class="col-3 text-center">
+
+                                </div>
+
+                            </div>
+
+
+                            <!-- <div class="pull-left">
+<a href="#" class="btn btn-default btn-flat">Profile</a>
+</div>
+<div class="pull-right">
+<a href="#" class="btn btn-default btn-flat">Sign out</a>
+</div> -->
+                        </li>
+                    </ul>
+                </li>
+                <!-- Login -->
+
+            </ul>
+        </nav>
+        <!-- /.navbar -->
+
+        <!-- Main Sidebar Container -->
+        <aside class="main-sidebar sidebar-dark-primary elevation-4">
+            <!-- Brand Logo -->
+            <a href="http://10.163.2.181:8080/sscsr_audit/site/Admin/index3.html" class="brand-link">
+
+                Staff Selection Commision
+                <!-- <img src="http://10.163.2.181:8080/sscsr_audit/site/admin/dist/img/AdminLTELogo.png" alt="AdminLTE Logo" class="brand-image img-circle elevation-3" style="opacity: .8">
+<span class="brand-text font-weight-light">AdminLTE 3</span> -->
+            </a>
+
+            <!-- Sidebar -->
+            <div class="sidebar os-host os-theme-light os-host-resize-disabled os-host-scrollbar-horizontal-hidden os-host-scrollbar-vertical-hidden os-host-transition" style=""><div class="os-resize-observer-host observed"><div class="os-resize-observer" style="left: 0px; right: auto;"></div></div><div class="os-size-auto-observer observed" style="height: calc(100% + 1px); float: left;"><div class="os-resize-observer"></div></div><div class="os-content-glue" style="margin: 0px -8px; width: 249px; height: 897px;"></div><div class="os-padding"><div class="os-viewport os-viewport-native-scrollbars-invisible"><div class="os-content" style="padding: 0px 8px; height: 100%; width: 100%;">
+                <!-- Sidebar user panel (optional) -->
+
+
+                <!-- Sidebar Menu -->
+                <nav class="mt-2">
+                    <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
+
+                        <li class="nav-header">Dashboard</li>
+                        
+                            <li class="nav-item">
+                                <a href="http://10.163.2.181:8080/sscsr_audit/site/Admin/edittender#" class="nav-link">
+                                    <i class="nav-icon fas fa-edit"></i>
+                                    <p>
+                                        Menu
+                                        <i class="fas fa-angle-left right"></i>
+                                    </p>
+                                </a>
+                                <ul class="nav nav-treeview" style="display: none;">
+                                    <li class="nav-item">
+                                        <a href="http://10.163.2.181:8080/sscsr_audit/site/Admin/dashboard/?action=listmenus&amp;&amp;status=1" class="nav-link">
+                                            <i class="far fa-circle nav-icon"></i>
+                                            <p>View Published</p>
+                                        </a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a href="http://10.163.2.181:8080/sscsr_audit/site/Admin/dashboard/?action=listmenus&amp;&amp;status=0" class="nav-link">
+                                            <i class="far fa-circle nav-icon"></i>
+                                            <p>View Unpublished </p>
+                                        </a>
+                                    </li>
+
+                                </ul>
+                            </li>
+                            <li class="nav-item">
+                                <a href="http://10.163.2.181:8080/sscsr_audit/site/Admin/edittender#" class="nav-link">
+                                    <i class="nav-icon fas fa-edit"></i>
+                                    <p>
+                                        Page
+                                        <i class="fas fa-angle-left right"></i>
+                                    </p>
+                                </a>
+                                <ul class="nav nav-treeview" style="display: none;">
+                                    <li class="nav-item">
+                                        <a href="http://10.163.2.181:8080/sscsr_audit/site/Admin/dashboard/?action=listpages&amp;&amp;status=1" class="nav-link">
+                                            <i class="far fa-circle nav-icon"></i>
+                                            <p>Page Published</p>
+                                        </a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a href="http://10.163.2.181:8080/sscsr_audit/site/Admin/dashboard/?action=listpages&amp;&amp;status=0" class="nav-link">
+                                            <i class="far fa-circle nav-icon"></i>
+                                            <p>Page Unpublished </p>
+                                        </a>
+                                    </li>
+
+                                </ul>
+                            </li>
+
+
+                            <li class="nav-item">
+                                <a href="http://10.163.2.181:8080/sscsr_audit/site/Admin/edittender#" class="nav-link">
+                                    <i class="nav-icon fas fa-edit"></i>
+                                    <p>
+                                        Menu Reorder
+                                        <i class="fas fa-angle-left right"></i>
+                                    </p>
+                                </a>
+
+                                <ul class="nav nav-treeview" style="display: none;">
+                                    <li class="nav-item">
+                                        <a href="http://10.163.2.181:8080/sscsr_audit/site/Admin/dashboard/?action=listmenuorders" class="nav-link">
+                                            <i class="far fa-circle nav-icon"></i>
+                                            <p>Main-Menus Reorder</p>
+                                        </a>
+                                    </li>
+                                    <!-- <li class="nav-item">
+                                        <a href="" class="nav-link">
+                                            <i class="far fa-circle nav-icon"></i>
+                                            <p>Sub-Menus Reorder </p>
+                                        </a>
+                                    </li> -->
+
+
+                                    <li class="nav-item">
+                                        <a href="http://10.163.2.181:8080/sscsr_audit/site/Admin/dashboard/?action=listsubmenuordersnew" class="nav-link">
+                                            <i class="far fa-circle nav-icon"></i>
+                                            <p>Sub-Menus Reorder </p>
+                                        </a>
+                                    </li>
+
+                                </ul>
+                            </li>
+
+
+                        
+                        <!--<li class="nav-item">
+                                <a href="" class="nav-link">
+                                    <i class="nav-icon fas fa-edit"></i>
+                                    <p>
+                                        Page
+
+                                    </p>
+                                </a>
+      
+                            </li>-->
+
+                        <li class="nav-item">
+                            <a href="http://10.163.2.181:8080/sscsr_audit/site/Admin/edittender#" class="nav-link">
+                                <i class="nav-icon fas fa-edit"></i>
+                                <p>
+                                    Nomination
+                                    <i class="fas fa-angle-left right"></i>
+                                </p>
+                            </a>
+                            <ul class="nav nav-treeview" style="display: none;">
+                                <li class="nav-item">
+                                    <a href="http://10.163.2.181:8080/sscsr_audit/site/Admin/dashboard/?action=listnominations" class="nav-link">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>Nomination </p>
+                                    </a>
+                                </li>
+                                <!-- <li class="nav-item">
+                                    <a href="" class="nav-link">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>Nomination Archieves</p>
+                                    </a>
+                                </li> -->
+
+                            </ul>
+                        </li>
+
+                        <!-- <li class="nav-item">
+                            <a href="" class="nav-link">
+                                <i class="nav-icon fas fa-edit"></i>
+                                <p>
+                                    Nomination
+
+                                </p>
+                            </a>
+                        </li> -->
+
+
+                        <li class="nav-item">
+                            <a href="http://10.163.2.181:8080/sscsr_audit/site/Admin/edittender#" class="nav-link">
+                                <i class="nav-icon fas fa-edit"></i>
+                                <p>
+                                    Selection Post
+                                    <i class="fas fa-angle-left right"></i>
+                                </p>
+                            </a>
+                            <ul class="nav nav-treeview" style="display: none;">
+                                <li class="nav-item">
+                                    <a href="http://10.163.2.181:8080/sscsr_audit/site/Admin/dashboard/?action=listselectionposts" class="nav-link">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>Selection Post </p>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="http://10.163.2.181:8080/sscsr_audit/site/Admin/dashboard/?action=listofphasemaster" class="nav-link">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>Phase</p>
+                                    </a>
+                                </li>
+
+                            </ul>
+                        </li>
+
+
+
+
+
+
+
+
+                        <li class="nav-item">
+                            <a href="http://10.163.2.181:8080/sscsr_audit/site/Admin/edittender#" class="nav-link">
+                                <i class="nav-icon fas fa-edit"></i>
+                                <p>
+                                    Photo Gallery
+                                    <i class="fas fa-angle-left right"></i>
+                                </p>
+                            </a>
+                            <ul class="nav nav-treeview" style="display: none;">
+                                <li class="nav-item">
+                                    <a href="http://10.163.2.181:8080/sscsr_audit/site/Admin/dashboard/?action=listofeventcategories" class="nav-link">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>Event Category </p>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="http://10.163.2.181:8080/sscsr_audit/site/Admin/dashboard/?action=listofphotogallery" class="nav-link">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>Gallery</p>
+                                    </a>
+                                </li>
+
+                            </ul>
+                        </li>
+                        <li class="nav-item">
+                            <a href="http://10.163.2.181:8080/sscsr_audit/site/Admin/dashboard/?action=listdebarredlists" class="nav-link">
+                                <i class="nav-icon fas fa-edit"></i>
+                                <p>
+                                    Debarred Lists
+
+                                </p>
+                            </a>
+                        </li>
+                        
+                        <li class="nav-item">
+                            <a href="http://10.163.2.181:8080/sscsr_audit/site/Admin/edittender#" class="nav-link">
+                                <i class="nav-icon fas fa-edit"></i>
+                                <p>
+                                    Category
+                                    <i class="fas fa-angle-left right"></i>
+                                </p>
+                            </a>
+                            <ul class="nav nav-treeview" style="display: none;">
+                                <li class="nav-item">
+                                    <a href="http://10.163.2.181:8080/sscsr_audit/site/Admin/dashboard/?action=listofcategory" class="nav-link">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>Category</p>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="http://10.163.2.181:8080/sscsr_audit/site/Admin/dashboard/?action=listnominationreorders" class="nav-link">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>Nomination Reorder </p>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="http://10.163.2.181:8080/sscsr_audit/site/Admin/dashboard/?action=listselectionpostreorders" class="nav-link">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>Selection Post Reorder </p>
+                                    </a>
+                                </li>
+
+                            </ul>
+                        </li>
+
+
+
+                        <!-- <li class="nav-item">
+                                <a href="" class="nav-link">
+                                    <i class="nav-icon fas fa-edit"></i>
+                                    <p>
+                                        Category
+
+                                    </p>
+                                </a>
+
+                            </li> -->
+                        <!--  # Faq--->
+                        <li class="nav-item">
+                            <a href="http://10.163.2.181:8080/sscsr_audit/site/Admin/edittender#" class="nav-link">
+                                <i class="nav-icon fas fa-edit"></i>
+                                <p>
+                                    Extra Menu
+                                    <i class="fas fa-angle-left right"></i>
+                                </p>
+                            </a>
+                            <ul class="nav nav-treeview" style="display: none;">
+                                <!-- <li class="nav-item">
+                                    <a href="http://10.163.2.181:8080/sscsr_audit/site/Admin/dashboard/?action=listofnotices" class="nav-link">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>Notice</p>
+                                    </a>
+                                </li> -->
+
+                                <!-- Notice Div-->
+                                <li class="nav-item">
+                                    <a href="http://10.163.2.181:8080/sscsr_audit/site/Admin/edittender#" class="nav-link">
+                                        <i class="nav-icon fas fa-edit"></i>
+                                        <p>
+                                            Notice
+                                            <i class="fas fa-angle-left right"></i>
+                                        </p>
+                                    </a>
+                                    <ul class="nav nav-treeview" style="display: none;">
+                                        <li class="nav-item">
+                                            <a href="http://10.163.2.181:8080/sscsr_audit/site/Admin/dashboard/?action=listofnotices" class="nav-link">
+                                                <i class="far fa-circle nav-icon"></i>
+                                                <p>Notice </p>
+                                            </a>
+                                        </li>
+                                        <!-- <li class="nav-item">
+                                            <a href="" class="nav-link">
+                                                <i class="far fa-circle nav-icon"></i>
+                                                <p>Notice Archieves</p>
+                                            </a>
+                                        </li> -->
+
+                                    </ul>
+                                </li>
+                                <!-- Notice Div-->
+
+
+
+
+
+
+
+                                <li class="nav-item">
+                                    <a href="http://10.163.2.181:8080/sscsr_audit/site/Admin/dashboard/?action=listoffaq" class="nav-link">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>FAQ </p>
+                                    </a>
+                                </li>
+
+                            </ul>
+                        </li>
+                        <!--  Faq--->
+
+                        <!-- Tender Div-->
+                        <li class="nav-item">
+                            <a href="http://10.163.2.181:8080/sscsr_audit/site/Admin/edittender#" class="nav-link">
+                                <i class="nav-icon fas fa-edit"></i>
+                                <p>
+                                    Tender
+                                    <i class="fas fa-angle-left right"></i>
+                                </p>
+                            </a>
+                            <ul class="nav nav-treeview" style="display: none;">
+                                <li class="nav-item">
+                                    <a href="http://10.163.2.181:8080/sscsr_audit/site/Admin/dashboard/?action=listoftenders" class="nav-link">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>Tender </p>
+                                    </a>
+                                </li>
+                                <!-- <li class="nav-item">
+                                    <a href="http://10.163.2.181:8080/sscsr_audit/site/Admin/dashboard/?action=tender_archieves_by_month" class="nav-link">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>Tender Archieves</p>
+                                    </a>
+                                </li> -->
+                            </ul>
+                        </li>
+                        <!-- Tender Div-->
+
+                        
+                        <!-- announcement -->
+                        <li class="nav-item">
+                            <a href="http://10.163.2.181:8080/sscsr_audit/site/Admin/edittender#" class="nav-link">
+                                <i class="nav-icon fas fa-edit"></i>
+                                <p>
+                                    Announcement
+                                    <i class="fas fa-angle-left right"></i>
+                                </p>
+                            </a>
+                            <ul class="nav nav-treeview" style="display: none;">
+                                <li class="nav-item">
+                                    <a href="http://10.163.2.181:8080/sscsr_audit/site/Admin/dashboard/?action=listofannouncements" class="nav-link">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>Announcement </p>
+                                    </a>
+                                </li>
+                             
+                            </ul>
+                        </li>
+                        <!-- announcement -->
+
+
+                                                <li class="nav-item">
+                            <a href="http://10.163.2.181:8080/sscsr_audit/site/Admin/dashboard/?action=listofimportantlinks" class="nav-link">
+                                <i class="nav-icon fas fa-edit"></i>
+                                <p>
+                                    Important Links
+
+                                </p>
+                            </a>
+
+                        </li>
+                        
+                    </ul>
+                </nav>
+                <!-- /.sidebar-menu -->
+            </div></div></div><div class="os-scrollbar os-scrollbar-horizontal os-scrollbar-unusable os-scrollbar-auto-hidden"><div class="os-scrollbar-track"><div class="os-scrollbar-handle" style="width: 100%; transform: translate(0px, 0px);"></div></div></div><div class="os-scrollbar os-scrollbar-vertical os-scrollbar-unusable os-scrollbar-auto-hidden"><div class="os-scrollbar-track"><div class="os-scrollbar-handle" style="height: 100%; transform: translate(0px, 0px);"></div></div></div><div class="os-scrollbar-corner"></div></div>
+            <!-- /.sidebar -->
+        </aside>
+        <style>
+            .preloader {
+                display: none !important;
+            }
+        </style><style>
+.ui-datepicker-trigger{
+margin: -27px 2px 3px 286px;
+    width: 20px;
+}
+</style>
+<!-- Content Wrapper. Contains page content -->
+<div class="content-wrapper" style="min-height: 955px;">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+        <div class="container-fluid">
+            <div class="row mb-2">
+                <div class="col-sm-6">
+                    <h1>Tender Creation Form</h1>
+                </div>
+            </div>
+        </div><!-- /.container-fluid -->
+    </section>
+    <!-- Main content   section div start -->
+    <!-- Main content -->
+    <section class="content">
+        <div class="container-fluid">
+            <div class="row">
+                <!-- left column -->
+                <div class="col-md-12">
+                    <!-- general form elements -->
+                    <!-- /.card -->
+                    <!-- Horizontal Form -->
+                    <div class="card card-info" style="width: 75%;">
+                        <div class="card-header">
+                            <h3 class="card-title"> Tender Creation Form </h3>
+                        </div>
+                        <!-- /.card-header -->
+                        <!-- form start -->
+                                                <form class="form-horizontal" method="post" name="tender_form" id="tenderForm" enctype="multipart/form-data" novalidate="novalidate">
+                            <div class="card-body">
+                                <div class="form-group row">
+                                    <label for="inputEmail3" class="col-sm-2 col-form-label">Tender Name <span style="color:red">*</span></label>
+                                    <div class="col-sm-6">
+                                        <textarea class="form-control exam_name valid" name="pdf_name" id="pdf_name" required="" maxlength="256" rows="5" placeholder="Enter only 256 characters" aria-invalid="false"></textarea>
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label for="inputEmail3" class="col-sm-2 col-form-label"> Effect From Date  <span style="color:red">*</span></label>
+                                    <div class="col-sm-3">
+									                                        <input class="form-control hasDatepicker" type="text" name="effect_from_date" id="effect_from_date" value="" readonly=""><img class="ui-datepicker-trigger" src="./Staff Selection Commision_files/datepicker.png" alt="Date Picker" title="Date Picker">
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label for="inputEmail3" class="col-sm-2 col-form-label"> Effect To Date <span style="color:red">*</span></label>
+                                    <div class="col-sm-3">
+                                        <input class="form-control hasDatepicker" type="text" name="effect_to_date" id="effect_to_date" value="" readonly=""><img class="ui-datepicker-trigger" src="./Staff Selection Commision_files/datepicker.png" alt="Date Picker" title="Date Picker">
+                                    </div>
+                                </div>
+                                                                <div class="form-group row">
+                                    <label for="inputEmail3" class="col-sm-2 col-form-label"> Attachment  <span style="color:red">*</span></label>
+                                    <div class="col-sm-6">
+                                        <input type="file" id="resume" name="attachment" class="form-control item_quantity" accept="application/pdf" value="">
+										 <input name="pdflink" value="" type="hidden">
+										<p name="attachments"></p>
+                                    </div>
+                                </div>
+                                <input type="hidden" value="0" name="id" class="sp_id">
+                            </div>
+                            <!-- /.card-body -->
+                            <div class="card-footer">
+                            <input type="hidden" name="csrf_token" value="aa86879f7b8732118f1841a3c5c2df155d84a8059cb901c409a9e33611d79561">
+                                <input type="submit" class="btn btn-info" name="save_tender" value="Submit" style="margin: 0px 0px 0px -160px;" id="save_tender">
+                                <input type="button" class="btn btn-default float-right" onclick="history.back();" style="float: left !important; margin: 0px 0px 0px 310px;" value="Cancel">
+                            </div>
+                            <!-- /.card-footer -->
+                        </form>
+                        <!-- <button class="btn btn-default float-right" onclick="goBack()">Cancel</button> -->
+                    </div>
+                    <!-- /.card -->
+                </div>
+                <!--/.col (left) -->
+                <!-- right column -->
+                <!-- /.row -->
+            </div><!-- /.container-fluid -->
+    </div></section>
+    <!-- Main content section div end -->
+</div>
+ <!-- /.content-wrapper -->
+ <footer class="main-footer">
+     <strong>Copyright © 2014-2022 <a href="https://adminlte.io/">SSCSR</a>.</strong>
+     All rights reserved.
+     <div class="float-right d-none d-sm-inline-block">
+         <b>Version</b> 3.1.0
+     </div>
+ </footer>
+
+ <!-- Control Sidebar -->
+ <aside class="control-sidebar control-sidebar-dark">
+     <!-- Control sidebar content goes here -->
+ <div class="p-3 control-sidebar-content"><h5>Customize AdminLTE</h5><hr class="mb-2"><div class="mb-4"><input type="checkbox" value="1" class="mr-1"><span>Dark Mode</span></div><h6>Header Options</h6><div class="mb-1"><input type="checkbox" value="1" class="mr-1"><span>Fixed</span></div><div class="mb-1"><input type="checkbox" value="1" class="mr-1"><span>Dropdown Legacy Offset</span></div><div class="mb-4"><input type="checkbox" value="1" class="mr-1"><span>No border</span></div><h6>Sidebar Options</h6><div class="mb-1"><input type="checkbox" value="1" class="mr-1"><span>Collapsed</span></div><div class="mb-1"><input type="checkbox" value="1" checked="checked" class="mr-1"><span>Fixed</span></div><div class="mb-1"><input type="checkbox" value="1" checked="checked" class="mr-1"><span>Sidebar Mini</span></div><div class="mb-1"><input type="checkbox" value="1" class="mr-1"><span>Sidebar Mini MD</span></div><div class="mb-1"><input type="checkbox" value="1" class="mr-1"><span>Sidebar Mini XS</span></div><div class="mb-1"><input type="checkbox" value="1" class="mr-1"><span>Nav Flat Style</span></div><div class="mb-1"><input type="checkbox" value="1" class="mr-1"><span>Nav Legacy Style</span></div><div class="mb-1"><input type="checkbox" value="1" class="mr-1"><span>Nav Compact</span></div><div class="mb-1"><input type="checkbox" value="1" class="mr-1"><span>Nav Child Indent</span></div><div class="mb-1"><input type="checkbox" value="1" class="mr-1"><span>Nav Child Hide on Collapse</span></div><div class="mb-4"><input type="checkbox" value="1" class="mr-1"><span>Disable Hover/Focus Auto-Expand</span></div><h6>Footer Options</h6><div class="mb-4"><input type="checkbox" value="1" class="mr-1"><span>Fixed</span></div><h6>Small Text Options</h6><div class="mb-1"><input type="checkbox" value="1" class="mr-1"><span>Body</span></div><div class="mb-1"><input type="checkbox" value="1" class="mr-1"><span>Navbar</span></div><div class="mb-1"><input type="checkbox" value="1" class="mr-1"><span>Brand</span></div><div class="mb-1"><input type="checkbox" value="1" class="mr-1"><span>Sidebar Nav</span></div><div class="mb-4"><input type="checkbox" value="1" class="mr-1"><span>Footer</span></div><h6>Navbar Variants</h6><div class="d-flex"><select class="custom-select mb-3 text-light border-0 bg-white"><option class="bg-primary">Primary</option><option class="bg-secondary">Secondary</option><option class="bg-info">Info</option><option class="bg-success">Success</option><option class="bg-danger">Danger</option><option class="bg-indigo">Indigo</option><option class="bg-purple">Purple</option><option class="bg-pink">Pink</option><option class="bg-navy">Navy</option><option class="bg-lightblue">Lightblue</option><option class="bg-teal">Teal</option><option class="bg-cyan">Cyan</option><option class="bg-dark">Dark</option><option class="bg-gray-dark">Gray dark</option><option class="bg-gray">Gray</option><option class="bg-light">Light</option><option class="bg-warning">Warning</option><option class="bg-white">White</option><option class="bg-orange">Orange</option></select></div><h6>Accent Color Variants</h6><div class="d-flex"></div><select class="custom-select mb-3 border-0"><option>None Selected</option><option class="bg-primary">Primary</option><option class="bg-warning">Warning</option><option class="bg-info">Info</option><option class="bg-danger">Danger</option><option class="bg-success">Success</option><option class="bg-indigo">Indigo</option><option class="bg-lightblue">Lightblue</option><option class="bg-navy">Navy</option><option class="bg-purple">Purple</option><option class="bg-fuchsia">Fuchsia</option><option class="bg-pink">Pink</option><option class="bg-maroon">Maroon</option><option class="bg-orange">Orange</option><option class="bg-lime">Lime</option><option class="bg-teal">Teal</option><option class="bg-olive">Olive</option></select><h6>Dark Sidebar Variants</h6><div class="d-flex"></div><select class="custom-select mb-3 text-light border-0 bg-primary"><option>None Selected</option><option class="bg-primary">Primary</option><option class="bg-warning">Warning</option><option class="bg-info">Info</option><option class="bg-danger">Danger</option><option class="bg-success">Success</option><option class="bg-indigo">Indigo</option><option class="bg-lightblue">Lightblue</option><option class="bg-navy">Navy</option><option class="bg-purple">Purple</option><option class="bg-fuchsia">Fuchsia</option><option class="bg-pink">Pink</option><option class="bg-maroon">Maroon</option><option class="bg-orange">Orange</option><option class="bg-lime">Lime</option><option class="bg-teal">Teal</option><option class="bg-olive">Olive</option></select><h6>Light Sidebar Variants</h6><div class="d-flex"></div><select class="custom-select mb-3 border-0"><option>None Selected</option><option class="bg-primary">Primary</option><option class="bg-warning">Warning</option><option class="bg-info">Info</option><option class="bg-danger">Danger</option><option class="bg-success">Success</option><option class="bg-indigo">Indigo</option><option class="bg-lightblue">Lightblue</option><option class="bg-navy">Navy</option><option class="bg-purple">Purple</option><option class="bg-fuchsia">Fuchsia</option><option class="bg-pink">Pink</option><option class="bg-maroon">Maroon</option><option class="bg-orange">Orange</option><option class="bg-lime">Lime</option><option class="bg-teal">Teal</option><option class="bg-olive">Olive</option></select><h6>Brand Logo Variants</h6><div class="d-flex"></div><select class="custom-select mb-3 border-0"><option>None Selected</option><option class="bg-primary">Primary</option><option class="bg-secondary">Secondary</option><option class="bg-info">Info</option><option class="bg-success">Success</option><option class="bg-danger">Danger</option><option class="bg-indigo">Indigo</option><option class="bg-purple">Purple</option><option class="bg-pink">Pink</option><option class="bg-navy">Navy</option><option class="bg-lightblue">Lightblue</option><option class="bg-teal">Teal</option><option class="bg-cyan">Cyan</option><option class="bg-dark">Dark</option><option class="bg-gray-dark">Gray dark</option><option class="bg-gray">Gray</option><option class="bg-light">Light</option><option class="bg-warning">Warning</option><option class="bg-white">White</option><option class="bg-orange">Orange</option><a href="http://10.163.2.181:8080/sscsr_audit/site/Admin/edittender#">clear</a></select></div></aside>
+ <!-- /.control-sidebar -->
+ <div id="sidebar-overlay"></div></div>
+ <!-- ./wrapper -->
+
+ <!-- jQuery -->
+ <script type="text/javascript" src="./Staff Selection Commision_files/jquery-3.5.1.js.download"></script>
+ <script src="./Staff Selection Commision_files/jquery.min.js.download"></script>
+ <!-- jQuery UI 1.11.4 -->
+ <script src="./Staff Selection Commision_files/jquery-ui.min.js.download"></script>
+ <!-- Resolve conflict in jQuery UI tooltip with Bootstrap tooltip -->
+
+
+<script src="./Staff Selection Commision_files/jquery.validate.min.js.download" crossorigin="anonymous"></script>
+ <script>
+     $.widget.bridge('uibutton', $.ui.button)
+ </script>
+ <!-- Bootstrap 4 -->
+ <script src="./Staff Selection Commision_files/bootstrap.bundle.min.js.download"></script>
+ <!-- ChartJS -->
+ <script src="./Staff Selection Commision_files/Chart.min.js.download"></script>
+ <!-- Sparkline -->
+ <script src="./Staff Selection Commision_files/sparkline.js.download"></script>
+ <!-- JQVMap -->
+ <script src="./Staff Selection Commision_files/jquery.vmap.min.js.download"></script>
+ <script src="./Staff Selection Commision_files/jquery.vmap.usa.js.download"></script>
+ <!-- jQuery Knob Chart -->
+ <script src="./Staff Selection Commision_files/jquery.knob.min.js.download"></script>
+ <!-- daterangepicker -->
+ <script src="./Staff Selection Commision_files/moment.min.js.download"></script>
+ <script src="./Staff Selection Commision_files/daterangepicker.js.download"></script>
+ <!-- Tempusdominus Bootstrap 4 -->
+ <script src="./Staff Selection Commision_files/tempusdominus-bootstrap-4.min.js.download"></script>
+ <!-- Summernote -->
+ <script src="./Staff Selection Commision_files/summernote-bs4.min.js.download"></script>
+ <!-- overlayScrollbars -->
+ <script src="./Staff Selection Commision_files/jquery.overlayScrollbars.min.js.download"></script>
+ <!-- AdminLTE App -->
+ <script src="./Staff Selection Commision_files/adminlte.js.download"></script>
+ <!-- AdminLTE for demo purposes -->
+ <script src="./Staff Selection Commision_files/demo.js.download"></script>
+ <!-- AdminLTE dashboard demo (This is only for demo purposes) -->
+ <script src="./Staff Selection Commision_files/dashboard.js.download"></script>
+ <script src="./Staff Selection Commision_files/jquery.dataTables.min.js.download"></script>
+ <script src="./Staff Selection Commision_files/dataTables.bootstrap4.min.js.download"></script>
+ <script src="./Staff Selection Commision_files/dataTables.responsive.min.js.download"></script>
+ <script src="./Staff Selection Commision_files/responsive.bootstrap4.min.js.download"></script>
+ <script src="./Staff Selection Commision_files/dataTables.buttons.min.js.download"></script>
+ <script src="./Staff Selection Commision_files/buttons.bootstrap4.min.js.download"></script>
+ <script src="./Staff Selection Commision_files/jszip.min.js.download"></script>
+ <script src="./Staff Selection Commision_files/pdfmake.min.js.download"></script>
+ <script src="./Staff Selection Commision_files/vfs_fonts.js.download"></script>
+ <script src="./Staff Selection Commision_files/buttons.html5.min.js.download"></script>
+ <script src="./Staff Selection Commision_files/buttons.print.min.js.download"></script>
+ <script src="./Staff Selection Commision_files/buttons.colVis.min.js.download"></script>
+
+ <script src="./Staff Selection Commision_files/sweetalert.min.js.download"></script>
+ 
+
+ <link rel="stylesheet" href="./Staff Selection Commision_files/custom.css">
+
+ <link rel="stylesheet" href="./Staff Selection Commision_files/jquery-ui.css">
+
+
+ <link rel="stylesheet" href="./Staff Selection Commision_files/mdtimepicker.css">
+
+ <script src="./Staff Selection Commision_files/customValidate.js.download"></script>
+ <script src="./Staff Selection Commision_files/publish.js.download"></script>
+
+
+ <script src="./Staff Selection Commision_files/mdtimepicker.js.download"></script>
+
+ <link rel="stylesheet" href="./Staff Selection Commision_files/jquery-ui-smooth.css" type="text/css">
+
+
+
+ <script src="./Staff Selection Commision_files/jquery-ui.min.js(1).download" integrity="sha256-eGE6blurk5sHj+rmkfsGYeKyZx3M4bG+ZlFyA7Kns7E=" crossorigin="anonymous"></script>
+
+
+ <!-- AdminLTE App -->
+
+ <!-- AdminLTE for demo purposes -->
+
+ <link rel="stylesheet" href="./Staff Selection Commision_files/custom.css">
+
+
+ <script type="text/javascript" src="./Staff Selection Commision_files/jquery-3.5.1.js.download"></script>
+ <script type="text/javascript" src="./Staff Selection Commision_files/jquery.dataTables.min.js(1).download"></script>
+ <script type="text/javascript" src="./Staff Selection Commision_files/moment.min.js(1).download"></script>
+ <script type="text/javascript" src="./Staff Selection Commision_files/dataTables.dateTime.min.js.download"></script>
+ <script type="text/javascript" src="./Staff Selection Commision_files/dataTables.checkboxes.min.js.download"></script>
+
+ <link rel="stylesheet" href="./Staff Selection Commision_files/jquery.dataTables.min.css" type="text/css">
+ <link rel="stylesheet" href="./Staff Selection Commision_files/dataTables.dateTime.min.css" type="text/css">
+ <link type="text/css" href="./Staff Selection Commision_files/dataTables.checkboxes.css" rel="stylesheet">
+
+
+ <script src="./Staff Selection Commision_files/sweetalert.min.js.download"></script>
+ <link href="./Staff Selection Commision_files/jquery-ui.css" rel="stylesheet">
+ <script src="./Staff Selection Commision_files/jquery-ui.js.download"></script>
+
+
+
+
+
+
+ <script>
+     //  DataTables date range filter
+
+     var minDate, maxDate;
+
+
+     // 
+
+     // Custom filtering function which will search data in column four between two values
+     $.fn.dataTable.ext.search.push(
+         function(settings, data, dataIndex) {
+             //
+             var min = minDate.val();
+             var max = maxDate.val();
+             var date = new Date(data[4]);
+
+             if (
+                 (min === null && max === null) ||
+                 (min === null && date <= max) ||
+                 (min <= date && max === null) ||
+                 (min <= date && date <= max)
+             ) {
+                 return true;
+             }
+             return false;
+         }
+     );
+
+     $(document).ready(function() { //dom ready 
+
+
+        
+
+         let modelid = $("#modelid").val();
+         var datepickerIcon = "http://10.163.2.181:8080/sscsr_audit/site/admin/dist/img/datepicker.png";
+         let archive_baseurl = 'http://10.163.2.181:8080/sscsr_audit/site/Admin/ajaxresponseforArchievesByMonth';
+
+        
+
+
+
+         switch (modelid) {
+             case 'Tender':
+
+               
+
+         archiveTemp(
+             "tender_arc_form",
+             "form_reset_btn",
+             "effect_from_date",
+             "effect_to_date",
+             'month',
+             'year',
+             'form_submit_btn',
+             'elink',
+             'dlink',
+             'alink',
+             'from_and_to_date_container',
+             datepickerIcon,
+             archive_baseurl,
+             modelid,
+             'example'
+         );
+                 break;
+             case 'Nomination':
+               
+                archiveTemp(
+             "tender_arc_form",
+             "form_reset_btn",
+             "effect_from_date",
+             "effect_to_date",
+             'month',
+             'year',
+             'form_submit_btn',
+             'elink',
+             'dlink',
+             'alink',
+             'from_and_to_date_container',
+             datepickerIcon,
+             archive_baseurl,
+             modelid,
+             'example2'
+         );
+                 break;
+             case 2:
+                 day = "Tuesday";
+                 break;
+             case 3:
+                 day = "Wednesday";
+                 break;
+             case 4:
+                 day = "Thursday";
+                 break;
+             case 5:
+                 day = "Friday";
+                 break;
+             case 6:
+                 day = "Saturday";
+         }
+
+
+
+
+
+
+
+
+
+
+
+
+        
+
+        
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+         // Create date inputs
+         minDate = new DateTime($('#min'), {
+             format: 'YYYY-MM-DD'
+         });
+         maxDate = new DateTime($('#max'), {
+             format: 'YYYY-MM-DD'
+         });
+
+         // DataTables initialisation
+         var table = $('#list_tender').DataTable({ //datatable
+
+             "lengthMenu": [
+                 [5, 10, 25, 50, -1],
+                 [5, 10, 25, 50, "All"]
+             ],
+             'columnDefs': [{
+                 'targets': 0,
+                 'checkboxes': {
+                     'selectRow': true
+                 }
+             }],
+             'select': {
+                 'style': 'multi'
+             },
+             'order': [
+                 [1, 'asc']
+             ],
+
+         }); // datatable
+
+         // Refilter the table
+         $('#min, #max').on('change', function() {
+             // 
+             table.draw();
+         });
+
+
+
+
+         $('#resetFilter').click(function(e) {
+             e.preventDefault();
+             $('input[type=text]').val('').change();
+             var min = minDate.val('');
+             var max = maxDate.val('');
+             table.draw();
+
+
+         });
+
+
+         // Check Box
+
+
+         // Handle form submission event
+         $('#frm-example-tender').on('submit', function(e) {
+
+             
+
+             var table = $('#example').DataTable();
+
+
+             var form = this;
+
+             var rows_selected = table.column(0).checkboxes.selected();
+
+             if (rows_selected.length == 0) {
+
+                 swal({title:"Please select atleast one checkbox"});
+                 return false;
+
+             } else {
+
+
+
+
+
+                 // Iterate over all selected checkboxes
+                 $.each(rows_selected, function(index, rowId) {
+                     // Create a hidden element
+                     $(form).append(
+                         $('<input>')
+                         .attr('type', 'hidden')
+                         .attr('name', 'id[]')
+                         .val(rowId)
+                     );
+                 });
+
+                 return true;
+
+             }
+
+         });
+         // Check Box
+
+
+
+     }); // dom ready
+
+     $(function() {
+
+
+
+         var url = window.location;
+         // for single sidebar menu
+         $('ul.nav-sidebar a').filter(function() {
+             return this.href == url;
+         }).addClass('active');
+
+         // for sidebar menu and treeview
+         $('ul.nav-treeview a').filter(function() {
+                 return this.href == url;
+             }).parentsUntil(".nav-sidebar > .nav-treeview")
+             .css({
+                 'display': 'block'
+             })
+             .addClass('menu-open').prev('a')
+             .addClass('active');
+     });
+     $(function() {
+
+         jQuery("select[name='menu_type']").on('change', function() {
+          
+             if (jQuery(this).val() == 1) {
+                 jQuery(".attachmentDiv").hide();
+                 jQuery(".menulinkDiv").show();
+                 jQuery(".pageContainer").show();
+                 jQuery(".route-container").hide();
+                 jQuery(".menulinkDiv").hide();
+                 jQuery(".redirectpopup").hide();
+                 jQuery("#menu_link").val('');
+                 $('#is_redirect_popup').prop('checked', false);
+
+             } else if (jQuery(this).val() == 2) {
+                 jQuery(".attachmentDiv").hide();
+                 jQuery(".pageContainer").hide();
+                 jQuery(".route-container").hide();
+                 jQuery(".menulinkDiv").show();
+                 jQuery(".redirectpopup").show();
+                 //jQuery("#menu_link").val('#');
+                 $('#is_redirect_popup').prop('checked', true);
+
+             } else if (jQuery(this).val() == 3) {
+                 jQuery(".attachmentDiv").show();
+                 jQuery(".menulinkDiv").hide();
+                 jQuery(".pageContainer").hide();
+                 jQuery(".route-container").hide();
+                 jQuery(".menulinkDiv").hide();
+                 jQuery(".redirectpopup").hide();
+                 jQuery("#menu_link").val('');
+                 $('#is_redirect_popup').prop('checked', false);
+
+
+             } else if (jQuery(this).val() == 4) {
+                 jQuery(".attachmentDiv").hide();
+                 jQuery(".menulinkDiv").hide();
+                 jQuery(".pageContainer").hide();
+                 jQuery(".route-container").hide();
+                 jQuery(".menulinkDiv").show();
+                 jQuery(".redirectpopup").hide();
+                 jQuery("#menu_link").val('#');
+                 $('#is_redirect_popup').prop('checked', false);
+             } else {
+                 jQuery(".attachmentDiv").hide();
+                 jQuery(".pageContainer").hide();
+                 jQuery(".route-container").hide();
+                 jQuery(".menulinkDiv").show();
+
+                 jQuery(".redirectpopup").hide();
+                 jQuery("#menu_link").val('#');
+                 $('#is_redirect_popup').prop('checked', false);
+
+             }
+         });
+         jQuery("select[name='menu_type']").trigger('change');
+
+
+
+
+
+         jQuery('.publish-button').on(
+             'click',
+             function() {
+
+
+
+                 var menuid = $(this).closest('td').find('#menuid').val();
+                 var baseurl = 'http://10.163.2.181:8080/sscsr_audit/site/Admin/ajaxresponse';
+                 var redirecturl = 'http://10.163.2.181:8080/sscsr_audit/site/Admin/dashboard/?action=listmenus&&status=0';
+
+
+                 swal({title:"Do You Want To Publish ?",
+                     buttons: {
+                         yes: {
+                             text: "Ok",
+                             value: "yes"
+                         },
+                         No: {
+                             text: "Cancel",
+                             value: "No",
+                             buttonColor: "#000000",
+                         }
+                     }
+                 }).then((value) => {
+                     if (value === "yes") {
+                         jQuery.ajax({
+                             url: baseurl,
+                             data: {
+                                 menuid: menuid
+                             },
+                             type: 'post',
+                             dataType: 'json',
+                             success: function(response) {
+                                 if (response.message == 1) {
+                                     //alert("Welcome")
+                                     window.location.href = redirecturl;
+
+                                 }
+                             }
+                         });
+                     }
+                     return false;
+                 });
+             }
+         );
+         //Ajax Response for Publish
+         // Ajax Response for Page start
+
+         jQuery('.page_publish_button').on(
+             'click',
+             function() {
+
+                 //
+
+                 var pageid = $(this).closest('td').find('#pageid').val();
+                 var baseurl = 'http://10.163.2.181:8080/sscsr_audit/site/Admin/ajaxresponseforpage';
+                 var redirecturl = 'http://10.163.2.181:8080/sscsr_audit/site/Admin/dashboard/?action=listpages&&status=0';
+
+
+                 swal({title:"Do You Want To Publish ?",
+                     buttons: {
+                         yes: {
+                             text: "Ok",
+                             value: "yes"
+                         },
+                         No: {
+                             text: "Cancel",
+                             value: "No",
+                             buttonColor: "#000000",
+                         }
+                     }
+                 }).then((value) => {
+                     if (value === "yes") {
+                         jQuery.ajax({
+                             url: baseurl,
+                             data: {
+                                 pageid: pageid
+                             },
+                             type: 'post',
+                             dataType: 'json',
+                             success: function(response) {
+                                 if (response.message == 1) {
+                                     //alert("Welcome")
+                                     window.location.href = redirecturl;
+
+                                 }
+                             }
+                         });
+                     }
+                     return false;
+                 });
+             }
+         );
+         // Ajax Response for Page End
+         //list nomination publish button	
+         jQuery('.nomination-publish-button').on(
+             'click',
+             function() {
+
+                 //
+
+
+                 var nomination_id = $(this).closest('td').find('#nomination_id').val();
+                 var baseurl = 'http://10.163.2.181:8080/sscsr_audit/site/Admin/ajaxresponseforNomination';
+                 var redirecturl = 'http://10.163.2.181:8080/sscsr_audit/site/Admin/dashboard/?action=listnominations&&status=0';
+
+
+                 swal({title:"Do You Want To Publish ?",
+                     buttons: {
+                         yes: {
+                             text: "Ok",
+                             value: "yes"
+                         },
+                         No: {
+                             text: "Cancel",
+                             value: "No",
+                             buttonColor: "#000000",
+                         }
+                     }
+                 }).then((value) => {
+                     if (value === "yes") {
+                         jQuery.ajax({
+                             url: baseurl,
+                             data: {
+                                 nomination_id: nomination_id
+                             },
+                             type: 'post',
+                             dataType: 'json',
+                             success: function(response) {
+
+                                 if (response.message == 1) {
+
+
+
+
+                                     //alert("Welcome")
+                                     window.location.href = redirecturl;
+
+                                     //window.location.reload();
+
+                                 }
+                             }
+                         });
+                     }
+                     return false;
+                 });
+             }
+         );
+
+         //list nomination publish button
+
+         //list nomination Archives publish button	
+         jQuery('.nomination-archives-publish-button').on(
+             'click',
+             function() {
+
+                 
+
+
+                 var nomination_id = $(this).closest('td').find('#nomination_id').val();
+                 var baseurl = 'http://10.163.2.181:8080/sscsr_audit/site/Admin/ajaxresponseforNominationArchives';
+                 var redirecturl = 'http://10.163.2.181:8080/sscsr_audit/site/Admin/dashboard/?action=listnominationsarchieves&&status=0';
+
+
+                 swal({title:"Do You Want To Publish ?",
+                     buttons: {
+                         yes: {
+                             text: "Ok",
+                             value: "yes"
+                         },
+                         No: {
+                             text: "Cancel",
+                             value: "No",
+                             buttonColor: "#000000",
+                         }
+                     }
+                 }).then((value) => {
+                     if (value === "yes") {
+                         jQuery.ajax({
+                             url: baseurl,
+                             data: {
+                                 nomination_id: nomination_id
+                             },
+                             type: 'post',
+                             dataType: 'json',
+                             success: function(response) {
+
+                                 if (response.message == 1) {
+
+
+
+
+                                     //alert("Welcome")
+                                     window.location.href = redirecturl;
+
+                                     //window.location.reload();
+
+                                 }
+                             }
+                         });
+                     }
+                     return false;
+                 });
+             }
+         );
+
+         //list nomination Archives publish button
+
+
+
+
+         //list sp publish button	
+         jQuery('.selectionpost-publish-button').on(
+             'click',
+             function() {
+
+
+                 var selection_post_id = $(this).closest('td').find('#selection_post_id').val();
+                 var baseurl = 'http://10.163.2.181:8080/sscsr_audit/site/Admin/ajaxresponseforSelectionPost';
+                 var redirecturl = 'http://10.163.2.181:8080/sscsr_audit/site/Admin/dashboard/?action=listselectionposts&&status=0';
+
+
+                 swal({title:"Do You Want To Publish ?",
+                     buttons: {
+                         yes: {
+                             text: "Ok",
+                             value: "yes"
+                         },
+                         No: {
+                             text: "Cancel",
+                             value: "No",
+                             buttonColor: "#000000",
+                         }
+                     }
+                 }).then((value) => {
+                     if (value === "yes") {
+                         jQuery.ajax({
+                             url: baseurl,
+                             data: {
+                                 selection_post_id: selection_post_id
+                             },
+                             type: 'post',
+                             dataType: 'json',
+                             success: function(response) {
+
+                                 if (response.message == 1) {
+                                     //alert("Welcome")
+                                     window.location.href = redirecturl;
+
+                                 }
+                             }
+                         });
+                     }
+                     return false;
+                 });
+             }
+         );
+
+         //list sp publish button
+
+
+
+         //list dlist publish button	
+         jQuery('.debarred-publish-button').on(
+             'click',
+             function() {
+
+
+                 var debarred_lists_id = $(this).closest('td').find('#debarred_lists_id').val();
+                 var baseurl = 'http://10.163.2.181:8080/sscsr_audit/site/Admin/ajaxresponseforDebarredList';
+                 var redirecturl = 'http://10.163.2.181:8080/sscsr_audit/site/Admin/dashboard/?action=listdebarredlists&&status=0';
+
+
+                 swal({title:"Do You Want To Publish ?", 
+                     buttons: {
+                         yes: {
+                             text: "Ok",
+                             value: "yes"
+                         },
+                         No: {
+                             text: "Cancel",
+                             value: "No",
+                             buttonColor: "#000000",
+                         }
+                     }
+                 }).then((value) => {
+                     if (value === "yes") {
+                         jQuery.ajax({
+                             url: baseurl,
+                             data: {
+                                 debarred_lists_id: debarred_lists_id
+                             },
+                             type: 'post',
+                             dataType: 'json',
+                             success: function(response) {
+
+                                 if (response.message == 1) {
+                                     //alert("Welcome")
+                                     window.location.href = redirecturl;
+
+                                 }
+                             }
+                         });
+                     }
+                     return false;
+                 });
+             }
+         );
+
+         //list dlist publish button
+
+
+         //Notice publish button	
+         jQuery('.notice-publish-button').on(
+             'click',
+             function() {
+
+
+                 var notice_id = $(this).closest('td').find('#notice_id').val();
+                 var baseurl = 'http://10.163.2.181:8080/sscsr_audit/site/Admin/ajaxresponseforNotice';
+                 var redirecturl = 'http://10.163.2.181:8080/sscsr_audit/site/Admin/dashboard/?action=listofnotices&&status=0';
+
+
+                 swal({title:"Do You Want To Publish ?",
+                     buttons: {
+                         yes: {
+                             text: "Ok",
+                             value: "yes"
+                         },
+                         No: {
+                             text: "Cancel",
+                             value: "No",
+                             buttonColor: "#000000",
+                         }
+                     }
+                 }).then((value) => {
+                     if (value === "yes") {
+                         jQuery.ajax({
+                             url: baseurl,
+                             data: {
+                                 notice_id: notice_id
+                             },
+                             type: 'post',
+                             dataType: 'json',
+                             success: function(response) {
+
+                                 if (response.message == 1) {
+                                     //alert("Welcome")
+                                     window.location.href = redirecturl;
+
+                                 }
+                             }
+                         });
+                     }
+                     return false;
+                 });
+             }
+         );
+
+         //Notice publish button
+
+
+         //tender publish button	
+         jQuery('.tender-publish-button').on(
+             'click',
+             function() {
+                 
+
+
+                 var tender_id = $(this).closest('td').find('#tender_id').val();
+                 var baseurl = 'http://10.163.2.181:8080/sscsr_audit/site/Admin/ajaxresponseforTender';
+                 var redirecturl = 'http://10.163.2.181:8080/sscsr_audit/site/Admin/dashboard/?action=listoftenders&&status=0';
+
+
+                 swal({title:"Do You Want To Publish ?", 
+                     buttons: {
+                         yes: {
+                             text: "Ok",
+                             value: "yes"
+                         },
+                         No: {
+                             text: "Cancel",
+                             value: "No",
+                             buttonColor: "#000000",
+                         }
+                     }
+                 }).then((value) => {
+                     if (value === "yes") {
+                         jQuery.ajax({
+                             url: baseurl,
+                             data: {
+                                 tender_id: tender_id
+                             },
+                             type: 'post',
+                             dataType: 'json',
+                             success: function(response) {
+
+                                 if (response.message == 1) {
+                                     //alert("Welcome")
+                                     window.location.href = redirecturl;
+
+                                 }
+                             }
+                         });
+                     }
+                     return false;
+                 });
+             }
+         );
+
+         //tender publish button
+         //Important Links publish button	
+         jQuery('.il-publish-button').on(
+             'click',
+             function() {
+
+
+                 var importantlink_id = $(this).closest('td').find('#importantlink_id').val();
+                 var baseurl = 'http://10.163.2.181:8080/sscsr_audit/site/Admin/ajaxresponseforImportantLinks';
+                 var redirecturl = 'http://10.163.2.181:8080/sscsr_audit/site/Admin/dashboard/?action=listofimportantlinks&&status=0';
+
+
+                 swal({title:"Do You Want To Publish ?", 
+                     buttons: {
+                         yes: {
+                             text: "Ok",
+                             value: "yes"
+                         },
+                         No: {
+                             text: "Cancel",
+                             value: "No",
+                             buttonColor: "#000000",
+                         }
+                     }
+                 }).then((value) => {
+                     if (value === "yes") {
+                         jQuery.ajax({
+                             url: baseurl,
+                             data: {
+                                 importantlink_id: importantlink_id
+                             },
+                             type: 'post',
+                             dataType: 'json',
+                             success: function(response) {
+
+                                 if (response.message == 1) {
+                                     //alert("Welcome")
+                                     window.location.href = redirecturl;
+
+                                 }
+                             }
+                         });
+                     }
+                     return false;
+                 });
+             }
+         );
+
+         //tender publish button
+
+
+         //Faq publish button
+         jQuery('.faq-publish-button').on(
+             'click',
+             function() {
+
+
+                 var faq_id = $(this).closest('td').find('#faq_id').val();
+                 var baseurl = 'http://10.163.2.181:8080/sscsr_audit/site/Admin/ajaxresponseforFaq';
+                 var redirecturl = 'http://10.163.2.181:8080/sscsr_audit/site/Admin/dashboard/?action=listoffaq&&status=0';
+
+
+                 swal({title:"Do You Want To Publish ?", 
+                     buttons: {
+                         yes: {
+                             text: "Ok",
+                             value: "yes"
+                         },
+                         No: {
+                             text: "Cancel",
+                             value: "No",
+                             buttonColor: "#000000",
+                         }
+                     }
+                 }).then((value) => {
+                     if (value === "yes") {
+                         jQuery.ajax({
+                             url: baseurl,
+                             data: {
+                                 faq_id: faq_id
+                             },
+                             type: 'post',
+                             dataType: 'json',
+                             success: function(response) {
+
+                                 if (response.message == 1) {
+                                     //alert("Welcome")
+                                     window.location.href = redirecturl;
+
+                                 }
+                             }
+                         });
+                     }
+                     return false;
+                 });
+             }
+         );
+
+         //Faq publish button
+
+
+         /* 
+		        $('.pdfnomination').on('change', function() {
+            
+            
+			var myfile = $(this).closest('td').find('.pdfnomination').val();
+            var ext = myfile.split('.').pop();
+            if (ext == "pdf") {
+                return true;
+            } else {
+               swal("Accept Only PDF Files","","warning");
+				myfile.val('');
+				return;
+            }
+        }); */
+
+
+
+
+
+         jQuery("select[name='m_menu_type']").on('change', function() {
+             console.log('here')
+             if (jQuery(this).val() == 1) {
+                 jQuery(".page-container").show();
+                 jQuery(".route-container").hide();
+             } else if (jQuery(this).val() == 2) {
+                 jQuery(".page-container").hide();
+                 jQuery(".route-container").show();
+             } else {
+                 jQuery(".page-container").hide();
+                 jQuery(".route-container").hide();
+             }
+         });
+         jQuery("select[name='m_menu_type']").trigger('change');
+
+
+         //   Check box Data Table For Archives
+
+         //   Check box Data Table For Archives
+
+         var table = jQuery('#menuTbl').DataTable({
+             "lengthMenu": [
+                 [5, 10, 25, 50, -1],
+                 [5, 10, 25, 50, "All"]
+             ],
+             /* "autoWidth": false, // might need this
+			  "columns": [
+				
+				null, // automatically calculates
+				null,
+				null,
+				{ "width": "20%" },
+				null,
+				null,
+				null,
+				// remaining width
+			  ], */
+
+             //fixedColumns: true,
+             'responsive': true
+         });
+
+         //Event Category start
+
+
+         //Event Category publish button	
+         jQuery('.ec-publish-button').on(
+             'click',
+             function() {
+
+
+                 var ec_id = $(this).closest('td').find('#eventcategory_id').val();
+                 var baseurl = 'http://10.163.2.181:8080/sscsr_audit/site/Admin/ajaxresponseforEventCategory';
+                 var redirecturl = 'http://10.163.2.181:8080/sscsr_audit/site/Admin/dashboard/?action=listofeventcategories';
+
+
+                 swal({title:"Do You Want To Publish ?",
+                     buttons: {
+                         yes: {
+                             text: "Ok",
+                             value: "yes"
+                         },
+                         No: {
+                             text: "Cancel",
+                             value: "No",
+                             buttonColor: "#000000",
+                         }
+                     }
+                 }).then((value) => {
+                     if (value === "yes") {
+
+                         jQuery.ajax({
+                             url: baseurl,
+                             data: {
+                                 ec_id: ec_id
+                             },
+                             type: 'post',
+                             dataType: 'json',
+                             success: function(response) {
+
+                                 if (response.message == 1) {
+                                     //alert("Welcome")
+                                     window.location.href = redirecturl;
+
+                                 }
+                             }
+                         });
+                     }
+                     return false;
+                 });
+             }
+         );
+
+         //Event Category End
+
+         //phase mastr
+         jQuery('.pm-publish-button').on(
+             'click',
+             function() {
+
+
+                 var pm_id = $(this).closest('td').find('#phasemaster_id').val();
+                 var baseurl = 'http://10.163.2.181:8080/sscsr_audit/site/Admin/ajaxresponseforPhaseMaster';
+                 var redirecturl = 'http://10.163.2.181:8080/sscsr_audit/site/Admin/dashboard/?action=listofphasemaster';
+
+
+                 swal({title:"Do You Want To Publish ?",
+                     buttons: {
+                         yes: {
+                             text: "Ok",
+                             value: "yes"
+                         },
+                         No: {
+                             text: "Cancel",
+                             value: "No",
+                             buttonColor: "#000000",
+                         }
+                     }
+                 }).then((value) => {
+                     if (value === "yes") {
+
+                         jQuery.ajax({
+                             url: baseurl,
+                             data: {
+                                pm_id: pm_id
+                             },
+                             type: 'post',
+                             dataType: 'json',
+                             success: function(response) {
+
+                                 if (response.message == 1) {
+                                     //alert("Welcome")
+                                     window.location.href = redirecturl;
+
+                                 }
+                             }
+                         });
+                     }
+                     return false;
+                 });
+             }
+         );
+
+         //phase mastr
+
+
+
+
+
+         // Category publish button	
+         // jQuery('.category-publish-button').on(
+         //              'click',
+         //              function() {
+
+         // Tender Data Table  Start 
+         $('#adminCategory').on('click', '.category-publish-button', function(event) {
+             event.preventDefault();
+
+             var cat_id = $(this).closest('td').find('#category_id').val();
+             var baseurl = 'http://10.163.2.181:8080/sscsr_audit/site/Admin/ajaxresponseforCategory';
+             var redirecturl = 'http://10.163.2.181:8080/sscsr_audit/site/Admin/dashboard/?action=listofcategory';
+
+
+             swal({title:"Do You Want To Publish ?", 
+                 buttons: {
+                     yes: {
+                         text: "Ok",
+                         value: "yes"
+                     },
+                     No: {
+                         text: "Cancel",
+                         value: "No",
+                         buttonColor: "#000000",
+                     }
+                 }
+             }).then((value) => {
+                 if (value === "yes") {
+                     jQuery.ajax({
+                         url: baseurl,
+                         data: {
+                             cat_id: cat_id
+                         },
+                         type: 'post',
+                         dataType: 'json',
+                         success: function(response) {
+
+                             if (response.message == 1) {
+                                 //alert("Welcome")
+                                 window.location.href = redirecturl;
+
+                             }
+                         }
+                     });
+                 }
+                 return false;
+             });
+         });
+
+         //Tender Data Table  End
+
+
+         /*  Check Username Availability with jQuery and AJAX  Start*/
+
+         $("#txt_username").keyup(function() {
+
+             var username = $(this).val().trim();
+             var baseurl = 'http://10.163.2.181:8080/sscsr_audit/site/Admin/ajaxResponseforUserNameAlreadyExists';
+
+             if (username != '') {
+
+                 $.ajax({
+                     url: baseurl,
+                     type: 'post',
+                     data: {
+                         username: username
+                     },
+                     success: function(response) {
+
+                         $('#uname_response').html(response);
+
+                     }
+                 });
+             } else {
+                 $("#uname_response").html("");
+             }
+
+         });
+
+
+         /*  Check Username Availability with jQuery and AJAX End*/
+
+         /*  Check Email Availability with jQuery and AJAX  Start*/
+
+         $("#txt_email").keyup(function() {
+
+             var email = $(this).val().trim();
+             var baseurl = 'http://10.163.2.181:8080/sscsr_audit/site/Admin/ajaxResponseforEmailAlreadyExists';
+
+             if (email != '') {
+
+                 $.ajax({
+                     url: baseurl,
+                     type: 'post',
+                     data: {
+                         email: email
+                     },
+                     success: function(response) {
+
+                         $('#email_response').html(response);
+
+                     }
+                 });
+             } else {
+                 $("#email_response").html("");
+             }
+
+         });
+
+
+         /*  Check Email Availability with jQuery and AJAX End*/
+
+
+         /*  Check Phone Number Availability with jQuery and AJAX  Start*/
+
+         $("#phone_number").keyup(function() {
+
+             var phone_number = $(this).val().trim();
+             var baseurl = 'http://10.163.2.181:8080/sscsr_audit/site/Admin/ajaxResponseforPhoneNumberAlreadyExists';
+
+             if (phone_number != '') {
+
+                 $.ajax({
+                     url: baseurl,
+                     type: 'post',
+                     data: {
+                         phone_number: phone_number
+                     },
+                     success: function(response) {
+
+                         $('#phone_response').html(response);
+
+                     }
+                 });
+             } else {
+                 $("#phone_response").html("");
+             }
+
+         });
+
+
+         /*  Check Phone Number Availability with jQuery and AJAX End*/
+
+         $('#pageTbl').DataTable({
+            'paging': true,
+            'pageLength': 5,
+            'lengthMenu': [[5, 10, 20, -1], [5, 10, 20, "All"]],
+            'iDisplayLength': -1,
+         });
+         $('#adminDList').DataTable({
+            'paging': true,
+            'pageLength': 5,
+            'lengthMenu': [[5, 10, 20, -1], [5, 10, 20, "All"]],
+            'iDisplayLength': -1,
+         });
+         $('#adminCategory').DataTable({
+            'paging': true,
+            'pageLength': 5,
+            'lengthMenu': [[5, 10, 20, -1], [5, 10, 20, "All"]],
+            'iDisplayLength': -1,
+         });
+       
+
+
+         var table = jQuery('#phasemaster').DataTable({
+             "lengthMenu": [
+                 [5, 10, 25, 50, -1],
+                 [5, 10, 25, 50, "All"]
+             ],
+             /* "autoWidth": false, // might need this
+			  "columns": [
+				
+				null, // automatically calculates
+				null,
+				null,
+				{ "width": "20%" },
+				null,
+				null,
+				null,
+				// remaining width
+			  ], */
+
+             //fixedColumns: true,
+             'responsive': true
+         });
+
+
+
+     });
+ </script>
+ 
+
+ <script src="./Staff Selection Commision_files/jquery.validate.min.js(1).download" crossorigin="anonymous"></script>
+<script src="./Staff Selection Commision_files/sweetalert.min.js(1).download"></script>
+<link href="./Staff Selection Commision_files/jquery-ui(1).css" rel="stylesheet">
+<script src="./Staff Selection Commision_files/jquery-ui.js(1).download"></script>
+<script>
+$.datepicker.setDefaults({
+showOn: "button",
+buttonImage: "http://10.163.2.181:8080/sscsr_audit/site/admin/dist/img/datepicker.png",
+buttonText: "Date Picker",
+buttonImageOnly: true,
+dateFormat: 'dd-mm-yy'  
+});
+$(function() {
+$("#effect_from_date").datepicker({
+    changeMonth: true, 
+    changeYear: true, 
+    yearRange: '2020:+0',
+    minDate: 0
+ }
+ );
+$("#effect_to_date").datepicker({
+    changeMonth: true, 
+    changeYear: true, 
+    yearRange: '2020:2025',
+    minDate: 0
+ }
+);
+});
+    $(document).ready(function() {
+		$('#resume').on( 'change', function() {
+   myfile= $( this ).val();
+   var ext = myfile.split('.').pop();
+   if(ext=="pdf"){
+      return true;
+   } else{
+       swal("Accept Only PDF Files","","warning");
+	   $('#resume').val('');
+	   return;
+   }
+});
+        var myfile = "";
+        // $('#save-namination').click(function(e) {
+        //     e.preventDefault();
+        //     //$('.pdfclassupload').trigger('click');
+        //     var exam_name = $('.exam_name').val();
+        //     if (exam_name == "") {
+        //         swal('Please Enter Exam Name');
+        //         return false;
+        //     }
+        //     if (exam_name.length <= 256) {} else {
+        //         swal('Please Enter Below 256 Characters');
+        //         return false;
+        //     }
+        //     // return true;
+        //     $("#nomination_form").submit();
+        // });
+        $(document).on('click', '.add', function() {
+            var html = '';
+            html += '<tr>';
+            html += '<td><input type="text" name="pdf_name[]" class="form-control item_name" /></td>';
+            html += '<td><input type="file" name="pdf_file[]" class="form-control item_quantity pdfclassupload" accept="application/pdf" /></td>';
+            html += '<td><button type="button" name="remove" class="btn btn-danger btn-sm remove"><span class="glyphicon glyphicon-minus"></span></button></td></tr>';
+            $('#item_table').append(html);
+        });
+        $(document).on('click', '.remove', function() {
+            //debugger;
+            var pdfname = $(this).closest('tr').find('#pdfname').val();
+            var pdf_id = $(this).closest('tr').find('#pdf_id').val();
+            if (pdfname != "") {
+                var sp_id = $('.sp_id').val();
+                var baseurl = 'http://10.163.2.181:8080/sscsr_audit/site/Admin/ajaxresponseforselectionpostsforremovingfileupload';
+                jQuery.ajax({
+                    url: baseurl,
+                    data: {
+                        sp_id: sp_id,
+                        pdf_id: pdf_id
+                    },
+                    type: 'post',
+                    dataType: 'json',
+                    success: function(response) {
+                        if (response.message == 1) {
+                            //alert("Welcome")
+                            window.location.href = redirecturl;
+                        }
+                    }
+                });
+            }
+            // alert(pdfname);
+            $(this).closest('tr').remove();
+        });
+        $('.pdfclassupload').on('change', function() {
+            myfile = $(this).val();
+            var ext = myfile.split('.').pop();
+            if (ext == "pdf") {
+                alert(ext);
+            } else {
+                alert(ext);
+            }
+        });
+    });
+</script><div id="ui-datepicker-div" class="ui-datepicker ui-widget ui-widget-content ui-helper-clearfix ui-corner-all" style="position: absolute; top: 409.656px; left: 484.078px; z-index: 1; display: none;"><div class="ui-datepicker-header ui-widget-header ui-helper-clearfix ui-corner-all"><a class="ui-datepicker-prev ui-corner-all ui-state-disabled" title="Prev"><span class="ui-icon ui-icon-circle-triangle-w">Prev</span></a><a class="ui-datepicker-next ui-corner-all" data-handler="next" data-event="click" title="Next"><span class="ui-icon ui-icon-circle-triangle-e">Next</span></a><div class="ui-datepicker-title"><select class="ui-datepicker-month" data-handler="selectMonth" data-event="change"><option value="9" selected="selected">Oct</option><option value="10">Nov</option><option value="11">Dec</option></select><select class="ui-datepicker-year" data-handler="selectYear" data-event="change"><option value="2023" selected="selected">2023</option></select></div></div><table class="ui-datepicker-calendar"><thead><tr><th class="ui-datepicker-week-end"><span title="Sunday">Su</span></th><th><span title="Monday">Mo</span></th><th><span title="Tuesday">Tu</span></th><th><span title="Wednesday">We</span></th><th><span title="Thursday">Th</span></th><th><span title="Friday">Fr</span></th><th class="ui-datepicker-week-end"><span title="Saturday">Sa</span></th></tr></thead><tbody><tr><td class=" ui-datepicker-week-end ui-datepicker-unselectable ui-state-disabled "><span class="ui-state-default">1</span></td><td class=" ui-datepicker-unselectable ui-state-disabled "><span class="ui-state-default">2</span></td><td class=" ui-datepicker-unselectable ui-state-disabled "><span class="ui-state-default">3</span></td><td class=" ui-datepicker-unselectable ui-state-disabled "><span class="ui-state-default">4</span></td><td class=" ui-datepicker-unselectable ui-state-disabled "><span class="ui-state-default">5</span></td><td class=" ui-datepicker-unselectable ui-state-disabled "><span class="ui-state-default">6</span></td><td class=" ui-datepicker-week-end ui-datepicker-unselectable ui-state-disabled "><span class="ui-state-default">7</span></td></tr><tr><td class=" ui-datepicker-week-end ui-datepicker-unselectable ui-state-disabled "><span class="ui-state-default">8</span></td><td class=" ui-datepicker-unselectable ui-state-disabled "><span class="ui-state-default">9</span></td><td class=" ui-datepicker-days-cell-over  ui-datepicker-today" data-handler="selectDay" data-event="click" data-month="9" data-year="2023"><a class="ui-state-default ui-state-highlight" href="http://10.163.2.181:8080/sscsr_audit/site/Admin/edittender#">10</a></td><td class=" " data-handler="selectDay" data-event="click" data-month="9" data-year="2023"><a class="ui-state-default" href="http://10.163.2.181:8080/sscsr_audit/site/Admin/edittender#">11</a></td><td class=" " data-handler="selectDay" data-event="click" data-month="9" data-year="2023"><a class="ui-state-default" href="http://10.163.2.181:8080/sscsr_audit/site/Admin/edittender#">12</a></td><td class=" " data-handler="selectDay" data-event="click" data-month="9" data-year="2023"><a class="ui-state-default" href="http://10.163.2.181:8080/sscsr_audit/site/Admin/edittender#">13</a></td><td class=" ui-datepicker-week-end " data-handler="selectDay" data-event="click" data-month="9" data-year="2023"><a class="ui-state-default" href="http://10.163.2.181:8080/sscsr_audit/site/Admin/edittender#">14</a></td></tr><tr><td class=" ui-datepicker-week-end " data-handler="selectDay" data-event="click" data-month="9" data-year="2023"><a class="ui-state-default" href="http://10.163.2.181:8080/sscsr_audit/site/Admin/edittender#">15</a></td><td class=" " data-handler="selectDay" data-event="click" data-month="9" data-year="2023"><a class="ui-state-default" href="http://10.163.2.181:8080/sscsr_audit/site/Admin/edittender#">16</a></td><td class=" " data-handler="selectDay" data-event="click" data-month="9" data-year="2023"><a class="ui-state-default" href="http://10.163.2.181:8080/sscsr_audit/site/Admin/edittender#">17</a></td><td class=" " data-handler="selectDay" data-event="click" data-month="9" data-year="2023"><a class="ui-state-default" href="http://10.163.2.181:8080/sscsr_audit/site/Admin/edittender#">18</a></td><td class=" " data-handler="selectDay" data-event="click" data-month="9" data-year="2023"><a class="ui-state-default" href="http://10.163.2.181:8080/sscsr_audit/site/Admin/edittender#">19</a></td><td class=" " data-handler="selectDay" data-event="click" data-month="9" data-year="2023"><a class="ui-state-default" href="http://10.163.2.181:8080/sscsr_audit/site/Admin/edittender#">20</a></td><td class=" ui-datepicker-week-end " data-handler="selectDay" data-event="click" data-month="9" data-year="2023"><a class="ui-state-default" href="http://10.163.2.181:8080/sscsr_audit/site/Admin/edittender#">21</a></td></tr><tr><td class=" ui-datepicker-week-end " data-handler="selectDay" data-event="click" data-month="9" data-year="2023"><a class="ui-state-default" href="http://10.163.2.181:8080/sscsr_audit/site/Admin/edittender#">22</a></td><td class=" " data-handler="selectDay" data-event="click" data-month="9" data-year="2023"><a class="ui-state-default" href="http://10.163.2.181:8080/sscsr_audit/site/Admin/edittender#">23</a></td><td class=" " data-handler="selectDay" data-event="click" data-month="9" data-year="2023"><a class="ui-state-default" href="http://10.163.2.181:8080/sscsr_audit/site/Admin/edittender#">24</a></td><td class=" " data-handler="selectDay" data-event="click" data-month="9" data-year="2023"><a class="ui-state-default" href="http://10.163.2.181:8080/sscsr_audit/site/Admin/edittender#">25</a></td><td class=" " data-handler="selectDay" data-event="click" data-month="9" data-year="2023"><a class="ui-state-default" href="http://10.163.2.181:8080/sscsr_audit/site/Admin/edittender#">26</a></td><td class=" " data-handler="selectDay" data-event="click" data-month="9" data-year="2023"><a class="ui-state-default" href="http://10.163.2.181:8080/sscsr_audit/site/Admin/edittender#">27</a></td><td class=" ui-datepicker-week-end " data-handler="selectDay" data-event="click" data-month="9" data-year="2023"><a class="ui-state-default" href="http://10.163.2.181:8080/sscsr_audit/site/Admin/edittender#">28</a></td></tr><tr><td class=" ui-datepicker-week-end " data-handler="selectDay" data-event="click" data-month="9" data-year="2023"><a class="ui-state-default" href="http://10.163.2.181:8080/sscsr_audit/site/Admin/edittender#">29</a></td><td class=" " data-handler="selectDay" data-event="click" data-month="9" data-year="2023"><a class="ui-state-default" href="http://10.163.2.181:8080/sscsr_audit/site/Admin/edittender#">30</a></td><td class=" " data-handler="selectDay" data-event="click" data-month="9" data-year="2023"><a class="ui-state-default" href="http://10.163.2.181:8080/sscsr_audit/site/Admin/edittender#">31</a></td><td class=" ui-datepicker-other-month ui-datepicker-unselectable ui-state-disabled">&nbsp;</td><td class=" ui-datepicker-other-month ui-datepicker-unselectable ui-state-disabled">&nbsp;</td><td class=" ui-datepicker-other-month ui-datepicker-unselectable ui-state-disabled">&nbsp;</td><td class=" ui-datepicker-week-end ui-datepicker-other-month ui-datepicker-unselectable ui-state-disabled">&nbsp;</td></tr></tbody></table></div></body></html>

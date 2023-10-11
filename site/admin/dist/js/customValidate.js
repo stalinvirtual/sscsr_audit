@@ -14,7 +14,8 @@ $("#menu_form").validate({
       required: true
     },
     menu_name: {
-      required: true
+      required: true,
+      maxlength:30,
     }
     // Add more rules as needed
   },
@@ -29,7 +30,8 @@ $("#menu_form").validate({
       required: "Please enter a link"
     },
     menu_name: {
-      required: "Please enter a menu name"
+      required: "Please enter a menu name",
+      maxlength: "Menu Name should be maximum length of 30 characters"
     }
     // Add more messages as needed
   },
@@ -42,7 +44,8 @@ $("#menu_form").validate({
     $("#edit_page_form").validate({
         rules: {
             title: {
-                required: true
+                required: true,
+                maxlength:100
             },
             page_content: {
                 required: true
@@ -51,7 +54,8 @@ $("#menu_form").validate({
         },
         messages: {
             title: {
-                required: "Please enter a title"
+                required: "Please enter a title",
+                maxlength: "Title should not exceed 100 characters of length"
             },
             page_content: {
                 required: "Please enter page content"
@@ -205,15 +209,14 @@ $('#nomination_form').validate({ // initialize the plugin
       required: true,
       greaterNominationlist: "#effect_from_date"
     }, 
-    attachment: "required",
-    
-
-    // "pdf_name[]": {
-    //   required: true
-    //  },
-    
-
-
+    'pdf_name[]': {
+      required: true
+  },
+  'pdf_file[]': {
+      required: true,
+      extension: 'pdf'
+  }
+ 
   },
   // Specify validation error messages
   messages: {
@@ -227,7 +230,13 @@ $('#nomination_form').validate({ // initialize the plugin
       required: "Please Enter To Date",
       greaterNominationlist: "Must be greater than From date"
     },
-    attachment: "Please provide a Attachment.",
+    'pdf_name[]': {
+      required: "Please enter a PDF name"
+  },
+  'pdf_file[]': {
+      required: "Please select a PDF file",
+      extension: "Please upload a valid PDF file"
+  }
    
 
   },
@@ -425,7 +434,13 @@ $(document).ready(function () {
         required: true,
         greaterSelectionPost: "#effort_from_date"
       }, 
-      attachment: "required",
+      'pdf_name[]': {
+        required: true
+    },
+    'pdf_file[]': {
+        required: true,
+        extension: 'pdf'
+    }
 
 
     },
@@ -443,7 +458,13 @@ $(document).ready(function () {
         required: "Please Enter To Date",
         greaterSelectionPost: "Must be greater than From date"
       },
-      attachment: "Please provide a Attachment.",
+      'pdf_name[]': {
+        required: "Please enter a PDF name"
+    },
+    'pdf_file[]': {
+        required: "Please select a PDF file",
+        extension: "Please upload a valid PDF file"
+    }
 
     }, errorPlacement: function(error, element) {
       if (element.attr("name") === "effect_from_date") {
@@ -670,7 +691,7 @@ $(document).ready(function () {
       rules: {
       pdf_name: {
         required: true,
-        maxlength: 256
+        maxlength: 100
       },
       effect_from_date: "required",
       effect_to_date: {
@@ -690,7 +711,7 @@ $(document).ready(function () {
    messages: {
       pdf_name: {
         required: "Please Enter Tender  Name",
-        maxlength: "Your Exam Name must be maximum 256 characters long"
+        maxlength: "Your Exam Name must be maximum 100 characters long"
       },
       effect_from_date: "Please Enter  From Date",
       effect_to_date:
@@ -797,7 +818,7 @@ $(document).ready(function () {
       rules: {
       link_name: {
         required: true,
-        maxlength: 256
+        maxlength: 100
       },
       menu_link:{
 	  required : true,
@@ -813,7 +834,7 @@ $(document).ready(function () {
     messages: {
       link_name: {
         required: "Please Enter Link  Name",
-        maxlength: "Your Exam Name must be maximum 256 characters long"
+        maxlength: "Your Exam Name must be maximum 100 characters long"
       },
      
 	  
@@ -1240,7 +1261,7 @@ $(document).ready(function () {
       rules: {
       announcement_name: {
         required: true,
-        maxlength: 256
+        maxlength: 100
       },
       announcement_content: {
         required: true,
@@ -1257,7 +1278,7 @@ $(document).ready(function () {
    messages: {
     announcement_name: {
         required: "Please Enter Announcement Name",
-        maxlength: "Your Announcement Name must be maximum 256 characters long"
+        maxlength: "Your Announcement Name must be maximum 100 characters long"
       },
       announcement_content: {
         required: "Please Enter Announcement Content",

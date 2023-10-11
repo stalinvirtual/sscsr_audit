@@ -227,8 +227,8 @@ $_SESSION['csrf_token'] = $csrfToken;
 	display:none !important;
 }
 </style>
-<script src="dist/js/jquery.validate.min.js"
-        crossorigin="anonymous"></script>
+<!-- <script src="dist/js/jquery.validate.min.js"
+        crossorigin="anonymous"></script> -->
 <script>
 function getval(sel)
 {

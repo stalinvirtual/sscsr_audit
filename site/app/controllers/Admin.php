@@ -3006,6 +3006,7 @@ HTML;
             $nomination = new Nomination();
             $nomination_list_data = $_POST['ids'];
             if ($_POST["action"] == 'archive') {
+               
                 if ($nomination->archiveNominationStatus($nomination_list_data)) {
                     $message = "Nomination  Archived successfully";
                     $message_type = "success";

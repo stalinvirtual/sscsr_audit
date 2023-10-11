@@ -124,6 +124,30 @@ margin: -27px 2px 3px 286px;
                                             </tr>
                                             <?php
                                             if ($nomination_id == 0) {
+                                                ?>
+                                                 <tr>
+                                                            <td><input type="text" name="pdf_name[]" class="form-control item_name"
+                                                                    id="pdfname" value="" />
+                                                                <input type="hidden" id="pdf_id" name="nomination_child_id[]"
+                                                                    class="form-control item_name"
+                                                                    value="" />
+                                                            </td>
+                                                            <td><input type="file" name="pdf_file[]"
+                                                                    class="form-control item_quantity pdfnomination"
+                                                                    accept="application/pdf"
+                                                                    value="" />
+                                                                <!-- <input type="text" name="pdf_files[]"
+                                                                    class="form-control item_quantity"
+                                                                    value="" /> -->
+                                                                <!-- <p><?php //echo $childlist->attachment; 
+                                                                            ?></p> -->
+                                                            </td>
+                                                            <td><button type="button" name="remove"
+                                                                    class="btn btn-danger btn-sm remove"><i class="fa fa-minus"
+                                                                        aria-hidden="true"></i></button></td>
+                                                            <br>
+                                                        </tr>
+                                                <?php
                                             } else {
                                                 foreach ($nominationchildlist as $key => $childlist):
                                                     $selected = "";

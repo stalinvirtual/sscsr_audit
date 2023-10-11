@@ -133,6 +133,20 @@ margin: -27px 2px 3px 286px;
                                             </tr>
                                             <?php
                                             if ($gallery_id == 0) {
+                                                ?>
+                                                     <tr>
+                                                           
+                                                                <input type="hidden" id="image_id" name="image_id[]" class="form-control item_name" />
+                                                            
+                                                            <td><input type="file" name="image_file[]" class="form-control item_quantity pdfnomination image_file" accept="image/gif, image/jpeg, image/png" />
+                                                         
+                                                                <!-- <p><?php //echo $childlist->attachment; 
+                                                                        ?></p> -->
+                                                            </td>
+                                                            <td><button type="button" name="remove" class="btn btn-danger btn-sm remove"><i class="fa fa-minus" aria-hidden="true"></i></button></td>
+                                                            <br>
+                                                        </tr>
+                                                <?php
                                             } else {
                                                 foreach ($gallery_child_list as $key => $childlist) :
                                                     $selected = "";
@@ -141,9 +155,9 @@ margin: -27px 2px 3px 286px;
                                                         $uploadPath = 'gallery' . '/' . $childlist->image_path;
                                                         $file_location = $this->route->get_base_url() . "/" . $uploadPath; ?>
                                                         <tr>
-                                                            <td>
+                                                            
                                                                 <input type="hidden" id="image_id" name="image_id[]" class="form-control item_name" value="<?php echo $childlist->image_id; ?>" />
-                                                            </td>
+                                                            
                                                             <td><input type="file" name="image_file[]" class="form-control item_quantity pdfnomination image_file" accept="image/gif, image/jpeg, image/png" value="<?php echo $childlist->image_path; ?>" />
                                                                 <input type="text" name="image_files[]" class="form-control item_quantity" value="<?php echo $childlist->image_path; ?>" />
                                                                 <!-- <p><?php //echo $childlist->attachment; 
@@ -250,7 +264,7 @@ margin: -27px 2px 3px 286px;
             html += '<tr>';
             // html += '<td><input type="text" name="pdf_name[]" class="form-control item_name" /></td>';
             html += '<td><input type="file" name="image_file[]" class="form-control item_quantity imageclassupload" accept="image/gif, image/jpeg, image/png" /></td>';
-            html += '<td><button type="button" name="remove" class="btn btn-danger btn-sm remove"><span class="glyphicon glyphicon-minus"></span></button></td></tr>';
+            html += '<td><button type="button" name="remove" class="btn btn-danger btn-sm remove"><i class="fa fa-minus" aria-hidden="true"></i></button></td></tr>';
             $('#item_table').append(html);
             $('input[type="file"]').change(function(e) {
             myfile = $(this).val();

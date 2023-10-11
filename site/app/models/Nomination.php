@@ -182,6 +182,7 @@ TEXT;
         $sql = "INSERT INTO archives.mstnominationarchivestbl (nomination_id, exam_name,category_id,effect_from_date, effect_to_date, p_status, date_archived ) 
         SELECT nomination_id, exam_name, category_id,effect_from_date, effect_to_date, '0', NOW()
        FROM public.mstnominationtbl WHERE nomination_id IN (:id)";
+       
         $delete_row = $this->insert_archieves($sql,$nomination_id);
 
 
