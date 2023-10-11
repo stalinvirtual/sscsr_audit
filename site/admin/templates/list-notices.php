@@ -156,7 +156,7 @@
                                     <th style="width: 10%">From Date</th>
                                     <th style="width: 10%">To Date</th>
                                     <th style="width: 1%">Status</th>
-                                    <th>Action</th>
+                                    <th style="width: 12%">Action</th>
 
                                 </tr>
                             </thead>

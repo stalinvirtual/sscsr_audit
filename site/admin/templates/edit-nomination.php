@@ -1,22 +1,24 @@
 <?php
 namespace App\Controllers;
+
 use App\Helpers\Helpers;
+
 Helpers::urlSecurityAudit();
 
-echo $this->get_header(); 
+echo $this->get_header();
 if (!isset($_SESSION)) {
     session_start();
-  }
-  $csrfToken = bin2hex(random_bytes(32));
-  $_SESSION['csrf_token'] = $csrfToken;?>
+}
+$csrfToken = bin2hex(random_bytes(32));
+$_SESSION['csrf_token'] = $csrfToken; ?>
 <!-- Content Wrapper. Contains page content -->
 
 <style>
-.ui-datepicker-trigger{
-margin: -27px 2px 3px 286px;
-    width: 20px;
-}
-    </style>
+    .ui-datepicker-trigger {
+        margin: -27px 2px 3px 286px;
+        width: 20px;
+    }
+</style>
 <div class="content-wrapper">
     <!-- Content Header (Page header) -->
     <section class="content-header">
@@ -55,7 +57,7 @@ margin: -27px 2px 3px 286px;
                             enctype="multipart/form-data">
                             <div class="card-body">
                                 <div class="form-group row">
-                                    <label for="inputEmail3" class="col-sm-2 col-form-label">Category  <span
+                                    <label for="inputEmail3" class="col-sm-2 col-form-label">Category <span
                                             style='color:red'>*</span></label>
                                     <div class="col-sm-6">
                                         <select name="category_id" class="form-control">
@@ -66,13 +68,15 @@ margin: -27px 2px 3px 286px;
                                                 }
                                                 ?>
                                                 <option <?php echo $selected; ?>
-                                                    value="<?php echo $category->category_id; ?>"><?php echo $category->category_name; ?></option>
+                                                    value="<?php echo $category->category_id; ?>">
+                                                    <?php echo $category->category_name; ?>
+                                                </option>
                                             <?php endforeach; ?>
                                         </select>
                                     </div>
                                 </div>
                                 <div class="form-group row">
-                                    <label for="inputEmail3" class="col-sm-2 col-form-label">Name of the Examination 
+                                    <label for="inputEmail3" class="col-sm-2 col-form-label">Name of the Examination
                                         <span style='color:red'>*</span></label>
                                     <div class="col-sm-6">
                                         <textarea class="form-control exam_name" name="exam_name" rows="5"
@@ -83,7 +87,7 @@ margin: -27px 2px 3px 286px;
                                 <div class="form-group row">
                                     <label for="inputEmail3" class="col-sm-2 col-form-label">Effect From Date<span
                                             style='color:red'>*</span></label>
-                                    <div class="col-sm-3" >
+                                    <div class="col-sm-3">
                                         <?php
                                         if (@$current_nomination['effect_from_date'] == "") {
                                             $effort_from_date = "";
@@ -96,9 +100,9 @@ margin: -27px 2px 3px 286px;
                                     </div>
                                 </div>
                                 <div class="form-group row">
-                                    <label for="inputEmail3" class="col-sm-2 col-form-label">Effect To Date  <span
+                                    <label for="inputEmail3" class="col-sm-2 col-form-label">Effect To Date <span
                                             style='color:red'>*</span></label>
-                                    <div class="col-sm-3" >
+                                    <div class="col-sm-3">
                                         <?php
                                         if (@$current_nomination['effect_to_date'] == "") {
                                             $effect_to_date = "";
@@ -111,7 +115,7 @@ margin: -27px 2px 3px 286px;
                                     </div>
                                 </div>
                                 <div class="form-group row">
-                                    <label for="inputEmail3" class="col-sm-2 col-form-label"> Attachment  <span
+                                    <label for="inputEmail3" class="col-sm-2 col-form-label"> Attachment <span
                                             style='color:red'>*</span></label>
                                     <div class="col-sm-6">
                                         <table class="table table-bordered" id="item_table">
@@ -125,28 +129,26 @@ margin: -27px 2px 3px 286px;
                                             <?php
                                             if ($nomination_id == 0) {
                                                 ?>
-                                                 <tr>
-                                                            <td><input type="text" name="pdf_name[]" class="form-control item_name"
-                                                                    id="pdfname" value="" />
-                                                                <input type="hidden" id="pdf_id" name="nomination_child_id[]"
-                                                                    class="form-control item_name"
-                                                                    value="" />
-                                                            </td>
-                                                            <td><input type="file" name="pdf_file[]"
-                                                                    class="form-control item_quantity pdfnomination"
-                                                                    accept="application/pdf"
-                                                                    value="" />
-                                                                <!-- <input type="text" name="pdf_files[]"
+                                                <tr>
+                                                    <td><input type="text" name="pdf_name[]" class="form-control item_name"
+                                                            id="pdfname" value="" />
+                                                        <input type="hidden" id="pdf_id" name="nomination_child_id[]"
+                                                            class="form-control item_name" value="" />
+                                                    </td>
+                                                    <td><input type="file" name="pdf_file[]"
+                                                            class="form-control item_quantity pdfnomination"
+                                                            accept="application/pdf" value="" />
+                                                        <!-- <input type="text" name="pdf_files[]"
                                                                     class="form-control item_quantity"
                                                                     value="" /> -->
-                                                                <!-- <p><?php //echo $childlist->attachment; 
-                                                                            ?></p> -->
-                                                            </td>
-                                                            <td><button type="button" name="remove"
-                                                                    class="btn btn-danger btn-sm remove"><i class="fa fa-minus"
-                                                                        aria-hidden="true"></i></button></td>
-                                                            <br>
-                                                        </tr>
+                                                        <!-- <p><?php //echo $childlist->attachment; 
+                                                            ?></p> -->
+                                                    </td>
+                                                    <td><button type="button" name="remove"
+                                                            class="btn btn-danger btn-sm remove"><i class="fa fa-minus"
+                                                                aria-hidden="true"></i></button></td>
+                                                    <br>
+                                                </tr>
                                                 <?php
                                             } else {
                                                 foreach ($nominationchildlist as $key => $childlist):
@@ -192,9 +194,11 @@ margin: -27px 2px 3px 286px;
                             </div>
                             <!-- /.card-body -->
                             <div class="card-footer">
-                            <input type="hidden" name="csrf_token" value="<?php echo $csrfToken; ?>">
-                                <input type="submit" class="btn btn-info" name="save-nomination" value="Submit" style="margin: 0px 0px 0px -160px;" id="save-namination">
-                                <input type="button" class="btn btn-default float-right" onclick="history.back();" style="float: left !important; margin: 0px 0px 0px 310px;"  value="Cancel">
+                                <input type="hidden" name="csrf_token" value="<?php echo $csrfToken; ?>">
+                                <input type="submit" class="btn btn-info save_btn" name="save-nomination" value="Submit"
+                                    style="margin: 0px 0px 0px -160px;" id="save-namination">
+                                <input type="button" class="btn btn-default float-right" onclick="history.back();"
+                                    style="float: left !important; margin: 0px 0px 0px 310px;" value="Cancel">
                             </div>
                             <!-- /.card-footer -->
                         </form>
@@ -210,12 +214,14 @@ margin: -27px 2px 3px 286px;
     <!-- Main content section div end -->
 </div>
 <?php echo $this->get_footer(); ?>
-    <script src="<?php echo $this->theme_url; ?>/dist/js/jquery.validate.min.js"
-        crossorigin="anonymous"></script>
-    <script src="<?php echo $this->theme_url; ?>/dist/js/sweetalert.min.js"></script>
-    <link href="<?php echo $this->theme_url; ?>/dist/css/jquery-ui.css" rel="stylesheet">
-    <script src="<?php echo $this->theme_url; ?>/dist/js/jquery-ui.js"></script>
+<script src="dist/js/jquery.validate.min.js" crossorigin="anonymous"></script>
+<script src="dist/js/sweetalert.min.js"></script>
+<link href="dist/css/jquery-ui.css" rel="stylesheet">
+<script src="dist/js/jquery-ui.js"></script>
 <script>
+    $(".save_btn").click(function () {
+        $("#effect_to_date").datepicker("option", "disabled", false);
+    });
     $.datepicker.setDefaults({
         showOn: "button",
         buttonImage: "<?php echo $this->theme_url; ?>/dist/img/datepicker.png",
@@ -228,7 +234,8 @@ margin: -27px 2px 3px 286px;
             changeMonth: true,
             changeYear: true,
             yearRange: '2020:+0',
-            minDate: 0
+            minDate: 0,
+
         });
     });
     $.datepicker.setDefaults({
@@ -243,8 +250,22 @@ margin: -27px 2px 3px 286px;
             changeMonth: true,
             changeYear: true,
             yearRange: '2020:2025',
-            minDate: 0
+            minDate: 0,
+            disabled: true
         });
+    });
+    $("#effect_from_date").on("change", function () {
+        var fromDateValue = $("#effect_from_date").datepicker("getDate");
+        if (fromDateValue) {
+            // If a date is selected in the "From Date" datepicker, enable the "To Date" datepicker
+            $("#effect_to_date").datepicker("option", "disabled", false);
+            // Set the minimum date for the "To Date" datepicker to the selected date in "From Date"
+            $("#effect_to_date").datepicker("option", "minDate", fromDateValue);
+        } else {
+            // If no date is selected in "From Date," disable and reset the "To Date" datepicker
+            $("#effect_to_date").datepicker("option", "disabled", true);
+            $("#effect_to_date").datepicker("setDate", null);
+        }
     });
     $(document).ready(function () {
         var myfile = "";
@@ -291,19 +312,19 @@ margin: -27px 2px 3px 286px;
             });
             $("input[name='pdf_file[]']").last().rules("add", {
                 required: true,
-               // accept: "application/pdf",
+                // accept: "application/pdf",
                 maxfilesize: 5242880,
                 messages: {
                     required: "Please select a PDF file",
                     //accept: "Only PDF files are allowed",
                     maxfilesize: "File size must be less than 5 MB"
-                    }
+                }
             });
 
-            jQuery.validator.addMethod("maxfilesize", function(value, element, param) {
+            jQuery.validator.addMethod("maxfilesize", function (value, element, param) {
                 //debugger;
                 if (element.files.length > 0) {
-                return element.files[0].size <= param;
+                    return element.files[0].size <= param;
                 }
                 return true; // No file selected, so it's valid
             }, "File size must be less than 5 MB");

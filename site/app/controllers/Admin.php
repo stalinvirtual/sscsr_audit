@@ -1030,7 +1030,7 @@ class Admin extends BackEndController
                         'creation_date' => date('Y-m-d H:i:s'),
                         'p_status' => '0',
                     ];
-                    //echo '<pre>';
+                    // echo '<pre>';
                     // print_r($nomination_data);
                     // exit;
                     if ($nomination->updateNomination($nomination_data, $nomination_id)) {

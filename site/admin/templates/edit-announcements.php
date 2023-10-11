@@ -101,7 +101,7 @@ $_SESSION['csrf_token'] = $csrfToken; ?>
                             <!-- /.card-body -->
                             <div class="card-footer">
                                 <input type="hidden" name="csrf_token" value="<?php echo $csrfToken; ?>">
-                                <input type="submit" class="btn btn-info" name="save_announcement" value="Submit" style="margin: 0px 0px 0px -160px;">
+                                <input type="submit" class="btn btn-info save_btn" name="save_announcement" value="Submit" style="margin: 0px 0px 0px -160px;">
                                 <input type="button" class="btn btn-default float-right" onclick="history.back();" value="Cancel" style="float: left !important; margin: 0px 0px 0px 310px;">
                             </div>
                             <!-- /.card-footer -->
@@ -122,13 +122,17 @@ $_SESSION['csrf_token'] = $csrfToken; ?>
 <link href="<?php echo $this->theme_url; ?>/dist/css/jquery-ui.css" rel="stylesheet">
 <script src="<?php echo $this->theme_url; ?>/dist/js/jquery-ui.js"></script>
 <script>
+    $(".save_btn").click(function () {
+        $("#effect_to_date").datepicker("option", "disabled", false);
+    });
     $(document).ready(function() {
         $('#announcementForm').validate({ // initialize the plugin
             ignore: [],
             rules: {
                 announcement_name: {
                     required: true,
-                    maxlength: 256
+                    maxlength: 256,
+                    restrictedChars: true 
                 },
                 announcement_content: {
                     required: function(textarea) {
@@ -147,7 +151,8 @@ $_SESSION['csrf_token'] = $csrfToken; ?>
             messages: {
                 announcement_name: {
                     required: "Please Enter Announcement Name",
-                    maxlength: "Your Announcement Name must be maximum 256 characters long"
+                    maxlength: "Your Announcement Name must be maximum 256 characters long",
+                    restrictedChars: "Special characters are not allowed."
                 },
                 announcement_content: {
                     required: "Please Enter Announcement Content",
@@ -191,6 +196,11 @@ $_SESSION['csrf_token'] = $csrfToken; ?>
             return this.optional(element) || endDateParseData >= startDateParseData;
         }, 'Must be greater than start date.');
         $("#announcementForm").on("submit", function() {});
+        $.validator.addMethod("restrictedChars", function (value, element) {
+    // Define the restricted characters
+    var restrictedChars = /[@#$%^*<>;:=_?~,{}\\]/;
+    return !restrictedChars.test(value);
+  }, "Special characters are not allowed.");
     });
     $.datepicker.setDefaults({
         showOn: "button",
@@ -210,7 +220,21 @@ $_SESSION['csrf_token'] = $csrfToken; ?>
             changeMonth: true,
             changeYear: true,
             yearRange: '2020:2025',
-            minDate: 0
+            minDate: 0,
+            disabled:true
         });
     });
+    $("#effect_from_date").on("change", function() {
+    var fromDateValue = $("#effect_from_date").datepicker("getDate");
+    if (fromDateValue) {
+      // If a date is selected in the "From Date" datepicker, enable the "To Date" datepicker
+      $("#effect_to_date").datepicker("option", "disabled", false);
+      // Set the minimum date for the "To Date" datepicker to the selected date in "From Date"
+      $("#effect_to_date").datepicker("option", "minDate", fromDateValue);
+    } else {
+      // If no date is selected in "From Date," disable and reset the "To Date" datepicker
+      $("#effect_to_date").datepicker("option", "disabled", true);
+      $("#effect_to_date").datepicker("setDate", null);
+    }
+  });
 </script>

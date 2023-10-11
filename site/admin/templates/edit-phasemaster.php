@@ -124,7 +124,8 @@ margin: -27px 2px 3px 286px;
         $("#creation_date").datepicker({
             changeMonth: true, 
             changeYear: true, 
-            yearRange: '2020:+0'
+            yearRange: '2020:+0',
+            minDate: 0,
         });
     });
     $(document).ready(function() {

@@ -144,11 +144,11 @@
                                     <th style="width: 2%"><input name="select_all" value="1" type="checkbox"></th>
                                     <th>Exam Name</th>
                                     <th style="width: 2%">Category Name</th>
-                                    <th style="width: 3%"> Pdf File</th>
+                                    <th style="width: 12%"> Pdf File</th>
                                     <th style="width: 10%">From Date</th>
                                     <th style="width: 10%">To Date</th>
                                     <th style="width: 2%">Status</th>
-                                    <th style="width: 15%">Action</th>
+                                    <th style="width: 11%">Action</th>
 
                                 </tr>
                             </thead>

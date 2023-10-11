@@ -217,7 +217,8 @@ $_SESSION['csrf_token'] = $csrfToken;
       ignore: [],
         rules: {
             title: {
-                required: true
+                required: true,
+                restrictedChars: true
             },
             page_content: {
                 required: function(textarea) {
@@ -230,7 +231,8 @@ $_SESSION['csrf_token'] = $csrfToken;
         },
         messages: {
             title: {
-                required: "Please enter a title"
+                required: "Please enter a title",
+                restrictedChars: "Special characters are not allowed."
             },
               page_content: {
                 required: "Please enter page content"
@@ -253,6 +255,11 @@ $_SESSION['csrf_token'] = $csrfToken;
         // Manually trigger validation when CKEditor content changes
     
     });
+    $.validator.addMethod("restrictedChars", function (value, element) {
+  // Define the restricted characters
+  var restrictedChars = /[@#$%^*<>;:=_?~,{}\\]/;
+  return !restrictedChars.test(value);
+}, "Special characters are not allowed.");
   
 });
 

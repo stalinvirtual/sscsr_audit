@@ -14,7 +14,7 @@
                                 <th>Category Name </th>
                                 <th style="width:20px">Category For </th>
                                 <th style="width:10px">Status</th>
-                                <th style="width:5px">Action</th>
+                                <th style="width:10%">Action</th>
                             </tr>
                         </thead>
                         <tbody>

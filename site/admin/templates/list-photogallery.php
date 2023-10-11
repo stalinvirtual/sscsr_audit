@@ -72,9 +72,9 @@
                                 <tr>
                                     <th style="width: 2%"><input name="select_all" value="1" type="checkbox"></th>
                                     <th>Event Name</th>
-                                    <th style="width: 20%"> Image Name</th>
+                                    <th style="width: 25%"> Image Name</th>
                                     <th style="width: 2%">Status</th>
-                                    <th>Action</th>
+                                    <th style="width: 15%">Action</th>
                                 </tr>
                             </thead>
                         </table>

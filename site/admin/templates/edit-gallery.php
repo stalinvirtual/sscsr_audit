@@ -223,7 +223,8 @@ margin: -27px 2px 3px 286px;
             $("#effect_from_date").datepicker({
                 changeMonth: true,
                 changeYear: true,
-                yearRange: '2020:+0'
+                yearRange: '2020:+0',
+                minDate: 0
             });
         });
         $.datepicker.setDefaults({
@@ -237,10 +238,25 @@ margin: -27px 2px 3px 286px;
             $("#effect_to_date").datepicker({
                 changeMonth: true,
                 changeYear: true,
-                yearRange: '2020:+0'
+                yearRange: '2020:+0',
+                minDate: 0,
+                disabled:true
             });
         });
     });
+    $("#effect_from_date").on("change", function() {
+    var fromDateValue = $("#effect_from_date").datepicker("getDate");
+    if (fromDateValue) {
+      // If a date is selected in the "From Date" datepicker, enable the "To Date" datepicker
+      $("#effect_to_date").datepicker("option", "disabled", false);
+      // Set the minimum date for the "To Date" datepicker to the selected date in "From Date"
+      $("#effect_to_date").datepicker("option", "minDate", fromDateValue);
+    } else {
+      // If no date is selected in "From Date," disable and reset the "To Date" datepicker
+      $("#toDate").datepicker("option", "disabled", true);
+      $("#toDate").datepicker("setDate", null);
+    }
+  });
     $(document).ready(function() {
 
 //Validation

@@ -153,11 +153,11 @@
                                     <th>Exam Name</th>
                                     <th style="width: 2%">Category Name</th>
                                     <th style="width: 2%">Phase Name </th>
-                                    <th style="width: 3%"> Pdf File</th>
+                                    <th style="width: 12%"> Pdf File</th>
                                     <th style="width: 10%">From Date</th>
                                     <th style="width: 10%">To Date</th>
                                     <th style="width: 1%">Status</th>
-                                    <th style="width: 15%">Action</th>
+                                    <th style="width: 11%">Action</th>
 
                                 </tr>
                             </thead>

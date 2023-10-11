@@ -115,7 +115,8 @@ $(function() {
     $("#effect_from_date").datepicker({
     changeMonth: true, 
     changeYear: true, 
-    yearRange: '2020:+0'
+    yearRange: '2020:+0',
+    minDate: 0
  }
 );
     });
