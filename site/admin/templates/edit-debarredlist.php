@@ -73,23 +73,29 @@ margin: -27px 2px 3px 286px;
                                     <label for="inputEmail3" class="col-sm-2 col-form-label"> Effect From Date<span style='color:red'>*</span></label>
                                     <div class="col-sm-3">
 									<?php
-									if($current_dlist['effect_from_date']==""){
+									if(@$current_dlist['effect_from_date']==""){
 										$effect_from_date = "";
 									}
 									else{
 										$effect_from_date = date('d-m-Y', strtotime($current_dlist['effect_from_date']));
 									}
-									// $effect_from_date = date('d-m-Y', strtotime($current_dlist['effect_from_date']));
+									if(@$current_dlist['effect_to_date']==""){
+										$effect_to_date = "";
+									}
+									else{
+										$effect_to_date = date('d-m-Y', strtotime($current_dlist['effect_to_date']));
+									}
 									?>
+									
                                         <input class="form-control" type="text" name="effect_from_date" id="effect_from_date" value="<?php echo $effect_from_date; ?>"  readonly>
                                     </div>
                                 </div>
-                                <!-- <div class="form-group row">
+                                <div class="form-group row">
                                     <label for="inputEmail3" class="col-sm-2 col-form-label"> Effect To Date : <span style='color:red'>*</span></label>
-                                    <div class="col-sm-10">
-                                        <input class="form-control" type="text" name="effect_to_date" id="effect_to_date" value="<?php //echo $effect_to_date; ?>" >
+                                    <div class="col-sm-3">
+                                        <input class="form-control" type="text" name="effect_to_date" id="effect_to_date" value="<?php echo $effect_to_date; ?>" readonly   >
                                     </div>
-                                </div> -->
+                                </div>
                                 <?php
                                 //echo '<pre>';
                                 // echo $nomination_id;
@@ -147,6 +153,14 @@ $("#effect_from_date").datepicker({
     minDate: 0
     
  });
+ $("#effect_to_date").datepicker({
+    changeMonth: true, 
+    changeYear: true, 
+    yearRange: '2020:2025',
+    minDate: 0,
+   
+ }
+);
 });
     $(document).ready(function() {
 		$('#resume').on( 'change', function() {

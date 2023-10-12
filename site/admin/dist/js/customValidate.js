@@ -1,4 +1,3 @@
-
 $(document).ready(function () {
   // menu
 $("#menu_form").validate({
@@ -85,7 +84,6 @@ $.validator.addMethod("restrictedChars", function (value, element) {
   return !restrictedChars.test(value);
 }, "Special characters are not allowed.");
 });
-
 $(document).ready(function () {
 //debarred_list
   $('#debarred_list_form').validate({ // initialize the plugin
@@ -98,17 +96,24 @@ $(document).ready(function () {
         effect_from_date: {
           required : true
         },
+        effect_to_date: {
+          required : true
+        },
         attachment: "required",
       },
       // Specify validation error messages
       messages: {
         pdf_name: {
-          required: "Please Enter Debarred List Name;;;;",
+          required: "Please Enter Debarred List Name;",
           maxlength: "Your Exam Name must be maximum 256 characters long",
           restrictedChars: "Special characters are not allowed."
         },
         effect_from_date:{
           required : "Please Enter  From Date",
+        },
+        effect_to_date:{
+          required : "Please Enter  To Date",
+          greaterNominationlist: "Must be greater than From date"
         },
         attachment: "Please provide a Attachment.",
       },
@@ -116,7 +121,11 @@ $(document).ready(function () {
         if (element.attr("name") === "effect_from_date") {
     // Place the error message after the image tag
     error.insertAfter(element.next("img.ui-datepicker-trigger"));
-    } else {
+    } else if (element.attr("name") === "effect_to_date") {
+      // Place the error message after the image tag
+      error.insertAfter(element.next("img.ui-datepicker-trigger"));
+    }
+    else{
     // Use the default error placement for other fields
     error.insertAfter(element);
     }
@@ -127,6 +136,17 @@ $(document).ready(function () {
         form.submit();
       }
     });
+    jQuery.validator.addMethod("greaterNominationlist", function (value, element, params) {
+      var startDate = document.getElementById("effect_from_date").value;
+        //Convert DD-MM-YYYY to YYYY-MM-DD format using Javascript
+      var startDate = startDate.split("-").reverse().join("-");
+      var endDate = document.getElementById("effect_to_date").value;
+       //Convert DD-MM-YYYY to YYYY-MM-DD format using Javascript
+      var endDate = endDate.split("-").reverse().join("-");
+      var startDateParseData = Date.parse(startDate) ;
+      var endDateParseData = Date.parse(endDate) ;
+    return this.optional(element) || endDateParseData >= startDateParseData;
+    }, 'Must be greater than start date.');
     $("#debarred_list_form").on("submit", function(){
     });
     $.validator.addMethod("restrictedChars", function (value, element) {
@@ -148,7 +168,6 @@ $(document).ready(function () {
     }
      });
 /***   Debarred List Page Validation    ***/
-
 $(document).ready(function () {
 $('#nomination_form').validate({ // initialize the plugin
   rules: {
@@ -207,7 +226,6 @@ error.insertAfter(element);
     form.submit();
   }
 });
-
 jQuery.validator.addMethod("greaterNominationlist", function (value, element, params) {
   var startDate = document.getElementById("effect_from_date").value;
     //Convert DD-MM-YYYY to YYYY-MM-DD format using Javascript
@@ -227,7 +245,6 @@ $.validator.addMethod("restrictedChars", function (value, element) {
   return !restrictedChars.test(value);
 }, "Special characters are not allowed.");
 }); 
-
 /***  Notice Validation    ***/
 $(document).ready(function () {
   jQuery.validator.addMethod("maxfilesize", function(value, element, param) {
@@ -260,7 +277,6 @@ $(document).ready(function () {
         required: "Please Enter Notice  Name",
         maxlength: "Your Exam Name must be maximum 256 characters long",
         restrictedChars: "Special characters are not allowed."
-        
       },
       effect_from_date: "Please Enter  From Date",
       effect_to_date:
@@ -322,7 +338,6 @@ $("#pdf_name").keypress(function (e) {
   }
    });
 /***   Notice Page Validation    ***/
-
 /***  Tende Validation    ***/
 $(document).ready(function () {
   jQuery.validator.addMethod("maxfilesize", function(value, element, param) {
@@ -604,7 +619,6 @@ $(document).ready(function () {
       form.submit();
     }
   });
-
   $("#category_form").on("submit", function(){
   });
   $.validator.addMethod("restrictedChars", function (value, element) {
@@ -715,10 +729,7 @@ $("#announcement_name").keypress(function (e) {
 /***  Announcement Page Validation    ***/
 ///selectionpost
 /***  Selection Post Validation    ***/
-
-
 $(document).ready(function () {
-
   $('#selection_post_form').validate({ // initialize the plugin
     rules: {
       exam_name: {
@@ -740,8 +751,6 @@ $(document).ready(function () {
         required: true,
         extension: 'pdf'
     }
-
-
     },
     // Specify validation error messages
     messages: {
@@ -765,7 +774,6 @@ $(document).ready(function () {
         required: "Please select a PDF file",
         extension: "Please upload a valid PDF file"
     }
-
     }, errorPlacement: function(error, element) {
       if (element.attr("name") === "effect_from_date") {
   // Place the error message after the image tag
@@ -785,9 +793,6 @@ $(document).ready(function () {
     }
   });
   jQuery.validator.addMethod("greaterSelectionPost", function (value, element, params) {
-
-
-
     var startDate = document.getElementById("effort_from_date").value;
     var startDate = startDate.split("-").reverse().join("-");
     var endDate = document.getElementById("effect_to_date").value;
@@ -796,8 +801,6 @@ $(document).ready(function () {
     var endDateParseData = Date.parse(endDate) ;
   return this.optional(element) || endDateParseData >= startDateParseData;
 }, 'Must be greater than start date.');
-
-
   $("#selection_post_form").on("submit", function(){
   });
   $.validator.addMethod("restrictedChars", function (value, element) {
@@ -806,31 +809,16 @@ $(document).ready(function () {
     return !restrictedChars.test(value);
   }, "Special characters are not allowed.");
   }); 
-
-
 /***************** Selection Post field validation below ****************/	
-
 // $('#exam_name').on("cut copy paste",function(e) {
 //   e.preventDefault();
 // });
-
 $("#exam_name").keypress(function (e) {
-
-
   var regex = new RegExp('^[a-zA-Z0-9 _.,(),-]*$');
-
   var key = String.fromCharCode(!event.charcode ? event.which : event.charcode);
-
   if(!regex.test(key)){
-
-
   event.preventDefault();
   return false;
   }
-
    });
-
-
-
-
 /***   Selection Post Page Validation    ***/

@@ -1,9 +1,25 @@
 {
     "errorMsg": "",
     "nominations": {},
-    "nominationchildlist": [],
+    "nominationchildlist": [
+        {
+            "nomination_child_id": 1069,
+            "nomination_id": 1101,
+            "pdf_name": "PDf 1",
+            "attachment": "57852-stalin-sept-mpr.pdf",
+            "status": 1
+        }
+    ],
     "nominations_latest_news": {},
-    "nominationchildlist_latest_news": [],
+    "nominationchildlist_latest_news": [
+        {
+            "nomination_child_id": 1069,
+            "nomination_id": 1101,
+            "pdf_name": "PDf 1",
+            "attachment": "57852-stalin-sept-mpr.pdf",
+            "status": 1
+        }
+    ],
     "selectionposts_latest_news": {},
     "selectpostschildlist_latest_news": [
         {
@@ -32,6 +48,20 @@
             "selection_post_id": 49,
             "pdf_name": "",
             "attachment": "2438-sms.pdf",
+            "status": 1
+        },
+        {
+            "selection_post_child_id": 72,
+            "selection_post_id": 57,
+            "pdf_name": "One",
+            "attachment": "44312-stalin-sept-mpr.pdf",
+            "status": 1
+        },
+        {
+            "selection_post_child_id": 73,
+            "selection_post_id": 57,
+            "pdf_name": "two ",
+            "attachment": "31189-stalin-sept-mpr.pdf",
             "status": 1
         }
     ],
@@ -116,14 +146,5 @@
         }
     ],
     "ilinkforAfterFirstFourRow": [],
-    "gallery_id_based_images": {
-        "0": {
-            "gallery_id": 63,
-            "event_id": 20,
-            "year": "2023",
-            "image_id": 99,
-            "image_path": "15881-17357-2021-01-28.jpg",
-            "event_name": "General"
-        }
-    }
+    "gallery_id_based_images": {}
 }

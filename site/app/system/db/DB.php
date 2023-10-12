@@ -61,8 +61,11 @@ class DB
     public function insert_archieves($sql,$id){
         try {
             $insertNominationStmt = $this->pdo->prepare($sql);
-            $insertNominationStmt->bindParam(':id', $id, \PDO::PARAM_INT);
-            $insertNominationResult = $insertNominationStmt->execute();
+            $idArray = explode(',', $id);
+            foreach ($idArray as $key => $value) {
+                $insertNominationStmt->bindParam($key + 1, $idArray[$key], \PDO::PARAM_INT);
+                $insertNominationResult = $insertNominationStmt->execute();
+            }
             return $insertNominationResult;
         } catch (\PDOException $e) {
             // Handle the exception, e.g., log the error or return a specific value indicating failure.
@@ -299,7 +302,7 @@ class DB
     public function whereconditionarchieves($str)
     {
         $this->query .= " WHERE  $str";
-        //  echo   $this->query;
+         // echo   $this->query;
         //  exit;
         return $this;
     }

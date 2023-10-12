@@ -88,6 +88,8 @@ class Admin extends BackEndController
         "common_nomination_archive" => "Admin/commonNominationArchive",
         "common_sp_archive" => "Admin/commonSelectionPostArchive",
         "common_tender_archive" => "Admin/commonTenderArchive",
+        "common_dlist_archive" => "Admin/commonDlistArchive",
+
         "common_announcement_archive" => "Admin/commonAnnouncementArchive",
         "common_notice_archive" => "Admin/commonNoticeArchive",
         "tender_boy" => "Admin/ArchiveTest",
@@ -102,10 +104,13 @@ class Admin extends BackEndController
         "delete_selection_post_link" => "admin/deleteselectionpost/{id}",
         "list_ckeditor_link_file" => "Admin/dashboard/?action=listckeditor&type=file",
         "list_ckeditor_link_image" => "Admin/dashboard/?action=listckeditor&type=image",
+
         "list_debarred_lists_link" => "Admin/dashboard/?action=listdebarredlists",
         "create_debarred_lists_link" => "Admin/editdebarredlists",
         "edit_debarred_lists_link" => "Admin/editdebarredlists/{id}",
         "delete_debarred_lists_link" => "admin/deletedebarredlists/{id}",
+
+
         "list_of_login_user_details" => "Admin/dashboard/?action=listofloginusers",
         "create_login_user_link" => "Admin/editloginuser",
         "edit_login_user_link" => "Admin/editloginuser/{id}",
@@ -1358,11 +1363,12 @@ class Admin extends BackEndController
                 $final_file = Helpers::cleanData($_POST['pdflink']);
             }
             $effect_from_date = date('Y-m-d', strtotime(Helpers::cleanData($_POST['effect_from_date'])));
-            //$effect_to_date =  date('Y-m-d', strtotime(Helpers::cleanData($_POST['effect_to_date'])));
+            $effect_to_date =  date('Y-m-d', strtotime(Helpers::cleanData($_POST['effect_to_date'])));
             $dlist_data = [
                 'pdf_name' => Helpers::cleanData($_POST['pdf_name']),
                 'attachment' => $final_file,
                 'effect_from_date' => $effect_from_date,
+                'effect_to_date' => $effect_to_date,
                 'p_status' => '0'
             ];
             /* echo "<pre>";
@@ -4213,4 +4219,206 @@ TEXT;
         $_SESSION['notification'] = ['message' => $message, 'message_type' => $message_type];
         $this->route->redirect($this->route->site_url("Admin/dashboard/?action=listofannouncements"));
     }
+      /*****
+     * 
+     * 
+     * Debarred List 
+     * 
+     */
+    public function ajaxResponseForDlistDataTableLoad   ()
+    {
+        $request = 1;
+        if (isset($_POST['request'])) {
+            $request = $_POST['request'];
+        }
+        if ($request == 1) {
+            ## Read value
+            $draw = $_POST['draw'];
+            $row = $_POST['start'];
+            $rowperpage = $_POST['length']; // Rows display per page
+            $columnIndex = $_POST['order'][0]['column']; // Column index
+            $columnName = $_POST['columns'][$columnIndex]['data']; // Column name
+            $columnSortOrder = $_POST['order'][0]['dir']; // asc or desc
+            $searchValue = $_POST['search']['value']; // Search value
+            ## Search 
+            $searchQuery = " ";
+            if ($searchValue != '') {
+                $searchQuery = "   pdf_name ilike '%" . $searchValue . "%'  
+               ";
+            }
+            ## Total number of records without filtering
+            $model = new Debarredlists();
+            $year = trim($_POST['year']);
+            $month = trim($_POST['month']);
+            $effect_from_date = date('Y-m-d', strtotime($_POST['effect_from_date']));
+            $effect_to_date = date('Y-m-d', strtotime($_POST['effect_to_date']));
+            $totalRecordsWithoutFiltering = $model->totalRecordsWithOutFiltering();
+            $totalRecords = $totalRecordsWithoutFiltering->allcount;
+            ## Total number of records with filtering
+            $totalRecordsWithFiltering = $model->totalRecordsWithFiltering($searchQuery);
+            $totalRecordwithFilter = $totalRecordsWithFiltering->allcount;
+            $fetchRecordsObject = $model->getDlistDetails($year, $month, $effect_from_date, $effect_to_date, $searchQuery);
+            $fetchRecords = (array) $fetchRecordsObject;
+            $edit_debarred_lists_link = $this->links['edit_debarred_lists_link'];
+            $data = array();
+            foreach ($fetchRecords as $rowval) {
+                $edit_debarred_lists_link_str = str_replace("{id}", $rowval->debarred_lists_id, $edit_debarred_lists_link);
+                $baseurl = $this->route->site_url($edit_debarred_lists_link_str);
+                $updateButton = "<a href= '" . $baseurl . "' name='menu_update' class='iconSize'> 
+       <button type='button' title='Edit' class='btn btn-secondary iconWidth updateUser'><i class='fas fa-edit'></i></button>
+       </a>";
+                // Delete Button
+                $deleteButton = "<button title='Delete' class='btn btn-sm btn-danger iconWidth deletebtn' style='height:30px'  data-id='" . $rowval->debarred_lists_id . "'><i class='fa fa-trash'></i></button>";
+                //$archivesButton = "<button  title='Archive' style='height:30px' class='btn btn-sm btn-primary archivebtn' data-id='" . $rowval->debarred_lists_id . "'><i class='fa  fa-archive'></i></button>";
+                if ($rowval->p_status != 1) {
+                    /****
+                     * Role Checking
+                     * 
+                     * 
+                     */
+                    $user = new User();
+                    $loginUser = $user->getUser();
+                    $is_superadmin = $user->is_superadmin();
+                    $is_admin = $user->is_admin();
+                    $is_uploader = $user->is_uploader();
+                    $is_publisher = $user->is_publisher();
+                    $array = array(
+                        "super_admin" => $user->is_superadmin() ? $user->is_superadmin() : "",
+                        "admin" => $user->is_admin() ? $user->is_admin() : "",
+                        "uploader" => $user->is_uploader() ? $user->is_uploader() : "",
+                        "publisher" => $user->is_publisher() ? $user->is_publisher() : "",
+                    );
+                    if ($array['uploader'] == 1) {
+                        $action = $updateButton . " " . $deleteButton . " ";
+                    } else if ($array['publisher'] == 1) {
+                        $publishButton = "<button  title='Publish' style='height:30px' class='btn btn-sm btn-success publishbtn iconWidth' data-id='" . $rowval->debarred_lists_id . "'><i class='fa  fa-eye'></i></button>";
+                        $action = $publishButton;
+                    } else if ($array['admin'] == 1) {
+                        $publishButton = "<button  title='Publish' style='height:30px' class='btn btn-sm btn-success publishbtn iconWidth' data-id='" . $rowval->debarred_lists_id . "'><i class='fa  fa-eye'></i></button>";
+                        $action = $updateButton . " " . $deleteButton . " " . $publishButton;
+                    } else {
+                    }
+                    /****
+                     * Role Checking
+                     * 
+                     * 
+                     */
+                } else {
+                    $action = "<p style='color:green'>Published</p>";
+                }
+                $pdfPath = "";
+                $selected = "";
+                $selected = "selected=\"selected\"";
+                $uploadPath = 'debarredlists' . '/' . $rowval->attachment;
+                $file_location = $this->route->get_base_url() . "/" . $uploadPath;
+                $pdfPath .= <<<TEXT
+              <a href="$file_location " target="_blank">$rowval->pdf_name </a><br>
+TEXT;
+                $flag = "";
+                if ($rowval->p_status == 1) {
+                    $flag .= '<i class="fa fa-flag" aria-hidden="true"  style="color:green"></i>';
+                } else {
+                    $flag .= '<i class="fa fa-flag" aria-hidden="true" style="color:red"></i>';
+                }
+                $data[] = array(
+                    "debarred_lists_id" => $rowval->debarred_lists_id,
+                    "pdf_name" => $rowval->pdf_name,
+                    "attachment" => $pdfPath,
+                    "effect_from_date" => $rowval->effect_from_date,
+                    "effect_to_date" => $rowval->effect_to_date,
+                    "p_status" => $flag,
+                    "action" => $action,
+                );
+            }
+            ## Response
+            $response = array(
+                "draw" => intval($draw),
+                "iTotalRecords" => $totalRecords,
+                "iTotalDisplayRecords" => $totalRecordwithFilter,
+                "aaData" => $data
+            );
+            echo json_encode($response);
+            exit;
+        } //request 1
+        // Delete Dlist
+        if ($request == 4) {
+            $id = $_POST['id'];
+            // Check id
+            ## Fetch records
+            $model = new Debarredlists();
+            $checkId = $model->checkDlistId($id);
+            $checkIdCount = $checkId->checkid;
+            if ($checkIdCount > 0) {
+                $deleteQuery = $model->deleteDlist($id);
+                echo 1;
+                exit;
+            } else {
+                echo 0;
+                exit;
+            }
+        }
+        // Archive Dlist
+        if ($request == 5) {
+            $id = $_POST['id'];
+            // Check id
+            ## Fetch records
+            $model = new Debarredlists();
+            $checkId = $model->checkDlistId($id);
+            $checkIdCount = $checkId->checkid;
+            if ($checkIdCount > 0) {
+                $archiveQuery = $model->archiveDlistStatus($id);
+                echo 1;
+                exit;
+            } else {
+                echo 0;
+                exit;
+            }
+        }
+        // Publish Dlist
+        if ($request == 6) {
+            $id = $_POST['id'];
+            $dlist_data = [
+                'p_status' => '1',
+            ];
+            // Check id
+            ## Fetch records
+            $model = new Debarredlists();
+            $checkId = $model->checkDlistId($id);
+            $checkIdCount = $checkId->checkid;
+            if ($checkIdCount > 0) {
+                $publishQuery = $model->updateDlistState($dlist_data, $id);
+                echo 1;
+                exit;
+            } else {
+                echo 0;
+                exit;
+            }
+        }
+    }
+    public function commonDlistArchive()
+    {
+        if (!empty($_POST["action"])) {
+            $dlist = new Debarredlists();
+            $dlist_list_data = $_POST['ids'];
+            if ($_POST["action"] == 'archive') {
+                if ($dlist->archiveDlistStatus($dlist_list_data)) {
+                    $message = " Debarred List Archived successfully";
+                    $message_type = "success";
+                }
+            } else {
+                if ($dlist->deleteDlist($dlist_list_data)) {
+                    $message = " Debarred List   Deleted successfully";
+                    $message_type = "success";
+                }
+            }
+        }
+        $_SESSION['notification'] = ['message' => $message, 'message_type' => $message_type];
+        $this->route->redirect($this->route->site_url("Admin/dashboard/?action=listdebarredlists"));
+    }
+    /*****
+     * 
+     * 
+     * Debarredlists 
+     * 
+     */
 }
