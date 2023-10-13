@@ -232,10 +232,12 @@ TEXT;
        if (is_array($tender_id)) {
            $tender_id = implode(",", $tender_id);
        }
+       $inIDS = explode(",", $tender_id);
+       $qMarks = str_repeat('?,', count($inIDS) - 1) . '?';
        $sql = "INSERT INTO archives.tenderarchivestbl (tender_id, pdf_name,effect_from_date, effect_to_date, p_status, date_archived ) 
        SELECT tender_id, pdf_name,effect_from_date, effect_to_date, '0', NOW()
-      FROM public.tendertbl WHERE tender_id IN (:id)";
-       $delete_row = $this->insert_archieves($sql,$tender_id);
+      FROM public.tendertbl WHERE tender_id IN ($qMarks )";
+       $delete_row = $this->insert_archieves($sql, $inIDS);
        
        $delId = explode(",", $tender_id);
        foreach ($delId as $val) {

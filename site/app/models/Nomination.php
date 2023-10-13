@@ -179,19 +179,21 @@ TEXT;
         if (is_array($nomination_id)) {
             $nomination_id = implode(",", $nomination_id);
         }
+       $inIDS = explode(",", $nomination_id);
+       $qMarks = str_repeat('?,', count($inIDS) - 1) . '?';
         $sql = "INSERT INTO archives.mstnominationarchivestbl (nomination_id, exam_name,category_id,effect_from_date, effect_to_date, p_status, date_archived ) 
         SELECT nomination_id, exam_name, category_id,effect_from_date, effect_to_date, '0', NOW()
-       FROM public.mstnominationtbl WHERE nomination_id IN (:id)";
+       FROM public.mstnominationtbl WHERE nomination_id IN ($qMarks)";
        
-        $delete_row = $this->insert_archieves($sql,$nomination_id);
+        $delete_row = $this->insert_archieves($sql, $inIDS);
 
 
 
         $sql1 = "INSERT INTO archives.mstnominationarchiveschildtbl(
          nomination_id, pdf_name, attachment, status)
          SELECT nomination_id, pdf_name, attachment, '0'
-       FROM public.mstnominationchildtbl WHERE nomination_id IN (:id)";
-        $childtable_insert =  $this->insert_archieves($sql1,$nomination_id);
+       FROM public.mstnominationchildtbl WHERE nomination_id IN ($qMarks)";
+        $childtable_insert =  $this->insert_archieves($sql1,$inIDS);
         
         $delId = explode(",", $nomination_id);
         foreach ($delId as $val) {

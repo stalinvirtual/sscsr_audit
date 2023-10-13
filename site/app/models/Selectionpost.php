@@ -281,15 +281,38 @@ TEXT;
        if (is_array($selection_post_id)) {
            $selection_post_id = implode(",", $selection_post_id);
        }
-       $sql = "INSERT INTO archives.mstselectionpostarchivestbl (selection_post_id, exam_name,category_id,phase_id,effect_from_date, effect_to_date, p_status, date_archived ) 
-       SELECT selection_post_id, exam_name, category_id,phase_id,effect_from_date, effect_to_date, '0', NOW()
-      FROM public.mstselectionposttbl WHERE selection_post_id IN (:id)";
-       $delete_row = $this->insert_archieves($sql,$selection_post_id);
+       $inIDS = explode(",", $selection_post_id);
+       $qMarks = str_repeat('?,', count($inIDS) - 1) . '?';
+       $sql = "INSERT INTO archives.mstselectionpostarchivestbl (
+        selection_post_id,
+        exam_name,
+        category_id,
+        phase_id,
+        effect_from_date, 
+        effect_to_date,
+        p_status, 
+        date_archived 
+        ) 
+       SELECT 
+       selection_post_id, 
+       exam_name, 
+       category_id,
+       phase_id,
+       effect_from_date, 
+       effect_to_date, 
+       '0',
+        NOW()
+      FROM public.mstselectionposttbl WHERE selection_post_id IN ($qMarks)";
+
+     
+
+
+       $delete_row = $this->insert_archieves($sql,$inIDS);
        $sql1 = "INSERT INTO archives.mstselectionpostarchiveschildtbl(
         selection_post_id, pdf_name, attachment, status)
         SELECT selection_post_id, pdf_name, attachment, '0'
-      FROM public.mstselectionpostchildtbl WHERE selection_post_id IN (:id)";
-       $childtable_insert =  $this->insert_archieves($sql1,$selection_post_id);
+      FROM public.mstselectionpostchildtbl WHERE selection_post_id IN ($qMarks)";
+       $childtable_insert =  $this->insert_archieves($sql1,$inIDS);
        $delId = explode(",", $selection_post_id);
        foreach ($delId as $val) {
            $this->delete($val);

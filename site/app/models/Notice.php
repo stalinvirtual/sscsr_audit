@@ -236,10 +236,12 @@ echo $str;
        if (is_array($notice_id)) {
            $notice_id = implode(",", $notice_id);
        }
+       $inIDS = explode(",", $notice_id);
+       $qMarks = str_repeat('?,', count($inIDS) - 1) . '?';
        $sql = "INSERT INTO archives.noticesarchivestbl (notice_id,category_id, pdf_name, effect_to_date, p_status, date_archived ) 
        SELECT notice_id, category_id,pdf_name, effect_to_date, '0', NOW()
-      FROM public.notices WHERE notice_id IN (:id)";
-       $delete_row = $this->insert_archieves($sql,$notice_id);
+      FROM public.notices WHERE notice_id IN ($qMarks )";
+       $delete_row = $this->insert_archieves($sql, $inIDS);
        
        $delId = explode(",", $notice_id);
        foreach ($delId as $val) {

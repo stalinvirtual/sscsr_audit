@@ -169,10 +169,12 @@ TEXT;
        if (is_array($dlist_id)) {
            $dlist_id = implode(",", $dlist_id);
        }
+       $inIDS = explode(",", $dlist_id);
+       $qMarks = str_repeat('?,', count($inIDS) - 1) . '?';
        $sql = "INSERT INTO archives.dlistarchivestbl (debarred_lists_id, pdf_name,effect_from_date, effect_to_date, p_status, date_archived ) 
        SELECT debarred_lists_id, pdf_name,effect_from_date, effect_to_date, '0', NOW()
-      FROM public.debarredliststbl WHERE debarred_lists_id IN (:id)";
-       $delete_row = $this->insert_archieves($sql,$dlist_id);
+      FROM public.debarredliststbl WHERE debarred_lists_id IN ( $qMarks )";
+       $delete_row = $this->insert_archieves($sql, $inIDS);
        $delId = explode(",", $dlist_id);
        foreach ($delId as $val) {
            $this->delete($val);

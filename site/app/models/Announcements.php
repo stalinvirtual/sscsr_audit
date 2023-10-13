@@ -241,10 +241,12 @@ TEXT;
        if (is_array($id)) {
            $id = implode(",", $id);
        }
+       $inIDS = explode(",", $id);
+       $qMarks = str_repeat('?,', count($inIDS) - 1) . '?';
        $sql = "INSERT INTO archives.announcementarchivestbl (announcement_id, announcement_name, announcement_content, effect_from_date, effect_to_date ) 
        SELECT announcement_id, announcement_name, announcement_content, effect_from_date, effect_to_date
-      FROM public.announcementtbl WHERE announcement_id IN ($id)";
-       $delete_row = $this->execute($sql);
+      FROM public.announcementtbl WHERE announcement_id IN ( $qMarks )";
+       $delete_row = $this->execute($sql, $inIDS );
        
        $delId = explode(",", $id);
        foreach ($delId as $val) {

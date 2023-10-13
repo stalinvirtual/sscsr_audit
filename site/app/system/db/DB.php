@@ -58,14 +58,10 @@ class DB
         $this->where = $where;
         return  implode(" AND ", $where_array);
     }
-    public function insert_archieves($sql,$id){
+    public function insert_archieves($sql,$inIDS){
         try {
             $insertNominationStmt = $this->pdo->prepare($sql);
-            $idArray = explode(',', $id);
-            foreach ($idArray as $key => $value) {
-                $insertNominationStmt->bindParam($key + 1, $idArray[$key], \PDO::PARAM_INT);
-                $insertNominationResult = $insertNominationStmt->execute();
-            }
+             $insertNominationResult = $insertNominationStmt->execute( $inIDS);
             return $insertNominationResult;
         } catch (\PDOException $e) {
             // Handle the exception, e.g., log the error or return a specific value indicating failure.
