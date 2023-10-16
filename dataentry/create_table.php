@@ -74,7 +74,7 @@ if (!isset($_SESSION['csrf_token']) || !isset($_POST['submit'])) {
 											class="form-control">
 											<option value=""></option>
 											<option value="is_kyas">Application Status</option>
-											<option value="is_tier">Written Exam</option>
+											<option value="is_tier">Written Examination/CBE</option>
 											<option value="is_skill">Skill Test</option>
 											<option value="is_dme">Detailed Medical Examination</option>
 											<option value="is_pet">Physical Standard Test and Physical Endurance Test
@@ -434,14 +434,14 @@ if (!isset($_SESSION['csrf_token']) || !isset($_POST['submit'])) {
 						});
 					} else if (response == 3) {
 						$('#table_exits').addClass("errormsg");
-						$('#table_exits').html("<i class='fa fa-exclamation-triangle' aria-hidden='true'> <span  style='color: red;font-size:15px;'><b>Written Exam Table Already Exists</span></i>");
+						$('#table_exits').html("<i class='fa fa-exclamation-triangle' aria-hidden='true'> <span  style='color: red;font-size:15px;'><b>Written Examination/CBE Table Already Exists</span></i>");
 						$('#parent_filter_select2').select2({
 							placeholder: 'Please select the correct table',
 						});
 						$('.table_columns').hide();
 					} else if (response == 4) {
 						$('#table_exits').addClass("errormsg");
-						$('#table_exits').html("<i class='fa fa-exclamation-triangle' aria-hidden='true'> <span  style='color: red;font-size:15px;'><b>Written Exam Table Not Exists</span></i>");
+						$('#table_exits').html("<i class='fa fa-exclamation-triangle' aria-hidden='true'> <span  style='color: red;font-size:15px;'><b>Written Examination/CBE Table Not Exists</span></i>");
 						$('#parent_filter_select2').select2({
 							placeholder: 'Please select the correct table',
 						});

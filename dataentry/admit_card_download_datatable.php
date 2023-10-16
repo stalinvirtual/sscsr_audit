@@ -140,7 +140,7 @@ if (!isset($_SERVER['HTTP_REFERER']) && empty($_SERVER['HTTP_REFERER']) || !isse
 										<select name="selectedTableFormat" required="true" id="selectedTableFormat"
 											class="form-control">
 											<option value=""></option>
-											<option value="is_tier">Written Exam</option>
+											<option value="is_tier">Written Examination/CBE</option>
 											<option value="is_skill">Skill Test</option>
 											<option value="is_dme">Detailed Medical Examination</option>
 											<option value="is_pet">Physical Standard Test and Physical Endurance Test

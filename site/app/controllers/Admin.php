@@ -32,6 +32,7 @@ use App\Models\Selectionpostschild as Selectionpostschild;
 use App\Models\SelectionpostArchives as SelectionpostArchives;
 use App\Models\SelectionpostschildArchives as SelectionpostschildArchives;
 use App\Models\PhaseMaster as PhaseMaster;
+use App\Models\SearchYear as SearchYear;
 ini_set('display_errors', '1');
 ini_set('display_startup_errors', '1');
 error_reporting(E_ALL);
@@ -170,6 +171,12 @@ class Admin extends BackEndController
         "edit_gallery_link" => "Admin/editgallery/{id}",
         "delete_gallery_link" => "admin/deletegallery/{id}",
         //Photo Category 
+
+         //SearchYear
+         "list_of_search_year" => "Admin/dashboard/?action=listofsearchyear",
+         "create_search_year_link" => "Admin/editsearchyear",
+         "edit_search_year_link" => "Admin/editsearchyear/{id}",
+         "delete_search_year_link" => "admin/deletesearchyear/{id}",
     );
     public function __construct($param_data = array())
     {
@@ -261,6 +268,7 @@ class Admin extends BackEndController
         $data['categories'] = Helpers::getCategoryListforAdmin();
         $data['departments'] = Helpers::getDepartmentListforAdmin();
         $data['phases'] = Helpers::getPhaseListforAdmin();
+        $data['searchyears'] = Helpers::getSearchyearforAdmin();
         $data['posts'] = Helpers::getPostListforAdmin();
         $data['debarredgetlists'] = Helpers::getDebarredListforAdmin();
         $data['usercreationlists'] = Helpers::getUserCreationforAdmin();
@@ -273,6 +281,7 @@ class Admin extends BackEndController
         $data['importantlinkscreationlists'] = Helpers::getImportantLinksListforAdmin();
         $data['eventcategorygetlists'] = Helpers::getEventCategoryListforAdmin();
         $data['phasemastergetlists'] = Helpers::getPhaseMasterListforAdmin();
+        $data['searchyeargetlists'] = Helpers::getSearchYearListforAdmin();
         $data['gallerymodelgetlists'] = Helpers::getPhotoGalleryListforAdmin();
         $data['gallerymodelchildlist'] = Helpers::getPhotoGalleryChildListforAdmin();
         $data['user_role_id'] = (int) $loginUser['roleid'];
@@ -4421,4 +4430,101 @@ TEXT;
      * Debarredlists 
      * 
      */
+
+
+     //search Year
+     public function editsearchyear()
+    {
+        $data = [];
+        $this->savesearchyear();
+        $user = new User();
+        $loginUser = $user->getUser();
+        ########  Role checking ########
+        $is_superadmin = $user->is_superadmin(); // super admin 
+        $data['is_superadmin'] = $is_superadmin; // super admin 
+        $is_admin = $user->is_admin(); // admin 
+        $data['is_admin'] = $is_admin; // admin 
+        $is_uploader = $user->is_uploader(); //uploader
+        $data['is_uploader'] = $is_uploader; //uploader
+        $is_publisher = $user->is_publisher(); // publisher
+        $data['is_publisher'] = $is_publisher; // publisher
+        ########  Role Checking ########
+        $data['logged_user'] = $loginUser;
+        $searchyear = new SearchYear();
+        // chek if the id is available in the params 
+        $searchyear_id = (isset($this->data['params'][0])) ? $this->data['params'][0] : 0;
+        $current_searchyear = $searchyear->getSearchyearby($searchyear_id, DB_ASSOC);
+        $data['current_searchyear'] = $current_searchyear;
+        $this->prepare_menus($data);
+        $this->render("edit-searchyear", $data);
+    }
+    private function savesearchyear()
+    {
+
+        $message = $message_type = "";
+        if (isset($_POST['csrf_token']) && hash_equals($_SESSION['csrf_token'], $_POST['csrf_token'])) {
+            if (isset($_POST['save_searchyear'])) {
+                $searchyear_id = isset($_POST['searchyear_id']) ? $_POST['searchyear_id'] : 0;
+                $creation_date = date('Y-m-d', strtotime(Helpers::cleanData($_POST['creation_date'])));
+                $searchyear_data = [
+                    'search_year' => Helpers::cleanData($_POST['search_year']),
+                    'creation_date' => $creation_date,
+                    'status' => '0'
+                ];
+               
+                $searchyear = new \App\Models\SearchYear();
+                
+                if ($searchyear_id == 0) { // insert new menu 
+                    echo "@@@";
+                    if ($searchyear->addSearchyear($searchyear_data)) {
+                        $message = "Search Year Added successfully";
+                        $message_type = "success";
+                    } else {
+                        $message = "Error adding Search Year ";
+                        $message_type = "warning";
+                    }
+                } else { // update menu
+                    echo '####';
+                    if ($searchyear->updateSearchyear($searchyear_data, $searchyear_id)) {
+                        $message = "Search Year Updated successfully";
+                        $message_type = "success";
+                    } else {
+                        $message = "Error updating Search Year ";
+                        $message_type = "warning";
+                    }
+                }
+                $_SESSION['notification'] = ['message' => $message, 'message_type' => $message_type];
+                $this->route->redirect($this->route->site_url("Admin/dashboard/?action=listofsearchyear"));
+            }
+        }
+    }
+    public function deletesearchyear()
+    {
+        $data = [];
+        $message = $message_type = "";
+        $searchyear_id = $this->data['params'][0];
+        $searchyear = new \App\Models\SearchYear();
+        if ($searchyear->deleteSearchyear($searchyear_id)) {
+            $message = "Search Year Deleted successfully";
+            $message_type = "success";
+        } else {
+            $message = "Error deleting Search Year ";
+        }
+        $_SESSION['notification'] = ['message' => $message, 'message_type' => $message_type];
+        $this->route->redirect($this->route->site_url("Admin/dashboard/?action=listofsearchyear"));
+    }
+    public function ajaxresponseforsearchyear()
+    {
+        $searchyear_id = htmlspecialchars($_POST['searchyear_id']);
+        // echo $cid;
+        $searchyear = new SearchYear();
+        $searchyear_data = [
+            'status' => '1',
+        ];
+        if ($searchyear->updateSearchYearState($searchyear_data, $searchyear_id)) {
+            $message = 1;
+            header('Content-Type: application/json');
+            echo json_encode(array("message" => $message));
+        }
+    }
 }

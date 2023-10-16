@@ -33,6 +33,7 @@ use App\Models\NominationArchieveschild as NominationArchieveschild;
 use App\Models\SelectionpostschildArchives as SelectionpostschildArchives;
 use App\Models\PhaseMaster as PhaseMaster;
 use App\Models\Announcements as Announcements;
+use App\Models\SearchYear as SearchYear;
 
 class Helpers
 {
@@ -419,8 +420,13 @@ class Helpers
 		//echo $data;
 		$errorMsg = "";
 		// Verify CSRF token
-		if (isset($_POST['csrf_token']) && hash_equals($_SESSION['csrf_token'], $_POST['csrf_token'])) {
+		
 			if (isset($_POST['admit_card'])) {
+				if (!hash_equals($_SESSION['csrf_token'], $_POST['csrf_token'])) {
+		// Token mismatch, handle the error (e.g., log it or display an error message)
+		die("CSRF token verification failed.");
+	}
+
 				$register_number     = trim($_POST['register_number']);
 				$dob   = trim($_POST['dob']);
 				$examname = trim($_POST['examname']);
@@ -747,9 +753,7 @@ class Helpers
 
 
 	}
-} else {
-	$errorMsg = "Invalid CSRF Token";
-}
+
 	
 		return ['errorMsg' => $errorMsg];
 	}
@@ -1252,6 +1256,12 @@ class Helpers
 		$phases = $phase->getPhase();
 		return $phases;
 	}
+	static function getSearchyearforAdmin()
+	{
+		$searchyear = new SearchYear();
+		$searchyears = $searchyear->getSearchyearList();
+		return $searchyears;
+	}
 	static function getPostListforAdmin()
 	{
 		$post = new Post();
@@ -1330,6 +1340,14 @@ class Helpers
 		$phasemastergetlists = $phasemastermodel->getPhaseMasterList();
 		return  $phasemastergetlists;
 	}
+	static function getSearchYearListforAdmin()
+	{
+		$searchyearmodel = new SearchYear();
+		$searchyeargetlists = $searchyearmodel->getSearchyearList();
+		return  $searchyeargetlists;
+	}
+	
+
 	static function getPhotoGalleryListforAdmin()
 	{
 		$gallerymodel = new Gallery();

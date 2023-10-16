@@ -287,6 +287,11 @@ echo $this->get_header();
             require_once 'list-phasemaster.php';
             
         }
+        elseif (@$_GET['action'] == 'listofsearchyear') {
+            //    require_once 'list-tender.php'; // commented for testing
+            require_once 'list-searchyear.php';
+            
+        }
 
  
 

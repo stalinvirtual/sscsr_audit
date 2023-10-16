@@ -17,10 +17,11 @@
                         <label for="inputEmail3" class="col-sm-2 col-form-label">Year : </label>
                         <div class="col-sm-3">
                             <select name="gallery_year" class="form-control" id="gallery_year">
-                                <?php for ($i = 0; $i <= 5; $i++) {
-                                    $year = date('Y', strtotime("last day of +$i year"));
-                                    echo "<option name='$year'>$year</option>";
-                                } ?>
+                            <?php foreach ($searchyears as $key => $searchyear) :
+                                            
+                                            ?>
+                                                <option  value="<?php echo $searchyear->searchyear_id; ?>"><?php echo $searchyear->search_year; ?></option>
+                                            <?php endforeach; ?>
                             </select>
                         </div>
                         

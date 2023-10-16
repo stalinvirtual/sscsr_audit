@@ -51,7 +51,7 @@ $csrf_token = $_SESSION['csrf_token']; ?>
 									<select name="selectedTableFormat" id="selectedTableFormat" required="true" class="form-control">
 										<option value="" ></option>		
 										<option value="is_kyas" >Application Status</option>		
-										<option value="is_tier" >Written Exam</option>		
+										<option value="is_tier" >Written Examination/CBE</option>		
 										<option value="is_skill" >Skill Test</option>		
 										<option value="is_dme" >Detailed Medical Examination</option>	
 										<option value="is_pet" >Physical Standard Test and Physical Endurance Test</option>		
@@ -472,7 +472,7 @@ var current_yearabove5 = d.getFullYear() + 5;	// Day		[dd]	(1 - 31)
 					else if(response == 3){
 						$('#table_exits').removeClass("errormsg");
 						$('#table_exits').addClass("successmsg");
-						$('#table_exits').html("<i class='fa fa-check-circle' aria-hidden='true'> <span  style='color: green;font-size:15px;'><b>Written Exam Table Is Exists</span></i>");
+						$('#table_exits').html("<i class='fa fa-check-circle' aria-hidden='true'> <span  style='color: green;font-size:15px;'><b>Written Examination/CBE Table Is Exists</span></i>");
 						$('.selectedtier').show();
 						$('.kyas_status').hide();
 						$('.excel_file_attachment').hide();
@@ -480,7 +480,7 @@ var current_yearabove5 = d.getFullYear() + 5;	// Day		[dd]	(1 - 31)
 					else if(response == 4){
 						$('#table_exits').removeClass("successmsg");
 						$('#table_exits').addClass("errormsg");
-						$('#table_exits').html("<i class='fa fa-exclamation-triangle' aria-hidden='true'> <span  style='color: red;font-size:15px;'><b>Written Exam Table Not Exists</span></i>");
+						$('#table_exits').html("<i class='fa fa-exclamation-triangle' aria-hidden='true'> <span  style='color: red;font-size:15px;'><b>Written Examination/CBE Table Not Exists</span></i>");
 						$('.selectedtier').hide();
 						$('.excel_file_attachment').hide();
 						$('.kyas_status').hide();

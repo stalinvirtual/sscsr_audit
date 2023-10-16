@@ -44,7 +44,7 @@ if (isset($_SERVER['HTTP_X_REQUESTED_WITH']) && ($_SERVER['HTTP_X_REQUESTED_WITH
 		if ($row->table_type == 'kyas') {
 			$table_for = "Application Status";
 		} else if ($row->table_type == 'tier') {
-			$table_for = "Written Exam";
+			$table_for = "Written Examination/CBE";
 		} else if ($row->table_type == 'skill') {
 			$table_for = "Skill Test";
 		} else if ($row->table_type == 'dme') {

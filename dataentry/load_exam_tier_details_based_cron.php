@@ -152,7 +152,7 @@ and date2 !='NA'  and date3 !='NA' and date4 !='NA'  order by exam_date asc limi
 		if ($row->table_type == 'kyas') {
 			$table_for = "Application Status";
 		} else if ($row->table_type == 'tier') {
-			$table_for = "Written Exam";
+			$table_for = "Written Examination/CBE";
 		} else if ($row->table_type == 'skill') {
 			$table_for = "Skill Test";
 		} else if ($row->table_type == 'dme') {

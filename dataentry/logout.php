@@ -17,7 +17,3 @@ try {
     die("Database Error: " . $e->getMessage());
 }
 ?>
-
-
-its working check panniko?are you there? yes anna ok 
-after the message you are already login avanga angae 

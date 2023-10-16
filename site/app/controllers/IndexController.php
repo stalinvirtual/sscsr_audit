@@ -108,9 +108,13 @@ class IndexController extends FrontEndController
 	{
 		$errorMsg = "";
 
-		if (isset($_POST['csrf_token']) && hash_equals($_SESSION['csrf_token'], $_POST['csrf_token'])) { //CSRF Token if Start
+		
 
 			if (isset($_POST['login'])) {
+				if (!hash_equals($_SESSION['csrf_token'], $_POST['csrf_token'])) {
+					// Token mismatch, handle the error (e.g., log it or display an error message)
+					$errorMsg ="CSRF token verification failed.";
+				}
 				// check captcha here
 				if (false == $this->checkCaptcha($_POST['captcha_code'])) {
 					$errorMsg = "Invalid Captcha";
@@ -134,11 +138,7 @@ class IndexController extends FrontEndController
 					$errorMsg = "Invalid credentials";
 				}
 			}
-		} //CSRF Token If End
-		else { //CSRF Token else Start
-
-			$errorMsg = "";
-		} //CSRF Token else end
+		//CSRF Token else end
 		if (isset($_GET['logout']) && $_GET['logout'] == true) {
 			session_destroy();
 			$route = new Route();
@@ -319,8 +319,13 @@ class IndexController extends FrontEndController
 	public function getknowyourstatus()
 	{
 		$errorMsg = "";
-		if (isset($_POST['csrf_token']) && hash_equals($_SESSION['csrf_token'], $_POST['csrf_token'])) {  // CSRF Token IF start
+		
 			if (isset($_POST['kyas'])) {
+		
+				if (!hash_equals($_SESSION['csrf_token'], $_POST['csrf_token'])) {
+					// Token mismatch, handle the error (e.g., log it or display an error message)
+					$errorMsg ="CSRF token verification failed.";
+				}
 				$register_number = trim($_POST['register_number']);
 				$dob = trim($_POST['dob']);
 				$table_name = trim($_POST['table_name']);
@@ -346,12 +351,7 @@ class IndexController extends FrontEndController
 					$errorMsg = "Your credentials are NOT correct. Please try with correct credentials";
 				}
 			}
-		} // CSRF Token IF end
-		else { // CSRF Token else start
-
-			$errorMsg = "";
-		} // CSRF Token else start
-
+		 // CSRF Token IF end
 
 		return ['errorMsg' => $errorMsg];
 	}
@@ -815,9 +815,12 @@ class IndexController extends FrontEndController
 	{
 		$errorMsg = "";
 
-		// Verify CSRF token
-		if (isset($_POST['csrf_token']) && hash_equals($_SESSION['csrf_token'], $_POST['csrf_token'])) {
+		
 			if (isset($_POST['admit_card'])) {
+				if (!hash_equals($_SESSION['csrf_token'], $_POST['csrf_token'])) {
+					// Token mismatch, handle the error (e.g., log it or display an error message)
+					$errorMsg ="CSRF token verification failed.";
+				}
 				$register_number = trim($_POST['register_number']);
 				$dob = trim($_POST['dob']);
 				$examname = trim($_POST['examname']);
@@ -869,9 +872,7 @@ class IndexController extends FrontEndController
 					$errorMsg = "Your credentials are NOT correct. Please try with correct credentials";
 				}
 			}
-		} else {
-			$errorMsg = "";
-		}
+		
 
 		return ['errorMsg' => $errorMsg];
 	}

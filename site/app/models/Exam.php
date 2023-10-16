@@ -69,7 +69,8 @@ class Exam extends DB
         //         JOIN exam_master em ON tm.table_exam_short_name = em.exam_short_name  
         //         WHERE  tm.table_type='kyas'  and tm.status='1' and tm.table_exam_short_name 
         //         LIKE '%".$q."%'  order by tm.table_exam_year desc ";
-
+        // echo '@@@'.$sql;
+        // exit;
         $sql  = $this->select("DISTINCT em.exam_name, dbm.table_exam_year, dbm.table_type, dbm.table_name,dbm.table_exam_short_name,dbm.table_id")
                 ->from("exam_master em ")
                 
@@ -77,11 +78,11 @@ class Exam extends DB
                 
                 
                 ->where(['dbm.status' => '1','dbm.table_type' => 'kyas'])
-                ->like('dbm.table_exam_short_name',$q)
+               //->like('dbm.table_exam_short_name',$q)
+
                 ->order_by("dbm.table_id desc")
                 ->get_list();
-              //  echo $this->last_query;
-
+                
         $lastinsertid = $sql;
         $lastinsertid = (object)$lastinsertid;
         return $lastinsertid;
@@ -97,7 +98,7 @@ $sql  = $this->select("DISTINCT em.exam_name, dbm.table_exam_year, dbm.table_typ
 ->join("sscsr_db_table_city_tier_master dtm","dbm.table_name = dtm.table_name","JOIN")
 ->join("tier_master tm","cast(dtm.tier_id as char(255)) =  cast(tm.tier_id as char(255))","JOIN")
 ->where(['dtm.status' => '1','dtm.stop_status' => '0'])
-->like('dbm.table_exam_short_name',$q)
+//->like('dbm.table_exam_short_name',$q)
 ->order_by("dbm.table_id desc")
 ->get_list();
 
@@ -120,7 +121,7 @@ $sql  = $this->select("DISTINCT em.exam_name, dbm.table_exam_year, dbm.table_typ
         ->join("sscsr_db_table_tier_master dtm","dbm.table_name = dtm.table_name","JOIN")
         ->join("tier_master tm","cast(dtm.tier_id as char(255)) =  cast(tm.tier_id as char(255))","JOIN")
         ->where(['dtm.status' => '1','dtm.stop_status' => '1'])
-        ->like('dbm.table_exam_short_name',$q)
+        //->like('dbm.table_exam_short_name',$q)
         ->order_by("dbm.table_id desc")
         ->get_list();
         //echo $this->last_query;
@@ -142,7 +143,7 @@ $sql  = $this->select("DISTINCT em.exam_name, dbm.table_exam_year, dbm.table_typ
                 ->join("sscsr_db_table_tier_master dtm","dbm.table_name = dtm.table_name","JOIN")
                 ->join("tier_master tm","cast(dtm.tier_id as char(255)) =  cast(tm.tier_id as char(255))","JOIN")
                 //->where(['dtm.status' => '0','dtm.stop_status' => '0'])
-                ->like('dbm.table_exam_short_name',$q)
+                //->like('dbm.table_exam_short_name',$q)
                 ->order_by("dbm.table_id desc")
                 ->get_list();
                 //echo $this->last_query;

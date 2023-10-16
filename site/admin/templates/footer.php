@@ -1110,7 +1110,57 @@
 
          //phase mastr
 
+//searchyear
 
+jQuery('.sy-publish-button').on(
+             'click',
+             function() {
+
+
+                 var searchyear_id = $(this).closest('td').find('#searchyear_id').val();
+                 var baseurl = '<?php echo $this->route->site_url("Admin/ajaxresponseforsearchyear"); ?>';
+                 var redirecturl = '<?php echo $this->route->site_url("Admin/dashboard/?action=listofsearchyear"); ?>';
+
+
+                 swal({title:"Do You Want To Publish ?",
+                     buttons: {
+                         yes: {
+                             text: "Ok",
+                             value: "yes"
+                         },
+                         No: {
+                             text: "Cancel",
+                             value: "No",
+                             buttonColor: "#000000",
+                         }
+                     }
+                 }).then((value) => {
+                     if (value === "yes") {
+
+                         jQuery.ajax({
+                             url: baseurl,
+                             data: {
+                                searchyear_id: searchyear_id
+                             },
+                             type: 'post',
+                             dataType: 'json',
+                             success: function(response) {
+
+                                 if (response.message == 1) {
+                                     //alert("Welcome")
+                                     window.location.href = redirecturl;
+
+                                 }
+                             }
+                         });
+                     }
+                     return false;
+                 });
+             }
+         );
+
+
+         //searchyear
 
 
 
