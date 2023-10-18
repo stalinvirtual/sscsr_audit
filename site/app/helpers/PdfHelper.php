@@ -9,6 +9,9 @@ require(__DIR__ . "/../../dompdf/vendor/dompdf/dompdf/src/Dompdf.php");
 //  use setasign\Fpdi\Fpdi;
 //  use setasign\Fpdi\PdfReader;
 //echo __DIR__ . "/../../dompdf/vendor/autoload.php";
+// ini_set('display_errors', 1);
+// ini_set('display_startup_errors', 1);
+// error_reporting(E_ALL);
 require("functions.php");
 use Dompdf\Dompdf;
 class PdfHelper extends Dompdf
@@ -20,6 +23,9 @@ class PdfHelper extends Dompdf
       $document = new Dompdf();
       // global $base_url;
       // echo '@@@@@'. $base_url;
+      // exit;
+      // echo '<pre>';
+      // print_r($data);
       // exit;
       $exam_short_name = $data['exam_name']->table_exam_short_name;
       $generator = new \Picqer\Barcode\BarcodeGeneratorPNG();
@@ -601,7 +607,7 @@ class PdfHelper extends Dompdf
       }
    </style>
    <div class="header-class">
-      <img src=' . $headerImg . ' style="width:100%;height:80px">
+      <img src=' . $headerImg . ' style="width:100%;">
    </div>
    <div class="headingClass"><b>e-ADMISSION CERTIFICATE</b></div>
    <div class="headingClass"><b>' . $value1 . '</b></div>
@@ -774,10 +780,6 @@ class PdfHelper extends Dompdf
       );
       if ($tier_id == 1 || $tier_id == 3) {
          $theader = $tcell = "<tr>";
-         
-
-
- 
          $marks_array = explode(',', $tableArray["Marks"]);
          $subjects = explode(',', $tableArray["Subject"]);
          foreach ($subjects as $index => $subject) {

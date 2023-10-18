@@ -107,7 +107,9 @@ class PdfHelperPETExam extends Dompdf
                } else {
                   $base_url = $GLOBALS['site_url'];
                   $local_path = $base_url . "/sscsr_audit/site/";
-                  $photo_path = $local_path . "exam_assets/photo_not_exists.png";
+                   $photo_path = $local_path . "exam_assets/photo_not_exists.png";
+
+                 // exit;
                }
                break;
             case "13":
@@ -135,7 +137,7 @@ class PdfHelperPETExam extends Dompdf
                } else {
                   $base_url = $GLOBALS['site_url'];
                   $local_path = $base_url . "/sscsr_audit/site/";
-                  $photo_path = $local_path . "exam_assets/sign_not_exists.png";
+                  $sign_path = $local_path . "exam_assets/sign_not_exits.png";
                }
                break;
             case "16":
@@ -255,7 +257,7 @@ class PdfHelperPETExam extends Dompdf
      }
   </style>
   <div class="header-class">
-     <img src=' . $headerImg . ' style="width:100%;height:130px">
+     <img src=' . $headerImg . ' style="width:100%;">
   </div><br>
   <div class="headingClass"><b>e-ADMISSION CERTIFICATE</b></div>
   <div class="headingClass"><b>' . $exam_name_based_tier_year . '</b></div>

@@ -132,7 +132,8 @@ class PdfHelperDMEExam extends Dompdf
                } else {
                   $base_url = $GLOBALS['site_url'];
                   $local_path = $base_url . "/sscsr_audit/site/";
-                  $sign_path = $local_path . "exam_assets/sign_not_exists.png";
+                   $sign_path = $local_path . "exam_assets/sign_not_exits.png";
+                  //exit;
                }
                break;
             case "16":
@@ -235,7 +236,7 @@ class PdfHelperDMEExam extends Dompdf
          }
       </style>
       <div class="header-class">
-         <img src=' . $headerImg . ' style="width:100%;height:130px">
+         <img src=' . $headerImg . ' style="width:100%;">
       </div><br>
       <div class="headingClass"><b>e-ADMISSION CERTIFICATE</b></div>
       <div class="headingClass">' . $value1 . '</div>

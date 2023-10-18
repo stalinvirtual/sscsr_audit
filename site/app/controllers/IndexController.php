@@ -151,16 +151,20 @@ class IndexController extends FrontEndController
 	}
 	public function admitcard($data = array())
 	{
+
+	
+
+		
 		$uriSegments = explode("/", parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH));
 		$lastUriSegment = array_pop($uriSegments);
 		//$data = $this->getadmitcard(); 	
 		$data = Helpers::getAdmitCardDetails();
-		$tablename = $data['tableName']; // si_2019_tier
-		$tierId = $data['tier_id']; //1
-		$regNo = $data['regNo']; //10000328837
+		$tablename = @$data['tableName']; // si_2019_tier
+		$tierId = @$data['tier_id']; //1
+		$regNo = @$data['regNo']; //10000328837
 		$examname = explode('_', $tablename);
 		// si2019_1_10000328837
-		$updateId = $examname[0] . $examname[1] . '_' . $tierId . '_' . $regNo;
+		$updateId = @$examname[0] . @$examname[1] . '_' . @$tierId . '_' . @$regNo;
 		//echo $updateId;
 		//$this->printr($data);
 		date_default_timezone_set("Asia/Calcutta");
@@ -971,5 +975,22 @@ class IndexController extends FrontEndController
 		$data['gallery_id_based_images'] = Helpers::getGalleryidBasedImages();
 		$data['notices'] = Helpers::getNotice();
 		$this->render("view_all", $data);
+	}
+	public function getadmitcardCount()
+	{
+			$data = $_POST;
+			$data_array = array(
+				'examname' =>$_POST['examname'],
+				'register_number' =>$_POST['register_number'],
+				'roll_number' =>$_POST['roll_number'],
+				'dob' =>$_POST['dob']
+			);
+			$admit_card_model = new Admitcard();
+			$admit_card_model_details = $admit_card_model->getAdmitcardforTierCount($data_array);
+			$response =  $admit_card_model_details;
+			$json_response = json_encode($response);
+			header('Content-Type: application/json');
+			echo $json_response;
+		//Helpers::gethelperadmitcardCount($data);
 	}
 }

@@ -172,17 +172,28 @@ $base_url = "http://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
     width: 100% !important;
 }
 		</style>
-		<?php //echo $this->get_footer(); ?>
+		<?php //echo $this->get_footer();
+		
+		//echo $base_url = "http://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";?>
 	</div>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+	<!-- <script src="js/jquery.min.js"></script>  -->
+	<script src="js/select2.js"></script>
+	<script src="js/select2.min.js"></script>
+	<link href="css/lightgallery.css" rel="stylesheet">
+	<script src="js/lightgallery-all.min.js"></script>
+	<link href="http://code.jquery.com/ui/1.10.4/themes/ui-lightness/jquery-ui.css" rel="stylesheet">
+	<script src="http://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.5/jquery.validate.min.js"></script>
 	<!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script> -->
-	<script src="<?php echo $this->theme_url; ?>/js/jquery.min.js"></script> 
-	<script src="<?php echo $this->theme_url; ?>/js/select2.js"></script>
-	<script src="<?php echo $this->theme_url; ?>/js/select2.min.js"></script>
-	<link href="<?php echo $this->theme_url; ?>/css/lightgallery.css" rel="stylesheet">
-	<script src="<?php echo $this->theme_url; ?>/js/lightgallery-all.min.js"></script>
-	<link href="<?php echo $this->theme_url; ?>/dist/css/jquery-ui.css" rel="stylesheet">
-	<script src="<?php echo $this->theme_url; ?>/dist/js/jquery-ui.js"></script>
-	<script src="<?php echo $this->theme_url; ?>/dist/js/jquery.validate.min.js" crossorigin="anonymous"></script>
+	<!-- <script src="<?php echo $base_url; ?>/js/jquery.min.js"></script> 
+	<script src="<?php echo $base_url; ?>/js/select2.js"></script>
+	<script src="<?php echo $base_url; ?>/js/select2.min.js"></script>
+	<link href="<?php echo $base_url; ?>/css/lightgallery.css" rel="stylesheet">
+	<script src="<?php echo $base_url; ?>/js/lightgallery-all.min.js"></script>
+	<link href="<?php echo $base_url; ?>/dist/css/jquery-ui.css" rel="stylesheet">
+	<script src="<?php echo $base_url; ?>/dist/js/jquery-ui.js"></script>
+	<script src="<?php echo $base_url; ?>/dist/js/jquery.validate.min.js" crossorigin="anonymous"></script> -->
 	<style>
 		.qnsround {
 			display: inline-block;

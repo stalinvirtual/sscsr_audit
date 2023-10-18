@@ -133,10 +133,17 @@ class DB
         $this->query .= ' ' . $method . " " . $table . " ON " . $condition;
         return $this;
     }
-    public function like($column_name, $condition)
-    {
-        $this->query .= "AND " . $column_name . " LIKE " . "'%?%'";
-        $this->params[] = $condition;
+    //Old Like 
+    // public function like($column_name, $condition)  
+    // {
+    //     $this->query .= "AND " . $column_name . " LIKE " . "'%?%'";
+    //     $this->params[] = $condition;
+    //     return $this;
+    // }
+    //Old Like 
+    public function like($column_name, $condition)  {
+        $this->query .= "AND " . $column_name . " LIKE ?";
+        $this->params[] = '%' . $condition . '%'; // Add wildcards around the condition
         return $this;
     }
     public function wherelike($str, $condition)
@@ -157,16 +164,24 @@ class DB
     }
     public function where($where = null)
     {
+        ini_set('display_errors', 1);
+        ini_set('display_startup_errors', 1);
+        error_reporting(E_ALL);
+       // print_r( $where);
+       //    exit;
         $where_string = null;
         if (is_array($where)) {
             $where_string .= $this->build_where($where);
+
         } else {
             $where_string .= $where;
         }
+//echo $where_string;
+
         if ($where_string != null) {
             $this->query .= " WHERE " . $where_string;
         }
-        // echo $this->query;
+       // echo $this->query;
         return $this;
     }
     public function orwhere($where = null)
@@ -210,7 +225,7 @@ class DB
             $this->limit($rows_per_page, $page_no);
         }
         $stmt = $this->pdo->prepare($this->query);
-        //echo $this->query."<br>";
+            //echo $this->query."<br>";
          // exit;
         $stmt->execute($this->params);
         $this->params = [];
@@ -230,10 +245,14 @@ class DB
     }
     public function get_one($result_type = null)
     {
+       
         $stmt = $this->pdo->prepare($this->query);
+       // echo $this->query;
+
         $stmt->execute($this->params);
         $this->params = [];
         $records =  $stmt->fetch($this->getPdoResultType($result_type));
+     
         return $records;
     }
     private function getPdoResultType($result_type)
@@ -326,7 +345,7 @@ class DB
     public function wherecondition($str)
     {
         $this->query .= " AND   $str";
-        // echo   $this->query;
+         //echo   $this->query;
         return $this;
     }
     public function where_between($where = null)
@@ -359,9 +378,30 @@ class DB
     }
     public function updateRawQuery($tableName, $data, $where = null)
     {
-        $this->query = "UPDATE " . $tableName . " SET ";
+        // $this->query = "UPDATE " . $tableName . " SET ";
+        // foreach ($data as $column => $value) {
+        //     $this->query .= $this->quote($column) . "=" . $this->safe_str($value) . ", ";
+        // }
+        // $this->query = substr($this->query, 0, -2);
+        // $where_str = null;
+        // if ($where ==  null) {
+        //     $where_str = $this->where;
+        // } else if (is_array($where)) {
+        //     $where_str = " WHERE " . $this->build_where($where);
+        // } else {
+        //     $where_str =  " WHERE " . $where;
+        // }
+        // if ($where_str != null) {
+        //     $this->query  .= $where_str;
+        //     return $this->execute($this->query);
+        // } else {
+        //     return false;
+        // }
+        $this->params = [];
+        $this->query = "UPDATE " .$tableName . " SET ";
         foreach ($data as $column => $value) {
-            $this->query .= $this->quote($column) . "=" . $this->safe_str($value) . ", ";
+            $this->query .= "$column = ?, ";
+            $this->params[] = $value;
         }
         $this->query = substr($this->query, 0, -2);
         $where_str = null;
@@ -374,7 +414,10 @@ class DB
         }
         if ($where_str != null) {
             $this->query  .= $where_str;
-            return $this->execute($this->query);
+            $stmt =  $this->pdo->prepare($this->query);
+            $params = $this->params;
+            $this->params = [];
+            return $stmt->execute($params);
         } else {
             return false;
         }

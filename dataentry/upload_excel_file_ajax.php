@@ -189,8 +189,8 @@ if (isset($_SERVER['HTTP_X_REQUESTED_WITH']) && ($_SERVER['HTTP_X_REQUESTED_WITH
 							} else {
 								// $last_line =  system(' py  ' . $dataEntryDirectory . '/python/upload_excel_file_01.py ' . $excel_file_attachment_name_path . ' ' . $table_name . ' ' . $table_columns . ' ' . $exam_code . ' ' . $tier_id . ' ' . $table_value . ' &', $retval);
 								$command = ' py  ' . $dataEntryDirectory . '/python/upload_excel_file_01.py ' . $excel_file_attachment_name_path . ' ' . $table_name . ' ' . $table_columns . ' ' . $exam_code . ' ' . $tier_id . ' ' . $table_value;
-							// 	 echo $command;
-							// exit;
+							 	 //echo $command;
+							 //exit;
 							}
 						}
 						// get the process id from table to kill before start new process

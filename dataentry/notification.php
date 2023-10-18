@@ -37,12 +37,16 @@ $response = new stdClass();
 $response->total = $totalRecords;
 $response->processed = $currentRecords;
 $response->processing = 1;
-if( ($procesStatus ==  'stopped' || $procesStatus ==  'done') && $totalRecords != 0){
+if( ($procesStatus ==  'stopped' || $procesStatus ==  'done' || $procesStatus == 'validation-error') && $totalRecords != 0){
     $response->processing = 0;
     $message = "<p style='color:blue'>Total number of records available $totalRecords</p> 
     <p style='color:blue'>Total number of records processed $currentRecords</p><p style='color:green'>Total inserted records $successRecords</p> <p style='color:red'>Total error records $errorRecords</p>";
      if( $procesStatus == 'stopped'){
         $message .= "<br/> <span style='color:red;font-size:11px'>Note: Process Stopped by user</span>";
+    }
+    // validation error - excel file not valid
+    if( $procesStatus == 'validation-error'){
+        $message .= "<br/> <span style='color:red;font-size:11px'>The uploaded excel file is invalid, please try with another excel file</span>";
     }
     $response->message = $message;
     //update total and processed
