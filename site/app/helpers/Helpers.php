@@ -423,7 +423,6 @@ class Helpers
 // error_reporting(E_ALL);
 		//echo $data;
 		$errorMsg = "";
-<<<<<<< Updated upstream
 		// Verify CSRF token
 		
 			if (isset($_POST['admit_card'])) {
@@ -432,27 +431,6 @@ class Helpers
 		die("CSRF token verification failed.");
 	}
 
-=======
-
-		// if ($_SERVER["REQUEST_METHOD"] == "POST") {
-
-		// 	echo '<pre>';
-		// 	print_r($_POST);
-		// 	exit;
-		// }
-		
-				
-		if (isset($_POST['examname'])) {
-
-
-			
-			
-			if (!hash_equals($_SESSION['csrf_token'], $_POST['csrf_token'])) {
-				// Token mismatch, handle the error (e.g., log it or display an error message)
-				$errorMsg ="CSRF token verification failed.";
-			}
-			
->>>>>>> Stashed changes
 				$register_number     = trim($_POST['register_number']);
 				$dob   = trim($_POST['dob']);
 				$examname = trim($_POST['examname']);
@@ -805,12 +783,8 @@ class Helpers
 
 	}
 
-<<<<<<< Updated upstream
 	
 		return ['errorMsg' => $errorMsg];
-=======
-return ['errorMsg' => $errorMsg];
->>>>>>> Stashed changes
 	}
 	static function getAdmitCardPreviewDetails()
 	{

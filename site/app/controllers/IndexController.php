@@ -30,7 +30,12 @@ use App\Models\Knowyourstatus as Knowyourstatus;
 use App\Models\Nominationchild as Nominationchild;
 use App\Models\Selectionpostschild as Selectionpostschild;
 
-error_reporting(0);
+
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
+
+//error_reporting(0);
 class IndexController extends FrontEndController
 {
 	public function __construct($param_data = array())

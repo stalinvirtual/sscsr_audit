@@ -25,7 +25,7 @@
                             <?php foreach ($searchyears as $key => $searchyear) :
                                             
                                             ?>
-                                                <option  value="<?php echo $searchyear->searchyear_id; ?>"><?php echo $searchyear->search_year; ?></option>
+                                                <option  value="<?php echo $searchyear->search_year; ?>"><?php echo $searchyear->search_year; ?></option>
                                             <?php endforeach; ?>
                             </select>
 
@@ -556,6 +556,7 @@
 
         $("#nomination_month").on('change', function(e) {
             let month = $(this).val();
+            debugger;
             let year = $("#nomination_year").val();
             if (month == 'All') {
                 monthvalue = '01';

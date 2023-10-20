@@ -269,10 +269,10 @@ if (!isset($_SERVER['HTTP_REFERER']) && empty($_SERVER['HTTP_REFERER']) || !isse
 							<div class="col-md-9 form-group">
 								<h4>List of Columns </h4>
 							</div>
-							<!-- <div class="col-md-2 form-group">
+							<div class="col-md-2 form-group">
 								<button class="btn w3ls-button hvr-icon-float-away col-24" data-toggle="modal"
 									data-target="#addStudent"> Add Column</button>
-							</div> -->
+							</div>
 						</div>
 					</div>
 

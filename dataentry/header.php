@@ -133,28 +133,6 @@
 	<!--//skycons-icons-->
 </head>
 <body class="dashboard-page">
-	<script>
-		// var idleTimeout; // Variable to store the timeout ID
-		// // Define a function to reset the timeout
-		// function resetIdleTimeout() {
-		// 	clearTimeout(idleTimeout); // Clear the existing timeout
-		// 	idleTimeout = setTimeout(logoutUser, 120000); // Set a new timeout for 2 minutes (in milliseconds)
-		// }
-		// // Define a function to logout the user
-		// function logoutUser() {
-		// 	window.location.href = "logout.php"; // Redirect to the logout page
-		// }
-		// // Add event listeners to reset the timeout on user activity
-		// document.addEventListener("mousemove", resetIdleTimeout);
-		// document.addEventListener("keydown", resetIdleTimeout);
-		// // Initialize the timeout when the page loads
-		// window.addEventListener("load", resetIdleTimeout);
-		// var theme = $.cookie('protonTheme') || 'default';
-		// $('body').removeClass(function (index, css) {
-		// 	return (css.match(/\btheme-\S+/g) || []).join(' ');
-		// });
-		// if (theme !== 'default') $('body').addClass(theme);
-	</script>
 	<!--//theme-style-->
 	<nav class="main-menu scrollable">
 		<li>
@@ -225,14 +203,14 @@
 					</span>
 				</a>
 			</li>
-			<!-- <li>
+			<li>
 				<a href="column_master.php">
 					<img class="menu-icon" src="images/icons/column_master.png"></i>
 					<span class="nav-text">
 						Column Master
 					</span>
 				</a>
-			</li> -->
+			</li> 
 			<li>
 				<a href="kyas_status_master.php">
 					<img class="menu-icon" src="images/icons/application_status.png"></i>

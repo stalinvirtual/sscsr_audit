@@ -64,11 +64,6 @@ class Exam extends DB
         //         JOIN exam_master em ON tm.table_exam_short_name = em.exam_short_name  
         //         WHERE  tm.table_type='kyas'  and tm.status='1' and tm.table_exam_short_name 
         //         LIKE '%".$q."%'  order by tm.table_exam_year desc ";
-<<<<<<< Updated upstream
-        // echo '@@@'.$sql;
-        // exit;
-=======
->>>>>>> Stashed changes
         $sql  = $this->select("DISTINCT em.exam_name, dbm.table_exam_year, dbm.table_type, dbm.table_name,dbm.table_exam_short_name,dbm.table_id")
                 ->from("exam_master em ")
                 ->join("sscsr_db_table_master dbm ","em.exam_short_name = dbm.table_exam_short_name","JOIN")
@@ -77,11 +72,7 @@ class Exam extends DB
 
                 ->order_by("dbm.table_id desc")
                 ->get_list();
-<<<<<<< Updated upstream
-                
-=======
                //echo $this->last_query;
->>>>>>> Stashed changes
         $lastinsertid = $sql;
         $lastinsertid = (object)$lastinsertid;
         return $lastinsertid;

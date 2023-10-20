@@ -1,4 +1,5 @@
 <?php
+
 //  $base_url =  "http://" . $_SERVER['SERVER_NAME'];
 $base_url = "http://" . $_SERVER['SERVER_NAME'];
 $GLOBALS['site_url'] = $base_url;
