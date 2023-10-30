@@ -24,10 +24,8 @@
                         <div class="col-sm-3">
                         <label for="inputEmail3" class="col-sm-6 col-form-label">Year : </label>
                             <select name="sp_year" class="form-control" id="sp_year">
-                            <?php foreach ($searchyears as $key => $searchyear) :
-                                            
-                                            ?>
-                                                <option  value="<?php echo $searchyear->searchyear_id; ?>"><?php echo $searchyear->search_year; ?></option>
+                            <?php foreach ($searchyears as $key => $searchyear) :?>
+                                                <option  value="<?php echo $searchyear->search_year; ?>"><?php echo $searchyear->search_year; ?></option>
                                             <?php endforeach; ?>
                             </select>
 

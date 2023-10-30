@@ -203,14 +203,14 @@
 					</span>
 				</a>
 			</li>
-			<li>
+			<!-- <li>
 				<a href="column_master.php">
 					<img class="menu-icon" src="images/icons/column_master.png"></i>
 					<span class="nav-text">
 						Column Master
 					</span>
 				</a>
-			</li> 
+			</li>  -->
 			<li>
 				<a href="kyas_status_master.php">
 					<img class="menu-icon" src="images/icons/application_status.png"></i>

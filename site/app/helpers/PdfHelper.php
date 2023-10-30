@@ -9,9 +9,6 @@ require(__DIR__ . "/../../dompdf/vendor/dompdf/dompdf/src/Dompdf.php");
 //  use setasign\Fpdi\Fpdi;
 //  use setasign\Fpdi\PdfReader;
 //echo __DIR__ . "/../../dompdf/vendor/autoload.php";
-// ini_set('display_errors', 1);
-// ini_set('display_startup_errors', 1);
-// error_reporting(E_ALL);
 require("functions.php");
 use Dompdf\Dompdf;
 class PdfHelper extends Dompdf
@@ -24,9 +21,15 @@ class PdfHelper extends Dompdf
       // global $base_url;
       // echo '@@@@@'. $base_url;
       // exit;
+
+
       // echo '<pre>';
-      // print_r($data);
+      // print_r($data['admitcardresults']);
       // exit;
+
+
+
+
       $exam_short_name = $data['exam_name']->table_exam_short_name;
       $generator = new \Picqer\Barcode\BarcodeGeneratorPNG();
       $tier_id = $data['tier_id'];
@@ -179,7 +182,7 @@ class PdfHelper extends Dompdf
                   $photo_path = $photo_path;
                } else {
                   $base_url = $GLOBALS['site_url'];
-                  $local_path = $base_url . "/sscsr_audit/site/";
+                  $local_path = $base_url . "/sscsr/site/";
                   $photo_path = $local_path . "exam_assets/photo_not_exists.png";
                }
                break;
@@ -216,7 +219,7 @@ class PdfHelper extends Dompdf
                   $sign_path = $sign_path;
                } else {
                   $base_url = $GLOBALS['site_url'];
-                  $local_path = $base_url . "/sscsr_audit/site/";
+                  $local_path = $base_url . "/sscsr/site/";
                   $sign_path = $local_path . "exam_assets/sign_not_exits.png";
                }
                break;
@@ -394,6 +397,21 @@ class PdfHelper extends Dompdf
                //Mark6
                $value59 = valueAdded($value["col_value"]);
                break;
+            case "83":
+               //Identification Mark
+               $key83 = $value["col_description"];
+               $value83 = $value["col_value"] == "NA" ? "" : $value["col_value"];
+               break;
+            case "85":
+               //Language
+               $key85 = $value["col_description"];
+               $value85 = $value["col_value"] == "NA" ? "NA" : $value["col_value"];
+               break;
+            case "84":
+               //Compensatory Time 
+               $key84 = $value["col_description"];
+               $value84 = $value["col_value"] == "NA" ? "" : $value["col_value"];
+               break;
             default:
             //echo "Your favorite color is neither red, blue, nor green!";
          }
@@ -425,16 +443,25 @@ class PdfHelper extends Dompdf
       $barcode_Value = 'RollNo=' . $value4;
       $qrcode_Value = 'RollNo=';
       $qrcode_Value .= $value4 . ",";
+      $qrcode_Value .= 'Reg No=';
+      $qrcode_Value .= $value3. ',';
       $qrcode_Value .= 'Name=';
       $qrcode_Value .= $value12 . ',';
       $qrcode_Value .= 'DOB=';
       $qrcode_Value .= $value15 . ',';
+      $qrcode_Value .= 'Gender=';
+      $qrcode_Value .= $value8. ',';
       $qrcode_Value .= 'Category=';
       $qrcode_Value .= $value16 . ',';
+      $qrcode_Value .= 'Identification Mark=';
+      $qrcode_Value .= $value83. ',';
       $qrcode_Value .= 'Date of Exam=';
       $qrcode_Value .= trim($date1) . ',';
       $qrcode_Value .= 'Batch of Exam=';
       $qrcode_Value .= $shift1;
+     
+      
+  
       $barcode = '<img  width="60%" style="padding-bottom:9px;height:47px" src="data:image/png;base64,' . base64_encode($generator->getBarcode($barcode_Value, $generator::TYPE_CODE_128, 3, 50)) . '">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;';
       $qrcode = '<img  style="width:70px;height:70px;" src="' . (new \chillerlan\QRCode\QRCode)->render($qrcode_Value) . '" alt="QR Code" />';
       //echo 'http://" . $_SERVER["SERVER_NAME"]."/dompdf/fonts/Bamini.ttf';
@@ -625,7 +652,8 @@ class PdfHelper extends Dompdf
    <table  class= "tableClass" style="width:100%">
       <tr style="height:200px">
          <td  style="text-align: left" width="50%" class="fontSizeClass"><b>' . $key4 . ' : </b>' . $value4 . ' </td>
-         <td  style="text-align: left" class="fontSizeClass"><b>' . $key6 . ' : </b> ' . $value6 . ' </td>
+         <td  style="text-align: left" width="24%" class="fontSizeClass"><b>' . $key6 . ' : </b> ' . $value6 . ' </td>
+         <td  style="text-align: left" width="26%" class="fontSizeClass"><b>' . $key84 . ' : </b> ' . $value84 . ' </td>
       </tr>
    </table>
    <!-- Roll Number and Scribe -->
@@ -633,7 +661,8 @@ class PdfHelper extends Dompdf
    <table  class= "tableClass" style="width:100%">
       <tr style="padding:10px">
          <td  style="text-align: left" width="50%" class="fontSizeClass"><b>' . $key7 . ': </b>' . $value7 . '</td>
-         <td  style="text-align: left" class="fontSizeClass"><b>' . $key8 . ': </b> ' . $value8 . ' </td>
+         <td  style="text-align: left" width="24%" class="fontSizeClass"><b>' . $key8 . ': </b> ' . $value8 . ' </td>
+         <td  style="text-align: left" width="26%" class="fontSizeClass"><b>' . $key85 . ' : </b> ' . $value85 . ' </td>
       </tr>
    </table>
    <!-- Password For Examination and Gender -->
@@ -697,6 +726,13 @@ class PdfHelper extends Dompdf
    <!-- Post Preference --->
    <!-- Candidate \'s Address-->
    <table  style="width:100%"; class= "tableClass">
+   <tr>
+      <td style="width:75%; vertical-align: text-top;text-align:left;border:0px solid black;border-collapse: collapse;">
+         <b>  ' . $key83 . ' :</b>  ' . $value83 . ' 
+      </td>
+   </tr>
+</table>
+   <table  style="width:100%"; class= "tableClass">
       <tr>
          <td style="width:75%; vertical-align: text-top;text-align:left;border:0px solid black;border-collapse: collapse;">
             <b> Candidate\'s Address :</b>  ' . $data['candidate_address'] . ' 
@@ -713,12 +749,12 @@ class PdfHelper extends Dompdf
    <table  style="width:100%"; class= "tableClass">
       <tr>
          <td style="width:75%; vertical-align: text-top;text-align:left;border:0px solid black;border-collapse: collapse;">
-            <b> Examination Venue :  </b> ' . $value19 . ' , ' . $value20 . ' 
+            <b> Examination Venue :<br> ' . $value19 . ' </b>   ' . $value20 . ' 
          </td>
       </tr>
       <tr>
       <td style="width:75%; vertical-align: text-top;text-align:left;border:0px solid black;border-collapse: collapse;">
-      ' . $value21 . '' . $value22 . '
+      <b>' . $value21 . ' </b> ' . $value22 . '
    </td>
       </tr>
    <!-- <tr>
@@ -780,6 +816,10 @@ class PdfHelper extends Dompdf
       );
       if ($tier_id == 1 || $tier_id == 3) {
          $theader = $tcell = "<tr>";
+         
+
+
+ 
          $marks_array = explode(',', $tableArray["Marks"]);
          $subjects = explode(',', $tableArray["Subject"]);
          foreach ($subjects as $index => $subject) {

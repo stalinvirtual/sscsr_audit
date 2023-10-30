@@ -106,10 +106,8 @@ class PdfHelperPETExam extends Dompdf
                   $photo_path = $photo_path;
                } else {
                   $base_url = $GLOBALS['site_url'];
-                  $local_path = $base_url . "/sscsr_audit/site/";
-                   $photo_path = $local_path . "exam_assets/photo_not_exists.png";
-
-                 // exit;
+                  $local_path = $base_url . "/sscsr/site/";
+                  $photo_path = $local_path . "exam_assets/photo_not_exists.png";
                }
                break;
             case "13":
@@ -136,8 +134,8 @@ class PdfHelperPETExam extends Dompdf
                   $sign_path = $sign_path;
                } else {
                   $base_url = $GLOBALS['site_url'];
-                  $local_path = $base_url . "/sscsr_audit/site/";
-                  $sign_path = $local_path . "exam_assets/sign_not_exits.png";
+                  $local_path = $base_url . "/sscsr/site/";
+                  $photo_path = $local_path . "exam_assets/sign_not_exists.png";
                }
                break;
             case "16":
@@ -163,10 +161,14 @@ class PdfHelperPETExam extends Dompdf
 
       $qrcode_Value = 'RollNo=';
       $qrcode_Value .= $value4 . ",";
+      $qrcode_Value .= 'Reg No=';
+      $qrcode_Value .= $value3. ',';
       $qrcode_Value .= 'Name=';
       $qrcode_Value .= $value10 . ',';
       $qrcode_Value .= 'DOB=';
       $qrcode_Value .= $value13 . ',';
+      $qrcode_Value .= 'Gender=';
+      $qrcode_Value .= $value7. ',';
       $qrcode_Value .= 'Category=';
       $qrcode_Value .= $value14 . ',';
       $qrcode_Value .= 'PET Date=';

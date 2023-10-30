@@ -33,6 +33,7 @@ use App\Models\SelectionpostArchives as SelectionpostArchives;
 use App\Models\SelectionpostschildArchives as SelectionpostschildArchives;
 use App\Models\PhaseMaster as PhaseMaster;
 use App\Models\SearchYear as SearchYear;
+use App\Models\Instructions as Instructions;
 ini_set('display_errors', '1');
 ini_set('display_startup_errors', '1');
 error_reporting(E_ALL);
@@ -45,6 +46,11 @@ class Admin extends BackEndController
         "tender_link" => "Admin/dashboard/?action=listoftenders",
         "notice_link" => "Admin/dashboard/?action=listofnotices",
         "announcement_link" => "Admin/dashboard/?action=listofannouncements",
+        "instructions_link" => "Admin/dashboard/?action=listofinstructions",
+
+
+
+
         "category_link" => "Admin/dashboard/?action=listofcategory",
         "photogallery_link" => "Admin/dashboard/?action=listphotogallery",
         "list_exams_link" => "Admin/dashboard/?action=listexams",
@@ -86,12 +92,19 @@ class Admin extends BackEndController
         "list_tender_archives_link" => "Admin/dashboard/?action=listtenderarchieves",
         "tender_archieves_by_month" => "Admin/dashboard/?action=tender_archieves_by_month",
         "announcement_archieves_by_month" => "Admin/dashboard/?action=announcement_archieves_by_month",
+
+        "instructions_archieves_by_month" => "Admin/dashboard/?action=instructions_archieves_by_month",
+
         "common_nomination_archive" => "Admin/commonNominationArchive",
         "common_sp_archive" => "Admin/commonSelectionPostArchive",
         "common_tender_archive" => "Admin/commonTenderArchive",
         "common_dlist_archive" => "Admin/commonDlistArchive",
 
         "common_announcement_archive" => "Admin/commonAnnouncementArchive",
+
+        "common_instructions_archive" => "Admin/commonInstructionsArchive",
+
+
         "common_notice_archive" => "Admin/commonNoticeArchive",
         "tender_boy" => "Admin/ArchiveTest",
         "common_gallery_archive" => "Admin/commonGalleryArchive",
@@ -147,6 +160,18 @@ class Admin extends BackEndController
         "create_announcement_link" => "Admin/editannouncements",
         "edit_announcement_link" => "Admin/editannouncements/{id}",
         "delete_announcement_link" => "admin/deleteannouncement/{id}",
+
+
+         //Important Instructions
+         "list_of_instructions" => "Admin/dashboard/?action=listofinstructions",
+         "create_instructions_link" => "Admin/editinstructions",
+         "edit_instructions_link" => "Admin/editinstructions/{id}",
+         "delete_instructions_link" => "admin/deleteinstructions/{id}",
+
+
+
+
+
         "common_archives__link" => "admin/archiveBtnFunction/{id}",
         "copy_tender_link" => "admin/copy-tender/{id}",
         "list_of_importantlinks" => "Admin/dashboard/?action=listofimportantlinks",
@@ -2001,6 +2026,22 @@ class Admin extends BackEndController
         $page = new Page();
         $page_data = [
             'status' => true,
+        ];
+        if ($page->updatePageState($page_data, $pageid)) {
+            $message = 1;
+            header('Content-Type: application/json');
+            echo json_encode(array("message" => $message));
+        }
+        //$this->route->redirect($this->route->site_url("Admin/dashboard"));
+    }
+
+    public function ajaxresponseforpageunpublish()
+    {
+        $pageid = Helpers::cleanData($_POST['pageid']);
+        // echo $cid;
+        $page = new Page();
+        $page_data = [
+            'status' => 0,
         ];
         if ($page->updatePageState($page_data, $pageid)) {
             $message = 1;
@@ -4527,4 +4568,311 @@ TEXT;
             echo json_encode(array("message" => $message));
         }
     }
+
+       
+
+    /**
+     * Author: Stalin Thomas
+     * 
+     * created on : 26-10-2023
+     * 
+     * Module : Important instructions Master
+     * 
+     */
+
+   public function ajaxResponseForInstructionsDataTableLoad()
+   {
+       $request = 1;
+       if (isset($_POST['request'])) {
+           $request = $_POST['request'];
+       }
+       if ($request == 1) {
+           ## Read value
+           $draw = $_POST['draw'];
+           $row = $_POST['start'];
+           $rowperpage = $_POST['length']; // Rows display per page
+           $columnIndex = $_POST['order'][0]['column']; // Column index
+           $columnName = $_POST['columns'][$columnIndex]['data']; // Column name
+           $columnSortOrder = $_POST['order'][0]['dir']; // asc or desc
+           $searchValue = $_POST['search']['value']; // Search value
+           ## Search 
+           $searchQuery = " ";
+           if ($searchValue != '') {
+               $searchQuery = "   pdf_name ilike '%" . $searchValue . "%' or 
+            TO_CHAR(effect_from_date, 'yyyy-mm-dd') like'%" . $searchValue . "%'  or
+            TO_CHAR(effect_to_date, 'yyyy-mm-dd') like'%" . $searchValue . "%' 
+             ";
+           }
+           ## Total number of records without filtering
+           $model = new Instructions();
+           $year = trim($_POST['year']);
+           $month = trim($_POST['month']);
+           $effect_from_date = date('Y-m-d', strtotime($_POST['effect_from_date']));
+           $effect_to_date = date('Y-m-d', strtotime($_POST['effect_to_date']));
+           $totalRecordsWithoutFiltering = $model->totalRecordsWithOutFiltering();
+           $totalRecords = $totalRecordsWithoutFiltering->allcount;
+           ## Total number of records with filtering
+           $totalRecordsWithFiltering = $model->totalRecordsWithFiltering($searchQuery);
+           $totalRecordwithFilter = $totalRecordsWithFiltering->allcount;
+           $fetchRecordsObject = $model->getInstructionsDetails($year, $month, $effect_from_date, $effect_to_date, $searchQuery);
+           $fetchRecords = (array) $fetchRecordsObject;
+           $edit_instructions_link = $this->links['edit_instructions_link'];
+           $data = array();
+           foreach ($fetchRecords as $rowval) {
+               $edit_instructions_link_str = str_replace("{id}", $rowval->ins_id, $edit_instructions_link);
+               $baseurl = $this->route->site_url($edit_instructions_link_str);
+               $updateButton = "<a href= '" . $baseurl . "' name='menu_update' class='iconSize'> 
+     <button type='button' title='Edit' class='btn btn-secondary iconWidth updateUser'><i class='fas fa-edit'></i></button>
+     </a>";
+               // Delete Button
+               $deleteButton = "<button title='Delete' class='btn btn-sm btn-danger iconWidth deletebtn' style='height:30px'  data-id='" . $rowval->ins_id . "'><i class='fa fa-trash'></i></button>";
+               //$archivesButton = "<button  title='Archive' style='height:30px' class='btn btn-sm btn-primary archivebtn' data-id='" . $rowval->ins_id . "'><i class='fa  fa-archive'></i></button>";
+               if ($rowval->p_status != 1) {
+                   /****
+                    * Role Checking
+                    * 
+                    * 
+                    */
+                   $user = new User();
+                   $loginUser = $user->getUser();
+                   $is_superadmin = $user->is_superadmin();
+                   $is_admin = $user->is_admin();
+                   $is_uploader = $user->is_uploader();
+                   $is_publisher = $user->is_publisher();
+                   $array = array(
+                       "super_admin" => $user->is_superadmin() ? $user->is_superadmin() : "",
+                       "admin" => $user->is_admin() ? $user->is_admin() : "",
+                       "uploader" => $user->is_uploader() ? $user->is_uploader() : "",
+                       "publisher" => $user->is_publisher() ? $user->is_publisher() : "",
+                   );
+                   if ($array['uploader'] == 1) {
+                       $action = $updateButton . " " . $deleteButton;
+                   } else if ($array['publisher'] == 1) {
+                       $publishButton = "<button  title='Publish' style='height:30px' class='btn btn-sm btn-success publishbtn iconWidth' data-id='" . $rowval->ins_id . "'><i class='fa  fa-eye'></i></button>";
+                       $action = $publishButton;
+                   } else if ($array['admin'] == 1) {
+                       $publishButton = "<button  title='Publish' style='height:30px' class='btn btn-sm btn-success publishbtn iconWidth' data-id='" . $rowval->ins_id . "'><i class='fa  fa-eye'></i></button>";
+                       $action = $updateButton . " " . $deleteButton . " " . $publishButton;
+                   } else {
+                   }
+                   /****
+                    * Role Checking
+                    * 
+                    * 
+                    */
+               } else {
+                   $action = "<p style='color:green'>Published</p>";
+               }
+               $data[] = array(
+                   "ins_id" => $rowval->ins_id,
+                   "ins_name" => $rowval->ins_name,
+                   "ins_content" => $rowval->ins_content,
+                   "effect_from_date" => $rowval->effect_from_date,
+                   "effect_to_date" => $rowval->effect_to_date,
+                   "action" => $action,
+               );
+           }
+           ## Response
+           $response = array(
+               "draw" => intval($draw),
+               "iTotalRecords" => $totalRecords,
+               "iTotalDisplayRecords" => $totalRecordwithFilter,
+               "aaData" => $data
+           );
+           echo json_encode($response);
+           exit;
+       } //request 1
+       // Che
+       // Delete Instructions
+       if ($request == 4) {
+           $id = $_POST['id'];
+           // echo $id;
+           // exit;
+           // Check id
+           ## Fetch records
+           $model = new Instructions();
+           $checkId = $model->checkInstructionsId($id);
+           $checkIdCount = $checkId->checkid;
+           if ($checkIdCount > 0) {
+               $deleteQuery = $model->deleteInstructions($id);
+               echo 1;
+               exit;
+           } else {
+               echo 0;
+               exit;
+           }
+       }
+       // Archive Instructions
+       if ($request == 5) {
+           $id = $_POST['id'];
+           // Check id
+           ## Fetch records
+           $model = new Instructions();
+           $checkId = $model->checkInstructionsId($id);
+           $checkIdCount = $checkId->checkid;
+           if ($checkIdCount > 0) {
+               $archiveQuery = $model->archiveInstructionsStatus($id);
+               echo 1;
+               exit;
+           } else {
+               echo 0;
+               exit;
+           }
+       }
+       // Publish Instructions
+       if ($request == 6) {
+           $id = $_POST['id'];
+           $ins_data = [
+               'p_status' => '1',
+           ];
+           // Check id
+           ## Fetch records
+           $model = new Instructions();
+           $checkId = $model->checkInstructionsId($id);
+           $checkIdCount = $checkId->checkid;
+           if ($checkIdCount > 0) {
+               $publishQuery = $model->updateInstructionsState($ins_data, $id);
+               echo 1;
+               exit;
+           } else {
+               echo 0;
+               exit;
+           }
+       }
+   }
+   public function editInstructions()
+   {
+       $data = [];
+       $this->saveInstructions();
+       $user = new User();
+       $loginUser = $user->getUser();
+       ########  Role checking ########
+       $is_superadmin = $user->is_superadmin(); // super admin 
+       $data['is_superadmin'] = $is_superadmin; // super admin 
+       $is_admin = $user->is_admin(); // admin 
+       $data['is_admin'] = $is_admin; // admin 
+       $is_uploader = $user->is_uploader(); //uploader
+       $data['is_uploader'] = $is_uploader; //uploader
+       $is_publisher = $user->is_publisher(); // publisher
+       $data['is_publisher'] = $is_publisher; // publisher
+       ########  Role Checking ########
+       $data['logged_user'] = $loginUser;
+       $instructionslists = new Instructions();
+       // chek if the id is available in the params 
+       $ins_id = (isset($this->data['params'][0])) ? $this->data['params'][0] : 0;
+       $current_instructions = $instructionslists->getInstructionsby($ins_id, DB_ASSOC);
+       $data['current_instructions'] = $current_instructions;
+       $this->prepare_menus($data);
+       $this->render("edit-instructions", $data);
+   }
+   private function saveInstructions()
+   {
+       $message = $message_type = "";
+       if (isset($_POST['csrf_token']) && hash_equals($_SESSION['csrf_token'], $_POST['csrf_token'])) {
+       if (isset($_POST['save_instructions'])) {
+           $ins_id = isset($_POST['ins_id']) ? $_POST['ins_id'] : 0;
+           $ins_name = $_POST['ins_name'];
+           $ins_content = $_POST['ins_content'];
+           $effect_from_date = date('Y-m-d', strtotime(Helpers::cleanData($_POST['effect_from_date'])));
+           $effect_to_date = date('Y-m-d', strtotime(Helpers::cleanData($_POST['effect_to_date'])));
+           $instructionslist_data = [
+               "ins_name"          => $ins_name,
+               "ins_content"       => $ins_content,
+               "effect_from_date"  => $effect_from_date,
+               "effect_to_date"    => $effect_to_date,
+               'creation_date'     => date('Y-m-d H:i:s'),
+           ];
+           $instructions = new \App\Models\Instructions();
+           if ($ins_id == 0) { // insert new menu 
+               if ($instructions->addInstructions($instructionslist_data)) {
+                   $message = "Instructions  Added successfully";
+                   $message_type = "success";
+               } else {
+                   $message = "Error adding Instructions";
+                   $message_type = "warning";
+               }
+           } else { // update menu
+               if ($instructions->updateInstructions($instructionslist_data, $ins_id)) {
+                   $message = "Instructions Updated successfully";
+                   $message_type = "success";
+               } else {
+                   $message = "Error updating Instructions";
+                   $message_type = "warning";
+               }
+           }
+           $_SESSION['notification'] = ['message' => $message, 'message_type' => $message_type];
+           $this->route->redirect($this->route->site_url("Admin/dashboard/?action=listofinstructions"));
+       }
+   }
+   }
+   public function deleteInstructions()
+   {
+       $data = [];
+       $message = $message_type = "";
+       $ins_id = $this->data['params'][0];
+       $instructions = new Instructions();
+       if ($instructions->deleteInstructionsStatus($ins_id)) {
+           $message = "Instructions   Deleted successfully";
+           $message_type = "success";
+       } else {
+           $message = "Error deleting Instructions ";
+       }
+       $_SESSION['notification'] = ['message' => $message, 'message_type' => $message_type];
+       $this->route->redirect($this->route->site_url("Admin/dashboard/?action=instructions_archieves_by_month"));
+   }
+   public function archiveInstructions()
+   {
+       $data = [];
+       $message = $message_type = "";
+       $ins_id = $this->data['params'][0];
+       $instructions = new Instructions();
+       if ($instructions->archiveInstructionsStatus($ins_id)) {
+           $message = "Instructions   Archived successfully";
+           $message_type = "success";
+       } else {
+           $message = "Error Archiving Instructions ";
+       }
+       $_SESSION['notification'] = ['message' => $message, 'message_type' => $message_type];
+       $this->route->redirect($this->route->site_url("Admin/dashboard/?action=instructions_archieves_by_month"));
+   }
+   public function commonInstructionsArchive()
+   {
+       if (!empty($_POST["action"])) {
+           $instructions = new Instructions();
+           $instructions_list_data = $_POST['ids'];
+           // echo '<pre>';
+           // print_r($_POST);
+           // exit;
+           if ($_POST["action"] == 'archive') {
+               if ($instructions->archiveInstructionsStatus($instructions_list_data)) {
+                   $message = " Instructions Archived successfully";
+                   $message_type = "success";
+               }
+           } else {
+               if ($instructions->deleteInstructions($instructions_list_data)) {
+                   $message = " Instructions  Deleted successfully";
+                   $message_type = "success";
+               }
+           }
+       }
+       $_SESSION['notification'] = ['message' => $message, 'message_type' => $message_type];
+       $this->route->redirect($this->route->site_url("Admin/dashboard/?action=listofinstructions"));
+   }
+
+
+   /**
+    * Author: Stalin Thomas
+    * 
+    * created on : 26-10-2023
+    * 
+    * Module : Important instructions Master
+    * 
+    */
+
+
+
+
+
+
+
 }

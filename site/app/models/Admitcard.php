@@ -1594,7 +1594,7 @@ class Admitcard extends DB
     }
     function cleanData($val)
     {
-        return pg_escape_string($val);
+        return htmlentities($val);
     }
     // Get Tier Admit Card
     public function getAdmitcardforTierEmailIntetgration($data_array)

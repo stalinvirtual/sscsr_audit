@@ -163,7 +163,7 @@ $csrf_token = $_SESSION['csrf_token'];
 		$pass = trim($_POST["pass"]);
 		$pass = cleanData($pass);
 		$pass = md5($pass);
-		session_start();
+		
 		$userEnteredCaptcha = $_POST['captcha'];
 		$actualCaptcha = $_SESSION['captcha_code'];
 		if ($user == "") {

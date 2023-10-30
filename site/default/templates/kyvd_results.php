@@ -6,7 +6,16 @@ use App\System\Route;
 $route = new Route();
 $kyasvd = $route->site_url("IndexController/knowyourvenuedetails");
 
-echo $this->get_header();?>
+echo $this->get_header();
+
+function dateFormat($date){
+	$date = date("d-m-Y", strtotime($date));
+	return $date;
+}
+
+
+
+?>
 
 <section class="buttons">
 	<div class="container">
@@ -308,7 +317,7 @@ echo $this->get_header();?>
 											echo '
 											<tr class="info">
 													<td>Exam Date :</td>
-													<td>'. $admitcardresults->date1.' </td>
+													<td>'. dateFormat($admitcardresults->date1).' </td>
 												</tr>
 												<tr class="success">
 													<td>Reporting Time :</td>

@@ -2,6 +2,7 @@
 
 namespace App\Helpers;
 
+#use App\Models\Instructions;
 use App\Models\Post;
 use App\System\Route;
 use App\Models\Faq as Faq;
@@ -34,6 +35,7 @@ use App\Models\SelectionpostschildArchives as SelectionpostschildArchives;
 use App\Models\PhaseMaster as PhaseMaster;
 use App\Models\Announcements as Announcements;
 use App\Models\SearchYear as SearchYear;
+use App\Models\Instructions as Instructions;
 
 class Helpers
 {
@@ -201,6 +203,13 @@ class Helpers
 		$q =  "on";
 		$gallery_id_based_images = $Gallery->getGalleryidBasedImagesModel($q);
 		return $gallery_id_based_images;
+	}
+	static function getInstructions()
+	{
+		$instructions_model = new Instructions();
+	
+		$getInstructionsList = $instructions_model->getInstructions();
+		return $getInstructionsList;
 	}
 	static function getNomination()
 	{
@@ -1376,7 +1385,7 @@ class Helpers
 	static function getSearchYearListforAdmin()
 	{
 		$searchyearmodel = new SearchYear();
-		$searchyeargetlists = $searchyearmodel->getSearchyearList();
+		$searchyeargetlists = $searchyearmodel->getSearchyearListDisplay();
 		return  $searchyeargetlists;
 	}
 	

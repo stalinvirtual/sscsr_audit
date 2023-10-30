@@ -95,7 +95,7 @@ class PdfHelperDMEExam extends Dompdf
                   $photo_path = $photo_path;
                } else {
                   $base_url = $GLOBALS['site_url'];
-                  $local_path = $base_url . "/sscsr_audit/site/";
+                  $local_path = $base_url . "/sscsr/site/";
                   $photo_path = $local_path . "exam_assets/photo_not_exists.png";
                }
                break;
@@ -131,9 +131,8 @@ class PdfHelperDMEExam extends Dompdf
                   $sign_path = $sign_path;
                } else {
                   $base_url = $GLOBALS['site_url'];
-                  $local_path = $base_url . "/sscsr_audit/site/";
-                   $sign_path = $local_path . "exam_assets/sign_not_exits.png";
-                  //exit;
+                  $local_path = $base_url . "/sscsr/site/";
+                  $sign_path = $local_path . "exam_assets/sign_not_exists.png";
                }
                break;
             case "16":
@@ -149,10 +148,14 @@ class PdfHelperDMEExam extends Dompdf
       $headerImg = $GLOBALS['pdf_header_image_server_path'] . "HEADER.png";
       $qrcode_Value = 'RollNo=';
       $qrcode_Value .= $value4 . ",";
+      $qrcode_Value .= 'Reg No=';
+      $qrcode_Value .= $value3. ',';
       $qrcode_Value .= 'Name=';
       $qrcode_Value .= $value9 . ',';
       $qrcode_Value .= 'DOB=';
       $qrcode_Value .= $value6 . ',';
+      $qrcode_Value .= 'Gender=';
+      $qrcode_Value .= $value8. ',';
       $qrcode_Value .= 'Category=';
       $qrcode_Value .= $value13 . ',';
       $qrcode_Value .= 'DME Date=';

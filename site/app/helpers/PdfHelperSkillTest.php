@@ -31,6 +31,12 @@ class PdfHelperSkillTest extends Dompdf
 
        $tier_id = $data['tier_id'];
        $pdfname = $data['pdf_name'] ;
+
+       
+      //        echo '<pre>';
+      // print_r($data['admitcardresults']);
+      // exit;
+
        
 
 		
@@ -118,7 +124,7 @@ class PdfHelperSkillTest extends Dompdf
                         }
                         else{
                            $base_url = $GLOBALS['site_url'];
-                           $local_path =  $base_url ."/sscsr_audit/site/";
+                           $local_path =  $base_url ."/sscsr/site/";
                            $photo_path =  $local_path."exam_assets/photo_not_exists.png";
                          
                                  
@@ -155,7 +161,7 @@ class PdfHelperSkillTest extends Dompdf
                             }
                             else{
                               $base_url = $GLOBALS['site_url'];
-                              $local_path =  $base_url ."/sscsr_audit/site/";
+                              $local_path =  $base_url ."/sscsr/site/";
                                $sign_path =  $local_path."exam_assets/sign_not_exits.png";
                              
                                 }
@@ -316,6 +322,18 @@ class PdfHelperSkillTest extends Dompdf
             $key40 = $value["col_description"];
             $value40 = $value["col_value"];
             break;
+
+            case "49":
+            //Identification Mark
+            $key49 = $value["col_description"];
+            $value49 = $value["col_value"];
+            break;
+
+            case "50":
+            //Compensatory Time
+            $key50 = $value["col_description"];
+            $value50 = $value["col_value"];
+            break;
              
             
             
@@ -441,12 +459,18 @@ class PdfHelperSkillTest extends Dompdf
 
       $qrcode_Value  =  'RollNo=';
       $qrcode_Value .=  $value4.",";
+      $qrcode_Value .= 'Reg No=';
+      $qrcode_Value .= $value3. ',';
       $qrcode_Value .=  'Name=';
       $qrcode_Value .=  $value9.',';
       $qrcode_Value .=  'DOB=';
       $qrcode_Value .=  $date.',';
+      $qrcode_Value .= 'Gender=';
+      $qrcode_Value .= $value8. ',';
       $qrcode_Value .=  'Category=';
       $qrcode_Value .=  $value13.',';
+      $qrcode_Value .= 'Identification Mark=';
+      $qrcode_Value .= $value49. ',';
       $qrcode_Value .=  'Date of Exam=';
       $qrcode_Value .=  trim($value20).',';
      // $qrcode_Value .=  'Batch of Exam=';
@@ -542,7 +566,7 @@ class PdfHelperSkillTest extends Dompdf
 </style>
 
 <div class="header-class">
-   <img src='. $headerImg.' style="width:100%;height:130px">
+   <img src='. $headerImg.' style="width:100%;">
 </div><br>
 <div class="headingClass"><b>e-ADMISSION CERTIFICATE</b></div>
 <div class="headingClass"><b>'.$value1.'</b></div>
@@ -561,7 +585,8 @@ class PdfHelperSkillTest extends Dompdf
 <table  class= "tableClass" style="width:100%">
    <tr style="height:200px">
       <td  style="text-align: left" width="50%" class="fontSizeClass"><b>'.$key4.' : </b>'. $value4 .' </td>
-      <td  style="text-align: left" class="fontSizeClass"><b>'.$key6.' : </b> '. $value6 .' </td>
+      <td  style="text-align: left" width="25%" class="fontSizeClass"><b>'.$key6.' : </b> '. $value6 .' </td>
+      <td  style="text-align: left" width="25%" class="fontSizeClass"><b>'.$key50.' : </b> '. $value50 .' </td>
    </tr>
 </table>
 <!-- Roll Number  and Scribe -->
@@ -636,6 +661,20 @@ class PdfHelperSkillTest extends Dompdf
    </tr>
 </table>
 <!-- DOB --->
+
+
+<table  style="width:100%"; class= "tableClass fontSizeClass">
+   <tr>
+      <td style="width:75%; vertical-align: text-top;text-align:left;border:0px solid black;border-collapse: collapse;">
+         <b> '.$key49.' : </b> 
+      </td>
+   </tr>
+   <tr>
+      <td style="width:75%; vertical-align: text-top;text-align:left;border:0px solid black;border-collapse: collapse;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+      '.$value49.'
+      </td>
+   </tr>
+</table>
 
 <!-- Candidate \'s Address-->
 <table  style="width:100%"; class= "tableClass fontSizeClass">

@@ -138,6 +138,9 @@ echo $this->get_header();
                             elseif (@$_GET['action'] == 'listoftenders') {
                                 echo 'Tender';
                             }
+                            elseif (@$_GET['action'] == 'listofinstructions') {
+                                echo 'Important Instructions';
+                            }
                         
  
 
@@ -290,6 +293,11 @@ echo $this->get_header();
         elseif (@$_GET['action'] == 'listofsearchyear') {
             //    require_once 'list-tender.php'; // commented for testing
             require_once 'list-searchyear.php';
+            
+        }
+        elseif (@$_GET['action'] == 'listofinstructions') {
+            //    require_once 'list-tender.php'; // commented for testing
+            require_once 'list-importantinstructions.php';
             
         }
 

@@ -20,7 +20,7 @@
                             <?php foreach ($searchyears as $key => $searchyear) :
                                             
                                             ?>
-                                                <option  value="<?php echo $searchyear->searchyear_id; ?>"><?php echo $searchyear->search_year; ?></option>
+                                                <option  value="<?php echo $searchyear->search_year; ?>"><?php echo $searchyear->search_year; ?></option>
                                             <?php endforeach; ?>
                             </select>
                         </div>

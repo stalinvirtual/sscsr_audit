@@ -529,6 +529,73 @@
              }
          );
          // Ajax Response for Page End
+         //Ajax Response for Page Unpublish End
+
+         jQuery('.page_unpublish_button').on(
+             'click',
+             function() {
+
+                 //
+
+                 var pageid = $(this).closest('td').find('#pageid').val();
+                 var baseurl = '<?php echo $this->route->site_url("Admin/ajaxresponseforpageunpublish"); ?>';
+                 var redirecturl = '<?php echo $this->route->site_url("Admin/dashboard/?action=listpages&&status=0"); ?>';
+
+
+                 swal({title:"Do You Want To UnPublish For Delete Page ?",
+                     buttons: {
+                         yes: {
+                             text: "Ok",
+                             value: "yes"
+                         },
+                         No: {
+                             text: "Cancel",
+                             value: "No",
+                             buttonColor: "#000000",
+                         }
+                     }
+                 }).then((value) => {
+                     if (value === "yes") {
+                         jQuery.ajax({
+                             url: baseurl,
+                             data: {
+                                 pageid: pageid
+                             },
+                             type: 'post',
+                             dataType: 'json',
+                             success: function(response) {
+                                 if (response.message == 1) {
+                                     //alert("Welcome")
+                                     window.location.href = redirecturl;
+
+                                 }
+                             }
+                         });
+                     }
+                     return false;
+                 });
+             }
+         );
+         // Ajax Response for Page Unpublish End
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
          //list nomination publish button	
          jQuery('.nomination-publish-button').on(
              'click',

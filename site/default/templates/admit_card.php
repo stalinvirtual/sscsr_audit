@@ -30,6 +30,11 @@ $_SESSION['csrf_token'] = $csrfToken;
 	<p style="text-align:center">
 		( cgle 2022 / 10000092576 / 04-06-1990 )
 	</p>
+<?php 
+	$ins_details   = $data['instructions_details'][0];
+	$ins_title     = strtoupper($ins_details->ins_name);
+	$ins_content   = $ins_details->ins_content;
+?>
 	<div class="container" id="main">
 		<div class="row">
 			<div class="col-lg-1">
@@ -48,17 +53,14 @@ $_SESSION['csrf_token'] = $csrfToken;
 							$route = new Route();
 							//$loadcaptcha = $route->site_url("Api/loadcaptcha");
 							?>
-
 							<!-- Modal-->
 		<div class="modal" id="instructionModal">
 								<div class="modal-content">
-									<h4 style="text-align:center">IMPORTANT INSTRUCTIONS</h4>
-									<p>1. Candidate must carry at least two passport size recent color photographs, an original valid photo identity card (as mentioned in Examination Notice) having the same Date of Birth (including Date, Month & Year) as printed on the Admission Certificate.</p>
-									<p>2. If the photo identity card does not have the same Date of Birth (including Date, Month & Year) then the candidate must carry an additional original document (as mentioned in Examination Notice) as proof of their Date of Birth.</p>
-									<p>3. In case of a mismatch in the Date of Birth mentioned in the Admission Certificate and photo ID or the certificate brought in support of Date of Birth, the candidate will not be allowed to appear in the examination.</p>
-									<p>4. PwBD/PwD (Below 40%) candidates availing the facility of scribe/compensatory time are also required to carry required Medical Certificate/ Undertaking/ Photocopy of the Scribe’s Photo ID Proof, as specified in Examination Notice.</p>
-                                    <input type="button" class="btn-dwn" name="btn-dwn" id="btn-dwn" value="Ok">
-								</div>
+									<h4 style="text-align:center"> <?php echo $ins_title;?></h4>
+								    <?php echo $ins_content ;?>	
+									<div>
+                                    <input type="button" class="btn-dwn btn btn-lg btn-sscsrthemecolor btn-block" name="btn-dwn" id="btn-dwn" value="Proceed to continue">
+						</div>								</div>
 							</div>
 							<!-- Modal-->
 							<form class="form-signin" action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post" id="download_admit_card_from" style="max-width:585px !important;" target="_blank">
@@ -136,10 +138,7 @@ $_SESSION['csrf_token'] = $csrfToken;
 								<input type="hidden" name="csrf_token" value="<?php echo $csrfToken; ?>">
 								<button class="btn btn-lg btn-sscsrthemecolor btn-block" type="submit" name="admit_card" >Download Admit Card</button>
 								<!-- New Design Starting -->
-
-							
 							</form>
-							
 						</div>
 					</div>
 				</div>
@@ -148,7 +147,6 @@ $_SESSION['csrf_token'] = $csrfToken;
 			</div>
 		</div>
 	</div>
-		
 </section>
 <?php include "footer2.php"; ?>
 <style>
@@ -207,8 +205,6 @@ $_SESSION['csrf_token'] = $csrfToken;
 </style>
 <script>
 	// Add an event listener for the "Ok" button in the modal
-
-
 	var shouldSubmitForm = false;
 	$(document).ready(function() {
 		var select2Dropdown = $("#admitcard_examname");
@@ -242,8 +238,6 @@ $_SESSION['csrf_token'] = $csrfToken;
     otherElement.style.display = "none";
 }
 // Display the modal when the condition is met
-								
-							
 	$(document).ready(function() {
 		$("#download_admit_card_from").validate({
 			rules: {
@@ -302,9 +296,6 @@ $_SESSION['csrf_token'] = $csrfToken;
 				}
 			},
 			submitHandler: function(form) {
-
-				
-					
 					//form.submit();
 					//After Submit
 					var baseurl = '<?php echo $this->route->site_url("IndexController/getadmitcardCount"); ?>';
@@ -314,10 +305,7 @@ $_SESSION['csrf_token'] = $csrfToken;
                 data: $(form).serialize(), // Serialize the form data
                 dataType: 'json', // Specify the expected data type of the response (json, html, text, etc.)
                 success: function(response) {
-
-
 					if(response == '1'){
-						
 				 var modal = document.getElementById("instructionModal");
         		 modal.style.display = "block";
 				 $("#btn-dwn").on("click", function() {
@@ -326,19 +314,14 @@ $_SESSION['csrf_token'] = $csrfToken;
 					});
 					}
 					else{
-					
 	//$(".errormsg").html("Your credentials are NOT correct. Please try with correct credentials");
 	form.submit();
-
 					}
 					//debugger;
                     // Handle the response from the server
 					//alert(response);
-				
-					
                     console.log('AJAX request successful!', response);
                     // Here, you can process the response data as needed
-			
                 },
                 error: function(xhr, status, error) {
                     // Handle errors
@@ -346,13 +329,9 @@ $_SESSION['csrf_token'] = $csrfToken;
                 }
             });
 					//After Submit
-			
-				
-
 			}
 		});
 	});
-
 </script>
 <style>
 								/* Style for the modal dialog */

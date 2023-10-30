@@ -18,6 +18,16 @@ class SearchYear extends DB
     {
         $importantLinks_list  = $this->select()
         ->from("mstsearchyear")
+        ->where(['status'=>1])
+        ->order_by("search_year asc")
+        ->get_list();
+       
+       return $importantLinks_list;
+    }
+    public function getSearchyearListDisplay($parent_id = 0)
+    {
+        $importantLinks_list  = $this->select()
+        ->from("mstsearchyear")
         ->order_by("searchyear_id desc")
         ->get_list();
        

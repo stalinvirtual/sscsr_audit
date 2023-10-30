@@ -31,11 +31,11 @@ use App\Models\Nominationchild as Nominationchild;
 use App\Models\Selectionpostschild as Selectionpostschild;
 
 
-ini_set('display_errors', 1);
-ini_set('display_startup_errors', 1);
-error_reporting(E_ALL);
+// ini_set('display_errors', 1);
+// ini_set('display_startup_errors', 1);
+// error_reporting(E_ALL);
 
-//error_reporting(0);
+error_reporting(0);
 class IndexController extends FrontEndController
 {
 	public function __construct($param_data = array())
@@ -164,6 +164,8 @@ class IndexController extends FrontEndController
 		$lastUriSegment = array_pop($uriSegments);
 		//$data = $this->getadmitcard(); 	
 		$data = Helpers::getAdmitCardDetails();
+
+		//echo  '<>'
 		$tablename = @$data['tableName']; // si_2019_tier
 		$tierId = @$data['tier_id']; //1
 		$regNo = @$data['regNo']; //10000328837
@@ -245,6 +247,7 @@ class IndexController extends FrontEndController
 		$data['ilinkforFirstFourRow'] = Helpers::getImporantLinksFirstFourRow();
 		$data['ilinkforAfterFirstFourRow'] = Helpers::getImporantLinksAfterFourRow();
 		$data['gallery_id_based_images'] = Helpers::getGalleryidBasedImages();
+		$data['instructions_details'] = Helpers::getInstructions();
 		$this->render("admit_card", $data);
 	}
 	/**** Admit card Preview    ******/

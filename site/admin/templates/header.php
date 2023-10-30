@@ -152,26 +152,7 @@
 
                         <li class="nav-header">Dashboard</li>
                         <?php if (@$is_superadmin == 1 || @$is_admin == 1) { ?>
-                            <li class="nav-item">
-                                <a href="#" class="nav-link">
-                                    <i class="nav-icon fas fa-edit"></i>
-                                    <p>
-                                    Search Year
-                                        <i class="fas fa-angle-left right"></i>
-                                    </p>
-                                </a>
-                                <ul class="nav nav-treeview" style="display: none;">
-                                    <li class="nav-item">
-                                        <a href="<?php echo $list_of_search_year;
-                                                    ?>" class="nav-link">
-                                            <i class="far fa-circle nav-icon"></i>
-                                            <p>Search Year</p>
-                                        </a>
-                                    </li>
-                                    
-
-                                </ul>
-                            </li>
+                           
                             <li class="nav-item">
                                 <a href="#" class="nav-link">
                                     <i class="nav-icon fas fa-edit"></i>
@@ -576,7 +557,39 @@
                             </a>
 
                         </li>
+                        
                         <?php } ?>
+                        <li class="nav-item">
+                                <a href="#" class="nav-link">
+                                    <i class="nav-icon fas fa-edit"></i>
+                                    <p>
+                                    Search Year
+                                        <i class="fas fa-angle-left right"></i>
+                                    </p>
+                                </a>
+                                <ul class="nav nav-treeview" style="display: none;">
+                                    <li class="nav-item">
+                                        <a href="<?php echo $list_of_search_year;
+                                                    ?>" class="nav-link">
+                                            <i class="far fa-circle nav-icon"></i>
+                                            <p>Search Year</p>
+                                        </a>
+                                    </li>
+                                    
+
+                                </ul>
+                            </li>
+                            <li class="nav-item">
+                            <a href="<?php echo $list_of_instructions;
+                                        ?>" class="nav-link">
+                                <i class="nav-icon fas fa-edit"></i>
+                                <p>
+                                    Important Instructions
+
+                                </p>
+                            </a>
+
+                        </li>
 
                     </ul>
                 </nav>

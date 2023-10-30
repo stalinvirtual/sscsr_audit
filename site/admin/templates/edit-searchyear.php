@@ -58,7 +58,7 @@ margin: -27px 2px 3px 286px;
                                     
 
                                     <div class="year-picker">
-    <input type="text"  placeholder="Select year"  required class="form-control" name="search_year" id="search_year"  value="<?php echo @$current_searchyear['search_year']; ?>" >
+    <input type="text"  placeholder="Select year"  required class="form-control" name="search_year" id="search_year"  autocomplete="off" value="<?php echo @$current_searchyear['search_year']; ?>" >
     <div class="year-dropdown"></div>
   </div></div>
                                 </div>

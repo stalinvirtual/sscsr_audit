@@ -64,6 +64,9 @@
 													if (@$_GET['status'] == 0){
 														echo '<i class="fa fa-eye page_publish_button" style="color:#007bff"></i>';
 													}
+													else{
+														echo '<i class="fa fa-eye page_unpublish_button" style="color:#007bff"></i>';
+													}
 												 }
 												elseif($is_uploader==1){ ?>
 													<a href="<?php echo $edit_page_link_str; ?>" name="menu_update" class="iconSize">
