@@ -35,33 +35,10 @@
             "status": 1
         }
     ],
-    "notices_latest_news": [
-        {
-            "notice_id": 33,
-            "pdf_name": "Important Notice about Helpdesk Facility for grievances of Applicants",
-            "attachment": "11678-important_notice_29082023-about-tollfree-phone-number.pdf",
-            "effect_from_date": "2023-09-05",
-            "effect_to_date": "2023-12-05",
-            "p_status": "1",
-            "category_id": 8,
-            "creation_date": "2023-09-05 09:01:32",
-            "category_name": "OTHERS"
-        }
-    ],
+    "notices_latest_news": [],
     "tenders_latest_news": [],
     "announcements_latest_news": [],
     "notices": [
-        {
-            "notice_id": 33,
-            "pdf_name": "Important Notice about Helpdesk Facility for grievances of Applicants",
-            "attachment": "11678-important_notice_29082023-about-tollfree-phone-number.pdf",
-            "effect_from_date": "2023-09-05",
-            "effect_to_date": "2023-12-05",
-            "p_status": "1",
-            "category_id": 8,
-            "creation_date": "2023-09-05 09:01:32",
-            "category_name": "OTHERS"
-        },
         {
             "notice_id": 36,
             "pdf_name": "Corrigendum Notice - Constables (Executive) in Delhi Police Examination 2023",
@@ -116,14 +93,5 @@
         }
     ],
     "ilinkforAfterFirstFourRow": [],
-    "gallery_id_based_images": {
-        "0": {
-            "gallery_id": 63,
-            "event_id": 20,
-            "year": "2023",
-            "image_id": 99,
-            "image_path": "15881-17357-2021-01-28.jpg",
-            "event_name": "General"
-        }
-    }
+    "gallery_id_based_images": {}
 }

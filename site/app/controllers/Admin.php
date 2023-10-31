@@ -4769,6 +4769,9 @@ TEXT;
    {
        $message = $message_type = "";
        if (isset($_POST['csrf_token']) && hash_equals($_SESSION['csrf_token'], $_POST['csrf_token'])) {
+
+       
+
        if (isset($_POST['save_instructions'])) {
            $ins_id = isset($_POST['ins_id']) ? $_POST['ins_id'] : 0;
            $ins_name = $_POST['ins_name'];
@@ -4782,6 +4785,10 @@ TEXT;
                "effect_to_date"    => $effect_to_date,
                'creation_date'     => date('Y-m-d H:i:s'),
            ];
+
+          
+
+          
            $instructions = new \App\Models\Instructions();
            if ($ins_id == 0) { // insert new menu 
                if ($instructions->addInstructions($instructionslist_data)) {

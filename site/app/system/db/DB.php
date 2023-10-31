@@ -77,6 +77,7 @@ class DB
         // remove last , when adding str_repeat
         $values_string = substr($values_string, 0, -1);
         $this->query = "INSERT INTO {$this->table} ( $columns_string ) VALUES ( $values_string );";
+        
         $stmt = $this->pdo->prepare($this->query);
         // reset the params for future queries once the execution is done
         $this->params = [];

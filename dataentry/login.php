@@ -18,10 +18,15 @@ $csrf_token = $_SESSION['csrf_token'];
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <link rel="stylesheet" href="css/bootstrap.css">
 <link rel="icon" type="image/png" sizes="16x16" href="images/logo/logo.png">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/11.0.18/sweetalert2.min.css">
 <!-- Include jQuery -->
 <script src="js/jquery-3.6.0.min.js"></script>
 <!-- Include jQuery Validation plugin -->
 <script src="js/jquery.validate.min.js"></script>
+
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/11.0.18/sweetalert2.all.min.js"></script>
+
 <style>
 	@import "https://use.fontawesome.com/releases/v5.5.0/css/all.css";
 	body {
@@ -108,6 +113,13 @@ $csrf_token = $_SESSION['csrf_token'];
 </style>
 </head>
 <body>
+
+<?php
+// echo "<pre>";
+// print_r($_SESSION);
+
+?>
+
 	<div class="container" style="margin-top:10%">
 		<div class="row">
 			<div class="col-lg-4">
@@ -152,12 +164,14 @@ $csrf_token = $_SESSION['csrf_token'];
 			</div>
 		</div>
 	</div>
+
+
 	<?php
 	if (isset($_POST['submit'])) {
-		if (!hash_equals($_SESSION['csrf_token'], $_POST['csrf_token'])) {
+		//if (!hash_equals($_SESSION['csrf_token'], $_POST['csrf_token'])) {
 			// Token mismatch, handle the error (e.g., log it or display an error message)
-			die("CSRF token verification failed.");
-		}
+			//die("CSRF token verification failed.");
+		//}
 		$user = trim($_POST["user"]);
 		$user = cleanData($user);
 		$pass = trim($_POST["pass"]);
@@ -193,9 +207,33 @@ $csrf_token = $_SESSION['csrf_token'];
 				$stmtCheckFlag->execute(['u_name' => $user]);
 				$loginflag = $stmtCheckFlag->fetchColumn();
 				if ($loginflag == 1) { //already logged in
+
+					$_SESSION['sess_user'] = $user;
+
+
+
+
+					
 					//$errorMsg = "error : Already Logged in.";
 					echo "<p class='message err_msg' style='text-align:center; width: 50%;
 					margin-left: 24%;'>This user is already logged in some other system.</p>";
+
+					
+					
+					echo '<div class="container">
+					<div class="row">
+					  <div class="col-sm-5" >
+						
+					  </div>
+					  <div class="col-sm-2">
+						
+				  <button type="button" class="btn btn-info force_logout">Force log out</button>
+					  </div>
+					  <div class="col-sm-5" style="">
+					  
+					  </div>
+					</div>
+				  </div>';
 				} //already logged in
 				else { // logged in
 					if ($user == $dbusername && $pass == $dbpassword) {
@@ -238,6 +276,55 @@ $csrf_token = $_SESSION['csrf_token'];
 </body>
 <script type="text/javascript" language="javascript">
  $(document).ready(function (){
+
+	$("button.force_logout").on("click", function() {
+
+	 // Show a SweetAlert confirmation box
+	 Swal.fire({
+            title: 'Are you sure you want to log out?',
+            text: 'You will be logged out from your account.',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'OK'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                // If the user clicks "OK" in the SweetAlert box, make an AJAX call to log out
+                $.ajax({
+                    url: 'force_logout.php',
+                    type: 'POST',
+                    success: function(response) {
+						debugger;
+                        // Upon success, redirect or handle UI changes
+                        window.location.href = 'index.php'; // Redirect to login page or any suitable page
+                    },
+                    error: function(xhr, status, error) {
+                        // Handle errors or failed log-out attempts
+                        console.error(error);
+                    }
+                });
+            }
+        });
+
+	});
+
+	// $("button.force_logout").on("click", function() {
+    //     $.ajax({
+    //         url: 'force_logout.php',
+    //         type: 'POST',
+    //         success: function(response) {
+    //             // Upon success (optional), handle any UI changes or redirects
+    //             window.location.href = 'index.php'; // Redirect to login page or any suitable page
+    //         },
+    //         error: function(xhr, status, error) {
+    //             // Handle any errors or failed log-out attempts
+    //             console.error(error);
+    //         }
+    //     });
+    // });
+
+
 		$("#dataentry_login").validate({
 			rules: {
 				user: {
