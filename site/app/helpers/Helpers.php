@@ -36,6 +36,7 @@ use App\Models\PhaseMaster as PhaseMaster;
 use App\Models\Announcements as Announcements;
 use App\Models\SearchYear as SearchYear;
 use App\Models\Instructions as Instructions;
+use App\Models\Loginflag as Loginflag;
 
 class Helpers
 {
@@ -427,20 +428,20 @@ class Helpers
 	static function getAdmitCardDetails()
 	{
 
-// 		ini_set('display_errors', 1);
-// ini_set('display_startup_errors', 1);
-// error_reporting(E_ALL);
-		//echo $data;
+	
+		
 		$errorMsg = "";
 		// Verify CSRF token
 		
-			if (isset($_POST['admit_card'])) {
+			if (isset($_POST['examname'])) {
+				
 				if (!hash_equals($_SESSION['csrf_token'], $_POST['csrf_token'])) {
 		// Token mismatch, handle the error (e.g., log it or display an error message)
-		die("CSRF token verification failed.");
+		$errorMsg ="CSRF token verification failed.";
 	}
 
-				$register_number     = trim($_POST['register_number']);
+		 $register_number     = trim($_POST['register_number']);
+				
 				$dob   = trim($_POST['dob']);
 				$examname = trim($_POST['examname']);
 				$examname = explode('_', $examname);
@@ -463,9 +464,8 @@ class Helpers
 					"roll_no" => $roll_no,
 					"post_preference" => $post_preference
 				);
-				// echo '<pre>';
-				// print_r($data_array);
-				// exit;
+	
+				
 				$tableName = $exam_value;
 				$admitcard = new Admitcard();
 				switch ($exam_type) {
@@ -1376,6 +1376,13 @@ class Helpers
 		$eventcategorygetlists = $eventcategorymodel->getEventCategoriesList();
 		return  $eventcategorygetlists;
 	}
+	static function getloginuserListforAdmin()
+	{
+		$loginusermodel = new LoginFlag();
+		$loginuserlists = $loginusermodel->getLoginList();
+		return  $loginuserlists;
+	}
+	
 	static function getPhaseMasterListforAdmin()
 	{
 		$phasemastermodel = new PhaseMaster();

@@ -308,7 +308,7 @@
 					},
 					dataType: "json",
 					success: function (response) {
-						debugger;
+						//debugger;
 						var html = '';
 						$.each(response, function (i) {
 							html += '<option value="' + response[i] + '">' +
@@ -327,7 +327,7 @@
 			$('#password').val('');
 			$("#dob").datepicker("setDate", "");
 			let admitcardExamName = $('#admitcard_examname option:selected').val();
-			debugger;
+			//debugger;
 			var strshortened = admitcardExamName.slice(0, 5);
 			if (strshortened == "phase") {
 				let exam_name = admitcardExamName.split('_');

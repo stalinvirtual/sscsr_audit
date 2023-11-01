@@ -540,6 +540,9 @@ class PdfHelper extends Dompdf
       } else {
          $value7 = "0" . $value7;
       }
+      $headerImg = 'http://10.163.2.181:8080/sscsr_audit/site/exam_assets/header.png';
+      // echo $headerImg;
+      // exit;
       $output = '
          <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
          <style>
@@ -580,10 +583,9 @@ class PdfHelper extends Dompdf
       }
       .header-class{
       border:1px solid black;
-      height:auto;
+      height:100px;
       padding-left:5px;
-      padding-top:5px;
-      padding-bottom:5px;
+      
       }
       div p{
       padding-left:50px;
@@ -634,7 +636,7 @@ class PdfHelper extends Dompdf
       }
    </style>
    <div class="header-class">
-      <img src=' . $headerImg . ' style="width:100%;">
+      <img src=' . $headerImg . ' style="width:100%; ">
    </div>
    <div class="headingClass"><b>e-ADMISSION CERTIFICATE</b></div>
    <div class="headingClass"><b>' . $value1 . '</b></div>
@@ -977,8 +979,8 @@ class PdfHelper extends Dompdf
          <div class="myDiv">
          <img src=' . $last_line . ' style="width:100%;height:130px">
          </div>';
-      // echo $output;
-      // exit;
+     //  echo $output;
+     //  exit;
       $data = ob_get_clean();
       $document->loadHtml($output);
       $document->set_option('isRemoteEnabled', true);
@@ -987,6 +989,8 @@ class PdfHelper extends Dompdf
       $document->render();
       //First Pdf insert 
       $output = $document->output();
+
+      
       $admitcardpdf = self::$PDF_TEMPLATE_PATH . "/" . $file_name . ".pdf";
       file_put_contents($admitcardpdf, $output);
       $pdf = new \Clegginabox\PDFMerger\PDFMerger;

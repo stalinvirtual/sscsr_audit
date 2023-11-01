@@ -64,6 +64,7 @@ error_reporting(0);
 											<input type="checkbox" id="ins_checkbox">
 											<span class="checkmark"></span>
 										</label>
+										<div class='errormsg'></div>
 										<input type="button" class="btn-dwn btn btn-lg btn-sscsrthemecolor btn-block" name="btn-dwn" id="btn-dwn" value="Proceed to continue">
 									</div>
 								</div>
@@ -156,6 +157,10 @@ error_reporting(0);
 </section>
 <?php include "footer2.php"; ?>
 <style>
+	.errormsg{
+		text-align: left !important;
+		color:red;
+	}
 	.label-spacing {
 		margin-right: 20px;
 		/* Adjust as needed */
@@ -243,7 +248,7 @@ error_reporting(0);
 	}
 	/* When the checkbox is checked, add a blue background */
 	.container_checkbox input:checked~.checkmark {
-		background-color: #2196F3;
+		background-color: #a94442;
 	}
 	/* Create the checkmark/indicator (hidden when not checked) */
 	.checkmark:after {
@@ -379,7 +384,7 @@ error_reporting(0);
 									modal.style.display = "none"; // Assuming modal is referenced correctly
 									form.submit(); // Submit the form
 								} else {
-									alert("Please select the Checkbox");
+									$(".errormsg").html("Please agree with the Checkbox");
 								}
 							});
 						} else {
