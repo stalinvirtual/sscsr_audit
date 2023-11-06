@@ -151,7 +151,8 @@ Helpers::urlSecurityAudit();
                                     </div>
 
 
-                                    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+                                    <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script> -->
+                                    <script src="<?php echo $this->theme_url; ?>/dist/js/jquery.min.js"></script>
                                     <script>
                                         $(document).ready(function() {
                                             $('#timepicker').mdtimepicker(); //Initializes the time picker
@@ -163,8 +164,8 @@ Helpers::urlSecurityAudit();
 
 
 
-                                <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-
+                                <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script> -->
+                                <script src="<?php echo $this->theme_url; ?>/dist/js/jquery.min.js"></script>
                                 <script>
                                     jQuery(document).ready(function() {
                                         jQuery("input[name='menu_type']").on('change', function() {

@@ -78,7 +78,7 @@ class Instructions extends DB
         ->from("instructionstbl ")
         ->where(['p_status'=>1])
         //->wherecondition("effect_from_date > current_date - interval '2 days'")
-        ->order_by('effect_from_date desc')
+        ->order_by('creation_date desc')
         ->fetchtwo('fetch first 2 rows only')
         ->get_list();
         return $fetch_all;
@@ -156,7 +156,7 @@ TEXT;
            $getlist =  $this->select('*')
                ->from("instructionstbl")
                ->whereconditionarchieves($str)
-               ->order_by('effect_from_date desc')
+               ->order_by('creation_date desc')
                ->get_list();
        } else {
            if ($searchQuery == " ") {
@@ -178,7 +178,7 @@ TEXT;
            $getlist =  $this->select('*')
                ->from("instructionstbl")
                ->whereconditionarchieves($str)
-               ->order_by('effect_from_date desc')
+               ->order_by('creation_date desc')
                ->get_list();
        }
     //    echo $this->last_query();

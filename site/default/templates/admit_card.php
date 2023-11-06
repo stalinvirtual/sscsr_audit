@@ -60,7 +60,7 @@ error_reporting(0);
 									<h4 style="text-align:center"> <?php echo $ins_title; ?></h4>
 									<?php echo $ins_content; ?>
 									<div>
-										<label class="container_checkbox">Please read the instruction before Download e-admit card
+										<label class="container_checkbox">I have read the above instructions and agree to comply with instructions
 											<input type="checkbox" id="ins_checkbox">
 											<span class="checkmark"></span>
 										</label>

@@ -94,17 +94,18 @@ class Route
         if (!$activeMenu) {
             return false;
         }
-       // echo '<pre>';
-        //print_r($activeMenu);
-       // exit;
+    //    echo '<pre>';
+    //     print_r($activeMenu);
+    //    exit;
         if ($activeMenu->menu_type == 1) { // article/ page
             $new_menu_alias = 'PageController/show/' . $activeMenu->menu_page_id;
         } else if ($activeMenu->menu_type == 2) { //External
             $new_menu_alias  = $activeMenu->menu_link;
         } else if ($activeMenu->menu_type == 0) { // internal menu
              $new_menu_alias = $activeMenu->menu_route;
-        } else { //PDF
-           //  $new_menu_alias  = $activeMenu->attachment;
+         }
+        else { //PDF
+           //$new_menu_alias  = $activeMenu->attachment;
         }
         
 

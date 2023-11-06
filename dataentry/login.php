@@ -25,7 +25,7 @@ $csrf_token = $_SESSION['csrf_token'];
 <script src="js/jquery.validate.min.js"></script>
 
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/11.0.18/sweetalert2.all.min.js"></script>
+<script src="js/sweetalert2.all.min.js"></script>
 
 <style>
 	@import "https://use.fontawesome.com/releases/v5.5.0/css/all.css";

@@ -171,7 +171,7 @@ class PdfHelper extends Dompdf
                $value14 = $value["col_description"] . " : " . $value["col_value"] != "" && $value["col_value"] != 'NA' ? $value["col_value"] : "photo_not_exists.png";
                $full_photo_path = photoPath($data);
                $photo_path = $full_photo_path . $value14;
-               //    echo $photo_path;
+                //   echo $photo_path;
                //   exit;
                $ch = curl_init($photo_path);
                curl_setopt($ch, CURLOPT_NOBODY, true);
@@ -182,7 +182,7 @@ class PdfHelper extends Dompdf
                   $photo_path = $photo_path;
                } else {
                   $base_url = $GLOBALS['site_url'];
-                  $local_path = $base_url . "/sscsr/site/";
+                  $local_path = $base_url . "/sscsr_audit/site/";
                   $photo_path = $local_path . "exam_assets/photo_not_exists.png";
                }
                break;
@@ -219,7 +219,7 @@ class PdfHelper extends Dompdf
                   $sign_path = $sign_path;
                } else {
                   $base_url = $GLOBALS['site_url'];
-                  $local_path = $base_url . "/sscsr/site/";
+                  $local_path = $base_url . "/sscsr_audit/site/";
                   $sign_path = $local_path . "exam_assets/sign_not_exits.png";
                }
                break;
@@ -440,7 +440,7 @@ class PdfHelper extends Dompdf
       $shift1 = $value26;
       $time1 = $value27;
       $mark1 = $value28;
-      $barcode_Value = 'RollNo=' . $value4;
+      $barcode_Value =  $value4;
       $qrcode_Value = 'RollNo=';
       $qrcode_Value .= $value4 . ",";
       $qrcode_Value .= 'Reg No=';
@@ -540,9 +540,6 @@ class PdfHelper extends Dompdf
       } else {
          $value7 = "0" . $value7;
       }
-      $headerImg = 'http://10.163.2.181:8080/sscsr_audit/site/exam_assets/header.png';
-      // echo $headerImg;
-      // exit;
       $output = '
          <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
          <style>
@@ -636,7 +633,7 @@ class PdfHelper extends Dompdf
       }
    </style>
    <div class="header-class">
-      <img src=' . $headerImg . ' style="width:100%; ">
+      <img src=' . $headerImg . ' style="width:100%;height:80px">
    </div>
    <div class="headingClass"><b>e-ADMISSION CERTIFICATE</b></div>
    <div class="headingClass"><b>' . $value1 . '</b></div>
@@ -653,7 +650,7 @@ class PdfHelper extends Dompdf
    <!-- Roll Number and Scribe -->
    <table  class= "tableClass" style="width:100%">
       <tr style="height:200px">
-         <td  style="text-align: left" width="50%" class="fontSizeClass"><b>' . $key4 . ' : </b>' . $value4 . ' </td>
+         <td  style="text-align: left" width="50%" class="fontSizeClass"><b>' . $key4 . ' : </b><b>' . $value4 . '</b> </td>
          <td  style="text-align: left" width="24%" class="fontSizeClass"><b>' . $key6 . ' : </b> ' . $value6 . ' </td>
          <td  style="text-align: left" width="26%" class="fontSizeClass"><b>' . $key84 . ' : </b> ' . $value84 . ' </td>
       </tr>
@@ -681,7 +678,7 @@ class PdfHelper extends Dompdf
       <tr>
          <td style="width:79%; vertical-align: text-top;text-align:left;border:1px solid black;border-collapse: collapse;">
             <div style="text-align:left;line-height: 2"><b>' . $key12 . '</b></div>
-            <div style=" text-align:left;line-height: 2">' . $value12 . '</div>
+            <div style=" text-align:left;line-height: 2"><b>' . $value12 . '</b></div>
             <div style="text-align:left;line-height: 2"><b>New or Changed Name</b></div>
             <div style=" text-align:left;line-height: 2">' . $value12 . '</div>
          </td>
@@ -945,8 +942,8 @@ class PdfHelper extends Dompdf
          <tr>
             <th width="8%">Exam Date</th>
             <th width="3%">Shift</th>
-            <th width="12%">Exam Time</th>
-            <th width="5%">Paper/<br>Session</th>
+            <th width="13%">Exam Time</th>
+            <th width="7%">Paper/<br>Session</th>
             <th width="25%" >Subject</th>
             <th width="4%">Marks</th>
          </tr>';
@@ -979,8 +976,8 @@ class PdfHelper extends Dompdf
          <div class="myDiv">
          <img src=' . $last_line . ' style="width:100%;height:130px">
          </div>';
-     //  echo $output;
-     //  exit;
+      // echo $output;
+      // exit;
       $data = ob_get_clean();
       $document->loadHtml($output);
       $document->set_option('isRemoteEnabled', true);
@@ -989,8 +986,6 @@ class PdfHelper extends Dompdf
       $document->render();
       //First Pdf insert 
       $output = $document->output();
-
-      
       $admitcardpdf = self::$PDF_TEMPLATE_PATH . "/" . $file_name . ".pdf";
       file_put_contents($admitcardpdf, $output);
       $pdf = new \Clegginabox\PDFMerger\PDFMerger;

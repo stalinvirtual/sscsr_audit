@@ -108,7 +108,7 @@ class PdfHelperDVExam extends Dompdf
                     }
                     else{
                      $base_url = $GLOBALS['site_url'];
-                                $local_path =  $base_url ."/sscsr/site/";
+                                $local_path =  $base_url ."/sscsr_audit/site/";
                                 $photo_path =  $local_path."exam_assets/photo_not_exists.png";
                                 
                         }
@@ -140,7 +140,7 @@ class PdfHelperDVExam extends Dompdf
             }
             else{
                $base_url = $GLOBALS['site_url'];
-              $local_path =  $base_url ."/sscsr/site/";
+              $local_path =  $base_url ."/sscsr_audit/site/";
               $sign_path =  $local_path."exam_assets/sign_not_exits.png";
               
                         }
@@ -359,12 +359,12 @@ class PdfHelperDVExam extends Dompdf
   
    <tr>
       <td style = "width:33%;padding:15px"><b>'.$key4.' </b></td>
-      <td style = "width:33%;padding:15px">'.$value4.'</td>
+      <td style = "width:33%;padding:15px"><b>'.$value4.'</b></td>
       <td style = "width:33%;padding:15px" rowspan = "2"><img src='.$photo_path.' width="150" height="150"></td>
    </tr>
     <tr>
       <td style = "width:33%;padding:15px"><b>'.$key5.' </b></td>
-      <td style = "width:33%;padding:15px">'.$value5.' </td>
+      <td style = "width:33%;padding:15px"><b>'.$value5.'</b> </td>
    </tr>
    <tr>
       <td style = "width:33%;padding:15px"><b>'.$key6.' </b></td>

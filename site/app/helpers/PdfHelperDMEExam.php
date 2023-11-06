@@ -95,7 +95,7 @@ class PdfHelperDMEExam extends Dompdf
                   $photo_path = $photo_path;
                } else {
                   $base_url = $GLOBALS['site_url'];
-                  $local_path = $base_url . "/sscsr/site/";
+                  $local_path = $base_url . "/sscsr_audit/site/";
                   $photo_path = $local_path . "exam_assets/photo_not_exists.png";
                }
                break;
@@ -131,7 +131,7 @@ class PdfHelperDMEExam extends Dompdf
                   $sign_path = $sign_path;
                } else {
                   $base_url = $GLOBALS['site_url'];
-                  $local_path = $base_url . "/sscsr/site/";
+                  $local_path = $base_url . "/sscsr_audit/site/";
                   $sign_path = $local_path . "exam_assets/sign_not_exists.png";
                }
                break;
@@ -161,7 +161,7 @@ class PdfHelperDMEExam extends Dompdf
       $qrcode_Value .= 'DME Date=';
       $qrcode_Value .= $value12 . ',';
       $qrcode = '<img  style="width:70px;height:70px;" src="' . (new \chillerlan\QRCode\QRCode)->render($qrcode_Value) . '" alt="QR Code" />';
-      $barcode_Value = 'RollNo=' . $value4;
+      $barcode_Value =  $value4;
       $barcode = '<img  width="60%" style="padding-bottom:10px;height:50px" src="data:image/png;base64,' . base64_encode($generator->getBarcode($barcode_Value, $generator::TYPE_CODE_128, 3, 50)) . '">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;';
       if (empty($value5)) {
          $value5 = 'NA';
@@ -259,7 +259,7 @@ class PdfHelperDMEExam extends Dompdf
       <!-- Roll Number and Date of DME -->
       <table  class= "tableClass" style="width:100%">
          <tr style="height:200px">
-            <td  style="text-align: left" width="50%" class="fontSizeClass"><b>' . $key4 . ' : </b>' . $value4 . ' </td>
+            <td  style="text-align: left" width="50%" class="fontSizeClass"><b>' . $key4 . ' : </b><b>' . $value4 . ' </b></td>
             <td  style="text-align: left" class="fontSizeClass"><b>' . $key6 . ' : </b> ' . $value6 . ' </td>
          </tr>
       </table>
@@ -277,7 +277,7 @@ class PdfHelperDMEExam extends Dompdf
          <tr>
             <td style="width:79%; vertical-align: text-top;text-align:left;border:1px solid black;border-collapse: collapse;">
                <div style="text-align:left;line-height: 2"><b>' . $key9 . '</b></div>
-               <div style=" text-align:left;line-height: 2">' . $value9 . '</div>
+               <div style=" text-align:left;line-height: 2"><b>' . $value9 . '</b></div>
                <div style="text-align:left;line-height: 2"><b>New or Changed Name</b></div>
                <div style=" text-align:left;line-height: 2">' . $value9 . '</div>
             </td>
