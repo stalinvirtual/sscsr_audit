@@ -56,7 +56,7 @@ class Application
     {
         $find = array("-", "_", " ");
         $replace = array("", "", "");
-        $name  = trim($name);
+        $name  = trim($name ?? '');
         return str_replace($find, $replace, $name);
     }
 }

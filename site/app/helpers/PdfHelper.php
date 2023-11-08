@@ -582,6 +582,7 @@ class PdfHelper extends Dompdf
       border:1px solid black;
       height:100px;
       padding-left:5px;
+      margin-top:-30px;
       
       }
       div p{
@@ -631,6 +632,12 @@ class PdfHelper extends Dompdf
          font-size:15px !important;
          text-decoration: underline;
       }
+      .footer
+{
+    width:100%;
+    position:fixed;
+    text-align: center; 
+}
    </style>
    <div class="header-class">
       <img src=' . $headerImg . ' style="width:100%;height:80px">
@@ -938,7 +945,7 @@ class PdfHelper extends Dompdf
             }
          }
          array_multisort(array_column($tableArray2, 0), SORT_ASC, $tableArray2);
-         $output .= '<table  style="width:100%" class= "tableClass">
+         $output .= '<div class="footer"><table  style="width:100%" class= "tableClass">
          <tr>
             <th width="8%">Exam Date</th>
             <th width="3%">Shift</th>
@@ -969,15 +976,15 @@ class PdfHelper extends Dompdf
          //    </tr>";
          // }
          $output .= '</table>
-         <br>';
+         </div>';
       }
       echo "<table class='outer-table' style='width:100%'>{$theader}{$tcell}{$tfoot}</table>";
-      $output .= '<div class="page-break"></div>
-         <div class="myDiv">
-         <img src=' . $last_line . ' style="width:100%;height:130px">
-         </div>';
+      // $output .= '<div class="page-break"></div>
+      //    <div class="myDiv">
+      //    <img src=' . $last_line . ' style="width:100%;height:130px">
+      //    </div>';
       // echo $output;
-      // exit;
+      //  exit;
       $data = ob_get_clean();
       $document->loadHtml($output);
       $document->set_option('isRemoteEnabled', true);

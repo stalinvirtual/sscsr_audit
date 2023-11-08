@@ -18,7 +18,7 @@ $csrf_token = $_SESSION['csrf_token'];
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <link rel="stylesheet" href="css/bootstrap.css">
 <link rel="icon" type="image/png" sizes="16x16" href="images/logo/logo.png">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/11.0.18/sweetalert2.min.css">
+<link rel="stylesheet" href="css\sweetalert2.min.css">
 <!-- Include jQuery -->
 <script src="js/jquery-3.6.0.min.js"></script>
 <!-- Include jQuery Validation plugin -->
@@ -28,7 +28,7 @@ $csrf_token = $_SESSION['csrf_token'];
 <script src="js/sweetalert2.all.min.js"></script>
 
 <style>
-	@import "https://use.fontawesome.com/releases/v5.5.0/css/all.css";
+	@import "css/fontawesome/css/all.css";
 	body {
 		margin: 0;
 		padding: 0;
@@ -153,7 +153,10 @@ $csrf_token = $_SESSION['csrf_token'];
 					</div>
 					<input type="text" id="captcha" name="captcha" placeholder="Enter captcha" required style="margin-left: 85px;">
 					<div class="containerred">
-						<img src="captcha.php" alt="CAPTCHA"><br><br>
+						<img src="captcha.php" alt="CAPTCHA" id="captcha_code">
+						<div>
+						<button name='submit' class="btnRefresh" onClick="refreshCaptcha();"><i class="fa fa-refresh" aria-hidden="true"></i></button>
+					</div>
 					</div>
 					<input type="hidden" name="csrf_token" value="<?php echo $csrf_token; ?>">
 
@@ -168,10 +171,10 @@ $csrf_token = $_SESSION['csrf_token'];
 
 	<?php
 	if (isset($_POST['submit'])) {
-		//if (!hash_equals($_SESSION['csrf_token'], $_POST['csrf_token'])) {
-			// Token mismatch, handle the error (e.g., log it or display an error message)
-			//die("CSRF token verification failed.");
-		//}
+		if (!hash_equals($_SESSION['csrf_token'], $_POST['csrf_token'])) {
+			//Token mismatch, handle the error (e.g., log it or display an error message)
+			$errorMsg="CSRF token verification failed.";
+		}
 		$user = trim($_POST["user"]);
 		$user = cleanData($user);
 		$pass = trim($_POST["pass"]);
@@ -209,12 +212,7 @@ $csrf_token = $_SESSION['csrf_token'];
 				if ($loginflag == 1) { //already logged in
 
 					$_SESSION['sess_user'] = $user;
-
-
-
-
-					
-					//$errorMsg = "error : Already Logged in.";
+//$errorMsg = "error : Already Logged in.";
 					echo "<p class='message err_msg' style='text-align:center; width: 50%;
 					margin-left: 24%;'>This user is already logged in some other system.</p>";
 
@@ -275,6 +273,9 @@ $csrf_token = $_SESSION['csrf_token'];
 	?>
 </body>
 <script type="text/javascript" language="javascript">
+	function refreshCaptcha() {
+		$('#captcha_code').attr('src','captcha.php');
+	}
  $(document).ready(function (){
 
 	$("button.force_logout").on("click", function() {
@@ -369,6 +370,17 @@ $csrf_token = $_SESSION['csrf_token'];
 .containerred img{
 	width: 105px; /* Ensure the image doesn't exceed the container's width */
 	margin-left: 27px;/* Ensure the image doesn't exceed the container's height */
+    border-radius: 30px;
+}
+
+.btnRefresh {
+    background-color: #fff;
+    border: #fff solid 2px;
+    font-size: 27px;
+    margin-top: -44px;
+    position: absolute;
+    margin-left: 128px;
+    /* margin-bottom: -49px; */
 }
 </style>
 </html>

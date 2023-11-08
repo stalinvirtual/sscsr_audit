@@ -13,7 +13,7 @@
                                 <th style="width:2%">Sr.No</th>
                                 <th>Event Name </th>
                                 <th style="width:5%">Status</th>
-                                <th style="width:9%"> Action </th>
+                                <th style="width:15%"> Action </th>
                             </tr>
                         </thead>
                         <tbody>

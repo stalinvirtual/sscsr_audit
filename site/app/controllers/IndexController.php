@@ -169,7 +169,7 @@ class IndexController extends FrontEndController
 		$tablename = @$data['tableName']; // si_2019_tier
 		$tierId = @$data['tier_id']; //1
 		$regNo = @$data['regNo']; //10000328837
-		$examname = explode('_', $tablename);
+		$examname = explode('_', $tablename ?? '');
 		// si2019_1_10000328837
 		$updateId = @$examname[0] . @$examname[1] . '_' . @$tierId . '_' . @$regNo;
 		//echo $updateId;

@@ -3441,9 +3441,9 @@ button.note-color-btn {
     margin-top: 10px;
 }
 .forms button.btn.btn-default {
-    background-color: #223a7e;
+    background-color: #a94442;
     color: #fff;
-    border: solid 2px #223a7e;
+    border: solid 2px #a94442;
     padding: .5em 1.5em;
     outline: none;
     border-radius: inherit;
@@ -3455,9 +3455,9 @@ button.note-color-btn {
     text-decoration: none;
 }
 .forms button.btn.btn-default:hover{
-    border: solid 2px #000;
-    background: none;
-    color: #000;
+  border: solid 2px #a94442;
+  background: #a94442;
+  color: #fff;
 }
 .inline-form.widget-shadow {
     margin-top: 0;

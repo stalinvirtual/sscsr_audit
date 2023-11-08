@@ -110,7 +110,8 @@ class Route
         
 
         if ($return_as_array == true) {
-            return  explode("/", $new_menu_alias);
+            return  explode("/", 
+            $new_menu_alias ?? '');
         }
 
         return $new_menu_alias;
