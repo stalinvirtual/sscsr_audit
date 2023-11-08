@@ -1,7 +1,10 @@
 <?php
+
 namespace App\Models;
+
 use App\System\DB\DB;
 use App\System\Route;
+
 class MstNotice extends DB
 {
     private $table_name = 'public.mstnoticetbl';
@@ -32,8 +35,9 @@ class MstNotice extends DB
             'effect_from_date' => '',
             'creation_date' => '',
             'effect_to_date' => '',
-            
+
             'p_status ' => '',
+            'category_id ' => '',
         ];
         if ($type == DB_OBJECT) {
             $empty_menu = (object) $empty_menu;
@@ -51,33 +55,33 @@ class MstNotice extends DB
     public function lastInsertedId($parent_id = 0)
     {
         $fetch_row  = $this->select('max(notice_id)')
-        ->from("public.mstnoticetbl")
-        ->get_one(DB_ASSOC);
+            ->from("public.mstnoticetbl")
+            ->get_one(DB_ASSOC);
         $lastinsertid = (array)$fetch_row;
         return $lastinsertid;
     }
     public function getMstNoticeListAdmin($parent_id = 0)
     {
         $fetch_all =  $this->select('P.*,category.category_name,phase.phase_name')
-      ->from("public.mstnoticetbl P ")
-      ->join("mstcategory category ","P.category_id = category.category_id ","JOIN")
-      ->join("mstphasemaster phase ","P.phase_id = phase.phase_id ","JOIN")
-      ->order_by('notice_id desc')
-      ->get_list();
-      $lastinsertid = (object)$fetch_all ;
-      return $lastinsertid;
+            ->from("public.mstnoticetbl P ")
+            ->join("mstcategory category ", "P.category_id = category.category_id ", "JOIN")
+            ->join("mstphasemaster phase ", "P.phase_id = phase.phase_id ", "JOIN")
+            ->order_by('notice_id desc')
+            ->get_list();
+        $lastinsertid = (object)$fetch_all;
+        return $lastinsertid;
     }
     public function getMstNoticeList($parent_id = 0)
     {
         $fetch_all =  $this->select('P.*,category.category_name,phase.phase_name')
-      ->from("mstselectionposttbl P ")
-      ->join("mstcategory category ","P.category_id = category.category_id ","JOIN")
-      ->join("mstphasemaster phase ","P.phase_id = phase.phase_id ","JOIN")
-      ->where(['P.p_status'=>'1'])
-      ->order_by('selection_post_id desc')
-      ->get_list();
-      $lastinsertid = (object)$fetch_all ;
-      return $lastinsertid;
+            ->from("mstselectionposttbl P ")
+            ->join("mstcategory category ", "P.category_id = category.category_id ", "JOIN")
+            ->join("mstphasemaster phase ", "P.phase_id = phase.phase_id ", "JOIN")
+            ->where(['P.p_status' => '1'])
+            ->order_by('selection_post_id desc')
+            ->get_list();
+        $lastinsertid = (object)$fetch_all;
+        return $lastinsertid;
     }
     /******
      * 
@@ -86,177 +90,172 @@ class MstNotice extends DB
     public function getMstNoticeListLatestNews($parent_id = 0)
     {
         $fetch_all =  $this->select('P.*,category.category_name,phase.phase_name')
-      ->from("mstselectionposttbl P ")
-      ->join("mstcategory category ","P.category_id = category.category_id ","JOIN")
-      ->join("mstphasemaster phase ","P.phase_id = phase.phase_id ","JOIN")
-      ->where(['P.p_status'=>'1'])
-      ->where_between('CURRENT_DATE BETWEEN effect_from_date AND effect_to_date')
-      ->order_by('P.creation_date desc')
-     // ->fetchtwo('fetch first 2 rows only')
-      ->get_list();
-      $lastinsertid = (object)$fetch_all ;
-      return $lastinsertid;
-    }
-	 public function getHomeMstNoticeList($parent_id = 0)
-    {
-        $fetch_all =  $this->select('P.*,category.category_name,phase.phase_name')
-        ->from("mstselectionposttbl P ")
-        ->join("mstcategory category ","P.category_id = category.category_id ","JOIN")
-        ->join("mstphasemaster phase ","P.phase_id = phase.phase_id ","JOIN")
-        ->where(['p_status'=>'1'])
-        ->order_by('P.effect_from_date desc limit 10')
-        ->get_list();
-        $lastinsertid = (object)$fetch_all ;
+            ->from("mstselectionposttbl P ")
+            ->join("mstcategory category ", "P.category_id = category.category_id ", "JOIN")
+            ->join("mstphasemaster phase ", "P.phase_id = phase.phase_id ", "JOIN")
+            ->where(['P.p_status' => '1'])
+            ->where_between('CURRENT_DATE BETWEEN effect_from_date AND effect_to_date')
+            ->order_by('P.creation_date desc')
+            // ->fetchtwo('fetch first 2 rows only')
+            ->get_list();
+        $lastinsertid = (object)$fetch_all;
         return $lastinsertid;
     }
-	// Publish and Unpublished
-	 public function updateMstNoticeState($data = array(), $id = 0)
+    public function getHomeMstNoticeList($parent_id = 0)
     {
-        return $this->update($data, ['selection_post_id' => $id]);
+        $fetch_all =  $this->select('P.*,category.category_name,phase.phase_name')
+            ->from("mstselectionposttbl P ")
+            ->join("mstcategory category ", "P.category_id = category.category_id ", "JOIN")
+            ->join("mstphasemaster phase ", "P.phase_id = phase.phase_id ", "JOIN")
+            ->where(['p_status' => '1'])
+            ->order_by('P.effect_from_date desc limit 10')
+            ->get_list();
+        $lastinsertid = (object)$fetch_all;
+        return $lastinsertid;
     }
-/***
- * 
- * PHP AJAX Data Table on 18-sep-2022
- * 
- * 
- */
-public function deleteMstNotice($sp_id = 0)
-{
-   $delId = explode(",", $sp_id);
-   foreach ($delId as $val) {
-       $delete_row =  $this->delete($val);
-   }
-   return $delete_row;
-}
-public function totalRecordsWithOutFiltering()
-   {
-       $fetch_all =  $this->select('count(*) as allcount')
-           ->from("mstselectionposttbl P ")
-           ->join("mstcategory category ", "P.category_id = category.category_id ", "JOIN")
-           ->get_one();
-       $count = $fetch_all;
-       return $count;
-   }
-  public function totalRecordsWithFiltering($searchQuery)
-   {
-       if ($searchQuery == " ") {
-           $finalquery = <<<HTML
-     '1'
-HTML;
-       }
-       else{
-           $finalquery = <<<HTML
-           '1' and $searchQuery
-HTML;
-       }
-       $fetch_all =  $this->select('count(*) as allcount')
-           ->from("mstselectionposttbl P ")
-           ->join("mstcategory category ", "P.category_id = category.category_id ", "JOIN")
-           ->whereconditiondatatable($finalquery)
-           ->get_one();
-       $count = $fetch_all;
-       return $count;
-   }
-   public function getMstNoticeDetails($year, $month, $effect_from_date, $effect_to_date, $searchQuery)
-   {
-       if ($month == 'All') {
-           if ($searchQuery == " ") {
-               $str = <<<TEXT
+    // Publish and Unpublished
+    public function updateMstNoticeState($data = array(), $id = 0)
+    {
+        return $this->update($data, ['notice_id' => $id]);
+    }
+    /***
+     * 
+     * PHP AJAX Data Table on 18-sep-2022
+     * 
+     * 
+     */
+
+    public function deleteMstNotice($sp_id = 0)
+    {
+        $delId = explode(",", $sp_id);
+        foreach ($delId as $val) {
+            $delete_row =  $this->delete($val);
+        }
+        return $delete_row;
+    }
+    public function totalRecordsWithOutFiltering()
+    {
+
+        $fetch_all =  $this->select('count(*) as allcount')
+            ->from("public.mstnoticetbl")
+            ->get_one();
+        $count = $fetch_all;
+        return $count;
+    }
+
+    public function totalRecordsWithFiltering($searchQuery)
+    {
+
+
+        if ($searchQuery == " ") {
+            $finalquery = "'1'";
+        } else {
+
+            $finalquery = " '1' and $searchQuery";
+        }
+        $fetch_all =  $this->select('count(*) as allcount')
+            ->from("public.mstnoticetbl P")
+            ->join("mstcategory c ", "P.category_id = c.category_id ", "JOIN")
+            ->whereconditiondatatable($finalquery)
+            ->get_one();
+        $count = $fetch_all;
+        return $count;
+    }
+    public function getMstNoticeDetails($year, $month, $effect_from_date, $effect_to_date, $searchQuery)
+    {
+        if ($month == 'All') {
+            if ($searchQuery == " ") {
+                $str = <<<TEXT
                to_char("effect_to_date", 'YYYY')='$year'
 TEXT;
-           } else {
-               $str = <<<TEXT
+            } else {
+                $str = <<<TEXT
                to_char("effect_to_date", 'YYYY')='$year' and  $searchQuery
 TEXT;
-           }
-           $getlist =  $this->select('P.*,category.category_name,phase.phase_name')
-               ->from("mstselectionposttbl P ")
-               ->join("mstcategory category ", "P.category_id = category.category_id ", "JOIN")
-               ->join("mstphasemaster phase ","P.phase_id = phase.phase_id ","JOIN")
-               ->whereconditionarchieves($str)
-               ->order_by('P.creation_date desc')
-               ->get_list();
-       } else {
-           if ($searchQuery == " ") {
-               $str = <<<TEXT
+            }
+            $getlist =  $this->select('P.*,c.*')
+                ->from("mstnoticetbl P")
+                ->join("mstcategory c ", "P.category_id = c.category_id ", "JOIN")
+                ->whereconditionarchieves($str)
+                ->order_by('P.creation_date desc')
+                ->get_list();
+        } else {
+            if ($searchQuery == " ") {
+                $str = <<<TEXT
                to_char("effect_to_date", 'MM')='$month' and
                to_char("effect_to_date", 'YYYY')='$year' and
                effect_from_date >='$effect_from_date' and
                effect_to_date <= '$effect_to_date'
 TEXT;
-           }
-           else{
-               $str = <<<TEXT
+            } else {
+                $str = <<<TEXT
                to_char("effect_to_date", 'MM')='$month' and
                to_char("effect_to_date", 'YYYY')='$year' and
                effect_from_date >='$effect_from_date' and
                effect_to_date <= '$effect_to_date'  $searchQuery
 TEXT;
-           }
-           $getlist =  $this->select('P.*,category.category_name,phase.phase_name')
-               ->from("mstselectionposttbl P ")
-               ->join("mstcategory category ", "P.category_id = category.category_id ", "JOIN")
-               ->join("mstphasemaster phase ","P.phase_id = phase.phase_id ","JOIN")
-               ->whereconditionarchieves($str)
-               ->order_by('P.creation_date desc')
-               ->get_list();
-       }
-         //echo $this->last_query;
-       return  $getlist;
-   }
-   public function checkMstNoticeId($id)
-   {
-       $fetch_all =  $this->select('count(*) as checkid')
-           ->from("mstselectionposttbl P ")
-           ->join("mstcategory category ", "P.category_id = category.category_id ", "JOIN")
-           ->where(['selection_post_id' => $id])
-           ->get_one();
-       $count = $fetch_all;
-       return $count;
-   }
-   public function archiveMstNoticeStatus($selection_post_id = 0)
-   {
-       if (is_array($selection_post_id)) {
-           $selection_post_id = implode(",", $selection_post_id);
-       }
-       $inIDS = explode(",", $selection_post_id);
-       $qMarks = str_repeat('?,', count($inIDS) - 1) . '?';
-       $sql = "INSERT INTO archives.mstselectionpostarchivestbl (
-        selection_post_id,
-        exam_name,
+            }
+            $getlist =  $this->select('P.*,c.*')
+                ->from("mstnoticetbl P")
+                ->join("mstcategory c ", "P.category_id = c.category_id ", "JOIN")
+                ->whereconditionarchieves($str)
+                ->order_by('P.creation_date desc')
+                ->get_list();
+        }
+        //echo $this->last_query;
+        return  $getlist;
+    }
+
+    public function checkMstNoticeId($id)
+    {
+        $fetch_all =  $this->select('count(*) as checkid')
+            ->from("public.mstnoticetbl")
+            ->where(['notice_id' => $id])
+            ->get_one();
+        $count = $fetch_all;
+        return $count;
+    }
+    public function archiveMstNoticeStatus($notice_id = 0)
+    {
+        if (is_array($notice_id)) {
+            $notice_id = implode(",", $notice_id);
+        }
+        $inIDS = explode(",", $notice_id);
+        $qMarks = str_repeat('?,', count($inIDS) - 1) . '?';
+        $sql = "INSERT INTO archives.mstnoticearchivestbl (
+        notice_id,
+        notice_name,
         category_id,
-        phase_id,
         effect_from_date, 
         effect_to_date,
         p_status, 
         date_archived 
         ) 
        SELECT 
-       selection_post_id, 
-       exam_name, 
+       notice_id, 
+       notice_name, 
        category_id,
-       phase_id,
        effect_from_date, 
        effect_to_date, 
        '0',
         NOW()
-      FROM public.mstselectionposttbl WHERE selection_post_id IN ($qMarks)";
-       $delete_row = $this->insert_archieves($sql,$inIDS);
-       $sql1 = "INSERT INTO archives.mstselectionpostarchiveschildtbl(
-        selection_post_id, pdf_name, attachment, status)
-        SELECT selection_post_id, pdf_name, attachment, '0'
-      FROM public.mstselectionpostchildtbl WHERE selection_post_id IN ($qMarks)";
-       $childtable_insert =  $this->insert_archieves($sql1,$inIDS);
-       $delId = explode(",", $selection_post_id);
-       foreach ($delId as $val) {
-           $this->delete($val);
-       }
-       return $childtable_insert;
-   }
-   /***
- * 
- * PHP AJAX Data Table on 18-sep-2022
- * 
- * 
- */
+      FROM public.mstnoticetbl WHERE notice_id IN ($qMarks)";
+        $delete_row = $this->insert_archieves($sql, $inIDS);
+        $sql1 = "INSERT INTO archives.mstnoticearchiveschildtbl(
+        notice_id, pdf_name, attachment, status)
+        SELECT notice_id, pdf_name, attachment, '0'
+      FROM public.mstnoticechildtbl WHERE notice_id IN ($qMarks)";
+        $childtable_insert =  $this->insert_archieves($sql1, $inIDS);
+        $delId = explode(",", $notice_id);
+        foreach ($delId as $val) {
+            $this->delete($val);
+        }
+        return $childtable_insert;
+    }
+    /***
+     * 
+     * PHP AJAX Data Table on 18-sep-2022
+     * 
+     * 
+     */
 }

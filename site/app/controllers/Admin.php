@@ -34,6 +34,8 @@ use App\Models\SelectionpostschildArchives as SelectionpostschildArchives;
 use App\Models\PhaseMaster as PhaseMaster;
 use App\Models\SearchYear as SearchYear;
 use App\Models\Instructions as Instructions;
+use App\Models\MstNotice as MstNotice;
+use App\Models\MstNoticeChild as MstNoticeChild;
 ini_set('display_errors', '1');
 ini_set('display_startup_errors', '1');
 error_reporting(E_ALL);
@@ -1001,6 +1003,11 @@ class Admin extends BackEndController
         $nominationchildlist = $nominationchildclass->getNominationchild();
         $data['nominationchildlist'] = $nominationchildlist;
         $data['nomination_id'] = $nomination_id;
+
+
+
+
+
         $this->prepare_menus($data);
         $this->render("edit-nomination", $data);
     }
@@ -1924,85 +1931,256 @@ class Admin extends BackEndController
         ob_start();
         if ($is_admin) {
         }
-        $notice = new Notice();
+
+        /**
+         * Mst Notice
+         * 
+         */
+        
+        $notice = new MstNotice();
         // chek if the id is available in the params 
         $notice_id = (isset($this->data['params'][0])) ? $this->data['params'][0] : 0;
-        $current_notice = $notice->getNoticeby($notice_id, DB_ASSOC);
+        
+        $current_notice = $notice->getMstNotice($notice_id, DB_ASSOC);
         $data['current_notice'] = $current_notice;
+
+
+
+
+
+
+
+
+
+        $notices = $notice->getMstNotices();
+        $data['notices'] = $notices;
         $category = new Category();
         $categories = $category->getCategoryNominations();
         $data['categories'] = $categories;
-        $notices = $notice->getNoticeList();
-        $data['notices'] = $notices;
+        $noticechildclass = new MstNoticeChild();
+        $noticechildlist = $noticechildclass->getMstNoticeChild();
+        $data['noticechildlist'] = $noticechildlist;
+        $data['notice_id'] = $notice_id;
+
+
+
+       
+
+
+        /**
+         * Mst Notice
+         * 
+         */
+
+
+
+
+
+
+
+
+
+
+
+        // $notice = new Notice();
+       
+        // $notice_id = (isset($this->data['params'][0])) ? $this->data['params'][0] : 0;
+        // $current_notice = $notice->getNoticeby($notice_id, DB_ASSOC);
+        // $data['current_notice'] = $current_notice;
+        // $category = new Category();
+        // $categories = $category->getCategoryNominations();
+        // $data['categories'] = $categories;
+        // $notices = $notice->getNoticeList();
+        // $data['notices'] = $notices;
         $this->prepare_menus($data);
         $this->render("edit-notice", $data);
     }
-    private function saveNotice()
-    {
+    private function saveNotice(){
+
         $message = $message_type = "";
         if (isset($_POST['csrf_token']) && hash_equals($_SESSION['csrf_token'], $_POST['csrf_token'])) {
-        if (isset($_POST['save_notice'])) {
-            $notice_id = isset($_POST['id']) ? $_POST['id'] : 0;
-            if (isset($_FILES['attachment']) && $_FILES['attachment']['name'] != "") {
-                //pdf upload function
-                $file = rand(1000, 100000) . "-" . $_FILES['attachment']['name'];
-                $file_loc = $_FILES['attachment']['tmp_name'];
-                $file_size = $_FILES['attachment']['size'];
-                $file_type = $_FILES['attachment']['type'];
-                $folder = './notices/';
-                $new_size = $file_size / 1024;
-                /* make file name in lower case */
-                $new_file_name = strtolower($file);
-                /* make file name in lower case */
-                $final_file = str_replace(' ', '-', $new_file_name);
-                if (move_uploaded_file($file_loc, $folder . $final_file)) { // echo "File is valid, and was successfully uploaded.\n";
-                } else {
-                    echo "File size greater than 300kb!\n\n";
+            if (isset($_POST['save_notice'])) {
+
+               
+
+
+                 $notice_id = isset($_POST['id']) ? $_POST['id'] : 0;
+               
+                $notice = new \App\Models\MstNotice();
+                $notice_name = trim(htmlspecialchars($_POST['notice_name']));
+                $notice_data = [
+                    'notice_name' => $notice_name,
+                    'category_id' => trim(htmlspecialchars($_POST['category_id'])),
+                    'effect_from_date' => date('Y-m-d', strtotime(Helpers::cleanData($_POST['effect_from_date']))),
+                    'effect_to_date' => date('Y-m-d', strtotime(Helpers::cleanData($_POST['effect_to_date']))),
+                    'creation_date' => date('Y-m-d H:i:s'),
+                ];
+                if ($notice_id == 0) {
+                    // insert new menu 
+                    if ($notice->addMstNotice($notice_data)) {
+                        $lastinsertsql = $notice->lastInsertedId();
+                        $lastinsertedid = $lastinsertsql['max'];
+                        if (count($_FILES) > 0) { //uploaded File 
+                            foreach ($_FILES['pdf_file']['name'] as $i => $name) {
+                                $item_name = Helpers::cleanData($_POST['pdf_name'][$i]);
+                                $item_name = htmlspecialchars($item_name);
+                                $tmp_name = $_FILES['pdf_file']['tmp_name'][$i];
+                                $error = $_FILES['pdf_file']['error'][$i];
+                                $size = $_FILES['pdf_file']['size'][$i];
+                                $type = $_FILES['pdf_file']['type'][$i];
+                                $folder = './notices/';
+                                $file = rand(1000, 100000) . "-" . $_FILES['pdf_file']['name'][$i];
+                                $new_file_name = strtolower($file);
+                                $final_file = str_replace(' ', '-', $new_file_name);
+                                if (move_uploaded_file($tmp_name, $folder . $final_file)) { // echo "File is valid, and was successfully uploaded.\n";
+                                } else {
+                                    echo "File size greater than 300kb!\n\n";
+                                }
+                                $noticechild = new \App\Models\MstNoticeChild();
+                                $notice_child_data = [
+                                    'notice_id' => $lastinsertedid,
+                                    'pdf_name' => $item_name,
+                                    'attachment' => $final_file,
+                                    'status' => 0
+                                ];
+                                $noticechild->addMstNoticeChild($notice_child_data);
+                            }
+                        } //uploaded File
+                        $message = "Notice Added successfully";
+                        $message_type = "success";
+                    } else {
+                        $message = "Error adding Notice";
+                        $message_type = "warning";
+                    }
+                } else { // update menu
+                    $notice_data = [
+                        'notice_name' => $notice_name,
+                        'category_id' => trim(htmlspecialchars($_POST['category_id'])),
+                        'effect_from_date' => date('Y-m-d', strtotime(Helpers::cleanData($_POST['effect_from_date']))),
+                        'effect_to_date' => date('Y-m-d', strtotime(Helpers::cleanData($_POST['effect_to_date']))),
+                        'creation_date' => date('Y-m-d H:i:s'),
+                        'p_status' => '0',
+                    ];
+                    // echo '<pre>';
+                    // print_r($nomination_data);
+                    // exit;
+                    if ($notice->updateMstNotice($notice_data, $notice_id)) {
+                        foreach ($_FILES['pdf_file']['name'] as $i => $name) {
+                            if ($_FILES['pdf_file']['size'][$i] != 0) {
+                                $item_name = Helpers::cleanData($_POST['pdf_name'][$i]);
+                                $item_name = htmlspecialchars($item_name);
+                                $child_id = isset($_POST['notice_child_id'][$i]) ? $_POST['notice_child_id'][$i] : 0;
+                                $tmp_name = $_FILES['pdf_file']['tmp_name'][$i];
+                                $error = $_FILES['pdf_file']['error'][$i];
+                                $size = $_FILES['pdf_file']['size'][$i];
+                                $type = $_FILES['pdf_file']['type'][$i];
+                                $folder = './notices/';
+                                $file = rand(1000, 100000) . "-" . $_FILES['pdf_file']['name'][$i];
+                                $new_file_name = strtolower($file);
+                                $final_file = str_replace(' ', '-', $new_file_name);
+                                if (move_uploaded_file($tmp_name, $folder . $final_file)) { // echo "File is valid, and was successfully uploaded.\n";
+                                } else {
+                                    echo "File size greater than 300kb!\n\n";
+                                }
+
+
+                                $noticechild = new \App\Models\MstNoticeChild();
+                                $notice_child_data = [
+                                    'notice_id' => $notice_id,
+                                    'pdf_name' => $item_name,
+                                    'attachment' => $final_file,
+                                    'status' => 1
+                                ];
+
+
+
+                            
+                               
+                                if ($child_id == 0) {
+                                    $noticechild->addMstNoticeChild($notice_child_data);
+                                } else {
+                                    $noticechild->updateMstNoticeChild($notice_child_data, $child_id);
+                                }
+                            } //Validation
+                        }
+                        $message = "Notice Updated successfully";
+                        $message_type = "success";
+                    } else {
+                        $message = "Error updating Notice";
+                        $message_type = "warning";
+                    }
                 }
-                //pdf upload function
-            } else {
-                $final_file = "";
+                $_SESSION['notification'] = ['message' => $message, 'message_type' => $message_type];
+                $this->route->redirect($this->route->site_url("Admin/dashboard/?action=listofnotices"));
             }
-            if ($final_file == '') {
-                $final_file = Helpers::cleanData($_POST['pdflink']);
-            }
-            $effect_from_date = date('Y-m-d', strtotime(Helpers::cleanData($_POST['effect_from_date'])));
-            $effect_to_date = date('Y-m-d', strtotime(Helpers::cleanData($_POST['effect_to_date'])));
-            $noticelist_data = [
-                'pdf_name' => Helpers::cleanData($_POST['pdf_name']),
-                'category_id' => Helpers::cleanData($_POST['category_id']),
-                'attachment' => $final_file,
-                'effect_from_date' => $effect_from_date,
-                'effect_to_date' => $effect_to_date,
-                'creation_date' => date('Y-m-d H:i:s'),
-                'p_status' => '0'
-            ];
-            /* echo "<pre>";
-            print_r($menu_data);
-            exit; */
-            $noticelist = new \App\Models\Notice();
-            if ($notice_id == 0) { // insert new menu 
-                if ($noticelist->addNotice($noticelist_data)) {
-                    $message = "Notice  Added successfully";
-                    $message_type = "success";
-                } else {
-                    $message = "Error adding Notice";
-                    $message_type = "warning";
-                }
-            } else { // update menu
-                if ($noticelist->updateNotice($noticelist_data, $notice_id)) {
-                    $message = "Notice Updated successfully";
-                    $message_type = "success";
-                } else {
-                    $message = "Error updating Notice";
-                    $message_type = "warning";
-                }
-            }
-            $_SESSION['notification'] = ['message' => $message, 'message_type' => $message_type];
-            $this->route->redirect($this->route->site_url("Admin/dashboard/?action=listofnotices"));
         }
+
+
     }
-    }
+    // private function saveNotice()
+    // {
+    //     $message = $message_type = "";
+    //     if (isset($_POST['csrf_token']) && hash_equals($_SESSION['csrf_token'], $_POST['csrf_token'])) {
+    //     if (isset($_POST['save_notice'])) {
+    //         $notice_id = isset($_POST['id']) ? $_POST['id'] : 0;
+    //         if (isset($_FILES['attachment']) && $_FILES['attachment']['name'] != "") {
+    //             //pdf upload function
+    //             $file = rand(1000, 100000) . "-" . $_FILES['attachment']['name'];
+    //             $file_loc = $_FILES['attachment']['tmp_name'];
+    //             $file_size = $_FILES['attachment']['size'];
+    //             $file_type = $_FILES['attachment']['type'];
+    //             $folder = './notices/';
+    //             $new_size = $file_size / 1024;
+    //             /* make file name in lower case */
+    //             $new_file_name = strtolower($file);
+    //             /* make file name in lower case */
+    //             $final_file = str_replace(' ', '-', $new_file_name);
+    //             if (move_uploaded_file($file_loc, $folder . $final_file)) { // echo "File is valid, and was successfully uploaded.\n";
+    //             } else {
+    //                 echo "File size greater than 300kb!\n\n";
+    //             }
+    //             //pdf upload function
+    //         } else {
+    //             $final_file = "";
+    //         }
+    //         if ($final_file == '') {
+    //             $final_file = Helpers::cleanData($_POST['pdflink']);
+    //         }
+    //         $effect_from_date = date('Y-m-d', strtotime(Helpers::cleanData($_POST['effect_from_date'])));
+    //         $effect_to_date = date('Y-m-d', strtotime(Helpers::cleanData($_POST['effect_to_date'])));
+    //         $noticelist_data = [
+    //             'pdf_name' => Helpers::cleanData($_POST['pdf_name']),
+    //             'category_id' => Helpers::cleanData($_POST['category_id']),
+    //             'attachment' => $final_file,
+    //             'effect_from_date' => $effect_from_date,
+    //             'effect_to_date' => $effect_to_date,
+    //             'creation_date' => date('Y-m-d H:i:s'),
+    //             'p_status' => '0'
+    //         ];
+            
+    //         $noticelist = new \App\Models\Notice();
+    //         if ($notice_id == 0) { // insert new menu 
+    //             if ($noticelist->addNotice($noticelist_data)) {
+    //                 $message = "Notice  Added successfully";
+    //                 $message_type = "success";
+    //             } else {
+    //                 $message = "Error adding Notice";
+    //                 $message_type = "warning";
+    //             }
+    //         } else { // update menu
+    //             if ($noticelist->updateNotice($noticelist_data, $notice_id)) {
+    //                 $message = "Notice Updated successfully";
+    //                 $message_type = "success";
+    //             } else {
+    //                 $message = "Error updating Notice";
+    //                 $message_type = "warning";
+    //             }
+    //         }
+    //         $_SESSION['notification'] = ['message' => $message, 'message_type' => $message_type];
+    //         $this->route->redirect($this->route->site_url("Admin/dashboard/?action=listofnotices"));
+    //     }
+    // }
+    // }
     public function deleteNotice()
     {
         $data = [];
@@ -3495,7 +3673,199 @@ TEXT;
      * Notice
      * 
      */
-    public function ajaxResponseForNoticeDataTableLoad()
+    public function ajaxResponseForNoticeDataTableLoad(){
+        $request = 1;
+        if (isset($_POST['request'])) {
+            $request = $_POST['request'];
+        }
+        if ($request == 1) {
+            ## Read value
+            $draw = $_POST['draw'];
+            $row = $_POST['start'];
+            $rowperpage = $_POST['length']; // Rows display per page
+            $columnIndex = $_POST['order'][0]['column']; // Column index
+            $columnName = $_POST['columns'][$columnIndex]['data']; // Column name
+            $columnSortOrder = $_POST['order'][0]['dir']; // asc or desc
+            $searchValue = $_POST['search']['value']; // Search value
+            ## Search 
+            $searchQuery = " ";
+            if ($searchValue != '') {
+                $searchQuery = "   notice_name ilike '%" . $searchValue . "%' or 
+                category_name ilike '%" . $searchValue . "%' or 
+                TO_CHAR(effect_from_date, 'yyyy-mm-dd') like'%" . $searchValue . "%'  or
+                TO_CHAR(effect_to_date, 'yyyy-mm-dd') like'%" . $searchValue . "%' 
+                 ";
+            }
+            ## Total number of records without filtering
+            $model = new MstNotice();
+            $year = trim($_POST['year']);
+            $month = trim($_POST['month']);
+            $effect_from_date = date('Y-m-d', strtotime($_POST['effect_from_date']));
+            $effect_to_date = date('Y-m-d', strtotime($_POST['effect_to_date']));
+            $totalRecordsWithoutFiltering = $model->totalRecordsWithOutFiltering();
+            $totalRecords = $totalRecordsWithoutFiltering->allcount;
+            ## Total number of records with filtering
+            $totalRecordsWithFiltering = $model->totalRecordsWithFiltering($searchQuery);
+            $totalRecordwithFilter = $totalRecordsWithFiltering->allcount;
+            $fetchRecordsObject = $model->getMstNoticeDetails($year, $month, $effect_from_date, $effect_to_date, $searchQuery);
+
+
+            // echo '<pre>';
+            // print_r( $fetchRecordsObject);
+            // exit;
+
+
+            $fetchRecords = (array) $fetchRecordsObject;
+            $noticechildlist = Helpers::getNoticeChildListforAdmin();
+
+            // echo '<pre>';
+            // print_r( $noticechildlist);
+            // exit;
+            $edit_notice_link = $this->links['edit_notice_link'];
+            $data = array();
+            foreach ($fetchRecords as $rowval) {
+                $edit_notice_link_str = str_replace("{id}", $rowval->notice_id, $edit_notice_link);
+                $baseurl = $this->route->site_url($edit_notice_link_str);
+                $updateButton = "<a href= '" . $baseurl . "' name='menu_update' class='iconSize'> 
+         <button type='button' title='Edit' class='btn btn-secondary iconWidth updateUser'><i class='fas fa-edit'></i></button>
+         </a>";
+                // Delete Button
+                $deleteButton = "<button title='Delete' class='btn btn-sm btn-danger iconWidth deletebtn' style='height:30px'  data-id='" . $rowval->notice_id . "'><i class='fa fa-trash'></i></button>";
+                // $archivesButton = "<button  title='Archive' style='height:30px' class='btn btn-sm btn-primary archivebtn' data-id='" . $rowval->nomination_id . "'><i class='fa  fa-archive'></i></button>";
+                if ($rowval->p_status != 1) {
+                    /****
+                     * Role Checking
+                     * 
+                     * 
+                     */
+                    $user = new User();
+                    $loginUser = $user->getUser();
+                    $is_superadmin = $user->is_superadmin();
+                    $is_admin = $user->is_admin();
+                    $is_uploader = $user->is_uploader();
+                    $is_publisher = $user->is_publisher();
+                    $array = array(
+                        "super_admin" => $user->is_superadmin() ? $user->is_superadmin() : "",
+                        "admin" => $user->is_admin() ? $user->is_admin() : "",
+                        "uploader" => $user->is_uploader() ? $user->is_uploader() : "",
+                        "publisher" => $user->is_publisher() ? $user->is_publisher() : "",
+                    );
+                    if ($array['uploader'] == 1) {
+                        $action = $updateButton . " " . $deleteButton;
+                    } else if ($array['publisher'] == 1) {
+                        $publishButton = "<button  title='Publish' style='height:30px' class='btn btn-sm btn-success publishbtn iconWidth' data-id='" . $rowval->notice_id . "'><i class='fa  fa-eye'></i></button>";
+                        $action = $publishButton;
+                    } else if ($array['admin'] == 1) {
+                        $publishButton = "<button  title='Publish' style='height:30px' class='btn btn-sm btn-success publishbtn iconWidth' data-id='" . $rowval->notice_id . "'><i class='fa  fa-eye'></i></button>";
+                        $action = $updateButton . " " . $deleteButton . " " . $publishButton;
+                    } else {
+                    }
+                    /****
+                     * Role Checking
+                     * 
+                     * 
+                     */
+                } else {
+                    $action = "<p style='color:green'>Published</p>";
+                }
+                $pdfPath = "";
+                $pdfLinks = []; // Initialize an array to store the PDF links
+                foreach ($noticechildlist as $key => $childlist) {
+                    $selected = "";
+                    if ($rowval->notice_id == $childlist->notice_id) {
+                        $selected = "selected=\"selected\"";
+                        $uploadPath = 'notices' . '/' . $childlist->attachment;
+                        $file_location = $this->route->get_base_url() . "/" . $uploadPath;
+                        // Add the PDF link to the array
+                        $pdfLinks[] = "<a href=\"$file_location\" target=\"_blank\">$childlist->pdf_name</a>";
+                    }
+                }
+                // Join the PDF links with commas
+                $pdfPath = implode(', ', $pdfLinks);
+                $flag = "";
+                if ($rowval->p_status == 1) {
+                    $flag .= '<i class="fa fa-flag" aria-hidden="true"  style="color:green"></i>';
+                } else {
+                    $flag .= '<i class="fa fa-flag" aria-hidden="true" style="color:red"></i>';
+                }
+                $data[] = array(
+                    "notice_id" => $rowval->notice_id,
+                    "notice_name" => $rowval->notice_name,
+                    "category_name" => $rowval->category_name,
+                    "pdf_name" => $pdfPath,
+                    "effect_from_date" => $rowval->effect_from_date,
+                    "effect_to_date" => $rowval->effect_to_date,
+                    "p_status" => $flag,
+                    "action" => $action,
+                );
+            }
+            ## Response
+            $response = array(
+                "draw" => intval($draw),
+                "iTotalRecords" => $totalRecords,
+                "iTotalDisplayRecords" => $totalRecordwithFilter,
+                "aaData" => $data
+            );
+            echo json_encode($response);
+            exit;
+        } //request 1
+               // Delete Notice
+               if ($request == 4) {
+                $id = $_POST['id'];
+                // Check id
+                ## Fetch records
+                $model = new MstNotice();
+                $checkId = $model->checkMstNoticeId($id);
+                $checkIdCount = $checkId->checkid;
+                if ($checkIdCount > 0) {
+                    $deleteQuery = $model->deleteMstNotice($id);
+                    echo 1;
+                    exit;
+                } else {
+                    echo 0;
+                    exit;
+                }
+            }
+            // Archive Notice
+            if ($request == 5) {
+                $id = $_POST['id'];
+                // Check id
+                ## Fetch records
+                $model = new MstNotice();
+                $checkId = $model->checkMstNoticeId($id);
+                $checkIdCount = $checkId->checkid;
+                if ($checkIdCount > 0) {
+                    $archiveQuery = $model->archiveMstNoticeStatus($id);
+                    echo 1;
+                    exit;
+                } else {
+                    echo 0;
+                    exit;
+                }
+            }
+            // Publish Notice
+            if ($request == 6) {
+                $id = $_POST['id'];
+                $notice_data = [
+                    'p_status' => '1',
+                ];
+                // Check id
+                ## Fetch records
+                $model = new MstNotice();
+                $checkId = $model->checkMstNoticeId($id);
+                 $checkIdCount = $checkId->checkid;
+             
+                if ($checkIdCount > 0) {
+                    $publishQuery = $model->updateMstNoticeState($notice_data, $id);
+                    echo 1;
+                    exit;
+                } else {
+                    echo 0;
+                    exit;
+                }
+            }
+    }
+    public function ajaxResponseForNoticeDataTableLoad1()
     {
         $request = 1;
         if (isset($_POST['request'])) {
@@ -3513,7 +3883,7 @@ TEXT;
             ## Search 
             $searchQuery = " ";
             if ($searchValue != '') {
-                $searchQuery = "   pdf_name ilike '%" . $searchValue . "%' or 
+                $searchQuery = "   notice_name ilike '%" . $searchValue . "%' or 
               c.category_name ilike '%" . $searchValue . "%' or                  
               TO_CHAR(effect_from_date, 'yyyy-mm-dd') like'%" . $searchValue . "%'  or
               TO_CHAR(effect_to_date, 'yyyy-mm-dd') like'%" . $searchValue . "%' 
@@ -3521,7 +3891,7 @@ TEXT;
             }
             //echo $searchQuery;
             ## Total number of records without filtering
-            $model = new Notice();
+            $model = new MstNotice();
             $year = trim($_POST['year']);
             $month = trim($_POST['month']);
             $effect_from_date = date('Y-m-d', strtotime($_POST['effect_from_date']));
@@ -3531,7 +3901,7 @@ TEXT;
             ## Total number of records with filtering
             $totalRecordsWithFiltering = $model->totalRecordsWithFiltering($searchQuery);
             $totalRecordwithFilter = $totalRecordsWithFiltering->allcount;
-            $fetchRecordsObject = $model->getNoticeDetails($year, $month, $effect_from_date, $effect_to_date, $searchQuery);
+            $fetchRecordsObject = $model->getMstNoticeDetails($year, $month, $effect_from_date, $effect_to_date, $searchQuery);
             $fetchRecords = (array) $fetchRecordsObject;
             $edit_notice_link = $this->links['edit_notice_link'];
             $data = array();
@@ -3620,11 +3990,11 @@ TEXT;
             $id = $_POST['id'];
             // Check id
             ## Fetch records
-            $model = new Notice();
-            $checkId = $model->checkNoticeId($id);
+            $model = new MstNotice();
+            $checkId = $model->checkMstNoticeId($id);
             $checkIdCount = $checkId->checkid;
             if ($checkIdCount > 0) {
-                $deleteQuery = $model->deleteNotice($id);
+                $deleteQuery = $model->deleteMstNotice($id);
                 echo 1;
                 exit;
             } else {
@@ -3637,11 +4007,11 @@ TEXT;
             $id = $_POST['id'];
             // Check id
             ## Fetch records
-            $model = new Notice();
-            $checkId = $model->checkNoticeId($id);
+            $model = new MstNotice();
+            $checkId = $model->checkMstNoticeId($id);
             $checkIdCount = $checkId->checkid;
             if ($checkIdCount > 0) {
-                $archiveQuery = $model->archiveNoticeStatus($id);
+                $archiveQuery = $model->archiveMstNoticeStatus($id);
                 echo 1;
                 exit;
             } else {
@@ -3657,11 +4027,12 @@ TEXT;
             ];
             // Check id
             ## Fetch records
-            $model = new Notice();
-            $checkId = $model->checkNoticeId($id);
-            $checkIdCount = $checkId->checkid;
+            $model = new MstNotice();
+            $checkId = $model->checkMstNoticeId($id);
+            echo $checkIdCount = $checkId->checkid;
+            exit;
             if ($checkIdCount > 0) {
-                $publishQuery = $model->updateNoticeState($notice_data, $id);
+                $publishQuery = $model->updateMstNoticeState($notice_data, $id);
                 echo 1;
                 exit;
             } else {
@@ -3673,15 +4044,15 @@ TEXT;
     public function commonNoticeArchive()
     {
         if (!empty($_POST["action"])) {
-            $notice = new Notice();
+            $notice = new MstNotice();
             $notice_list_data = $_POST['ids'];
             if ($_POST["action"] == 'archive') {
-                if ($notice->archiveNoticeStatus($notice_list_data)) {
+                if ($notice->archiveMstNoticeStatus($notice_list_data)) {
                     $message = " Notice Archived successfully";
                     $message_type = "success";
                 }
             } else {
-                if ($notice->deleteNotice($notice_list_data)) {
+                if ($notice->deleteMstNotice($notice_list_data)) {
                     $message = " Notice  Deleted successfully";
                     $message_type = "success";
                 }

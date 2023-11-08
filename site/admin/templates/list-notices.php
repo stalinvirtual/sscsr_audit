@@ -208,13 +208,13 @@
                     data: 'notice_id'
                 },
                 {
-                    data: 'pdf_name'
+                    data: 'notice_name'
                 },
 				{
                     data: 'category_name'
                 },
                 {
-                    data: 'attachment'
+                    data: 'pdf_name'
                 },
                 {
                     data: 'effect_from_date'
@@ -450,6 +450,7 @@
 
         // Publish record
         $('#noticeTable').on('click', '.publishbtn', function(e) {
+            debugger;
             e.preventDefault()
             var id = $(this).data('id');
             swal({title:"Do You Want to Publish ?", 

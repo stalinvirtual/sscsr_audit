@@ -289,7 +289,8 @@ $(document).ready(function () {
         //accept: "Only PDF files are allowed",
         maxfilesize: "File size must be less than 5 MB"
         }
-    }, errorPlacement: function(error, element) {
+    }, 
+    errorPlacement: function(error, element) {
       if (element.attr("name") === "effect_from_date") {
   // Place the error message after the image tag
   error.insertAfter(element.next("img.ui-datepicker-trigger"));

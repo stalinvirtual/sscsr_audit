@@ -37,6 +37,7 @@ use App\Models\Announcements as Announcements;
 use App\Models\SearchYear as SearchYear;
 use App\Models\Instructions as Instructions;
 use App\Models\Loginflag as Loginflag;
+use App\Models\MstNoticeChild as MstNoticeChild;
 
 class Helpers
 {
@@ -1279,6 +1280,12 @@ class Helpers
 		$nominationchildclass = new Nominationchild();
 		$nominationchildlist = $nominationchildclass->getNominationchild();
 		return  $nominationchildlist;
+	}
+	static function getNoticeChildListforAdmin()
+	{
+		$noticechildclass = new MstNoticeChild();
+		$result = $noticechildclass->getMstNoticeChild();
+		return  $result;
 	}
 	static function getCategoryListforAdmin()
 	{

@@ -16,7 +16,7 @@ class MstNoticeChild extends DB
     {
         $result = $this->select()
             ->from($this->table_name)
-            ->where(['status' => 1])
+          //  ->where(['status' => 1])
             ->get_list();
         return $result;
     }

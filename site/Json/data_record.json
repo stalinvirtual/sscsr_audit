@@ -1,9 +1,39 @@
 {
     "errorMsg": "",
     "nominations": {},
-    "nominationchildlist": [],
+    "nominationchildlist": [
+        {
+            "nomination_child_id": 1072,
+            "nomination_id": 1103,
+            "pdf_name": "one",
+            "attachment": "51654-lams-public-l2-04-09-2023-security-report.pdf",
+            "status": 1
+        },
+        {
+            "nomination_child_id": 1073,
+            "nomination_id": 1104,
+            "pdf_name": "one",
+            "attachment": "21152-tnrajbhavan.gov.in-security-report.pdf",
+            "status": 1
+        }
+    ],
     "nominations_latest_news": {},
-    "nominationchildlist_latest_news": [],
+    "nominationchildlist_latest_news": [
+        {
+            "nomination_child_id": 1072,
+            "nomination_id": 1103,
+            "pdf_name": "one",
+            "attachment": "51654-lams-public-l2-04-09-2023-security-report.pdf",
+            "status": 1
+        },
+        {
+            "nomination_child_id": 1073,
+            "nomination_id": 1104,
+            "pdf_name": "one",
+            "attachment": "21152-tnrajbhavan.gov.in-security-report.pdf",
+            "status": 1
+        }
+    ],
     "selectionposts_latest_news": {},
     "selectpostschildlist_latest_news": [
         {
@@ -48,7 +78,7 @@
             "p_status": "1",
             "category_id": 6,
             "creation_date": "2023-09-05 09:16:05",
-            "category_name": "CONSTABLE"
+            "category_name": "CONSTABLE-GD"
         },
         {
             "notice_id": 35,
@@ -59,39 +89,10 @@
             "p_status": "1",
             "category_id": 6,
             "creation_date": "2023-09-05 09:14:56",
-            "category_name": "CONSTABLE"
+            "category_name": "CONSTABLE-GD"
         }
     ],
-    "ilinkforFirstFourRow": [
-        {
-            "id": 118,
-            "link_name": "SSC HQ website",
-            "menu_link": "https:\/\/ssc.nic.in\/",
-            "creation_date": "2022-07-12 00:00:00",
-            "status": 1
-        },
-        {
-            "id": 119,
-            "link_name": "Archives",
-            "menu_link": "IndexController\/nominationarchives",
-            "creation_date": "2022-08-25 00:00:00",
-            "status": 1
-        },
-        {
-            "id": 117,
-            "link_name": "SSC(SR) Old website",
-            "menu_link": "http:\/\/www.sscsr.gov.in",
-            "creation_date": "2022-06-28 00:00:00",
-            "status": 1
-        },
-        {
-            "id": 121,
-            "link_name": "National Career Service",
-            "menu_link": "https:\/\/www.ncs.gov.in\/",
-            "creation_date": "2023-07-25 00:00:00",
-            "status": 1
-        }
-    ],
+    "ilinkforFirstFourRow": [],
     "ilinkforAfterFirstFourRow": [],
     "gallery_id_based_images": {}
 }

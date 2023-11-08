@@ -1,11 +1,14 @@
 <?php 
 namespace App\Controllers; 
 use App\Helpers\Helpers;
-
 Helpers::urlSecurityAudit();
-
-
-echo $this->get_header(); ?>
+echo $this->get_header();
+if (!isset($_SESSION)) {
+    session_start();
+}
+$csrfToken = bin2hex(random_bytes(32));
+$_SESSION['csrf_token'] = $csrfToken; 
+?>
 <style>
 .ui-datepicker-trigger{
 margin: -27px 2px 3px 286px;
@@ -24,37 +27,22 @@ margin: -27px 2px 3px 286px;
             </div>
         </div><!-- /.container-fluid -->
     </section>
-
     <!-- Main content   section div start -->
     <!-- Main content -->
-
     <section class="content">
-
         <div class="container-fluid">
-
             <div class="row">
-
                 <!-- left column -->
-
                 <div class="col-md-12">
-
                     <!-- general form elements -->
                     <!-- /.card -->
-
                     <!-- Horizontal Form -->
-
                     <div class="card card-info" style="width: 75%;">
-
                         <div class="card-header">
-
                             <h3 class="card-title"> Notice Creation Form </h3>
-
                         </div>
-
                         <!-- /.card-header -->
-
                         <!-- form start -->
-
                         <?php if (isset($errorMsg) && !empty($errorMsg)) {
                             echo '<div class="alert alert-danger errormsg">';
                             echo $errorMsg;
@@ -62,14 +50,10 @@ margin: -27px 2px 3px 286px;
                             //unset($errorMsg);
                         }
                         ?>
-
                         <form class="form-horizontal" method="post" name = "notice_form" id="notice_form" enctype="multipart/form-data">
-
                             <div class="card-body">
 								<div class="form-group row">
-
                                     <label for="inputEmail3" class="col-sm-2 col-form-label">Category <span style='color:red'>*</span></label>
-
                                     <div class="col-sm-6">
                                         <select name="category_id" class="form-control">
                                             <?php foreach ($categories as $key => $category) :
@@ -83,23 +67,16 @@ margin: -27px 2px 3px 286px;
                                         </select>
                                     </div>
                                 </div>
-
                                 <div class="form-group row">
-
                                     <label for="inputEmail3" class="col-sm-2 col-form-label">Notice Name  <span style='color:red'>*</span></label>
-
                                     <div class="col-sm-6">
-                                        <textarea class="form-control exam_name" name="pdf_name" id="pdf_name" rows="5" placeholder="Enter only 256 characters"><?php echo @$current_notice['pdf_name']; ?></textarea>
+                                        <textarea class="form-control exam_name" name="notice_name" id="notice_name" rows="5" placeholder="Enter only 256 characters"><?php echo @$current_notice['notice_name']; ?></textarea>
                                     </div>
                                 </div>
-
                                 <div class="form-group row">
-
                                     <label for="inputEmail3" class="col-sm-2 col-form-label"> Effect From Date <span style='color:red'>*</span></label>
-
                                     <div class="col-sm-3">
 									<?php
-									
 									if(@$current_notice['effect_from_date']==""){
 										$effect_from_date = "";
 									}
@@ -112,117 +89,116 @@ margin: -27px 2px 3px 286px;
 									else{
 										$effect_to_date = date('d-m-Y', strtotime($current_notice['effect_to_date']));
 									}
-									
 									?>
-
                                         <input class="form-control" type="text" name="effect_from_date" id="effect_from_date" value="<?php echo $effect_from_date; ?>" readonly>
-									
-
                                     </div>
-
                                 </div>
                                 <div class="form-group row">
-
                                     <label for="inputEmail3" class="col-sm-2 col-form-label"> Effect To Date  <span style='color:red'>*</span></label>
-
                                     <div class="col-sm-3">
-
                                         <input class="form-control" type="text" name="effect_to_date" id="effect_to_date" value="<?php echo $effect_to_date; ?>" readonly>
-										
-
                                     </div>
-
                                 </div>
-
                                 <?php
-
-
-
                                 //echo '<pre>';
-
                                 // echo $nomination_id;
                                 //print_r($current_nomination); 
                                 ?>
-
-
                                     <!-- Multiple Pdf Files added-->
                                     <div class="form-group row">
-                                    <label for="inputEmail3" class="col-sm-2 col-form-label"> Attachment <span style='color:red'>*</span></label>
+                                    <label for="inputEmail3" class="col-sm-2 col-form-label"> Attachment <span
+                                            style='color:red'>*</span></label>
                                     <div class="col-sm-6">
                                         <table class="table table-bordered" id="item_table">
                                             <tr>
-                                                <th>Enter Pdf Name</th>
-                                                <th>Enter Pdf </th>
-                                                <th><button type="button" name="add" class="btn btn-success btn-sm add"><i class="fa fa-plus" aria-hidden="true"></i></button></th>
+                                                <th style="text-align: center">Enter Pdf Name</th>
+                                                <th style="text-align: center">Enter Pdf </th>
+                                                <th style="text-align: center"><button type="button" name="add"
+                                                        class="btn btn-success btn-sm add"><i class="fa fa-plus"
+                                                            aria-hidden="true"></i></button></th>
                                             </tr>
-                                            
+                                            <?php
+                                            if ($notice_id == 0) {
+                                                ?>
+                                                <tr>
+                                                    <td><input type="text" name="pdf_name[]" class="form-control item_name"
+                                                            id="pdfname" value="" />
+                                                        <input type="hidden" id="pdf_id" name="notice_child_id[]"
+                                                            class="form-control item_name" value="" />
+                                                    </td>
+                                                    <td><input type="file" name="pdf_file[]"
+                                                            class="form-control item_quantity pdfnomination"
+                                                            accept="application/pdf" value="" />
+                                                        <!-- <input type="text" name="pdf_files[]"
+                                                                    class="form-control item_quantity"
+                                                                    value="" /> -->
+                                                        <!-- <p><?php //echo $childlist->attachment; 
+                                                            ?></p> -->
+                                                    </td>
+                                                    <td><button type="button" name="remove"
+                                                            class="btn btn-danger btn-sm remove"><i class="fa fa-minus"
+                                                                aria-hidden="true"></i></button></td>
+                                                    <br>
+                                                </tr>
+                                                <?php
+                                            } else {
+                                                foreach ($noticechildlist as $key => $childlist):
+                                                    $selected = "";
+                                                    if ($current_notice['notice_id'] == $childlist->notice_id) {
+                                                        $selected = "selected=\"selected\"";
+                                                        $uploadPath = 'notices' . '/' . $childlist->attachment;
+                                                        $file_location = $this->route->get_base_url() . "/" . $uploadPath; ?>
+                                                        <tr>
+                                                            <td><input type="text" name="pdf_name[]" class="form-control item_name"
+                                                                    id="pdfname" value="<?php echo $childlist->pdf_name; ?>" />
+                                                                <input type="hidden" id="pdf_id" name="notice_child_id[]"
+                                                                    class="form-control item_name"
+                                                                    value="<?php echo $childlist->notice_child_id; ?>" />
+                                                            </td>
+                                                            <td><input type="file" name="pdf_file[]"
+                                                                    class="form-control item_quantity pdfnomination"
+                                                                    accept="application/pdf"
+                                                                    value="<?php echo $childlist->attachment; ?>" />
+                                                                <input type="text" name="pdf_files[]"
+                                                                    class="form-control item_quantity"
+                                                                    value="<?php echo $childlist->attachment; ?>" />
+                                                                <!-- <p><?php //echo $childlist->attachment; 
+                                                                            ?></p> -->
+                                                            </td>
+                                                            <td><button type="button" name="remove"
+                                                                    class="btn btn-danger btn-sm remove"><i class="fa fa-minus"
+                                                                        aria-hidden="true"></i></button></td>
+                                                            <br>
+                                                        </tr>
+                                                    <?php }
+                                                    ?>
+                                                <?php endforeach; ?>
+                                                <?php
+                                                // echo '<tr>';
+                                            }
+                                            ?>
                                         </table>
                                     </div>
                                 </div>
-                                    <!-- Multiple Pdf Files added-->
-
-
-
-
-                                <!-- <div class="form-group row">
-
-                                    <label for="inputEmail3" class="col-sm-2 col-form-label"> Attachment  <span style='color:red'>*</span></label>
-
-                                    <div class="col-sm-6">
-                                        <input type="file" id="resume" name="attachment" class="form-control item_quantity" accept="application/pdf" value="<?php //echo @$current_notice['attachment']; ?>" />
-										 <input name="pdflink" value="<?php //@$current_notice['attachment']; ?>" type="hidden"/>
-										<p name="attachments"  /><?php //echo @$current_notice['attachment']; ?></p>
-										
-										
-
-
-                                    </div>
-
-                                </div> -->
-
                                 <input type="hidden" value="<?php echo $current_notice['notice_id']; ?>" name="id" class="sp_id">
-
                             </div>
-
                             <!-- /.card-body -->
-
                             <div class="card-footer">
-
+                            <input type="hidden" name="csrf_token" value="<?php echo $csrfToken; ?>">
                                 <input type="submit" class="btn btn-info" name="save_notice" value="Submit" id="save_notice"  style="margin: 0px 0px 0px -160px;">
                                 <input type="button" class="btn btn-default float-right" onclick="history.back();" value="Cancel" style="float: left !important; margin: 0px 0px 0px 310px;">
-
-
-
                             </div>
-
                             <!-- /.card-footer -->
-
                         </form>
                         <!-- <button class="btn btn-default float-right" onclick="goBack()">Cancel</button> -->
-
-
-
-
                     </div>
-
                     <!-- /.card -->
-
-
-
                 </div>
-
                 <!--/.col (left) -->
-
                 <!-- right column -->
-
-
-
                 <!-- /.row -->
-
             </div><!-- /.container-fluid -->
-
     </section>
-
     <!-- Main content section div end -->
 </div>
 <?php echo $this->get_footer(); ?>
@@ -230,27 +206,21 @@ margin: -27px 2px 3px 286px;
 <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.2/sweetalert.min.js"></script>
 <link href="http://code.jquery.com/ui/1.10.4/themes/ui-lightness/jquery-ui.css" rel="stylesheet">
 <script src="http://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
-
 <script>
 $.datepicker.setDefaults({
 showOn: "button",
 buttonImage: "<?php echo $this->theme_url; ?>/dist/img/datepicker.png",
-
 buttonText: "Date Picker",
 buttonImageOnly: true,
 dateFormat: 'dd-mm-yy'  
 });
 $(function() {
-	
-
 $("#effect_from_date").datepicker({
     changeMonth: true, 
     changeYear: true, 
     yearRange: '2020:+0',
     minDate: 0
  }
-
-
  );
 $("#effect_to_date").datepicker({
     changeMonth: true, 
@@ -261,7 +231,6 @@ $("#effect_to_date").datepicker({
 );
 });
     $(document).ready(function() {
-		
 		$('#resume').on( 'change', function() {
    myfile= $( this ).val();
    var ext = myfile.split('.').pop();
@@ -273,34 +242,7 @@ $("#effect_to_date").datepicker({
 	   return;
    }
 });
-		
-		
         var myfile = "";
-
-        // $('#save-namination').click(function(e) {
-        //     e.preventDefault();
-        //     //$('.pdfclassupload').trigger('click');
-        //     var exam_name = $('.exam_name').val();
-        //     if (exam_name == "") {
-        //         swal('Please Enter Exam Name');
-        //         return false;
-        //     }
-        //     if (exam_name.length <= 256) {} else {
-        //         swal('Please Enter Below 256 Characters');
-        //         return false;
-        //     }
-        //     // return true;
-
-        //     $("#nomination_form").submit();
-
-
-
-        // });
-
-
-
-
-
         $(document).on('click', '.add', function() {
             var html = '';
             html += '<tr>';
@@ -308,24 +250,43 @@ $("#effect_to_date").datepicker({
             html += '<td><input type="file" name="pdf_file[]" class="form-control item_quantity pdfclassupload" accept="application/pdf" /></td>';
             html += '<td><button type="button" name="remove" class="btn btn-danger btn-sm remove"><span class="glyphicon glyphicon-minus"></span></button></td></tr>';
             $('#item_table').append(html);
-            
+            $("input[name='pdf_name[]']").last().rules("add", {
+                required: true,
+                messages: {
+                    required: "Please enter a PDF name"
+                }
+            });
+            $("input[name='pdf_file[]']").last().rules("add", {
+                required: true,
+                // accept: "application/pdf",
+                maxfilesize: 5242880,
+                messages: {
+                    required: "Please select a PDF file",
+                    //accept: "Only PDF files are allowed",
+                    maxfilesize: "File size must be less than 5 MB"
+                }
+            });
+
+            jQuery.validator.addMethod("maxfilesize", function (value, element, param) {
+                //debugger;
+                if (element.files.length > 0) {
+                    return element.files[0].size <= param;
+                }
+                return true; // No file selected, so it's valid
+            }, "File size must be less than 5 MB");
         });
         $(document).on('click', '.remove', function() {
             //debugger;
             var pdfname = $(this).closest('tr').find('#pdfname').val();
             var pdf_id = $(this).closest('tr').find('#pdf_id').val();
             if (pdfname != "") {
-
                 var sp_id = $('.sp_id').val();
                 var baseurl = '<?php echo $this->route->site_url("Admin/ajaxresponseforselectionpostsforremovingfileupload"); ?>';
-
-
                 jQuery.ajax({
                     url: baseurl,
                     data: {
                         sp_id: sp_id,
                         pdf_id: pdf_id
-
                     },
                     type: 'post',
                     dataType: 'json',
@@ -333,7 +294,6 @@ $("#effect_to_date").datepicker({
                         if (response.message == 1) {
                             //alert("Welcome")
                             window.location.href = redirecturl;
-
                         }
                     }
                 });
@@ -341,7 +301,6 @@ $("#effect_to_date").datepicker({
             // alert(pdfname);
             $(this).closest('tr').remove();
         });
-
         $('.pdfclassupload').on('change', function() {
             myfile = $(this).val();
             var ext = myfile.split('.').pop();
@@ -351,10 +310,5 @@ $("#effect_to_date").datepicker({
                 //alert(ext);
             }
         });
-
-
-
-
-
     });
 </script>
