@@ -160,6 +160,7 @@ if (isset($_SERVER['HTTP_X_REQUESTED_WITH']) && ($_SERVER['HTTP_X_REQUESTED_WITH
 				data: "table_name=" + table_name,
 				dataType: "json",
 				success: function (data) {
+					debugger;
 					if (data.response.status == 'fail') {
 						swal.fire({
 							title: data.response.message,

@@ -80,7 +80,18 @@ class IndexController extends FrontEndController
 		/****
 		 * Notices For Latest News
 		 */
-		$data['notices_latest_news'] = Helpers::getNoticeLatestNews();
+		// $data['notices_latest_news'] = Helpers::getNoticeLatestNews();
+		
+		$data['notice_latest_news'] = Helpers::getMstNoticeLatestNews();
+		$data['noticechildlist_latest_news'] = Helpers::getMstNoticeChildListNews();
+		// echo '<pre>';
+		// print_r($data['notice_latest_news']);
+		// echo '<br>';
+		// echo '<pre>';
+		// print_r($data['noticechildlist_latest_news']);
+		// exit;
+
+
 		/***
 		 * Tender For Latest News
 		 * 

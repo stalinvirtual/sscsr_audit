@@ -165,53 +165,107 @@ function filesize_formatted($path)
                             }
 
                             // Notices
-                            $notices_li = []; // Array to store li values for notices
-                            if (count((array) $notices_latest_news) > 0) {
-                                foreach ($notices_latest_news as $sn => $noticelist) {
-                                    $nl_date = date("Y-m-d", strtotime($noticelist->effect_from_date));
-                                    $notice_creation_date =  date("Y-m-d H:i:s", strtotime($noticelist->creation_date));
-                                    $li = '<li class="card">';
-                                    $timestamp = strtotime($nl_date);
+                            $notice_li = []; // Array to store li values for nominations
+                            if (count((array) $notice_latest_news) > 0) {
+                                foreach ($notice_latest_news as $sn => $notice) {
+                                    $notice_date = date("Y-m-d", strtotime($notice->effect_from_date));
+                                    $notice_creation_date =  date("Y-m-d H:i:s", strtotime($notice->creation_date));
+                                    $li = '<li class=" card">';
+                                    $timestamp = strtotime($notice_date);
                                     $month = date("M", $timestamp);
                                     $day = date("d", $timestamp);
                                     $year = date("Y", $timestamp);
                                     $li .= '<div class="eachNotification ">
-                                    <span>' . $month . "<i>" . $day . "</i>" . $year . '</span><p class="English"><hr class="hrClass">';
+                                <span>' . $month . "<i>" . $day . "</i>" . $year . '</span><p class="English"><hr class="hrClass">';
 
-                                    $uploadPath = "notices" . "/" . $noticelist->attachment;
-                                    $file_location = $this
-                                        ->route
-                                        ->get_base_url() . "/" . $uploadPath;
-                                    $li .= '<a  class="card-link" href="' . $file_location . '" target="_blank">' . $noticelist->pdf_name . '(Notice)</a> <img class="file-icon" alt="" title="pdf document. opens in new tab" src="exam_assets/pdficon.png">
-                                 <small style="font-family:Calibri;">
-                                (' . filesize_formatted($uploadPath) . ')
-                                  </small>';
-                                    if ($current_date == $nl_date) {
+                                    $pdfCount = 0; // Counter for PDFs
+                                    $pdfs_for_notice = array();
+                                    foreach ($noticechildlist_latest_news as $key => $childlist) {
+                                        if ($notice->notice_id == $childlist->notice_id) {
+                                            $pdfCount++;
+                                            $uploadPath = "notices" . "/" . $childlist->attachment;
+                                            $file_location = $this
+                                                ->route
+                                                ->get_base_url() . "/" . $uploadPath;
+                                            $pdfs_for_notice[] = '<a  class="card-link" href="' . $file_location . '" target="_blank">' . $notice->notice_name . "_" . $childlist->pdf_name . "(Notice)" . '</a> <img class="file-icon" alt="" title="pdf document. opens in new tab" src="exam_assets/pdficon.png">
+                                    <small style="font-family:Calibri;">
+                                        (' . filesize_formatted($uploadPath) . ')
+                                    </small> ';
+                                        }
+                                    }
+                                    $li .= implode(' , ', $pdfs_for_notice);
+
+                                    if ($current_date == $notice_date) {
                                         $li .= '<img src="images/new.gif" style="width:40px">';
-                                        $li .= "</li>";
-                                    } else {
-                                        $li .= "</li>";
                                     }
 
-                                    // if ($current_date == $nl_date) {
-                                    //     // Display the li for the current date
-                                    //     echo $li;
-                                    // } else {
+                                    $li .= "</li>";
+
+                                    
                                     // Store the li in the all_content array with date as key
-                                    if (!isset($all_content[$nl_date])) {
-                                        $all_content[$nl_date] = [];
+                                    if (!isset($all_content[$notice_date])) {
+                                        $all_content[$notice_date] = [];
                                     }
                                     // Check if less than 2 items are already displayed for this date
-                                    if (count($all_content[$nl_date]) < 10) {
-                                        $all_content[$nl_date][] = [
-                                            'date' => $nl_date,
+                                    if (count($all_content[$notice_date]) < 10) {
+                                        $all_content[$notice_date][] = [
+                                            'date' => $notice_date,
                                             'creation_date' => $notice_creation_date,
                                             'content' => $li,
                                         ];
-                                        // }
                                     }
+                                    // }
                                 }
                             }
+
+
+                            // $notices_li = []; // Array to store li values for notices
+                            // if (count((array) $notices_latest_news) > 0) {
+                            //     foreach ($notices_latest_news as $sn => $noticelist) {
+                            //         $nl_date = date("Y-m-d", strtotime($noticelist->effect_from_date));
+                            //         $notice_creation_date =  date("Y-m-d H:i:s", strtotime($noticelist->creation_date));
+                            //         $li = '<li class="card">';
+                            //         $timestamp = strtotime($nl_date);
+                            //         $month = date("M", $timestamp);
+                            //         $day = date("d", $timestamp);
+                            //         $year = date("Y", $timestamp);
+                            //         $li .= '<div class="eachNotification ">
+                            //         <span>' . $month . "<i>" . $day . "</i>" . $year . '</span><p class="English"><hr class="hrClass">';
+
+                            //         $uploadPath = "notices" . "/" . $noticelist->attachment;
+                            //         $file_location = $this
+                            //             ->route
+                            //             ->get_base_url() . "/" . $uploadPath;
+                            //         $li .= '<a  class="card-link" href="' . $file_location . '" target="_blank">' . $noticelist->pdf_name . '(Notice)</a> <img class="file-icon" alt="" title="pdf document. opens in new tab" src="exam_assets/pdficon.png">
+                            //      <small style="font-family:Calibri;">
+                            //     (' . filesize_formatted($uploadPath) . ')
+                            //       </small>';
+                            //         if ($current_date == $nl_date) {
+                            //             $li .= '<img src="images/new.gif" style="width:40px">';
+                            //             $li .= "</li>";
+                            //         } else {
+                            //             $li .= "</li>";
+                            //         }
+
+                            //         // if ($current_date == $nl_date) {
+                            //         //     // Display the li for the current date
+                            //         //     echo $li;
+                            //         // } else {
+                            //         // Store the li in the all_content array with date as key
+                            //         if (!isset($all_content[$nl_date])) {
+                            //             $all_content[$nl_date] = [];
+                            //         }
+                            //         // Check if less than 2 items are already displayed for this date
+                            //         if (count($all_content[$nl_date]) < 10) {
+                            //             $all_content[$nl_date][] = [
+                            //                 'date' => $nl_date,
+                            //                 'creation_date' => $notice_creation_date,
+                            //                 'content' => $li,
+                            //             ];
+                            //             // }
+                            //         }
+                            //     }
+                            // }
 
                             // Tenders
                             $tenders_li = []; // Array to store li values for tenders

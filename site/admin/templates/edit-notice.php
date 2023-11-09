@@ -1,19 +1,21 @@
-<?php 
-namespace App\Controllers; 
+<?php
+namespace App\Controllers;
+
 use App\Helpers\Helpers;
+
 Helpers::urlSecurityAudit();
 echo $this->get_header();
 if (!isset($_SESSION)) {
     session_start();
 }
 $csrfToken = bin2hex(random_bytes(32));
-$_SESSION['csrf_token'] = $csrfToken; 
+$_SESSION['csrf_token'] = $csrfToken;
 ?>
 <style>
-.ui-datepicker-trigger{
-margin: -27px 2px 3px 286px;
-    width: 20px;
-}
+    .ui-datepicker-trigger {
+        margin: -27px 2px 3px 286px;
+        width: 20px;
+    }
 </style>
 <!-- Content Wrapper. Contains page content -->
 <div class="content-wrapper">
@@ -50,53 +52,63 @@ margin: -27px 2px 3px 286px;
                             //unset($errorMsg);
                         }
                         ?>
-                        <form class="form-horizontal" method="post" name = "notice_form" id="notice_form" enctype="multipart/form-data">
+                        <form class="form-horizontal" method="post" name="notice_form" id="notice_form"
+                            enctype="multipart/form-data">
                             <div class="card-body">
-								<div class="form-group row">
-                                    <label for="inputEmail3" class="col-sm-2 col-form-label">Category <span style='color:red'>*</span></label>
+                                <div class="form-group row">
+                                    <label for="inputEmail3" class="col-sm-2 col-form-label">Category <span
+                                            style='color:red'>*</span></label>
                                     <div class="col-sm-6">
                                         <select name="category_id" class="form-control">
-                                            <?php foreach ($categories as $key => $category) :
+                                            <?php foreach ($categories as $key => $category):
                                                 $selected = "";
                                                 if ($current_notice['category_id'] == $category->category_id) {
                                                     $selected = "selected=\"selected\"";
                                                 }
-                                            ?>
-                                                <option <?php echo $selected; ?> value="<?php echo $category->category_id; ?>"><?php echo $category->category_name; ?></option>
+                                                ?>
+                                                <option <?php echo $selected; ?>
+                                                    value="<?php echo $category->category_id; ?>">
+                                                    <?php echo $category->category_name; ?>
+                                                </option>
                                             <?php endforeach; ?>
                                         </select>
                                     </div>
                                 </div>
                                 <div class="form-group row">
-                                    <label for="inputEmail3" class="col-sm-2 col-form-label">Notice Name  <span style='color:red'>*</span></label>
+                                    <label for="inputEmail3" class="col-sm-2 col-form-label">Notice Name <span
+                                            style='color:red'>*</span></label>
                                     <div class="col-sm-6">
-                                        <textarea class="form-control exam_name" name="notice_name" id="notice_name" rows="5" placeholder="Enter only 256 characters"><?php echo @$current_notice['notice_name']; ?></textarea>
+                                        <textarea class="form-control exam_name" name="notice_name" id="notice_name"
+                                            rows="5"
+                                            placeholder="Enter only 256 characters"><?php echo @$current_notice['notice_name']; ?></textarea>
                                     </div>
                                 </div>
                                 <div class="form-group row">
-                                    <label for="inputEmail3" class="col-sm-2 col-form-label"> Effect From Date <span style='color:red'>*</span></label>
+                                    <label for="inputEmail3" class="col-sm-2 col-form-label"> Effect From Date <span
+                                            style='color:red'>*</span></label>
                                     <div class="col-sm-3">
-									<?php
-									if(@$current_notice['effect_from_date']==""){
-										$effect_from_date = "";
-									}
-									else{
-										$effect_from_date = date('d-m-Y', strtotime($current_notice['effect_from_date']));
-									}
-									if(@$current_notice['effect_to_date']==""){
-										$effect_to_date = "";
-									}
-									else{
-										$effect_to_date = date('d-m-Y', strtotime($current_notice['effect_to_date']));
-									}
-									?>
-                                        <input class="form-control" type="text" name="effect_from_date" id="effect_from_date" value="<?php echo $effect_from_date; ?>" readonly>
+                                        <?php
+                                        if (@$current_notice['effect_from_date'] == "") {
+                                            $effect_from_date = "";
+                                        } else {
+                                            $effect_from_date = date('d-m-Y', strtotime($current_notice['effect_from_date']));
+                                        }
+                                        if (@$current_notice['effect_to_date'] == "") {
+                                            $effect_to_date = "";
+                                        } else {
+                                            $effect_to_date = date('d-m-Y', strtotime($current_notice['effect_to_date']));
+                                        }
+                                        ?>
+                                        <input class="form-control" type="text" name="effect_from_date"
+                                            id="effect_from_date" value="<?php echo $effect_from_date; ?>" readonly>
                                     </div>
                                 </div>
                                 <div class="form-group row">
-                                    <label for="inputEmail3" class="col-sm-2 col-form-label"> Effect To Date  <span style='color:red'>*</span></label>
+                                    <label for="inputEmail3" class="col-sm-2 col-form-label"> Effect To Date <span
+                                            style='color:red'>*</span></label>
                                     <div class="col-sm-3">
-                                        <input class="form-control" type="text" name="effect_to_date" id="effect_to_date" value="<?php echo $effect_to_date; ?>" readonly>
+                                        <input class="form-control" type="text" name="effect_to_date"
+                                            id="effect_to_date" value="<?php echo $effect_to_date; ?>" readonly>
                                     </div>
                                 </div>
                                 <?php
@@ -104,8 +116,8 @@ margin: -27px 2px 3px 286px;
                                 // echo $nomination_id;
                                 //print_r($current_nomination); 
                                 ?>
-                                    <!-- Multiple Pdf Files added-->
-                                    <div class="form-group row">
+                                <!-- Multiple Pdf Files added-->
+                                <div class="form-group row">
                                     <label for="inputEmail3" class="col-sm-2 col-form-label"> Attachment <span
                                             style='color:red'>*</span></label>
                                     <div class="col-sm-6">
@@ -180,13 +192,16 @@ margin: -27px 2px 3px 286px;
                                         </table>
                                     </div>
                                 </div>
-                                <input type="hidden" value="<?php echo $current_notice['notice_id']; ?>" name="id" class="sp_id">
+                                <input type="hidden" value="<?php echo $current_notice['notice_id']; ?>" name="id"
+                                    class="sp_id">
                             </div>
                             <!-- /.card-body -->
                             <div class="card-footer">
-                            <input type="hidden" name="csrf_token" value="<?php echo $csrfToken; ?>">
-                                <input type="submit" class="btn btn-info" name="save_notice" value="Submit" id="save_notice"  style="margin: 0px 0px 0px -160px;">
-                                <input type="button" class="btn btn-default float-right" onclick="history.back();" value="Cancel" style="float: left !important; margin: 0px 0px 0px 310px;">
+                                <input type="hidden" name="csrf_token" value="<?php echo $csrfToken; ?>">
+                                <input type="submit" class="btn btn-info" name="save_notice" value="Submit"
+                                    id="save_notice" style="margin: 0px 0px 0px -160px;">
+                                <input type="button" class="btn btn-default float-right" onclick="history.back();"
+                                    value="Cancel" style="float: left !important; margin: 0px 0px 0px 310px;">
                             </div>
                             <!-- /.card-footer -->
                         </form>
@@ -202,48 +217,48 @@ margin: -27px 2px 3px 286px;
     <!-- Main content section div end -->
 </div>
 <?php echo $this->get_footer(); ?>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.2/jquery.validate.min.js" crossorigin="anonymous"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.2/sweetalert.min.js"></script>
-<link href="http://code.jquery.com/ui/1.10.4/themes/ui-lightness/jquery-ui.css" rel="stylesheet">
-<script src="http://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
+<script src="<?php echo $this->theme_url; ?>/dist/js/jquery.validate.min.js" crossorigin="anonymous"></script>
+<script src="<?php echo $this->theme_url; ?>/dist/js/sweetalert.min.js"></script>
+<link href="<?php echo $this->theme_url; ?>/dist/css/jquery-ui.css" rel="stylesheet">
+<script src="<?php echo $this->theme_url; ?>/dist/js/jquery-ui.js"></script>
 <script>
-$.datepicker.setDefaults({
-showOn: "button",
-buttonImage: "<?php echo $this->theme_url; ?>/dist/img/datepicker.png",
-buttonText: "Date Picker",
-buttonImageOnly: true,
-dateFormat: 'dd-mm-yy'  
-});
-$(function() {
-$("#effect_from_date").datepicker({
-    changeMonth: true, 
-    changeYear: true, 
-    yearRange: '2020:+0',
-    minDate: 0
- }
- );
-$("#effect_to_date").datepicker({
-    changeMonth: true, 
-    changeYear: true, 
-    yearRange: '2020:2025',
-    minDate: 0
- }
-);
-});
-    $(document).ready(function() {
-		$('#resume').on( 'change', function() {
-   myfile= $( this ).val();
-   var ext = myfile.split('.').pop();
-   if(ext=="pdf"){
-      return true;
-   } else{
-       swal("Accept Only PDF Files","","warning");
-	   $('#resume').val('');
-	   return;
-   }
-});
+    $.datepicker.setDefaults({
+        showOn: "button",
+        buttonImage: "<?php echo $this->theme_url; ?>/dist/img/datepicker.png",
+        buttonText: "Date Picker",
+        buttonImageOnly: true,
+        dateFormat: 'dd-mm-yy'
+    });
+    $(function () {
+        $("#effect_from_date").datepicker({
+            changeMonth: true,
+            changeYear: true,
+            yearRange: '2020:+0',
+            minDate: 0
+        }
+        );
+        $("#effect_to_date").datepicker({
+            changeMonth: true,
+            changeYear: true,
+            yearRange: '2020:2025',
+            minDate: 0
+        }
+        );
+    });
+    $(document).ready(function () {
+        $('#resume').on('change', function () {
+            myfile = $(this).val();
+            var ext = myfile.split('.').pop();
+            if (ext == "pdf") {
+                return true;
+            } else {
+                swal("Accept Only PDF Files", "", "warning");
+                $('#resume').val('');
+                return;
+            }
+        });
         var myfile = "";
-        $(document).on('click', '.add', function() {
+        $(document).on('click', '.add', function () {
             var html = '';
             html += '<tr>';
             html += '<td><input type="text" name="pdf_name[]" class="form-control item_name" /></td>';
@@ -266,7 +281,6 @@ $("#effect_to_date").datepicker({
                     maxfilesize: "File size must be less than 5 MB"
                 }
             });
-
             jQuery.validator.addMethod("maxfilesize", function (value, element, param) {
                 //debugger;
                 if (element.files.length > 0) {
@@ -275,7 +289,7 @@ $("#effect_to_date").datepicker({
                 return true; // No file selected, so it's valid
             }, "File size must be less than 5 MB");
         });
-        $(document).on('click', '.remove', function() {
+        $(document).on('click', '.remove', function () {
             //debugger;
             var pdfname = $(this).closest('tr').find('#pdfname').val();
             var pdf_id = $(this).closest('tr').find('#pdf_id').val();
@@ -290,7 +304,7 @@ $("#effect_to_date").datepicker({
                     },
                     type: 'post',
                     dataType: 'json',
-                    success: function(response) {
+                    success: function (response) {
                         if (response.message == 1) {
                             //alert("Welcome")
                             window.location.href = redirecturl;
@@ -301,7 +315,7 @@ $("#effect_to_date").datepicker({
             // alert(pdfname);
             $(this).closest('tr').remove();
         });
-        $('.pdfclassupload').on('change', function() {
+        $('.pdfclassupload').on('change', function () {
             myfile = $(this).val();
             var ext = myfile.split('.').pop();
             if (ext == "pdf") {

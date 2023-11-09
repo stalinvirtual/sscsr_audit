@@ -3,6 +3,7 @@
 namespace App\Helpers;
 
 #use App\Models\Instructions;
+use App\Models\MstNotice;
 use App\Models\Post;
 use App\System\Route;
 use App\Models\Faq as Faq;
@@ -264,6 +265,18 @@ class Helpers
 		$nominationchildclass = new Nominationchild();
 		$nominationchildlist = $nominationchildclass->getNominationchildLatestNews();
 		return $nominationchildlist;
+	}
+	static function getMstNoticeLatestNews()
+	{
+		$mstnotice = new MstNotice();
+		$result = $mstnotice->getHomeMstNoticeList();
+		return $result;
+	}
+	static function getMstNoticeChildListNews()
+	{
+		$modelchildclass = new MstNoticeChild();
+		$result = $modelchildclass->getMstNoticeChildLatestNews();
+		return $result;
 	}
 	/******
 	 * 

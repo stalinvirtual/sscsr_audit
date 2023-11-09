@@ -95,25 +95,25 @@ if (isset($_SERVER['HTTP_X_REQUESTED_WITH']) && ($_SERVER['HTTP_X_REQUESTED_WITH
                 'colvis',
                 {
                     extend: 'collection',
-                    text: '<i class="fa fa-file-text-o" style="color:black;font-size: 15px;"> Export</i>',
+                    text: '<i class="fa fa-file-text" style="color:black;font-size: 12px;"> Export</i>',
                     buttons: [
                         {
                             extend: 'excel',
-                            text: '<i class="fa fa-file-excel-o" style="color:green;"> Excel</i>',
+                            text: '<i class="fa fa-file-excel" style="color:green;"> Excel</i>',
                             title: 'Exam Details',
                             filename: 'Exam Details',
                             exportOptions: {
-                                columns: ':visible'
+                                columns: [ 0, 1, 2 ]
                             }
 
                         },
                         {
                             extend: 'pdf',
-                            text: '<i class="fa fa-file-pdf-o" style="color:red;"> PDF</i>',
+                            text: '<i class="fa fa-file-pdf" style="color:red;"> PDF</i>',
                             title: 'Exam Details',
                             filename: 'Exam Details',
                             exportOptions: {
-                                columns: ':visible'
+                                columns: [ 0, 1, 2 ]
                             }
                         },
                         {
@@ -122,7 +122,7 @@ if (isset($_SERVER['HTTP_X_REQUESTED_WITH']) && ($_SERVER['HTTP_X_REQUESTED_WITH
                             title: 'Exam Details',
                             filename: 'Exam Details',
                             exportOptions: {
-                                columns: ':visible'
+                                columns: [ 0, 1, 2 ]
                             },
                             customize: function (win) {
                                 $(win.document.body)

@@ -24,7 +24,7 @@ try{
 
     $message = array(
         'response' => array(
-            'status' => 'fail',
+            'status' => 'success',
             'code' => '1', // whatever you want
             'message' => 'Table Already  Exists.',
             'title' => 'Important Instruction' 
@@ -36,9 +36,9 @@ try{
 
     $message = array(
         'response' => array(
-            'status' => 'success',
-            'code' => '1', // whatever you want
-            'message' => 'Table Already Exists.',
+            'status' => 'fail',
+            'code' => '0', // whatever you want
+            'message' => 'Table is Empty',
             'title' => 'Important Instruction'
         )
     );

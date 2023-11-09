@@ -56,7 +56,7 @@ function filesize_formatted($path)
                     $data = json_decode($jsonData, true);
                     $itemsPerPage = 5;
                     $currentDate = date("Y-m-d");
-                    $totalItems = count($data['nominations_latest_news']) + count($data['selectionposts_latest_news']) + count($data['tenders_latest_news']) + count($data['notices_latest_news'])  + count($data['announcements_latest_news']);
+                    $totalItems = count($data['nominations_latest_news']) + count($data['selectionposts_latest_news']) + count($data['tenders_latest_news']) + count($data['notice_latest_news'])  + count($data['announcements_latest_news']);
                     $totalPages = ceil($totalItems / $itemsPerPage);
 
                     // Get the current page number from the query parameter
@@ -64,7 +64,7 @@ function filesize_formatted($path)
                     $offset = ($page - 1) * $itemsPerPage;
 
                     // Combine the announcements and nominations data
-                    $combinedData = array_merge($data['nominations_latest_news'], $data['selectionposts_latest_news'], $data['tenders_latest_news'], $data['notices_latest_news'], $data['announcements_latest_news']);
+                    $combinedData = array_merge($data['nominations_latest_news'], $data['selectionposts_latest_news'], $data['tenders_latest_news'], $data['notice_latest_news'], $data['announcements_latest_news']);
 
                     usort($combinedData, function ($a, $b) {
                         $insertionComparison = strcmp($b['creation_date'], $a['creation_date']);
@@ -76,11 +76,12 @@ function filesize_formatted($path)
                         // If insertion timestamps are equal, compare creation dates
                         return strtotime($b['creation_date']) - strtotime($a['creation_date']);
                     });
-                    $combinedDataChild = array_merge($data['nominationchildlist_latest_news'], $data['selectpostschildlist_latest_news']);
+                    $combinedDataChild = array_merge($data['nominationchildlist_latest_news'], $data['selectpostschildlist_latest_news'],$data['noticechildlist_latest_news']);
 
                     // Get the subset of data for the current page
                     $currentPageData = array_slice($combinedData, $offset, $itemsPerPage);
                     foreach ($currentPageData as $entry) {
+          
                         $Date = date("Y-m-d", strtotime($entry['effect_from_date']));
                         $li = '<li class="card">';
                         $timestamp = strtotime($Date);
@@ -131,9 +132,41 @@ function filesize_formatted($path)
                                 </small> ';
                                     }
                                 }
+                               
                             }
                             $li .= implode(' , ', $pdfs_for_nomination);
                             $li .= implode(' , ', $pdfs_for_selectionpost);
+                            $li .= implode(' , ', $pdfs_for_notice);
+
+                        }
+                        elseif (isset($entry['notice_name'])) {
+
+
+                            $combinedDataChild = $data['noticechildlist_latest_news'];
+
+                            $pdfCount = 0; // Counter for PDFs
+                            $pdfs_for_notice = array();
+                           
+                            foreach ($combinedDataChild as $childlist) {
+                               
+
+                                    if ($entry['notice_id'] == $childlist['notice_id']) {
+                                        $pdfCount++;
+                                        $uploadPath = "notices" . "/" . $childlist['attachment'];
+                                        $file_location = $this
+                                            ->route
+                                            ->get_base_url() . "/" . $uploadPath;
+                                        $pdfs_for_notice[] = '<a  class="card-link" href="' . $file_location . '" target="_blank">' . $entry['notice_name'] . "_" . $childlist['pdf_name'] . "(Selection Post)" . '</a> <img class="file-icon" alt="" title="pdf document. opens in new tab" src="exam_assets/pdficon.png">
+                                <small style="font-family:Calibri;">
+                                    (' . filesize_formatted($uploadPath) . ')
+                                </small> ';
+                                    }
+                                
+                               
+                            }
+                           
+                            $li .= implode(' , ', $pdfs_for_notice);
+
                         } elseif (isset($entry['pdf_name'])) {
                             if ($entry['tender_id']) {
 
@@ -145,17 +178,18 @@ function filesize_formatted($path)
                             <small style="font-family:Calibri;">
                             (' . filesize_formatted($uploadPath) . ')
                             </small>';
-                            } elseif ($entry['notice_id']) {
+                            } 
+                            // elseif ($entry['notice_id']) {
 
-                                $uploadPath = "notices" . "/" . $entry['attachment'];
-                                $file_location = $this
-                                    ->route
-                                    ->get_base_url() . "/" . $uploadPath;
-                                $li .= '<a  class="card-link" href="' . $file_location . '" target="_blank">' . $entry['pdf_name'] . '(Notice)</a> <img class="file-icon" alt="" title="pdf document. opens in new tab" src="exam_assets/pdficon.png">
-                             <small style="font-family:Calibri;">
-                            (' . filesize_formatted($uploadPath) . ')
-                              </small>';
-                            }
+                            //     $uploadPath = "notices" . "/" . $entry['attachment'];
+                            //     $file_location = $this
+                            //         ->route
+                            //         ->get_base_url() . "/" . $uploadPath;
+                            //     $li .= '<a  class="card-link" href="' . $file_location . '" target="_blank">' . $entry['pdf_name'] . '(Notice)</a> <img class="file-icon" alt="" title="pdf document. opens in new tab" src="exam_assets/pdficon.png">
+                            //  <small style="font-family:Calibri;">
+                            // (' . filesize_formatted($uploadPath) . ')
+                            //   </small>';
+                            // }
                         }
 
 

@@ -176,9 +176,9 @@ $csrf_token = $_SESSION['csrf_token'];
 			$errorMsg="CSRF token verification failed.";
 		}
 		$user = trim($_POST["user"]);
-		$user = cleanData($user);
+		$user = htmlspecialchars(cleanData($user));
 		$pass = trim($_POST["pass"]);
-		$pass = cleanData($pass);
+		$pass = htmlspecialchars(cleanData($pass));
 		$pass = md5($pass);
 		
 		$userEnteredCaptcha = $_POST['captcha'];

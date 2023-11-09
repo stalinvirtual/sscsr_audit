@@ -103,15 +103,16 @@ class MstNotice extends DB
     }
     public function getHomeMstNoticeList($parent_id = 0)
     {
-        $fetch_all =  $this->select('P.*,category.category_name,phase.phase_name')
-            ->from("mstselectionposttbl P ")
-            ->join("mstcategory category ", "P.category_id = category.category_id ", "JOIN")
-            ->join("mstphasemaster phase ", "P.phase_id = phase.phase_id ", "JOIN")
-            ->where(['p_status' => '1'])
-            ->order_by('P.effect_from_date desc limit 10')
-            ->get_list();
-        $lastinsertid = (object)$fetch_all;
-        return $lastinsertid;
+        $fetch_all =  $this->select('P.*,category.category_name')
+        ->from("public.mstnoticetbl P ")
+        ->join("mstcategory category ","P.category_id = category.category_id ","JOIN")
+        ->where(['p_status' => 1])
+        ->where_between('CURRENT_DATE BETWEEN effect_from_date AND effect_to_date')
+        
+        ->order_by('P.creation_date desc')
+        //->fetchtwo('fetch first 2 rows only')
+        ->get_list();
+        return  $fetch_all;
     }
     // Publish and Unpublished
     public function updateMstNoticeState($data = array(), $id = 0)
