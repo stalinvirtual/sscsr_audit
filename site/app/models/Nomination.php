@@ -87,7 +87,7 @@ class Nomination extends DB
         $fetch_all =  $this->select('P.*,category.category_name')
             ->from("mstnominationtbl P ")
             ->join("mstcategory category ", "P.category_id = category.category_id ", "JOIN")
-            ->where(['p_status' => '1'])
+            ->where(['P.p_status' => '1'])
             ->where_between('CURRENT_DATE BETWEEN P.effect_from_date AND P.effect_to_date')
             // ->wherecondition("P.effort_from_date > current_date - interval '2 days'")
             ->order_by('P.creation_date desc')

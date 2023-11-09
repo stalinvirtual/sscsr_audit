@@ -1,40 +1,87 @@
 {
     "errorMsg": "",
-    "nominations": {},
+    "nominations": {
+        "0": {
+            "nomination_id": 1105,
+            "exam_name": "test nomini",
+            "category_id": 1,
+            "effect_from_date": "2023-11-16",
+            "effect_to_date": "2023-11-24",
+            "creation_date": "2023-11-09 11:13:48",
+            "p_status": "1",
+            "category_name": "CGL"
+        },
+        "1": {
+            "nomination_id": 1106,
+            "exam_name": "test ",
+            "category_id": 1,
+            "effect_from_date": "2023-11-09",
+            "effect_to_date": "2023-11-23",
+            "creation_date": "2023-11-09 11:27:39",
+            "p_status": "1",
+            "category_name": "CGL"
+        }
+    },
     "nominationchildlist": [
         {
-            "nomination_child_id": 1072,
-            "nomination_id": 1103,
-            "pdf_name": "one",
-            "attachment": "51654-lams-public-l2-04-09-2023-security-report.pdf",
+            "nomination_child_id": 1074,
+            "nomination_id": 1105,
+            "pdf_name": "test sp",
+            "attachment": "17349-exam-detailsp.pdf",
             "status": 1
         },
         {
-            "nomination_child_id": 1073,
-            "nomination_id": 1104,
-            "pdf_name": "one",
-            "attachment": "21152-tnrajbhavan.gov.in-security-report.pdf",
+            "nomination_child_id": 1075,
+            "nomination_id": 1106,
+            "pdf_name": "PDf 1",
+            "attachment": "67442-81000268411.pdf",
             "status": 1
         }
     ],
-    "nominations_latest_news": {},
+    "nominations_latest_news": {
+        "0": {
+            "nomination_id": 1106,
+            "exam_name": "test ",
+            "category_id": 1,
+            "effect_from_date": "2023-11-09",
+            "effect_to_date": "2023-11-23",
+            "creation_date": "2023-11-09 11:27:39",
+            "p_status": "1",
+            "category_name": "CGL"
+        }
+    },
     "nominationchildlist_latest_news": [
         {
-            "nomination_child_id": 1072,
-            "nomination_id": 1103,
-            "pdf_name": "one",
-            "attachment": "51654-lams-public-l2-04-09-2023-security-report.pdf",
+            "nomination_child_id": 1074,
+            "nomination_id": 1105,
+            "pdf_name": "test sp",
+            "attachment": "17349-exam-detailsp.pdf",
             "status": 1
         },
         {
-            "nomination_child_id": 1073,
-            "nomination_id": 1104,
-            "pdf_name": "one",
-            "attachment": "21152-tnrajbhavan.gov.in-security-report.pdf",
+            "nomination_child_id": 1075,
+            "nomination_id": 1106,
+            "pdf_name": "PDf 1",
+            "attachment": "67442-81000268411.pdf",
             "status": 1
         }
     ],
-    "selectionposts_latest_news": {},
+    "selectionposts_latest_news": {
+        "0": {
+            "selection_post_id": 62,
+            "exam_name": "Sp Exam",
+            "department_id": null,
+            "post_id": null,
+            "category_id": 10,
+            "phase_id": 20,
+            "effect_from_date": "2023-11-09",
+            "effect_to_date": "2023-11-09",
+            "p_status": "1",
+            "creation_date": "2023-11-09 10:39:24",
+            "category_name": "Notices",
+            "phase_name": "Phase - 2"
+        }
+    },
     "selectpostschildlist_latest_news": [
         {
             "selection_post_child_id": 59,
@@ -63,10 +110,35 @@
             "pdf_name": "",
             "attachment": "2438-sms.pdf",
             "status": 1
+        },
+        {
+            "selection_post_child_id": 78,
+            "selection_post_id": 62,
+            "pdf_name": "PDf 1",
+            "attachment": "70116-81000268411.pdf",
+            "status": 1
+        },
+        {
+            "selection_post_child_id": 79,
+            "selection_post_id": 62,
+            "pdf_name": "nomination_d",
+            "attachment": "58301-81000268411_withfooter.pdf",
+            "status": 1
         }
     ],
-    "notices_latest_news": [],
-    "tenders_latest_news": [],
+    "notice_latest_news": [],
+    "noticechildlist_latest_news": [],
+    "tenders_latest_news": [
+        {
+            "tender_id": 209,
+            "pdf_name": "Tender One",
+            "attachment": "15655-stalin-sept-mpr.pdf",
+            "effect_from_date": "2023-11-09",
+            "effect_to_date": "2023-11-09",
+            "p_status": "1",
+            "creation_date": "2023-11-09 13:47:21"
+        }
+    ],
     "announcements_latest_news": [],
     "notices": [
         {

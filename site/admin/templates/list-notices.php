@@ -450,7 +450,6 @@
 
         // Publish record
         $('#noticeTable').on('click', '.publishbtn', function(e) {
-            debugger;
             e.preventDefault()
             var id = $(this).data('id');
             swal({title:"Do You Want to Publish ?", 
@@ -502,6 +501,61 @@
 
 
         });
+
+               // Publish record
+               $('#noticeTable').on('click', '.notice_unpublishbtn', function(e) {
+            e.preventDefault()
+            var id = $(this).data('id');
+            swal({title:"Do you want to Unpublish?", 
+                buttons: {
+                    yes: {
+                        text: "Ok",
+                        value: "yes"
+                    },
+                    No: {
+                        text: "Cancel",
+                        value: "No",
+                        buttonColor: "#000000",
+                    }
+                }
+            }).then((value) => {
+                if (value === "yes") { //yes start
+
+                    // AJAX request
+                    $.ajax({
+                        url: baseurl,
+                        type: 'post',
+                        data: {
+                            request: 7,
+                            id: id
+                        },
+                        success: function(response) {
+
+                            if (response == 1) {
+                                swal({title:"Record has been published successfully"});
+                              
+
+                                // Reload DataTable
+                                $('#noticeTable').DataTable().ajax.reload();
+                                $('.alert-success').hide();
+                            } else {
+                                swal("Invalid ID.");
+                            }
+
+                        }
+                    });
+
+
+
+
+
+                } // yes End
+                return false;
+            });
+
+
+        });
+
 
         //DatePicker
 

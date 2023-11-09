@@ -2385,6 +2385,20 @@ class Admin extends BackEndController
             echo json_encode(array("message" => $message));
         }
     }
+    public function ajaxresponseforphaseunpublish()
+    {
+        $phasemaster_id = htmlspecialchars($_POST['pageid']);
+        // echo $cid;
+        $pm_model = new PhaseMaster();
+        $pm_data = [
+            'status' => '0',
+        ];
+        if ($pm_model->updatePhaseMasterState($pm_data, $phasemaster_id)) {
+            $message = 1;
+            header('Content-Type: application/json');
+            echo json_encode(array("message" => $message));
+        }
+    }
     public function ajaxresponseforNarchieves()
     {
         $year = $_POST['nom_year'];
@@ -3136,7 +3150,10 @@ HTML;
                      * 
                      */
                 } else {
-                    $action = "<p style='color:green'>Published</p>";
+                   // $action = "<p style='color:green'>Published</p>";
+                   $unpublishButton = "<button  title='Un Publish' style='height:30px' class='btn btn-sm btn-danger unpublishbtn iconWidth' data-id='" . $rowval->nomination_id . "'><i class='fa  fa-eye'></i></button>";
+                   $green_text = "<p style='color:green'>Published</p>";
+                   $action =  $green_text . $unpublishButton ;
                 }
                 $pdfPath = "";
                 $pdfLinks = []; // Initialize an array to store the PDF links
@@ -3218,6 +3235,26 @@ HTML;
             $id = $_POST['id'];
             $nomination_data = [
                 'p_status' => '1',
+            ];
+            // Check id
+            ## Fetch records
+            $model = new Nomination();
+            $checkId = $model->checkNominationId($id);
+            $checkIdCount = $checkId->checkid;
+            if ($checkIdCount > 0) {
+                $publishQuery = $model->updateNominationState($nomination_data, $id);
+                echo 1;
+                exit;
+            } else {
+                echo 0;
+                exit;
+            }
+        }
+        // Un Publish Nomination
+        if ($request == 7) {
+            $id = $_POST['id'];
+            $nomination_data = [
+                'p_status' => '0',
             ];
             // Check id
             ## Fetch records
@@ -3340,7 +3377,9 @@ HTML;
                     } else {
                     }
                 } else {
-                    $action = "<p style='color:green'>Published</p>";
+                    $unpublishButton = "<button  title='Un Publish' style='height:30px' class='btn btn-sm btn-danger sp_unpublishbtn iconWidth' data-id='" . $rowval->selection_post_id . "'><i class='fa  fa-eye'></i></button>";
+                    $green_text = "<p style='color:green'>Published</p>";
+                    $action =  $green_text . $unpublishButton ;
                 }
                 $pdfPath = "";
                 $pdfLinks = []; // Initialize an array to store the PDF links
@@ -3423,6 +3462,26 @@ HTML;
             $id = $_POST['id'];
             $sp_data = [
                 'p_status' => '1',
+            ];
+            // Check id
+            ## Fetch records
+            $model = new Selectionpost();
+            $checkId = $model->checkSelectionpostId($id);
+            $checkIdCount = $checkId->checkid;
+            if ($checkIdCount > 0) {
+                $publishQuery = $model->updateSelectionpostState($sp_data, $id);
+                echo 1;
+                exit;
+            } else {
+                echo 0;
+                exit;
+            }
+        }
+         // Un Publish Selection Post
+         if ($request == 7) {
+            $id = $_POST['id'];
+            $sp_data = [
+                'p_status' => '0',
             ];
             // Check id
             ## Fetch records
@@ -3551,7 +3610,11 @@ HTML;
                      * 
                      */
                 } else {
-                    $action = "<p style='color:green'>Published</p>";
+
+                    $unpublishButton = "<button  title='Un Publish' style='height:30px' class='btn btn-sm btn-danger tender_unpublishbtn iconWidth' data-id='" . $rowval->tender_id . "'><i class='fa  fa-eye'></i></button>";
+                    $green_text = "<p style='color:green'>Published</p>";
+                    $action =  $green_text . $unpublishButton ;
+                   // $action = "<p style='color:green'>Published</p>";
                 }
                 $pdfPath = "";
                 $selected = "";
@@ -3626,6 +3689,26 @@ TEXT;
             $id = $_POST['id'];
             $tender_data = [
                 'p_status' => '1',
+            ];
+            // Check id
+            ## Fetch records
+            $model = new Tender();
+            $checkId = $model->checkTenderId($id);
+            $checkIdCount = $checkId->checkid;
+            if ($checkIdCount > 0) {
+                $publishQuery = $model->updateTenderState($tender_data, $id);
+                echo 1;
+                exit;
+            } else {
+                echo 0;
+                exit;
+            }
+        }
+        // Un Publish Tender
+        if ($request == 7) {
+            $id = $_POST['id'];
+            $tender_data = [
+                'p_status' => '0',
             ];
             // Check id
             ## Fetch records
@@ -3766,7 +3849,12 @@ TEXT;
                      * 
                      */
                 } else {
-                    $action = "<p style='color:green'>Published</p>";
+
+                    $unpublishButton = "<button  title='Un Publish' style='height:30px' class='btn btn-sm btn-danger notice_unpublishbtn iconWidth' data-id='" . $rowval->notice_id . "'><i class='fa  fa-eye'></i></button>";
+                    $green_text = "<p style='color:green'>Published</p>";
+                    $action =  $green_text . $unpublishButton ;
+
+                   
                 }
                 $pdfPath = "";
                 $pdfLinks = []; // Initialize an array to store the PDF links
@@ -3848,6 +3936,27 @@ TEXT;
                 $id = $_POST['id'];
                 $notice_data = [
                     'p_status' => '1',
+                ];
+                // Check id
+                ## Fetch records
+                $model = new MstNotice();
+                $checkId = $model->checkMstNoticeId($id);
+                 $checkIdCount = $checkId->checkid;
+             
+                if ($checkIdCount > 0) {
+                    $publishQuery = $model->updateMstNoticeState($notice_data, $id);
+                    echo 1;
+                    exit;
+                } else {
+                    echo 0;
+                    exit;
+                }
+            }
+             // Un Publish Notice
+             if ($request == 7) {
+                $id = $_POST['id'];
+                $notice_data = [
+                    'p_status' => '0',
                 ];
                 // Check id
                 ## Fetch records

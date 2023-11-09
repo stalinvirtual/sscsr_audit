@@ -65,7 +65,7 @@
 														echo '<i class="fa fa-eye page_publish_button" style="color:#007bff"></i>';
 													}
 													else{
-														echo '<i class="fa fa-eye page_unpublish_button" style="color:#007bff"></i>';
+														echo '<i class="fa fa-eye page_unpublish_button" style="color:red"></i>';
 													}
 												 }
 												elseif($is_uploader==1){ ?>

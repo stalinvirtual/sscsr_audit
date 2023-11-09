@@ -53,7 +53,7 @@
 													</a>
 													<?php 
 													if (@$_GET['status'] == 0 && $phasemaster->status != 1){
-														echo '<i class="fa fa-eye pm-publish-button" style="color:#007bff"></i>';
+														echo '<i class="fa fa-eye pm-publish-button" style="color:#007bff;cursor:pointer"></i>';
 													}
 													
 												}
@@ -69,8 +69,11 @@
 													</a>
 													<?php 
 													if (@$_GET['status'] == 0 && $phasemaster->status != 1){
-														echo '<i class="fa fa-eye pm-publish-button" style="color:#007bff"></i>';
+														echo '<i class="fa fa-eye pm-publish-button" style="color:red;cursor:pointer" title="Published"></i>';
 													}
+                                                    else{
+                                                        echo '<i class="fa fa-eye pm-unpublish-button" style="color:green;cursor:pointer" title="Unpublished"></i>';
+                                                    }
 													
 													
 												 }

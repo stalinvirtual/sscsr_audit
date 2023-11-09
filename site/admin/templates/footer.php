@@ -579,7 +579,53 @@
          // Ajax Response for Page Unpublish End
 
 
+// Unpublish phase master
+jQuery('.pm-unpublish-button').on(
+             'click',
+             function() {
 
+                 //
+
+                 var pageid = $(this).closest('td').find('#phasemaster_id').val();
+                 var baseurl = '<?php echo $this->route->site_url("Admin/ajaxresponseforphaseunpublish"); ?>';
+                 var redirecturl = '<?php echo $this->route->site_url("Admin/dashboard/?action=listofphasemaster&&status=0"); ?>';
+
+
+                 swal({title:"Do you want to unpublish phase master ?",
+                     buttons: {
+                         yes: {
+                             text: "Ok",
+                             value: "yes"
+                         },
+                         No: {
+                             text: "Cancel",
+                             value: "No",
+                             buttonColor: "#000000",
+                         }
+                     }
+                 }).then((value) => {
+                     if (value === "yes") {
+                         jQuery.ajax({
+                             url: baseurl,
+                             data: {
+                                 pageid: pageid
+                             },
+                             type: 'post',
+                             dataType: 'json',
+                             success: function(response) {
+                                 if (response.message == 1) {
+                                     //alert("Welcome")
+                                     window.location.href = redirecturl;
+
+                                 }
+                             }
+                         });
+                     }
+                     return false;
+                 });
+             }
+         );
+// Unpublish phase master
 
 
 
@@ -1416,6 +1462,9 @@ jQuery('.sy-publish-button').on(
              //fixedColumns: true,
              'responsive': true
          });
+
+
+     
 
 
 

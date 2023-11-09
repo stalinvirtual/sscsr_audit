@@ -63,6 +63,10 @@ class IndexController extends FrontEndController
 		$data['nominationchildlist'] = Helpers::getNominationChildList();
 		//Nomination List For Latest News
 		$data['nominations_latest_news'] = Helpers::getNominationLatestNews();
+		// echo '<pr>';
+		// print_r($data['nominations_latest_news']);
+
+		// exit;
 		$data['nominationchildlist_latest_news'] = Helpers::getNominationChildListNews();
 		//Nomination List For Latest News
 		/*****
