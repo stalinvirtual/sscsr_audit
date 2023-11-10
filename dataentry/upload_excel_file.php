@@ -228,7 +228,7 @@ $csrf_token = $_SESSION['csrf_token']; ?>
 	  background: #d7faeb;
 }
 i.fa.fa-exclamation-triangle {
-    width: inherit;
+    width: 80%;
 }
 .select2-container.select2-container-disabled .select2-choice {
   background-color: #ddd;

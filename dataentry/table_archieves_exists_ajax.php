@@ -2,6 +2,9 @@
 require_once("config/db1.php");
 if( isset( $_SERVER['HTTP_X_REQUESTED_WITH'] ) && ( $_SERVER['HTTP_X_REQUESTED_WITH'] == 'XMLHttpRequest' ) )
 {
+    // print_r($_POST['row_count']);
+    // exit;
+    
     	//require_once("functions.php");
 	if(isset($_POST["table_name"]) && $_POST["table_name"] != 'null' )
 	{
@@ -12,6 +15,7 @@ if( isset( $_SERVER['HTTP_X_REQUESTED_WITH'] ) && ( $_SERVER['HTTP_X_REQUESTED_W
  */
 
 try{
+    if( ($_POST['row_count']) >0){
     $tbl =$_POST["table_name"];
     $sql = "SELECT count(table_name) FROM information_schema.tables where table_name = :table_name";
     $sth = $pdo->prepare($sql);
@@ -24,7 +28,7 @@ try{
 
     $message = array(
         'response' => array(
-            'status' => 'success',
+            'status' => 'fail',
             'code' => '1', // whatever you want
             'message' => 'Table Already  Exists.',
             'title' => 'Important Instruction' 
@@ -36,9 +40,9 @@ try{
 
     $message = array(
         'response' => array(
-            'status' => 'fail',
-            'code' => '0', // whatever you want
-            'message' => 'Table is Empty',
+            'status' => 'success',
+            'code' => '1', // whatever you want
+            'message' => 'Table Archived Successfully.',
             'title' => 'Important Instruction'
         )
     );
@@ -47,8 +51,19 @@ try{
 
    echo json_encode($message);  
 
-
-    
+}
+else{
+    $message = array(
+    'response' => array(
+        'status' => 'fail',
+        'code' => '1', // whatever you want
+        'message' => "Table is empty",
+        'title'=>'Error'
+    )
+);
+echo json_encode($message);
+}
+  
     
 }
 catch (Exception $e)
@@ -84,17 +99,11 @@ catch (Exception $e)
   * 
 TRy Catch
 
-
-
   */
 
 
-
-
-
-
-
     }
+
 }
 else{
 	

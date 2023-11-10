@@ -68,7 +68,7 @@ if (isset($_SERVER['HTTP_X_REQUESTED_WITH']) && ($_SERVER['HTTP_X_REQUESTED_WITH
 		<td>' . $asset_path . '</td>
 		<td width="20px">' . $table_tot_row_count . '</td>
 		  <td width="20px"><button type="button" name="update" id="' . $row->table_name . '" class="btn btn-danger btn-xs delete" data-toggle="tooltip" title="Delete"><i class="fa fa-trash" aria-hidden="true"></i></button>
-		  <button type="button" name="archieve" id="' . $row->table_name . '" class="btn btn-primary btn-xs archieve" style="cursor:pointer"  data-toggle="tooltip" title="Archive"><i class="fa fa-archive" aria-hidden="true"></i></button></td>
+		  <button type="button" name="archieve" id="' . $row->table_name .','.$table_tot_row_count.'" class="btn btn-primary btn-xs archieve" style="cursor:pointer"  data-toggle="tooltip" title="Archive"><i class="fa fa-archive" aria-hidden="true"></i></button></td>
 		</tr>';
 		$i++;
 	}
@@ -153,11 +153,19 @@ if (isset($_SERVER['HTTP_X_REQUESTED_WITH']) && ($_SERVER['HTTP_X_REQUESTED_WITH
 		});
 		//Archieves Functions
 		$(document).on('click', '.archieve', function () {
-			var table_name = $(this).attr("id");
+			debugger;
+			var table_name_value = $(this).attr("id");
+			const myArray = table_name_value.split(",");
+			var table_name =myArray[0];
+			var row_count =myArray[1];
+			
 			$.ajax({
 				url: "table_archieves_exists_ajax.php",
 				type: "post",
-				data: "table_name=" + table_name,
+				data: {
+							table_name: table_name,
+							row_count:row_count,
+						},
 				dataType: "json",
 				success: function (data) {
 					debugger;
@@ -176,6 +184,8 @@ if (isset($_SERVER['HTTP_X_REQUESTED_WITH']) && ($_SERVER['HTTP_X_REQUESTED_WITH
 						 * Success
 						 * 
 						 */
+						
+						debugger;
 						swal.fire({
 							title: '<strong>Are you sure you want to move this Table to an Archive?</strong>',
 							html: '<b>' + table_name + '</b>',
