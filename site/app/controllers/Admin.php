@@ -3850,9 +3850,9 @@ TEXT;
                      */
                 } else {
 
-                    $unpublishButton = "<button  title='Un Publish' style='height:30px' class='btn btn-sm btn-danger notice_unpublishbtn iconWidth' data-id='" . $rowval->notice_id . "'><i class='fa  fa-eye'></i></button>";
-                    $green_text = "<p style='color:green'>Published</p>";
-                    $action =  $green_text . $unpublishButton ;
+                    $unpublishButton = "<button  title='Un Publish' style='height:30px;margin-left:10px' class='btn btn-sm btn-danger notice_unpublishbtn iconWidth' data-id='" . $rowval->notice_id . "'><i class='fa  fa-eye'></i></button>";
+                    $green_text = "<p style='color:green;margin-top:8px'>Published</p></div>";
+                    $action = "<div class='flex-container'>". $green_text . $unpublishButton ."</div>";
 
                    
                 }
@@ -4834,7 +4834,15 @@ TEXT;
                      * 
                      */
                 } else {
-                    $action = "<p style='color:green'>Published</p>";
+                   // $action = "<p style='color:green'>Published</p>";
+
+                    $unpublishButton = "<button  title='Unpublish' style='height:30px' class='btn btn-sm btn-danger dl_unpublishbtn iconWidth' data-id='" . $rowval->debarred_lists_id . "'><i class='fa  fa-eye'></i></button>";
+                    $green_text = "<p style='color:green'>Published</p>";
+                    $action =  $green_text . $unpublishButton ;
+
+
+
+
                 }
                 $pdfPath = "";
                 $selected = "";
@@ -4909,6 +4917,26 @@ TEXT;
             $id = $_POST['id'];
             $dlist_data = [
                 'p_status' => '1',
+            ];
+            // Check id
+            ## Fetch records
+            $model = new Debarredlists();
+            $checkId = $model->checkDlistId($id);
+            $checkIdCount = $checkId->checkid;
+            if ($checkIdCount > 0) {
+                $publishQuery = $model->updateDlistState($dlist_data, $id);
+                echo 1;
+                exit;
+            } else {
+                echo 0;
+                exit;
+            }
+        }
+          // Unpublish Dlist
+          if ($request == 7) {
+            $id = $_POST['id'];
+            $dlist_data = [
+                'p_status' => '0',
             ];
             // Check id
             ## Fetch records

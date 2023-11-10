@@ -183,6 +183,8 @@
 <script>
     $(document).ready(function() {
 
+        
+
         $("#notice_from_and_to_date_container").hide();
         let baseurl = '<?php echo $this->route->site_url("Admin/ajaxResponseForNoticeDataTableLoad"); ?>';
         $("#notice_arc_form").on('click', function(event) {
@@ -243,7 +245,8 @@
 
         });
 
-	
+       
+      //tes
 
         $('#notice_form_reset_btn').click(function(e) {
              e.preventDefault();
@@ -636,7 +639,7 @@
 
         });
    
-
+        var test =  $(".notice_unpublishbtn").closest('td').find('.flex-container').css("display", "flex");
     });
 </script>
 <style>
