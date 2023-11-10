@@ -235,6 +235,12 @@
             },
         });
 
+        userDataTable.on('draw.dt', function() {
+                // Update the background color after each draw
+                $("button.unpublishbtn").css("margin-left", "10px");
+                $("button.unpublishbtn").closest("td").css("display", "flex");
+            });
+
         });
 
         $('#tender_form_reset_btn').click(function(e) {

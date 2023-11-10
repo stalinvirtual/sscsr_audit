@@ -1,11 +1,12 @@
 <style>
-  .form-control{
-        width:90% !important;
+    .form-control {
+        width: 90% !important;
     }
-    .ui-datepicker-trigger{
+
+    .ui-datepicker-trigger {
         margin: -25px 2px 3px 245px;
     }
-    </style>
+</style>
 <div class="container-fluid">
     <!-- Container Start-->
     <div class="row">
@@ -15,17 +16,16 @@
                     <div class="form-group row">
                         <!-- Form Group Row Start-->
                         <div class="col-sm-3">
-                        <label for="inputEmail3" class="col-sm-6 col-form-label">Year : </label>
+                            <label for="inputEmail3" class="col-sm-6 col-form-label">Year : </label>
                             <select name="dlist_year" class="form-control" id="dlist_year">
-                            <?php foreach ($searchyears as $key => $searchyear) :
-                                            
-                                            ?>
-                                                <option  value="<?php echo $searchyear->searchyear_id; ?>"><?php echo $searchyear->search_year; ?></option>
-                                            <?php endforeach; ?>
+                                <?php foreach ($searchyears as $key => $searchyear) :
+                                ?>
+                                    <option value="<?php echo $searchyear->searchyear_id; ?>"><?php echo $searchyear->search_year; ?></option>
+                                <?php endforeach; ?>
                             </select>
                         </div>
                         <div class="col-sm-3">
-                        <label for="inputEmail3" class="col-sm-6 col-form-label">Month : </label>
+                            <label for="inputEmail3" class="col-sm-6 col-form-label">Month : </label>
                             <select name="dlist_month" class="form-control" id="dlist_month">
                                 <option value="All">All</option>
                                 <?php
@@ -44,11 +44,11 @@
                     <div class="form-group row " id="dlist_from_and_to_date_container" style="display: none;">
                         <!-- Form Group Row Start-->
                         <div class="col-sm-3">
-                        <label for="inputEmail3" class="col-sm-6 col-form-label">From Date : </label>
+                            <label for="inputEmail3" class="col-sm-6 col-form-label">From Date : </label>
                             <input class="form-control" type="text" name="effect_from_date" id="effect_from_date" value="" readonly>
                         </div>
                         <div class="col-sm-3">
-                        <label for="inputEmail3" class="col-sm-6 col-form-label">To Date :</label>
+                            <label for="inputEmail3" class="col-sm-6 col-form-label">To Date :</label>
                             <input class="form-control" type="text" name="effect_to_date" id="effect_to_date" value="" readonly>
                         </div>
                     </div><!-- Form Group Row End-->
@@ -128,52 +128,58 @@
                 effect_to_date: $("#effect_to_date").val(),
             };
             var userDataTable = $('#dlisttbl').DataTable({
-            'processing': true,
-            'serverSide': true,
-            'serverMethod': 'post',
-            'ajax': {
-                'url': baseurl,
-                data: formData,
-            },
-            'columns': [{
-                    data: 'debarred_lists_id'
+                'processing': true,
+                'serverSide': true,
+                'serverMethod': 'post',
+                'ajax': {
+                    'url': baseurl,
+                    data: formData,
                 },
-                {
-                    data: 'pdf_name'
+                'columns': [{
+                        data: 'debarred_lists_id'
+                    },
+                    {
+                        data: 'pdf_name'
+                    },
+                    {
+                        data: 'attachment'
+                    },
+                    {
+                        data: 'effect_from_date'
+                    },
+                    {
+                        data: 'effect_to_date'
+                    },
+                    {
+                        data: 'p_status'
+                    },
+                    {
+                        data: 'action'
+                    },
+                ],
+                'columnDefs': [{
+                    'targets': 0,
+                    'checkboxes': { // debugger;
+                        'selectRow': true
+                    }
+                }],
+                'select': {
+                    'style': 'multi'
                 },
-                {
-                    data: 'attachment'
-                },
-                {
-                    data: 'effect_from_date'
-                },
-                {
-                    data: 'effect_to_date'
-                },
-                {
-                    data: 'p_status'
-                },
-                {
-                    data: 'action'
-                },
-            ],
-            'columnDefs': [{
-                'targets': 0,
-                'checkboxes': {
-                    'selectRow': true
-                }
-            }],
-            'select': {
-                'style': 'multi'
-            },
-        });
+            });
+            // Add an event listener for the draw.dt event
+            userDataTable.on('draw.dt', function() {
+                // Update the background color after each draw
+                $("button.dl_unpublishbtn").css("margin-left", "10px");
+                $("button.dl_unpublishbtn").closest("td").css("display", "flex");
+            });
         });
         $('#dlist_form_reset_btn').click(function(e) {
-             e.preventDefault();
-             $('input[type=text]').val('');
-             $('#dlist_month').val('All')
-             $('#dlist_from_and_to_date_container').hide();
-         });
+            e.preventDefault();
+            $('input[type=text]').val('');
+            $('#dlist_month').val('All')
+            $('#dlist_from_and_to_date_container').hide();
+        });
         jQuery("#dlist_arc_form").trigger('click');
         // Check Box
         $('#dlisttbl').on('change', 'input[type="checkbox"]', function() {
@@ -198,11 +204,14 @@
             let form = "#frm-example";
             let rowIds = "";
             if (rows_selected.length == 0) {
-                swal({title:"Please select atleast one checkbox"});
+                swal({
+                    title: "Please select atleast one checkbox"
+                });
                 return false;
             } else {
-                let title = action_value[0].toUpperCase() +action_value.slice(1);
-                swal({title:"Do You Want to " +   title +'?', 
+                let title = action_value[0].toUpperCase() + action_value.slice(1);
+                swal({
+                    title: "Do You Want to " + title + '?',
                     buttons: {
                         yes: {
                             text: "Ok",
@@ -240,7 +249,7 @@
             e.preventDefault()
             var id = $(this).data('id');
             swal({
-                title: 'Do You Want to Delete ?', 
+                title: 'Do You Want to Delete ?',
                 buttons: {
                     yes: {
                         text: "Ok",
@@ -264,7 +273,9 @@
                         },
                         success: function(response) {
                             if (response == 1) {
-                                swal({title:"Record has been deleted successfully" });
+                                swal({
+                                    title: "Record has been deleted successfully"
+                                });
                                 // Reload DataTable
                                 $('#dlisttbl').DataTable().ajax.reload();
                                 $('.alert-success').html('');
@@ -281,7 +292,8 @@
         $('#dlisttbl').on('click', '.archivebtn', function(e) {
             e.preventDefault()
             var id = $(this).data('id');
-            swal({title:"Do You Want to Archive ?", 
+            swal({
+                title: "Do You Want to Archive ?",
                 buttons: {
                     yes: {
                         text: "Ok",
@@ -305,7 +317,9 @@
                         },
                         success: function(response) {
                             if (response == 1) {
-                                swal({title:"Record has been archived successfully"});
+                                swal({
+                                    title: "Record has been archived successfully"
+                                });
                                 // Reload DataTable
                                 $('#dlisttbl').DataTable().ajax.reload();
                             } else {
@@ -321,7 +335,8 @@
         $('#dlisttbl').on('click', '.publishbtn', function(e) {
             e.preventDefault()
             var id = $(this).data('id');
-            swal({title:"Do You Want to Publish ?", 
+            swal({
+                title: "Do You Want to Publish ?",
                 buttons: {
                     yes: {
                         text: "Ok",
@@ -345,7 +360,9 @@
                         },
                         success: function(response) {
                             if (response == 1) {
-                                swal({title:"Record has been published successfully"});
+                                swal({
+                                    title: "Record has been published successfully"
+                                });
                                 // Reload DataTable
                                 $('#dlisttbl').DataTable().ajax.reload();
                                 $('.alert-success').hide();
@@ -358,14 +375,12 @@
                 return false;
             });
         });
-
-
-
-                // Un Publish record
-                $('#dlisttbl').on('click', '.dl_unpublishbtn', function(e) {
+        // Un Publish record
+        $('#dlisttbl').on('click', '.dl_unpublishbtn', function(e) {
             e.preventDefault()
             var id = $(this).data('id');
-            swal({title:"Do you want to Unpublish?", 
+            swal({
+                title: "Do you want to Unpublish?",
                 buttons: {
                     yes: {
                         text: "Ok",
@@ -389,7 +404,9 @@
                         },
                         success: function(response) {
                             if (response == 1) {
-                                swal({title:"Record has been published successfully"});
+                                swal({
+                                    title: "Record has been published successfully"
+                                });
                                 // Reload DataTable
                                 $('#dlisttbl').DataTable().ajax.reload();
                                 $('.alert-success').hide();
@@ -402,6 +419,7 @@
                 return false;
             });
         });
+        //debugger;
         //DatePicker
         $.datepicker.setDefaults({
             showOn: "button",
@@ -412,11 +430,10 @@
         });
         $(function() {
             $("#effect_from_date").datepicker({
-                    changeMonth: true,
-                    changeYear: true,
-                    yearRange: '2020:+0'
-                }
-            );
+                changeMonth: true,
+                changeYear: true,
+                yearRange: '2020:+0'
+            });
             $("#effect_to_date").datepicker({
                 changeMonth: true,
                 changeYear: true,
@@ -448,7 +465,6 @@
                 monthvalue = '01';
                 $("#dlist_from_and_to_date_container").hide();
             } else {
-               // debugger;
                 $("#dlist_from_and_to_date_container").show();
                 monthvalue = month;
                 $("#effect_from_date").datepicker("setDate", `01-${monthvalue}-${year}`);
@@ -459,7 +475,7 @@
     });
 </script>
 <style>
-    .dt-checkboxes-select-all [type="checkbox"]{
+    .dt-checkboxes-select-all [type="checkbox"] {
         position: relative;
         left: 10px;
     }

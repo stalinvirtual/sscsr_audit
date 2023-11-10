@@ -3151,7 +3151,7 @@ HTML;
                      */
                 } else {
                    // $action = "<p style='color:green'>Published</p>";
-                   $unpublishButton = "<button  title='Un Publish' style='height:30px' class='btn btn-sm btn-danger unpublishbtn iconWidth' data-id='" . $rowval->nomination_id . "'><i class='fa  fa-eye'></i></button>";
+                   $unpublishButton = "<button  title='Un Publish' style='height:24px' class='btn btn-sm btn-danger unpublishbtn iconWidth' data-id='" . $rowval->nomination_id . "'><i class='fa  fa-eye'></i></button>";
                    $green_text = "<p style='color:green'>Published</p>";
                    $action =  $green_text . $unpublishButton ;
                 }
@@ -3377,7 +3377,7 @@ HTML;
                     } else {
                     }
                 } else {
-                    $unpublishButton = "<button  title='Un Publish' style='height:30px' class='btn btn-sm btn-danger sp_unpublishbtn iconWidth' data-id='" . $rowval->selection_post_id . "'><i class='fa  fa-eye'></i></button>";
+                    $unpublishButton = "<button  title='Un Publish' style='height:24px' class='btn btn-sm btn-danger sp_unpublishbtn iconWidth' data-id='" . $rowval->selection_post_id . "'><i class='fa  fa-eye'></i></button>";
                     $green_text = "<p style='color:green'>Published</p>";
                     $action =  $green_text . $unpublishButton ;
                 }
@@ -3611,7 +3611,7 @@ HTML;
                      */
                 } else {
 
-                    $unpublishButton = "<button  title='Un Publish' style='height:30px' class='btn btn-sm btn-danger tender_unpublishbtn iconWidth' data-id='" . $rowval->tender_id . "'><i class='fa  fa-eye'></i></button>";
+                    $unpublishButton = "<button  title='Un Publish' style='height:24px' class='btn btn-sm btn-danger tender_unpublishbtn iconWidth' data-id='" . $rowval->tender_id . "'><i class='fa  fa-eye'></i></button>";
                     $green_text = "<p style='color:green'>Published</p>";
                     $action =  $green_text . $unpublishButton ;
                    // $action = "<p style='color:green'>Published</p>";
@@ -4836,7 +4836,7 @@ TEXT;
                 } else {
                    // $action = "<p style='color:green'>Published</p>";
 
-                    $unpublishButton = "<button  title='Unpublish' style='height:30px' class='btn btn-sm btn-danger dl_unpublishbtn iconWidth' data-id='" . $rowval->debarred_lists_id . "'><i class='fa  fa-eye'></i></button>";
+                    $unpublishButton = "<button  title='Unpublish' style='height:24px' class='btn btn-sm btn-danger dl_unpublishbtn iconWidth' data-id='" . $rowval->debarred_lists_id . "'><i class='fa  fa-eye'></i></button>";
                     $green_text = "<p style='color:green'>Published</p>";
                     $action =  $green_text . $unpublishButton ;
 
