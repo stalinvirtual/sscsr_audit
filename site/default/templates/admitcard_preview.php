@@ -51,7 +51,7 @@ $base_url = "http://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
 </head>
 </head>
 <body>
-	<?php //echo phpinfo();?>
+	
 	<div id="wrapper" class="admitcard-preview-wrapper">
 		<section class="buttons">
 			<div class="container" id="main">

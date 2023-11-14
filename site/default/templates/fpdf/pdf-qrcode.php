@@ -4,7 +4,7 @@ require_once("phpqrcode/qrlib.php");
 ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
 /*
-phpinfo();
+
 
 QRcode::png("1234567435ddddfghbd"); */
 $student_name = 'Jeevitha';

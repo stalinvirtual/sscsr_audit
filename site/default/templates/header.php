@@ -179,7 +179,7 @@ $_SESSION['token'] = bin2hex(openssl_random_pseudo_bytes(16));
 
 
 
-	//echo phpinfo();?>
+	?>
 	<div id="wrapper">
 		<div>
 			<!-- start header -->

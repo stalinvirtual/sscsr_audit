@@ -49,10 +49,6 @@ class Admin extends BackEndController
         "notice_link" => "Admin/dashboard/?action=listofnotices",
         "announcement_link" => "Admin/dashboard/?action=listofannouncements",
         "instructions_link" => "Admin/dashboard/?action=listofinstructions",
-
-
-
-
         "category_link" => "Admin/dashboard/?action=listofcategory",
         "photogallery_link" => "Admin/dashboard/?action=listphotogallery",
         "list_exams_link" => "Admin/dashboard/?action=listexams",
@@ -94,19 +90,13 @@ class Admin extends BackEndController
         "list_tender_archives_link" => "Admin/dashboard/?action=listtenderarchieves",
         "tender_archieves_by_month" => "Admin/dashboard/?action=tender_archieves_by_month",
         "announcement_archieves_by_month" => "Admin/dashboard/?action=announcement_archieves_by_month",
-
         "instructions_archieves_by_month" => "Admin/dashboard/?action=instructions_archieves_by_month",
-
         "common_nomination_archive" => "Admin/commonNominationArchive",
         "common_sp_archive" => "Admin/commonSelectionPostArchive",
         "common_tender_archive" => "Admin/commonTenderArchive",
         "common_dlist_archive" => "Admin/commonDlistArchive",
-
         "common_announcement_archive" => "Admin/commonAnnouncementArchive",
-
         "common_instructions_archive" => "Admin/commonInstructionsArchive",
-
-
         "common_notice_archive" => "Admin/commonNoticeArchive",
         "tender_boy" => "Admin/ArchiveTest",
         "common_gallery_archive" => "Admin/commonGalleryArchive",
@@ -120,13 +110,10 @@ class Admin extends BackEndController
         "delete_selection_post_link" => "admin/deleteselectionpost/{id}",
         "list_ckeditor_link_file" => "Admin/dashboard/?action=listckeditor&type=file",
         "list_ckeditor_link_image" => "Admin/dashboard/?action=listckeditor&type=image",
-
         "list_debarred_lists_link" => "Admin/dashboard/?action=listdebarredlists",
         "create_debarred_lists_link" => "Admin/editdebarredlists",
         "edit_debarred_lists_link" => "Admin/editdebarredlists/{id}",
         "delete_debarred_lists_link" => "admin/deletedebarredlists/{id}",
-
-
         "list_of_login_user_details" => "Admin/dashboard/?action=listofloginusers",
         "create_login_user_link" => "Admin/editloginuser",
         "edit_login_user_link" => "Admin/editloginuser/{id}",
@@ -162,18 +149,11 @@ class Admin extends BackEndController
         "create_announcement_link" => "Admin/editannouncements",
         "edit_announcement_link" => "Admin/editannouncements/{id}",
         "delete_announcement_link" => "admin/deleteannouncement/{id}",
-
-
          //Important Instructions
          "list_of_instructions" => "Admin/dashboard/?action=listofinstructions",
          "create_instructions_link" => "Admin/editinstructions",
          "edit_instructions_link" => "Admin/editinstructions/{id}",
          "delete_instructions_link" => "admin/deleteinstructions/{id}",
-
-
-
-
-
         "common_archives__link" => "admin/archiveBtnFunction/{id}",
         "copy_tender_link" => "admin/copy-tender/{id}",
         "list_of_importantlinks" => "Admin/dashboard/?action=listofimportantlinks",
@@ -198,7 +178,6 @@ class Admin extends BackEndController
         "edit_gallery_link" => "Admin/editgallery/{id}",
         "delete_gallery_link" => "admin/deletegallery/{id}",
         //Photo Category 
-
          //SearchYear
          "list_of_search_year" => "Admin/dashboard/?action=listofsearchyear",
          "create_search_year_link" => "Admin/editsearchyear",
@@ -751,8 +730,8 @@ class Admin extends BackEndController
     }
     public function ajaxresponsemenuorder()
     {
-        if (isset($_POST["action"])) {
-            if ($_POST["action"] == 'fetch_data') {
+        if (isset(Helpers::cleanData($_POST["action"]))) {
+            if (Helpers::cleanData($_POST["action"]) == 'fetch_data') {
                 $menu = new Menu();
                 $ret = $menu->reorderMenus();
                 $data = $ret;
@@ -764,7 +743,7 @@ class Admin extends BackEndController
                     $menu_data = [
                         'menu_order' => $count + 1
                     ];
-                    if ($menu->updatereorderMenu($menu_data, $_POST["page_id_array"][$count])) {
+                    if ($menu->updatereorderMenu($menu_data, Helpers::cleanData($_POST["page_id_array"][$count]))) {
                         $message = "Menu Updated successfully";
                         $message_type = "success";
                     } else {
@@ -782,20 +761,20 @@ class Admin extends BackEndController
      */
     public function ajaxresponsenominationorder()
     {
-        if (isset($_POST["action"])) {
+        if (isset(Helpers::cleanData($_POST["action"]))) {
             if ($_POST["action"] == 'fetch_data') {
                 $nomination = new Category();
                 $ret = $nomination->reorderNomination();
                 $data = $ret;
                 echo json_encode($data);
             }
-            if ($_POST['action'] == 'update') {
+            if (Helpers::cleanData($_POST['action']) == 'update') {
                 for ($count = 0; $count < count($_POST["page_id_array"]); $count++) {
                     $nomination = new \App\Models\Category();
                     $nomination_data = [
                         'nomination_order' => $count + 1
                     ];
-                    if ($nomination->updatereorderNomination($nomination_data, $_POST["page_id_array"][$count])) {
+                    if ($nomination->updatereorderNomination($nomination_data, Helpers::cleanData($_POST["page_id_array"][$count]))) {
                         $message = "Menu Updated successfully";
                         $message_type = "success";
                     } else {
@@ -813,8 +792,8 @@ class Admin extends BackEndController
      */
     public function ajaxresponseselectionpostreorder()
     {
-        if (isset($_POST["action"])) {
-            if ($_POST["action"] == 'fetch_data') {
+        if (isset(Helpers::cleanData($_POST["action"]))) {
+            if (Helpers::cleanData($_POST["action"]) == 'fetch_data') {
                 $sp = new Category();
                 $ret = $sp->reorderSelectionPost();
                 $data = $ret;
@@ -826,7 +805,7 @@ class Admin extends BackEndController
                     $sp_data = [
                         'selection_post_order' => $count + 1
                     ];
-                    if ($sp->updatereorderSelectionPost($sp_data, $_POST["page_id_array"][$count])) {
+                    if ($sp->updatereorderSelectionPost($sp_data, Helpers::cleanData($_POST["page_id_array"][$count]))) {
                         $message = "Menu Updated successfully";
                         $message_type = "success";
                     } else {
@@ -839,8 +818,8 @@ class Admin extends BackEndController
     }
     public function ajaxresponsesubmenuorder()
     {
-        if (isset($_POST["action"])) {
-            if ($_POST["action"] == 'fetch_data') {
+        if (isset(Helpers::cleanData($_POST["action"]))) {
+            if (Helpers::cleanData($_POST["action"]) == 'fetch_data') {
                 $menu = new Menu();
                 $ret = $menu->reorderSubMenus();
                 $data = $ret;
@@ -852,7 +831,7 @@ class Admin extends BackEndController
                     $menu_data = [
                         'menu_order' => $count + 1
                     ];
-                    if ($menu->updatereorderSubMenu($menu_data, $_POST["page_id_array"][$count])) {
+                    if ($menu->updatereorderSubMenu($menu_data, Helpers::cleanData($_POST["page_id_array"][$count]))) {
                         $message = "Menu Updated successfully";
                         $message_type = "success";
                     } else {
@@ -871,9 +850,9 @@ class Admin extends BackEndController
      */
     public function ajaxresponsesubmenuordernew()
     {
-        if (isset($_POST["action"])) {
-            if ($_POST["action"] == 'fetch_data') {
-                $menu_id = $_POST["menu_id"];
+        if (isset(Helpers::cleanData($_POST["action"]))) {
+            if (Helpers::cleanData($_POST["action"]) == 'fetch_data') {
+                $menu_id = Helpers::cleanData($_POST["menu_id"]);
                 if ($menu_id != 0) {
                     $message = 'selected';
                 } else {
@@ -889,31 +868,14 @@ class Admin extends BackEndController
                                                echo $message;
                                            } ?>><?php echo $val->parent_name; ?></option>
                                     <?php }
-                //  $data  = $ret;
-                // echo json_encode($data);
             }
-            // if ($_POST['action'] == 'update') {
-            //     for ($count = 0; $count < count($_POST["page_id_array"]); $count++) {
-            //         $menu =  new  \App\Models\Menu();
-            //         $menu_data = [
-            //             'menu_order'     => $count + 1
-            //         ];
-            //         if ($menu->updatereorderSubMenuNew($menu_data, $_POST["page_id_array"][$count])) {
-            //             $message = "Menu Updated successfully";
-            //             $message_type = "success";
-            //         } else {
-            //             $message = "Error updating Menu";
-            //             $message_type = "warning";
-            //         }
-            //     }
-            // }
         }
     }
     public function ajaxresponsesubmenuordernewbyId()
     {
-        if (isset($_POST["action"])) {
+        if (isset(Helpers::cleanData($_POST["action"]))) {
             if ($_POST["action"] == 'fetch_data') {
-                $id = $_POST["id"];
+                $id = Helpers::cleanData($_POST["id"]);
                 $menu = new Menu();
                 $ret = $menu->reorderSubMenusNewById($id);
                 $data = $ret;
@@ -925,7 +887,7 @@ class Admin extends BackEndController
                     $menu_data = [
                         'menu_order' => $count + 1
                     ];
-                    if ($menu->updatereorderSubMenuNew($menu_data, $_POST["page_id_array"][$count])) {
+                    if ($menu->updatereorderSubMenuNew($menu_data, Helpers::cleanData($_POST["page_id_array"][$count]))) {
                         $message = "Menu Updated successfully";
                         $message_type = "success";
                     } else {
@@ -938,8 +900,7 @@ class Admin extends BackEndController
     }
     public function ajaxresponse()
     {
-        $menuid = $_POST['menuid'];
-        // echo $cid;
+        $menuid = Helpers::cleanData($_POST['menuid']);
         $menu = new Menu();
         $menu_data = [
             'status' => true,
@@ -949,7 +910,6 @@ class Admin extends BackEndController
             header('Content-Type: application/json');
             echo json_encode(array("message" => $message));
         }
-        //$this->route->redirect($this->route->site_url("Admin/dashboard"));
     }
     //Nominations
     // List Exams start
@@ -1003,11 +963,6 @@ class Admin extends BackEndController
         $nominationchildlist = $nominationchildclass->getNominationchild();
         $data['nominationchildlist'] = $nominationchildlist;
         $data['nomination_id'] = $nomination_id;
-
-
-
-
-
         $this->prepare_menus($data);
         $this->render("edit-nomination", $data);
     }
@@ -1031,10 +986,6 @@ class Admin extends BackEndController
                     if ($nomination->addNomination($nomination_data)) {
                         $lastinsertsql = $nomination->lastInsertedId();
                         $lastinsertedid = $lastinsertsql['max'];
-                        // echo '<pre>';
-                        // print_r($_FILES);
-                        // echo count($_FILES);
-                        // exit;
                         if (count($_FILES) > 0) { //uploaded File 
                             foreach ($_FILES['pdf_file']['name'] as $i => $name) {
                                 $item_name = Helpers::cleanData($_POST['pdf_name'][$i]);
@@ -1454,19 +1405,6 @@ class Admin extends BackEndController
         $this->route->redirect($this->route->site_url("Admin/dashboard/?action=listdebarredlists"));
     }
     //Debarredlists End
-    public function ArchivesTest()
-    {
-        echo '<pre>';
-        print_r($_POST);
-        $tender = new Tender();
-        $tenderlist_data = $_POST['id'];
-        if ($tender->archiveTenderStatus($tenderlist_data)) {
-            $message = "Tender  Archived successfully";
-            $message_type = "success";
-        }
-        $_SESSION['notification'] = ['message' => $message, 'message_type' => $message_type];
-        $this->route->redirect($this->route->site_url("Admin/dashboard/?action=tender_archieves_by_month"));
-    }
     //Tenderlists Starts
     public function edittender()
     {
@@ -1816,10 +1754,6 @@ class Admin extends BackEndController
         $message = $message_type = "";
         if (isset($_POST['csrf_token']) && hash_equals($_SESSION['csrf_token'], $_POST['csrf_token'])) {
         if (isset($_POST['save_category'])) {
-            // echo '<pre>';
-            // print_r($_POST);
-            // exit;
-            //$category_id = isset($_POST['id'])   ? $_POST['id'] : 0;
             if (isset($_POST['id']) && !empty($_POST['id'])) {
                 $category_id = $_POST['id'];
             } else {
@@ -1833,11 +1767,6 @@ class Admin extends BackEndController
                 $sp = 0;
                 $nm = 1;
             }
-            // if(@$_POST['category_status'] == 'on'){
-            // 	$status = 1;
-            // }else{
-            // 	$status = 0;
-            // }
             if ($category_id == 0) { //insert
                 $string = htmlspecialchars(strip_tags($_POST['category_name']));
                 $categorylist_data = [
@@ -1931,27 +1860,15 @@ class Admin extends BackEndController
         ob_start();
         if ($is_admin) {
         }
-
         /**
          * Mst Notice
          * 
          */
-        
         $notice = new MstNotice();
         // chek if the id is available in the params 
         $notice_id = (isset($this->data['params'][0])) ? $this->data['params'][0] : 0;
-        
         $current_notice = $notice->getMstNotice($notice_id, DB_ASSOC);
         $data['current_notice'] = $current_notice;
-
-
-
-
-
-
-
-
-
         $notices = $notice->getMstNotices();
         $data['notices'] = $notices;
         $category = new Category();
@@ -1961,51 +1878,18 @@ class Admin extends BackEndController
         $noticechildlist = $noticechildclass->getMstNoticeChild();
         $data['noticechildlist'] = $noticechildlist;
         $data['notice_id'] = $notice_id;
-
-
-
-       
-
-
         /**
          * Mst Notice
          * 
          */
-
-
-
-
-
-
-
-
-
-
-
-        // $notice = new Notice();
-       
-        // $notice_id = (isset($this->data['params'][0])) ? $this->data['params'][0] : 0;
-        // $current_notice = $notice->getNoticeby($notice_id, DB_ASSOC);
-        // $data['current_notice'] = $current_notice;
-        // $category = new Category();
-        // $categories = $category->getCategoryNominations();
-        // $data['categories'] = $categories;
-        // $notices = $notice->getNoticeList();
-        // $data['notices'] = $notices;
         $this->prepare_menus($data);
         $this->render("edit-notice", $data);
     }
     private function saveNotice(){
-
         $message = $message_type = "";
         if (isset($_POST['csrf_token']) && hash_equals($_SESSION['csrf_token'], $_POST['csrf_token'])) {
             if (isset($_POST['save_notice'])) {
-
-               
-
-
                  $notice_id = isset($_POST['id']) ? $_POST['id'] : 0;
-               
                 $notice = new \App\Models\MstNotice();
                 $notice_name = trim(htmlspecialchars($_POST['notice_name']));
                 $notice_data = [
@@ -2061,9 +1945,6 @@ class Admin extends BackEndController
                         'creation_date' => date('Y-m-d H:i:s'),
                         'p_status' => '0',
                     ];
-                    // echo '<pre>';
-                    // print_r($nomination_data);
-                    // exit;
                     if ($notice->updateMstNotice($notice_data, $notice_id)) {
                         foreach ($_FILES['pdf_file']['name'] as $i => $name) {
                             if ($_FILES['pdf_file']['size'][$i] != 0) {
@@ -2082,8 +1963,6 @@ class Admin extends BackEndController
                                 } else {
                                     echo "File size greater than 300kb!\n\n";
                                 }
-
-
                                 $noticechild = new \App\Models\MstNoticeChild();
                                 $notice_child_data = [
                                     'notice_id' => $notice_id,
@@ -2091,11 +1970,6 @@ class Admin extends BackEndController
                                     'attachment' => $final_file,
                                     'status' => 1
                                 ];
-
-
-
-                            
-                               
                                 if ($child_id == 0) {
                                     $noticechild->addMstNoticeChild($notice_child_data);
                                 } else {
@@ -2114,73 +1988,7 @@ class Admin extends BackEndController
                 $this->route->redirect($this->route->site_url("Admin/dashboard/?action=listofnotices"));
             }
         }
-
-
     }
-    // private function saveNotice()
-    // {
-    //     $message = $message_type = "";
-    //     if (isset($_POST['csrf_token']) && hash_equals($_SESSION['csrf_token'], $_POST['csrf_token'])) {
-    //     if (isset($_POST['save_notice'])) {
-    //         $notice_id = isset($_POST['id']) ? $_POST['id'] : 0;
-    //         if (isset($_FILES['attachment']) && $_FILES['attachment']['name'] != "") {
-    //             //pdf upload function
-    //             $file = rand(1000, 100000) . "-" . $_FILES['attachment']['name'];
-    //             $file_loc = $_FILES['attachment']['tmp_name'];
-    //             $file_size = $_FILES['attachment']['size'];
-    //             $file_type = $_FILES['attachment']['type'];
-    //             $folder = './notices/';
-    //             $new_size = $file_size / 1024;
-    //             /* make file name in lower case */
-    //             $new_file_name = strtolower($file);
-    //             /* make file name in lower case */
-    //             $final_file = str_replace(' ', '-', $new_file_name);
-    //             if (move_uploaded_file($file_loc, $folder . $final_file)) { // echo "File is valid, and was successfully uploaded.\n";
-    //             } else {
-    //                 echo "File size greater than 300kb!\n\n";
-    //             }
-    //             //pdf upload function
-    //         } else {
-    //             $final_file = "";
-    //         }
-    //         if ($final_file == '') {
-    //             $final_file = Helpers::cleanData($_POST['pdflink']);
-    //         }
-    //         $effect_from_date = date('Y-m-d', strtotime(Helpers::cleanData($_POST['effect_from_date'])));
-    //         $effect_to_date = date('Y-m-d', strtotime(Helpers::cleanData($_POST['effect_to_date'])));
-    //         $noticelist_data = [
-    //             'pdf_name' => Helpers::cleanData($_POST['pdf_name']),
-    //             'category_id' => Helpers::cleanData($_POST['category_id']),
-    //             'attachment' => $final_file,
-    //             'effect_from_date' => $effect_from_date,
-    //             'effect_to_date' => $effect_to_date,
-    //             'creation_date' => date('Y-m-d H:i:s'),
-    //             'p_status' => '0'
-    //         ];
-            
-    //         $noticelist = new \App\Models\Notice();
-    //         if ($notice_id == 0) { // insert new menu 
-    //             if ($noticelist->addNotice($noticelist_data)) {
-    //                 $message = "Notice  Added successfully";
-    //                 $message_type = "success";
-    //             } else {
-    //                 $message = "Error adding Notice";
-    //                 $message_type = "warning";
-    //             }
-    //         } else { // update menu
-    //             if ($noticelist->updateNotice($noticelist_data, $notice_id)) {
-    //                 $message = "Notice Updated successfully";
-    //                 $message_type = "success";
-    //             } else {
-    //                 $message = "Error updating Notice";
-    //                 $message_type = "warning";
-    //             }
-    //         }
-    //         $_SESSION['notification'] = ['message' => $message, 'message_type' => $message_type];
-    //         $this->route->redirect($this->route->site_url("Admin/dashboard/?action=listofnotices"));
-    //     }
-    // }
-    // }
     public function deleteNotice()
     {
         $data = [];
@@ -2210,9 +2018,7 @@ class Admin extends BackEndController
             header('Content-Type: application/json');
             echo json_encode(array("message" => $message));
         }
-        //$this->route->redirect($this->route->site_url("Admin/dashboard"));
     }
-
     public function ajaxresponseforpageunpublish()
     {
         $pageid = Helpers::cleanData($_POST['pageid']);
@@ -2226,7 +2032,6 @@ class Admin extends BackEndController
             header('Content-Type: application/json');
             echo json_encode(array("message" => $message));
         }
-        //$this->route->redirect($this->route->site_url("Admin/dashboard"));
     }
     public function ajaxresponseforNomination()
     {
@@ -2241,7 +2046,6 @@ class Admin extends BackEndController
             header('Content-Type: application/json');
             echo json_encode(array("message" => $message));
         }
-        //$this->route->redirect($this->route->site_url("Admin/dashboard"));
     }
     /*****
      * 
@@ -2260,7 +2064,6 @@ class Admin extends BackEndController
             header('Content-Type: application/json');
             echo json_encode(array("message" => $message));
         }
-        //$this->route->redirect($this->route->site_url("Admin/dashboard"));
     }
     public function ajaxresponseforSelectionPost()
     {
@@ -2304,7 +2107,6 @@ class Admin extends BackEndController
             header('Content-Type: application/json');
             echo json_encode(array("message" => $message));
         }
-        //$this->route->redirect($this->route->site_url("Admin/dashboard"));
     }
     /***
      * Faq  Publish Button
@@ -2401,8 +2203,8 @@ class Admin extends BackEndController
     }
     public function ajaxresponseforNarchieves()
     {
-        $year = $_POST['nom_year'];
-        $month = $_POST['nom_month'];
+        $year = Helpers::cleanData($_POST['nom_year']);
+        $month = Helpers::cleanData($_POST['nom_month']);
         $model = new NominationArchieves();
         $model_archieves = $model->nominationArchieves($year, $month);
         $arrayValue = json_decode(json_encode($model_archieves), true);
@@ -2427,8 +2229,8 @@ class Admin extends BackEndController
      */
     public function ajaxresponseforSelectionPostarchievesByMonth()
     {
-        $year = $_POST['sp_year'];
-        $month = $_POST['sp_month'];
+        $year = Helpers::cleanData($_POST['sp_year']);
+        $month = Helpers::cleanData($_POST['sp_month']);
         $model = new SelectionpostArchives();
         $model_archieves = $model->selectionPostArchievesByMonth($year, $month);
         $arrayValue = json_decode(json_encode($model_archieves), true);
@@ -2461,8 +2263,8 @@ class Admin extends BackEndController
      */
     public function ajaxresponseforNoticearchievesByMonth()
     {
-        $year = $_POST['notice_year'];
-        $month = $_POST['notice_month'];
+        $year = Helpers::cleanData($_POST['notice_year']);
+        $month = Helpers::cleanData($_POST['notice_month']);
         $model = new NoticeArchives();
         $model_archieves = $model->noticeArchievesByMonth($year, $month);
         $arrayValue = json_decode(json_encode($model_archieves), true);
@@ -2487,14 +2289,14 @@ class Admin extends BackEndController
      */
     public function ajaxresponseforArchievesByMonth()
     {
-        $year = $_POST['year'];
-        $month = $_POST['month'];
-        $elink = $_POST['elink'];
-        $dlink = $_POST['dlink'];
-        $alink = $_POST['alink'];
-        $effect_from_date = $_POST['effect_from_date'];
-        $effect_to_date = $_POST['effect_to_date'];
-        $modelName = $_POST['model'];
+        $year = Helpers::cleanData($_POST['year']);
+        $month = Helpers::cleanData($_POST['month']);
+        $elink = Helpers::cleanData( $_POST['elink']);
+        $dlink = Helpers::cleanData($_POST['dlink']);
+        $alink = Helpers::cleanData($_POST['alink']);
+        $effect_from_date = Helpers::cleanData($_POST['effect_from_date']);
+        $effect_to_date = Helpers::cleanData($_POST['effect_to_date']);
+        $modelName = Helpers::cleanData($_POST['model']);
         switch ($modelName) {
             case "Gallery":
                 $model = new Gallery();
@@ -3070,18 +2872,18 @@ HTML;
     public function ajaxResponseForDataTableLoad()
     {
         $request = 1;
-        if (isset($_POST['request'])) {
-            $request = $_POST['request'];
+        if (isset(Helpers::cleanData($_POST['request']))) {
+            $request = Helpers::cleanData($_POST['request']);
         }
         if ($request == 1) {
             ## Read value
-            $draw = $_POST['draw'];
-            $row = $_POST['start'];
-            $rowperpage = $_POST['length']; // Rows display per page
-            $columnIndex = $_POST['order'][0]['column']; // Column index
-            $columnName = $_POST['columns'][$columnIndex]['data']; // Column name
-            $columnSortOrder = $_POST['order'][0]['dir']; // asc or desc
-            $searchValue = $_POST['search']['value']; // Search value
+            $draw = Helpers::cleanData($_POST['draw']);
+            $row = Helpers::cleanData($_POST['start']);
+            $rowperpage = Helpers::cleanData($_POST['length']); // Rows display per page
+            $columnIndex = Helpers::cleanData($_POST['order'][0]['column']); // Column index
+            $columnName = Helpers::cleanData($_POST['columns'][$columnIndex]['data']); // Column name
+            $columnSortOrder = Helpers::cleanData($_POST['order'][0]['dir']); // asc or desc
+            $searchValue = Helpers::cleanData($_POST['search']['value']); // Search value
             ## Search 
             $searchQuery = " ";
             if ($searchValue != '') {
@@ -3093,10 +2895,10 @@ HTML;
             }
             ## Total number of records without filtering
             $model = new Nomination();
-            $year = trim($_POST['year']);
-            $month = trim($_POST['month']);
-            $effect_from_date = date('Y-m-d', strtotime($_POST['effect_from_date']));
-            $effect_to_date = date('Y-m-d', strtotime($_POST['effect_to_date']));
+            $year = trim(Helpers::cleanData($_POST['year']));
+            $month = trim(Helpers::cleanData($_POST['month']));
+            $effect_from_date = date('Y-m-d', strtotime(Helpers::cleanData($_POST['effect_from_date'])));
+            $effect_to_date = date('Y-m-d', strtotime(Helpers::cleanData($_POST['effect_to_date'])));
             $totalRecordsWithoutFiltering = $model->totalRecordsWithOutFiltering();
             $totalRecords = $totalRecordsWithoutFiltering->allcount;
             ## Total number of records with filtering
@@ -3198,7 +3000,7 @@ HTML;
         } //request 1
         // Delete Nomination
         if ($request == 4) {
-            $id = $_POST['id'];
+            $id = Helpers::cleanData($_POST['id']);
             // Check id
             ## Fetch records
             $model = new Nomination();
@@ -3215,7 +3017,7 @@ HTML;
         }
         // Archive Nomination
         if ($request == 5) {
-            $id = $_POST['id'];
+            $id = Helpers::cleanData($_POST['id']);
             // Check id
             ## Fetch records
             $model = new Nomination();
@@ -3232,7 +3034,7 @@ HTML;
         }
         // Publish Nomination
         if ($request == 6) {
-            $id = $_POST['id'];
+            $id = Helpers::cleanData($_POST['id']);
             $nomination_data = [
                 'p_status' => '1',
             ];
@@ -3252,7 +3054,7 @@ HTML;
         }
         // Un Publish Nomination
         if ($request == 7) {
-            $id = $_POST['id'];
+            $id = Helpers::cleanData($_POST['id']);
             $nomination_data = [
                 'p_status' => '0',
             ];
@@ -3273,11 +3075,10 @@ HTML;
     }
     public function commonNominationArchive()
     {
-        if (!empty($_POST["action"])) {
+        if (!empty(Helpers::cleanData($_POST["action"]))) {
             $nomination = new Nomination();
-            $nomination_list_data = $_POST['ids'];
-            if ($_POST["action"] == 'archive') {
-               
+            $nomination_list_data = Helpers::cleanData($_POST['ids']);
+           if (Helpers::cleanData($_POST["action"]) == 'archive') {
                 if ($nomination->archiveNominationStatus($nomination_list_data)) {
                     $message = "Nomination  Archived successfully";
                     $message_type = "success";
@@ -3299,18 +3100,18 @@ HTML;
     public function ajaxResponseForSpDataTableLoad()
     {
         $request = 1;
-        if (isset($_POST['request'])) {
-            $request = $_POST['request'];
+        if (isset(Helpers::cleanData($_POST['request']))) {
+            $request = Helpers::cleanData($_POST['request']);
         }
         if ($request == 1) {
             ## Read value
-            $draw = $_POST['draw'];
-            $row = $_POST['start'];
-            $rowperpage = $_POST['length']; // Rows display per page
-            $columnIndex = $_POST['order'][0]['column']; // Column index
-            $columnName = $_POST['columns'][$columnIndex]['data']; // Column name
-            $columnSortOrder = $_POST['order'][0]['dir']; // asc or desc
-            $searchValue = $_POST['search']['value']; // Search value
+            $draw = Helpers::cleanData($_POST['draw']);
+            $row = Helpers::cleanData($_POST['start']);
+            $rowperpage = Helpers::cleanData($_POST['length']); // Rows display per page
+            $columnIndex = Helpers::cleanData($_POST['order'][0]['column']); // Column index
+            $columnName = Helpers::cleanData($_POST['columns'][$columnIndex]['data']); // Column name
+            $columnSortOrder = Helpers::cleanData($_POST['order'][0]['dir']); // asc or desc
+            $searchValue = Helpers::cleanData($_POST['search']['value']); // Search value
             ## Search 
             $searchQuery = " ";
             if ($searchValue != '') {
@@ -3322,10 +3123,10 @@ HTML;
             }
             ## Total number of records without filtering
             $model = new Selectionpost();
-            $year = trim($_POST['year']);
-            $month = trim($_POST['month']);
-            $effect_from_date = date('Y-m-d', strtotime($_POST['effect_from_date']));
-            $effect_to_date = date('Y-m-d', strtotime($_POST['effect_to_date']));
+            $year = trim(Helpers::cleanData($_POST['year']));
+            $month = trim(Helpers::cleanData($_POST['month']));
+            $effect_from_date = date('Y-m-d', strtotime(Helpers::cleanData($_POST['effect_from_date'])));
+            $effect_to_date = date('Y-m-d', strtotime(Helpers::cleanData($_POST['effect_to_date'])));
             $totalRecordsWithoutFiltering = $model->totalRecordsWithOutFiltering();
             $totalRecords = $totalRecordsWithoutFiltering->allcount;
             ## Total number of records with filtering
@@ -3425,7 +3226,7 @@ HTML;
         } //request 1
         // Delete Nomination
         if ($request == 4) {
-            $id = $_POST['id'];
+            $id = Helpers::cleanData($_POST['id']);
             // Check id
             ## Fetch records
             $model = new Selectionpost();
@@ -3442,7 +3243,7 @@ HTML;
         }
         // Archive Nomination
         if ($request == 5) {
-            $id = $_POST['id'];
+            $id = Helpers::cleanData($_POST['id']);
             // Check id
             ## Fetch records
             $model = new Selectionpost();
@@ -3459,7 +3260,7 @@ HTML;
         }
         // Publish Nomination
         if ($request == 6) {
-            $id = $_POST['id'];
+            $id = Helpers::cleanData($_POST['id']);
             $sp_data = [
                 'p_status' => '1',
             ];
@@ -3479,7 +3280,7 @@ HTML;
         }
          // Un Publish Selection Post
          if ($request == 7) {
-            $id = $_POST['id'];
+            $id = Helpers::cleanData($_POST['id']);
             $sp_data = [
                 'p_status' => '0',
             ];
@@ -3500,10 +3301,10 @@ HTML;
     }
     public function commonSelectionPostArchive()
     {
-        if (!empty($_POST["action"])) {
+        if (!empty(Helpers::cleanData($_POST["action"]))) {
             $sp = new Selectionpost();
-            $sp_list_data = $_POST['ids'];
-            if ($_POST["action"] == 'archive') {
+            $sp_list_data = Helpers::cleanData($_POST['ids']);
+           if (Helpers::cleanData($_POST["action"]) == 'archive') {
                 if ($sp->archiveSelectionPostStatus($sp_list_data)) {
                     $message = " Selection Post Archived successfully";
                     $message_type = "success";
@@ -3532,18 +3333,18 @@ HTML;
     public function ajaxResponseForTenderDataTableLoad()
     {
         $request = 1;
-        if (isset($_POST['request'])) {
-            $request = $_POST['request'];
+        if (isset(Helpers::cleanData($_POST['request']))) {
+            $request = Helpers::cleanData($_POST['request']);
         }
         if ($request == 1) {
             ## Read value
-            $draw = $_POST['draw'];
-            $row = $_POST['start'];
-            $rowperpage = $_POST['length']; // Rows display per page
-            $columnIndex = $_POST['order'][0]['column']; // Column index
-            $columnName = $_POST['columns'][$columnIndex]['data']; // Column name
-            $columnSortOrder = $_POST['order'][0]['dir']; // asc or desc
-            $searchValue = $_POST['search']['value']; // Search value
+            $draw = Helpers::cleanData($_POST['draw']);
+            $row = Helpers::cleanData($_POST['start']);
+            $rowperpage = Helpers::cleanData($_POST['length']); // Rows display per page
+            $columnIndex = Helpers::cleanData($_POST['order'][0]['column']); // Column index
+            $columnName = Helpers::cleanData($_POST['columns'][$columnIndex]['data']); // Column name
+            $columnSortOrder = Helpers::cleanData($_POST['order'][0]['dir']); // asc or desc
+            $searchValue = Helpers::cleanData($_POST['search']['value']); // Search value
             ## Search 
             $searchQuery = " ";
             if ($searchValue != '') {
@@ -3554,10 +3355,10 @@ HTML;
             }
             ## Total number of records without filtering
             $model = new Tender();
-            $year = trim($_POST['year']);
-            $month = trim($_POST['month']);
-            $effect_from_date = date('Y-m-d', strtotime($_POST['effect_from_date']));
-            $effect_to_date = date('Y-m-d', strtotime($_POST['effect_to_date']));
+            $year = trim(Helpers::cleanData($_POST['year']));
+            $month = trim(Helpers::cleanData($_POST['month']));
+            $effect_from_date = date('Y-m-d', strtotime(Helpers::cleanData($_POST['effect_from_date'])));
+            $effect_to_date = date('Y-m-d', strtotime(Helpers::cleanData($_POST['effect_to_date'])));
             $totalRecordsWithoutFiltering = $model->totalRecordsWithOutFiltering();
             $totalRecords = $totalRecordsWithoutFiltering->allcount;
             ## Total number of records with filtering
@@ -3610,7 +3411,6 @@ HTML;
                      * 
                      */
                 } else {
-
                     $unpublishButton = "<button  title='Un Publish' style='height:24px' class='btn btn-sm btn-danger tender_unpublishbtn iconWidth' data-id='" . $rowval->tender_id . "'><i class='fa  fa-eye'></i></button>";
                     $green_text = "<p style='color:green'>Published</p>";
                     $action =  $green_text . $unpublishButton ;
@@ -3652,7 +3452,7 @@ TEXT;
         } //request 1
         // Delete Tender
         if ($request == 4) {
-            $id = $_POST['id'];
+            $id = Helpers::cleanData($_POST['id']);
             // Check id
             ## Fetch records
             $model = new Tender();
@@ -3669,7 +3469,7 @@ TEXT;
         }
         // Archive Tender
         if ($request == 5) {
-            $id = $_POST['id'];
+            $id = Helpers::cleanData($_POST['id']);
             // Check id
             ## Fetch records
             $model = new Tender();
@@ -3686,7 +3486,7 @@ TEXT;
         }
         // Publish Tender
         if ($request == 6) {
-            $id = $_POST['id'];
+            $id = Helpers::cleanData($_POST['id']);
             $tender_data = [
                 'p_status' => '1',
             ];
@@ -3706,7 +3506,7 @@ TEXT;
         }
         // Un Publish Tender
         if ($request == 7) {
-            $id = $_POST['id'];
+            $id = Helpers::cleanData($_POST['id']);
             $tender_data = [
                 'p_status' => '0',
             ];
@@ -3727,10 +3527,10 @@ TEXT;
     }
     public function commonTenderArchive()
     {
-        if (!empty($_POST["action"])) {
+        if (!empty(Helpers::cleanData($_POST["action"]))) {
             $tender = new Tender();
-            $tender_list_data = $_POST['ids'];
-            if ($_POST["action"] == 'archive') {
+            $tender_list_data = Helpers::cleanData($_POST['ids']);
+           if (Helpers::cleanData($_POST["action"]) == 'archive') {
                 if ($tender->archiveTenderStatus($tender_list_data)) {
                     $message = " Tender Archived successfully";
                     $message_type = "success";
@@ -3758,18 +3558,18 @@ TEXT;
      */
     public function ajaxResponseForNoticeDataTableLoad(){
         $request = 1;
-        if (isset($_POST['request'])) {
-            $request = $_POST['request'];
+        if (isset(Helpers::cleanData($_POST['request']))) {
+            $request = Helpers::cleanData($_POST['request']);
         }
         if ($request == 1) {
             ## Read value
-            $draw = $_POST['draw'];
-            $row = $_POST['start'];
-            $rowperpage = $_POST['length']; // Rows display per page
-            $columnIndex = $_POST['order'][0]['column']; // Column index
-            $columnName = $_POST['columns'][$columnIndex]['data']; // Column name
-            $columnSortOrder = $_POST['order'][0]['dir']; // asc or desc
-            $searchValue = $_POST['search']['value']; // Search value
+            $draw = Helpers::cleanData($_POST['draw']);
+            $row = Helpers::cleanData($_POST['start']);
+            $rowperpage = Helpers::cleanData($_POST['length']); // Rows display per page
+            $columnIndex = Helpers::cleanData($_POST['order'][0]['column']); // Column index
+            $columnName = Helpers::cleanData($_POST['columns'][$columnIndex]['data']); // Column name
+            $columnSortOrder = Helpers::cleanData($_POST['order'][0]['dir']); // asc or desc
+            $searchValue = Helpers::cleanData($_POST['search']['value']); // Search value
             ## Search 
             $searchQuery = " ";
             if ($searchValue != '') {
@@ -3781,26 +3581,21 @@ TEXT;
             }
             ## Total number of records without filtering
             $model = new MstNotice();
-            $year = trim($_POST['year']);
-            $month = trim($_POST['month']);
-            $effect_from_date = date('Y-m-d', strtotime($_POST['effect_from_date']));
-            $effect_to_date = date('Y-m-d', strtotime($_POST['effect_to_date']));
+            $year = trim(Helpers::cleanData($_POST['year']));
+            $month = trim(Helpers::cleanData($_POST['month']));
+            $effect_from_date = date('Y-m-d', strtotime(Helpers::cleanData($_POST['effect_from_date'])));
+            $effect_to_date = date('Y-m-d', strtotime(Helpers::cleanData($_POST['effect_to_date'])));;
             $totalRecordsWithoutFiltering = $model->totalRecordsWithOutFiltering();
             $totalRecords = $totalRecordsWithoutFiltering->allcount;
             ## Total number of records with filtering
             $totalRecordsWithFiltering = $model->totalRecordsWithFiltering($searchQuery);
             $totalRecordwithFilter = $totalRecordsWithFiltering->allcount;
             $fetchRecordsObject = $model->getMstNoticeDetails($year, $month, $effect_from_date, $effect_to_date, $searchQuery);
-
-
             // echo '<pre>';
             // print_r( $fetchRecordsObject);
             // exit;
-
-
             $fetchRecords = (array) $fetchRecordsObject;
             $noticechildlist = Helpers::getNoticeChildListforAdmin();
-
             // echo '<pre>';
             // print_r( $noticechildlist);
             // exit;
@@ -3849,12 +3644,9 @@ TEXT;
                      * 
                      */
                 } else {
-
                     $unpublishButton = "<button  title='Un Publish' style='height:30px;margin-left:10px' class='btn btn-sm btn-danger notice_unpublishbtn iconWidth' data-id='" . $rowval->notice_id . "'><i class='fa  fa-eye'></i></button>";
                     $green_text = "<p style='color:green;margin-top:8px'>Published</p></div>";
                     $action = "<div class='flex-container'>". $green_text . $unpublishButton ."</div>";
-
-                   
                 }
                 $pdfPath = "";
                 $pdfLinks = []; // Initialize an array to store the PDF links
@@ -3899,7 +3691,7 @@ TEXT;
         } //request 1
                // Delete Notice
                if ($request == 4) {
-                $id = $_POST['id'];
+                $id = Helpers::cleanData($_POST['id']);
                 // Check id
                 ## Fetch records
                 $model = new MstNotice();
@@ -3916,7 +3708,7 @@ TEXT;
             }
             // Archive Notice
             if ($request == 5) {
-                $id = $_POST['id'];
+                $id = Helpers::cleanData($_POST['id']);
                 // Check id
                 ## Fetch records
                 $model = new MstNotice();
@@ -3933,7 +3725,7 @@ TEXT;
             }
             // Publish Notice
             if ($request == 6) {
-                $id = $_POST['id'];
+                $id = Helpers::cleanData($_POST['id']);
                 $notice_data = [
                     'p_status' => '1',
                 ];
@@ -3942,7 +3734,6 @@ TEXT;
                 $model = new MstNotice();
                 $checkId = $model->checkMstNoticeId($id);
                  $checkIdCount = $checkId->checkid;
-             
                 if ($checkIdCount > 0) {
                     $publishQuery = $model->updateMstNoticeState($notice_data, $id);
                     echo 1;
@@ -3954,7 +3745,7 @@ TEXT;
             }
              // Un Publish Notice
              if ($request == 7) {
-                $id = $_POST['id'];
+                $id = Helpers::cleanData($_POST['id']);
                 $notice_data = [
                     'p_status' => '0',
                 ];
@@ -3963,7 +3754,6 @@ TEXT;
                 $model = new MstNotice();
                 $checkId = $model->checkMstNoticeId($id);
                  $checkIdCount = $checkId->checkid;
-             
                 if ($checkIdCount > 0) {
                     $publishQuery = $model->updateMstNoticeState($notice_data, $id);
                     echo 1;
@@ -3977,18 +3767,18 @@ TEXT;
     public function ajaxResponseForNoticeDataTableLoad1()
     {
         $request = 1;
-        if (isset($_POST['request'])) {
-            $request = $_POST['request'];
+        if (isset(Helpers::cleanData($_POST['request']))) {
+            $request = Helpers::cleanData($_POST['request']);
         }
         if ($request == 1) {
             ## Read value
-            $draw = $_POST['draw'];
-            $row = $_POST['start'];
-            $rowperpage = $_POST['length']; // Rows display per page
-            $columnIndex = $_POST['order'][0]['column']; // Column index
-            $columnName = $_POST['columns'][$columnIndex]['data']; // Column name
-            $columnSortOrder = $_POST['order'][0]['dir']; // asc or desc
-            $searchValue = $_POST['search']['value']; // Search value
+            $draw = Helpers::cleanData($_POST['draw']);
+            $row = Helpers::cleanData($_POST['start']);
+            $rowperpage = Helpers::cleanData($_POST['length']); // Rows display per page
+            $columnIndex = Helpers::cleanData($_POST['order'][0]['column']); // Column index
+            $columnName = Helpers::cleanData($_POST['columns'][$columnIndex]['data']); // Column name
+            $columnSortOrder = Helpers::cleanData($_POST['order'][0]['dir']); // asc or desc
+            $searchValue = Helpers::cleanData($_POST['search']['value']); // Search value
             ## Search 
             $searchQuery = " ";
             if ($searchValue != '') {
@@ -4001,10 +3791,10 @@ TEXT;
             //echo $searchQuery;
             ## Total number of records without filtering
             $model = new MstNotice();
-            $year = trim($_POST['year']);
-            $month = trim($_POST['month']);
-            $effect_from_date = date('Y-m-d', strtotime($_POST['effect_from_date']));
-            $effect_to_date = date('Y-m-d', strtotime($_POST['effect_to_date']));
+            $year = trim(Helpers::cleanData($_POST['year']));
+            $month = trim(Helpers::cleanData($_POST['month']));
+            $effect_from_date = date('Y-m-d', strtotime(Helpers::cleanData($_POST['effect_from_date'])));
+            $effect_to_date = date('Y-m-d', strtotime(Helpers::cleanData($_POST['effect_to_date'])));;
             $totalRecordsWithoutFiltering = $model->totalRecordsWithOutFiltering();
             $totalRecords = $totalRecordsWithoutFiltering->allcount;
             ## Total number of records with filtering
@@ -4096,7 +3886,7 @@ TEXT;
         } //request 1
         // Delete Notice
         if ($request == 4) {
-            $id = $_POST['id'];
+            $id = Helpers::cleanData($_POST['id']);
             // Check id
             ## Fetch records
             $model = new MstNotice();
@@ -4113,7 +3903,7 @@ TEXT;
         }
         // Archive Notice
         if ($request == 5) {
-            $id = $_POST['id'];
+            $id = Helpers::cleanData($_POST['id']);
             // Check id
             ## Fetch records
             $model = new MstNotice();
@@ -4130,7 +3920,7 @@ TEXT;
         }
         // Publish Notice
         if ($request == 6) {
-            $id = $_POST['id'];
+            $id = Helpers::cleanData($_POST['id']);
             $notice_data = [
                 'p_status' => '1',
             ];
@@ -4152,10 +3942,10 @@ TEXT;
     }
     public function commonNoticeArchive()
     {
-        if (!empty($_POST["action"])) {
+        if (!empty(Helpers::cleanData($_POST["action"]))) {
             $notice = new MstNotice();
-            $notice_list_data = $_POST['ids'];
-            if ($_POST["action"] == 'archive') {
+            $notice_list_data = Helpers::cleanData($_POST['ids']);
+           if (Helpers::cleanData($_POST["action"]) == 'archive') {
                 if ($notice->archiveMstNoticeStatus($notice_list_data)) {
                     $message = " Notice Archived successfully";
                     $message_type = "success";
@@ -4183,18 +3973,18 @@ TEXT;
     public function ajaxResponseForGalleryDataTableLoad()
     {
         $request = 1;
-        if (isset($_POST['request'])) {
-            $request = $_POST['request'];
+        if (isset(Helpers::cleanData($_POST['request']))) {
+            $request = Helpers::cleanData($_POST['request']);
         }
         if ($request == 1) {
             ## Read value
-            $draw = $_POST['draw'];
-            $row = $_POST['start'];
-            $rowperpage = $_POST['length']; // Rows display per page
-            $columnIndex = $_POST['order'][0]['column']; // Column index
-            $columnName = $_POST['columns'][$columnIndex]['data']; // Column name
-            $columnSortOrder = $_POST['order'][0]['dir']; // asc or desc
-            $searchValue = $_POST['search']['value']; // Search value
+            $draw = Helpers::cleanData($_POST['draw']);
+            $row = Helpers::cleanData($_POST['start']);
+            $rowperpage = Helpers::cleanData($_POST['length']); // Rows display per page
+            $columnIndex = Helpers::cleanData($_POST['order'][0]['column']); // Column index
+            $columnName = Helpers::cleanData($_POST['columns'][$columnIndex]['data']); // Column name
+            $columnSortOrder = Helpers::cleanData($_POST['order'][0]['dir']); // asc or desc
+            $searchValue = Helpers::cleanData($_POST['search']['value']); // Search value
             ## Search 
             $searchQuery = " ";
             if ($searchValue != '') {
@@ -4203,10 +3993,10 @@ TEXT;
             //echo $searchQuery;
             ## Total number of records without filtering
             $model = new Gallery();
-            $year = trim($_POST['year']);
-            //  $month = trim($_POST['month']);
-            //  $effect_from_date =  date('Y-m-d', strtotime($_POST['effect_from_date'])); 
-            //  $effect_to_date =  date('Y-m-d', strtotime($_POST['effect_to_date'])); 
+            $year = trim(Helpers::cleanData($_POST['year']));
+            //  $month = trim(Helpers::cleanData($_POST['month']));
+            //  $effect_from_date =  date('Y-m-d', strtotime(Helpers::cleanData($_POST['effect_from_date']))); 
+            //  $effect_to_date =  date('Y-m-d', strtotime(Helpers::cleanData($_POST['effect_to_date'])));; 
             $totalRecordsWithoutFiltering = $model->totalRecordsWithOutFiltering($year);
             $totalRecords = $totalRecordsWithoutFiltering->allcount;
             ## Total number of records with filtering
@@ -4302,7 +4092,7 @@ TEXT;
         } //request 1
         // Delete Notice
         if ($request == 4) {
-            $id = $_POST['id'];
+            $id = Helpers::cleanData($_POST['id']);
             // Check id
             ## Fetch records
             $model = new Gallery();
@@ -4319,7 +4109,7 @@ TEXT;
         }
         // Archive Notice
         if ($request == 5) {
-            $id = $_POST['id'];
+            $id = Helpers::cleanData($_POST['id']);
             // Check id
             ## Fetch records
             $model = new Gallery();
@@ -4336,7 +4126,7 @@ TEXT;
         }
         // Publish Notice
         if ($request == 6) {
-            $id = $_POST['id'];
+            $id = Helpers::cleanData($_POST['id']);
             $gallery_data = [
                 'p_status' => '1',
             ];
@@ -4357,10 +4147,10 @@ TEXT;
     }
     public function commonGalleryArchive()
     {
-        if (!empty($_POST["action"])) {
+        if (!empty(Helpers::cleanData($_POST["action"]))) {
             $notice = new Gallery();
-            $notice_list_data = $_POST['ids'];
-            if ($_POST["action"] == 'archive') {
+            $notice_list_data = Helpers::cleanData($_POST['ids']);
+           if (Helpers::cleanData($_POST["action"]) == 'archive') {
                 if ($notice->archiveGalleryStatus($notice_list_data)) {
                     $message = " Gallery  Archived successfully";
                     $message_type = "success";
@@ -4474,18 +4264,18 @@ TEXT;
     public function ajaxResponseForAnnouncementDataTableLoad()
     {
         $request = 1;
-        if (isset($_POST['request'])) {
-            $request = $_POST['request'];
+        if (isset(Helpers::cleanData($_POST['request']))) {
+            $request = Helpers::cleanData($_POST['request']);
         }
         if ($request == 1) {
             ## Read value
-            $draw = $_POST['draw'];
-            $row = $_POST['start'];
-            $rowperpage = $_POST['length']; // Rows display per page
-            $columnIndex = $_POST['order'][0]['column']; // Column index
-            $columnName = $_POST['columns'][$columnIndex]['data']; // Column name
-            $columnSortOrder = $_POST['order'][0]['dir']; // asc or desc
-            $searchValue = $_POST['search']['value']; // Search value
+            $draw = Helpers::cleanData($_POST['draw']);
+            $row = Helpers::cleanData($_POST['start']);
+            $rowperpage = Helpers::cleanData($_POST['length']); // Rows display per page
+            $columnIndex = Helpers::cleanData($_POST['order'][0]['column']); // Column index
+            $columnName = Helpers::cleanData($_POST['columns'][$columnIndex]['data']); // Column name
+            $columnSortOrder = Helpers::cleanData($_POST['order'][0]['dir']); // asc or desc
+            $searchValue = Helpers::cleanData($_POST['search']['value']); // Search value
             ## Search 
             $searchQuery = " ";
             if ($searchValue != '') {
@@ -4496,10 +4286,10 @@ TEXT;
             }
             ## Total number of records without filtering
             $model = new Announcements();
-            $year = trim($_POST['year']);
-            $month = trim($_POST['month']);
-            $effect_from_date = date('Y-m-d', strtotime($_POST['effect_from_date']));
-            $effect_to_date = date('Y-m-d', strtotime($_POST['effect_to_date']));
+            $year = trim(Helpers::cleanData($_POST['year']));
+            $month = trim(Helpers::cleanData($_POST['month']));
+            $effect_from_date = date('Y-m-d', strtotime(Helpers::cleanData($_POST['effect_from_date'])));
+            $effect_to_date = date('Y-m-d', strtotime(Helpers::cleanData($_POST['effect_to_date'])));;
             $totalRecordsWithoutFiltering = $model->totalRecordsWithOutFiltering();
             $totalRecords = $totalRecordsWithoutFiltering->allcount;
             ## Total number of records with filtering
@@ -4576,7 +4366,7 @@ TEXT;
         // Che
         // Delete Announcement
         if ($request == 4) {
-            $id = $_POST['id'];
+            $id = Helpers::cleanData($_POST['id']);
             // echo $id;
             // exit;
             // Check id
@@ -4595,7 +4385,7 @@ TEXT;
         }
         // Archive Announcement
         if ($request == 5) {
-            $id = $_POST['id'];
+            $id = Helpers::cleanData($_POST['id']);
             // Check id
             ## Fetch records
             $model = new Announcements();
@@ -4612,7 +4402,7 @@ TEXT;
         }
         // Publish Announcement
         if ($request == 6) {
-            $id = $_POST['id'];
+            $id = Helpers::cleanData($_POST['id']);
             $announcement_data = [
                 'p_status' => '1',
             ];
@@ -4728,13 +4518,13 @@ TEXT;
     }
     public function commonAnnouncementArchive()
     {
-        if (!empty($_POST["action"])) {
+        if (!empty(Helpers::cleanData($_POST["action"]))) {
             $announcement = new Announcements();
-            $announcement_list_data = $_POST['ids'];
+            $announcement_list_data = Helpers::cleanData($_POST['ids']);
             // echo '<pre>';
             // print_r($_POST);
             // exit;
-            if ($_POST["action"] == 'archive') {
+           if (Helpers::cleanData($_POST["action"]) == 'archive') {
                 if ($announcement->archiveAnnouncementStatus($announcement_list_data)) {
                     $message = " Announcements Archived successfully";
                     $message_type = "success";
@@ -4758,18 +4548,18 @@ TEXT;
     public function ajaxResponseForDlistDataTableLoad   ()
     {
         $request = 1;
-        if (isset($_POST['request'])) {
-            $request = $_POST['request'];
+        if (isset(Helpers::cleanData($_POST['request']))) {
+            $request = Helpers::cleanData($_POST['request']);
         }
         if ($request == 1) {
             ## Read value
-            $draw = $_POST['draw'];
-            $row = $_POST['start'];
-            $rowperpage = $_POST['length']; // Rows display per page
-            $columnIndex = $_POST['order'][0]['column']; // Column index
-            $columnName = $_POST['columns'][$columnIndex]['data']; // Column name
-            $columnSortOrder = $_POST['order'][0]['dir']; // asc or desc
-            $searchValue = $_POST['search']['value']; // Search value
+            $draw = Helpers::cleanData($_POST['draw']);
+            $row = Helpers::cleanData($_POST['start']);
+            $rowperpage = Helpers::cleanData($_POST['length']); // Rows display per page
+            $columnIndex = Helpers::cleanData($_POST['order'][0]['column']); // Column index
+            $columnName = Helpers::cleanData($_POST['columns'][$columnIndex]['data']); // Column name
+            $columnSortOrder = Helpers::cleanData($_POST['order'][0]['dir']); // asc or desc
+            $searchValue = Helpers::cleanData($_POST['search']['value']); // Search value
             ## Search 
             $searchQuery = " ";
             if ($searchValue != '') {
@@ -4778,10 +4568,10 @@ TEXT;
             }
             ## Total number of records without filtering
             $model = new Debarredlists();
-            $year = trim($_POST['year']);
-            $month = trim($_POST['month']);
-            $effect_from_date = date('Y-m-d', strtotime($_POST['effect_from_date']));
-            $effect_to_date = date('Y-m-d', strtotime($_POST['effect_to_date']));
+            $year = trim(Helpers::cleanData($_POST['year']));
+            $month = trim(Helpers::cleanData($_POST['month']));
+            $effect_from_date = date('Y-m-d', strtotime(Helpers::cleanData($_POST['effect_from_date'])));
+            $effect_to_date = date('Y-m-d', strtotime(Helpers::cleanData($_POST['effect_to_date'])));;
             $totalRecordsWithoutFiltering = $model->totalRecordsWithOutFiltering();
             $totalRecords = $totalRecordsWithoutFiltering->allcount;
             ## Total number of records with filtering
@@ -4835,14 +4625,9 @@ TEXT;
                      */
                 } else {
                    // $action = "<p style='color:green'>Published</p>";
-
                     $unpublishButton = "<button  title='Unpublish' style='height:24px' class='btn btn-sm btn-danger dl_unpublishbtn iconWidth' data-id='" . $rowval->debarred_lists_id . "'><i class='fa  fa-eye'></i></button>";
                     $green_text = "<p style='color:green'>Published</p>";
                     $action =  $green_text . $unpublishButton ;
-
-
-
-
                 }
                 $pdfPath = "";
                 $selected = "";
@@ -4880,7 +4665,7 @@ TEXT;
         } //request 1
         // Delete Dlist
         if ($request == 4) {
-            $id = $_POST['id'];
+            $id = Helpers::cleanData($_POST['id']);
             // Check id
             ## Fetch records
             $model = new Debarredlists();
@@ -4897,7 +4682,7 @@ TEXT;
         }
         // Archive Dlist
         if ($request == 5) {
-            $id = $_POST['id'];
+            $id = Helpers::cleanData($_POST['id']);
             // Check id
             ## Fetch records
             $model = new Debarredlists();
@@ -4914,7 +4699,7 @@ TEXT;
         }
         // Publish Dlist
         if ($request == 6) {
-            $id = $_POST['id'];
+            $id = Helpers::cleanData($_POST['id']);
             $dlist_data = [
                 'p_status' => '1',
             ];
@@ -4934,7 +4719,7 @@ TEXT;
         }
           // Unpublish Dlist
           if ($request == 7) {
-            $id = $_POST['id'];
+            $id = Helpers::cleanData($_POST['id']);
             $dlist_data = [
                 'p_status' => '0',
             ];
@@ -4955,10 +4740,10 @@ TEXT;
     }
     public function commonDlistArchive()
     {
-        if (!empty($_POST["action"])) {
+        if (!empty(Helpers::cleanData($_POST["action"]))) {
             $dlist = new Debarredlists();
-            $dlist_list_data = $_POST['ids'];
-            if ($_POST["action"] == 'archive') {
+            $dlist_list_data = Helpers::cleanData($_POST['ids']);
+           if (Helpers::cleanData($_POST["action"]) == 'archive') {
                 if ($dlist->archiveDlistStatus($dlist_list_data)) {
                     $message = " Debarred List Archived successfully";
                     $message_type = "success";
@@ -4979,8 +4764,6 @@ TEXT;
      * Debarredlists 
      * 
      */
-
-
      //search Year
      public function editsearchyear()
     {
@@ -5009,7 +4792,6 @@ TEXT;
     }
     private function savesearchyear()
     {
-
         $message = $message_type = "";
         if (isset($_POST['csrf_token']) && hash_equals($_SESSION['csrf_token'], $_POST['csrf_token'])) {
             if (isset($_POST['save_searchyear'])) {
@@ -5020,11 +4802,9 @@ TEXT;
                     'creation_date' => $creation_date,
                     'status' => '0'
                 ];
-               
                 $searchyear = new \App\Models\SearchYear();
-                
                 if ($searchyear_id == 0) { // insert new menu 
-                    echo "@@@";
+                  //  echo "@@@";
                     if ($searchyear->addSearchyear($searchyear_data)) {
                         $message = "Search Year Added successfully";
                         $message_type = "success";
@@ -5033,7 +4813,7 @@ TEXT;
                         $message_type = "warning";
                     }
                 } else { // update menu
-                    echo '####';
+                   // echo '####';
                     if ($searchyear->updateSearchyear($searchyear_data, $searchyear_id)) {
                         $message = "Search Year Updated successfully";
                         $message_type = "success";
@@ -5076,9 +4856,6 @@ TEXT;
             echo json_encode(array("message" => $message));
         }
     }
-
-       
-
     /**
      * Author: Stalin Thomas
      * 
@@ -5087,22 +4864,21 @@ TEXT;
      * Module : Important instructions Master
      * 
      */
-
    public function ajaxResponseForInstructionsDataTableLoad()
    {
        $request = 1;
-       if (isset($_POST['request'])) {
-           $request = $_POST['request'];
+       if (isset(Helpers::cleanData($_POST['request']))) {
+           $request = Helpers::cleanData($_POST['request']);
        }
        if ($request == 1) {
            ## Read value
-           $draw = $_POST['draw'];
-           $row = $_POST['start'];
-           $rowperpage = $_POST['length']; // Rows display per page
-           $columnIndex = $_POST['order'][0]['column']; // Column index
-           $columnName = $_POST['columns'][$columnIndex]['data']; // Column name
-           $columnSortOrder = $_POST['order'][0]['dir']; // asc or desc
-           $searchValue = $_POST['search']['value']; // Search value
+           $draw = Helpers::cleanData($_POST['draw']);
+           $row = Helpers::cleanData($_POST['start']);
+           $rowperpage = Helpers::cleanData($_POST['length']); // Rows display per page
+           $columnIndex = Helpers::cleanData($_POST['order'][0]['column']); // Column index
+           $columnName = Helpers::cleanData($_POST['columns'][$columnIndex]['data']); // Column name
+           $columnSortOrder = Helpers::cleanData($_POST['order'][0]['dir']); // asc or desc
+           $searchValue = Helpers::cleanData($_POST['search']['value']); // Search value
            ## Search 
            $searchQuery = " ";
            if ($searchValue != '') {
@@ -5113,10 +4889,10 @@ TEXT;
            }
            ## Total number of records without filtering
            $model = new Instructions();
-           $year = trim($_POST['year']);
-           $month = trim($_POST['month']);
-           $effect_from_date = date('Y-m-d', strtotime($_POST['effect_from_date']));
-           $effect_to_date = date('Y-m-d', strtotime($_POST['effect_to_date']));
+           $year = trim(Helpers::cleanData($_POST['year']));
+           $month = trim(Helpers::cleanData($_POST['month']));
+           $effect_from_date = date('Y-m-d', strtotime(Helpers::cleanData($_POST['effect_from_date'])));
+           $effect_to_date = date('Y-m-d', strtotime(Helpers::cleanData($_POST['effect_to_date'])));;
            $totalRecordsWithoutFiltering = $model->totalRecordsWithOutFiltering();
            $totalRecords = $totalRecordsWithoutFiltering->allcount;
            ## Total number of records with filtering
@@ -5193,7 +4969,7 @@ TEXT;
        // Che
        // Delete Instructions
        if ($request == 4) {
-           $id = $_POST['id'];
+           $id = Helpers::cleanData($_POST['id']);
            // echo $id;
            // exit;
            // Check id
@@ -5212,7 +4988,7 @@ TEXT;
        }
        // Archive Instructions
        if ($request == 5) {
-           $id = $_POST['id'];
+           $id = Helpers::cleanData($_POST['id']);
            // Check id
            ## Fetch records
            $model = new Instructions();
@@ -5229,7 +5005,7 @@ TEXT;
        }
        // Publish Instructions
        if ($request == 6) {
-           $id = $_POST['id'];
+           $id = Helpers::cleanData($_POST['id']);
            $ins_data = [
                'p_status' => '1',
            ];
@@ -5277,9 +5053,6 @@ TEXT;
    {
        $message = $message_type = "";
        if (isset($_POST['csrf_token']) && hash_equals($_SESSION['csrf_token'], $_POST['csrf_token'])) {
-
-       
-
        if (isset($_POST['save_instructions'])) {
            $ins_id = isset($_POST['ins_id']) ? $_POST['ins_id'] : 0;
            $ins_name = $_POST['ins_name'];
@@ -5293,10 +5066,6 @@ TEXT;
                "effect_to_date"    => $effect_to_date,
                'creation_date'     => date('Y-m-d H:i:s'),
            ];
-
-          
-
-          
            $instructions = new \App\Models\Instructions();
            if ($ins_id == 0) { // insert new menu 
                if ($instructions->addInstructions($instructionslist_data)) {
@@ -5352,13 +5121,13 @@ TEXT;
    }
    public function commonInstructionsArchive()
    {
-       if (!empty($_POST["action"])) {
+       if (!empty(Helpers::cleanData($_POST["action"]))) {
            $instructions = new Instructions();
-           $instructions_list_data = $_POST['ids'];
+           $instructions_list_data = Helpers::cleanData($_POST['ids']);
            // echo '<pre>';
            // print_r($_POST);
            // exit;
-           if ($_POST["action"] == 'archive') {
+          if (Helpers::cleanData($_POST["action"]) == 'archive') {
                if ($instructions->archiveInstructionsStatus($instructions_list_data)) {
                    $message = " Instructions Archived successfully";
                    $message_type = "success";
@@ -5373,8 +5142,6 @@ TEXT;
        $_SESSION['notification'] = ['message' => $message, 'message_type' => $message_type];
        $this->route->redirect($this->route->site_url("Admin/dashboard/?action=listofinstructions"));
    }
-
-
    /**
     * Author: Stalin Thomas
     * 
@@ -5383,11 +5150,4 @@ TEXT;
     * Module : Important instructions Master
     * 
     */
-
-
-
-
-
-
-
 }

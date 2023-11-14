@@ -130,7 +130,7 @@ class IndexController extends FrontEndController
 
 		
 
-			if (isset($_POST['login'])) {
+			if (isset(Helpers::cleanData($_POST['login']))) {
 				if (!hash_equals($_SESSION['csrf_token'], $_POST['csrf_token'])) {
 					// Token mismatch, handle the error (e.g., log it or display an error message)
 					$errorMsg ="CSRF token verification failed.";
@@ -140,9 +140,9 @@ class IndexController extends FrontEndController
 					$errorMsg = "Invalid Captcha";
 					return ['errorMsg' => $errorMsg];
 				}
-				if (!empty($_POST['username']) && !empty($_POST['password'])) {
-					$decyptedusername = Helpers::encrypt_with_cryptoJS_and_decrypt_with_php($_POST['username']);
-					$decyptedpassword = Helpers::encrypt_with_cryptoJS_and_decrypt_with_php($_POST['password']);
+				if (!empty(Helpers::cleanData($_POST['username'])) && !empty(Helpers::cleanData($_POST['password']))) {
+					$decyptedusername = Helpers::encrypt_with_cryptoJS_and_decrypt_with_php(Helpers::cleanData($_POST['username']));
+					$decyptedpassword = Helpers::encrypt_with_cryptoJS_and_decrypt_with_php(Helpers::cleanData($_POST['password']));
 					$username = Helpers::cleanData(trim($decyptedusername));
 					$password = Helpers::cleanData(trim($decyptedpassword));
 					$md5Password = md5($password);
@@ -347,15 +347,15 @@ class IndexController extends FrontEndController
 	{
 		$errorMsg = "";
 		
-			if (isset($_POST['kyas'])) {
+			if (isset(Helpers::cleanData($_POST['kyas']))) {
 		
 				if (!hash_equals($_SESSION['csrf_token'], $_POST['csrf_token'])) {
 					// Token mismatch, handle the error (e.g., log it or display an error message)
 					$errorMsg ="CSRF token verification failed.";
 				}
-				$register_number = trim($_POST['register_number']);
-				$dob = trim($_POST['dob']);
-				$table_name = trim($_POST['table_name']);
+				$register_number = trim(Helpers::cleanData($_POST['register_number']));
+				$dob = trim(Helpers::cleanData($_POST['dob']));
+				$table_name = trim(Helpers::cleanData($_POST['table_name']));
 				$data_array = array(
 					"register_number" => $register_number,
 					"dob" => $dob,
@@ -629,8 +629,8 @@ class IndexController extends FrontEndController
 		//get matched data 
 		try {
 			$Gallery = new Gallery();
-			//$q = isset($_POST['year']) ? $_POST['year'] : "2022";
-			$year = $_POST['year'];
+			
+			$year = Helpers::cleanData($_POST['year']);
 			$gallery_event_by_years = $Gallery->getGalleryEventsByYears($year);
 		} catch (Exception $Ex) {
 			echo "Error" . $sql . "</br>" . $Ex;
@@ -648,7 +648,7 @@ class IndexController extends FrontEndController
 	}
 	public function EventBasedLightBox()
 	{
-		$id = $_POST['id'];
+		$id = Helpers::cleanData($_POST['id']);
 		//get matched data 
 		try {
 			$Gallery = new Gallery();
@@ -696,7 +696,7 @@ class IndexController extends FrontEndController
 		//get matched data 
 		try {
 			$Gallery = new Gallery();
-			$q = (isset($_POST['gallery_id'])) ? $_POST['gallery_id'] : "on";
+			$q = (isset(Helpers::cleanData($_POST['gallery_id']))) ? Helpers::cleanData($_POST['gallery_id']) : "on";
 			$gallery_id_based_images = $Gallery->getGalleryidBasedImagesModel($q);
 		} catch (Exception $Ex) {
 			echo "Error" . $sql . "</br>" . $Ex;
@@ -713,7 +713,7 @@ class IndexController extends FrontEndController
 	}
 	public function GalleryidBasedEvents()
 	{
-		$year = $_POST['year'];
+		$year = Helpers::cleanData($_POST['year']);
 		//get matched data 
 		try {
 			$Gallery = new Gallery();
@@ -784,10 +784,10 @@ class IndexController extends FrontEndController
 	public function getKnowYourRollNo()
 	{
 		$errorMsg = "";
-		if (isset($_POST['admit_card'])) {
-			$register_number = trim($_POST['register_number']);
-			$dob = trim($_POST['dob']);
-			$examname = trim($_POST['examname']);
+		if (isset(Helpers::cleanData($_POST['admit_card']))) {
+			$register_number = trim(Helpers::cleanData($_POST['register_number']));
+			$dob = trim(Helpers::cleanData($_POST['dob']));
+			$examname = trim(Helpers::cleanData($_POST['examname']));
 			$examname = explode('_', $examname);
 			$exam_value = $examname[0] . '_' . $examname[1] . '_' . $examname[2];
 			$tier_id = $examname[3];
@@ -843,19 +843,16 @@ class IndexController extends FrontEndController
 		$errorMsg = "";
 
 		
-			if (isset($_POST['admit_card'])) {
+			if (isset(Helpers::cleanData($_POST['admit_card']))) {
 				if (!hash_equals($_SESSION['csrf_token'], $_POST['csrf_token'])) {
 					// Token mismatch, handle the error (e.g., log it or display an error message)
 					$errorMsg ="CSRF token verification failed.";
 				}
-				$register_number = trim($_POST['register_number']);
-				$dob = trim($_POST['dob']);
-				$examname = trim($_POST['examname']);
+				$register_number = trim(Helpers::cleanData($_POST['register_number']));
+				$dob = trim(Helpers::cleanData($_POST['dob']));
+				$examname = trim(Helpers::cleanData($_POST['examname']));
 				$examname = explode('_', $examname);
-				// $examname = explode('_',$examname);
-				// $exam_value = $examname[0].'_'.$examname[1].'_'.$examname[2];
-				// $exam_type = $examname[2];
-				// $tier_id = $examname[3];
+				
 				if ($examname[0] == 'phase') {
 					$exam_value = $examname[0] . '_' . $examname[1] . '_' . $examname[2] . '_' . $examname[3] . '_' . $examname[4];
 					$exam_type = $examname[4];
@@ -865,9 +862,9 @@ class IndexController extends FrontEndController
 					$exam_type = $examname[2];
 					$tier_id = $examname[3];
 				}
-				$roll_no = isset($_POST['roll_number']) ? trim($_POST['roll_number']) : null;
-				$post_preference = isset($_POST['post_preference_one']) ? trim($_POST['post_preference_one']) : null;
-				//$roll_no =  trim($_POST['dob'])? "Adult" : "Not Adult"
+				$roll_no = isset(Helpers::cleanData($_POST['roll_number'])) ? trim(Helpers::cleanData($_POST['roll_number'])) : null;
+				$post_preference = isset(Helpers::cleanData($_POST['post_preference_one'])) ? trim(Helpers::cleanData($_POST['post_preference_one'])) : null;
+				
 				$data_array = array(
 					"table_name" => $exam_value,
 					"register_number" => $register_number,
@@ -876,9 +873,7 @@ class IndexController extends FrontEndController
 					"roll_no" => $roll_no,
 					"post_preference" => $post_preference
 				);
-				// echo "<pre>";
-				// print_r($data_array);
-				// exit;
+				
 				$admitcard = new Admitcard();
 				if ($admitcard->getAdmitcardforTierPreview($data_array)) {
 					$admitcardresults = $admitcard->getAdmitcardforTierPreview($data_array);
@@ -910,11 +905,11 @@ class IndexController extends FrontEndController
 	public function emailIntegration()
 	{
 		//$sendEmail = PhpMailerHelper::AdminCardofBulkEmail();
-		$selectedTableFormat = $_POST['selectedTableFormat'];
+		$selectedTableFormat = Helpers::cleanData($_POST['selectedTableFormat']);
 		$selectedTableFormatValue = explode('_', $selectedTableFormat);
 		$exam_type = $selectedTableFormatValue[1];
-		$table_name = $_POST['examname'] . "_" . $_POST['exam_year'] . "_" . $exam_type;
-		$tier_id = $_POST['selectedtier'];
+		$table_name = Helpers::cleanData($_POST['examname']) . "_" . Helpers::cleanData($_POST['exam_year']) . "_" . $exam_type;
+		$tier_id = Helpers::cleanData($_POST['selectedtier']);
 		$data_array = array(
 			"table_name" => $table_name,
 			"tier_id" => $tier_id,
@@ -964,8 +959,8 @@ class IndexController extends FrontEndController
 	}
 	public function getPostPreferenceValue()
 	{
-		$roll_no = $_POST['roll_no'];
-		$examname = trim($_POST['examname']);
+		$roll_no = Helpers::cleanData($_POST['roll_no']);
+		$examname = trim(Helpers::cleanData($_POST['examname']));
 		$examnameArray = explode('_', $examname);
 		$table_name = $examnameArray[0] . '_' . $examnameArray[1] . '_' . $examnameArray[2] . '_' . $examnameArray[3] . '_' . $examnameArray[4];
 		$type = $examnameArray[4];
@@ -1003,10 +998,10 @@ class IndexController extends FrontEndController
 	{
 			$data = $_POST;
 			$data_array = array(
-				'examname' =>$_POST['examname'],
-				'register_number' =>$_POST['register_number'],
-				'roll_number' =>$_POST['roll_number'],
-				'dob' =>$_POST['dob']
+				'examname' => Helpers::cleanData($_POST['examname']),
+				'register_number' => Helpers::cleanData($_POST['register_number']),
+				'roll_number' =>Helpers::cleanData($_POST['roll_number']),
+				'dob' => Helpers::cleanData($_POST['dob'])
 			);
 			$admit_card_model = new Admitcard();
 			$admit_card_model_details = $admit_card_model->getAdmitcardforTierCount($data_array);
