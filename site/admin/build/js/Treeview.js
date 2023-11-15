@@ -1,16 +1,7 @@
-/**
- * --------------------------------------------
- * AdminLTE Treeview.js
- * License MIT
- * --------------------------------------------
- */
+
 
 import $ from 'jquery'
 
-/**
- * Constants
- * ====================================================
- */
 
 const NAME = 'Treeview'
 const DATA_KEY = 'lte.treeview'

@@ -1,6 +1,4 @@
-/*! Bootstrap 4 styling wrapper for Scroller
- * ©2018 SpryMedia Ltd - datatables.net/license
- */
+
 
 (function( factory ){
 	if ( typeof define === 'function' && define.amd ) {

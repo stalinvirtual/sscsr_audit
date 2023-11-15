@@ -1,16 +1,8 @@
-/**
- * --------------------------------------------
- * AdminLTE SidebarSearch.js
- * License MIT
- * --------------------------------------------
- */
+
 
 import $, { trim } from 'jquery'
 
-/**
- * Constants
- * ====================================================
- */
+
 
 const NAME = 'SidebarSearch'
 const DATA_KEY = 'lte.sidebar-search'

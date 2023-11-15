@@ -1,9 +1,3 @@
-// CodeMirror, copyright (c) by Marijn Haverbeke and others
-// Distributed under an MIT license: https://codemirror.net/LICENSE
-
-/**
- * Author: Koh Zi Han, based on implementation by Koh Zi Chun
- */
 
 (function(mod) {
   if (typeof exports == "object" && typeof module == "object") // CommonJS

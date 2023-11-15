@@ -1,5 +1,5 @@
-/* Based on https://github.com/dempfi/ayu */
 
+ 
 .cm-s-ayu-mirage.CodeMirror { background: #1f2430; color: #cbccc6; }
 .cm-s-ayu-mirage div.CodeMirror-selected { background: #34455a; }
 .cm-s-ayu-mirage .CodeMirror-line::selection, .cm-s-ayu-mirage .CodeMirror-line > span::selection, .cm-s-ayu-mirage .CodeMirror-line > span > span::selection { background: #34455a; }

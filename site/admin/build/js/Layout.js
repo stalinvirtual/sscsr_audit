@@ -1,16 +1,7 @@
-/**
- * --------------------------------------------
- * AdminLTE Layout.js
- * License MIT
- * --------------------------------------------
- */
+
 
 import $ from 'jquery'
 
-/**
- * Constants
- * ====================================================
- */
 
 const NAME = 'Layout'
 const DATA_KEY = 'lte.layout'

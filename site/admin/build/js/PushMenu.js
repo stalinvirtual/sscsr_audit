@@ -1,16 +1,8 @@
-/**
- * --------------------------------------------
- * AdminLTE PushMenu.js
- * License MIT
- * --------------------------------------------
- */
+
 
 import $ from 'jquery'
 
-/**
- * Constants
- * ====================================================
- */
+
 
 const NAME = 'PushMenu'
 const DATA_KEY = 'lte.pushmenu'

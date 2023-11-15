@@ -1,12 +1,4 @@
-// CodeMirror, copyright (c) by Marijn Haverbeke and others
-// Distributed under an MIT license: https://codemirror.net/LICENSE
 
-/*
- *      Pig Latin Mode for CodeMirror 2
- *      @author Prasanth Jayachandran
- *      @link   https://github.com/prasanthj/pig-codemirror-2
- *  This implementation is adapted from PL/SQL mode in CodeMirror 2.
- */
 (function(mod) {
   if (typeof exports == "object" && typeof module == "object") // CommonJS
     mod(require("../../lib/codemirror"));

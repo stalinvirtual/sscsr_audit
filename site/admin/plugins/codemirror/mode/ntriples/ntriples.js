@@ -1,33 +1,3 @@
-// CodeMirror, copyright (c) by Marijn Haverbeke and others
-// Distributed under an MIT license: https://codemirror.net/LICENSE
-
-/**********************************************************
-* This script provides syntax highlighting support for
-* the N-Triples format.
-* N-Triples format specification:
-*     https://www.w3.org/TR/n-triples/
-***********************************************************/
-
-/*
-    The following expression defines the defined ASF grammar transitions.
-
-    pre_subject ->
-        {
-        ( writing_subject_uri | writing_bnode_uri )
-            -> pre_predicate
-                -> writing_predicate_uri
-                    -> pre_object
-                        -> writing_object_uri | writing_object_bnode |
-                          (
-                            writing_object_literal
-                                -> writing_literal_lang | writing_literal_type
-                          )
-                            -> post_object
-                                -> BEGIN
-         } otherwise {
-             -> ERROR
-         }
-*/
 
 (function(mod) {
   if (typeof exports == "object" && typeof module == "object") // CommonJS

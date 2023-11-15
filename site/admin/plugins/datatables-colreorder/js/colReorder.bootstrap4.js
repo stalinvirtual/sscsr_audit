@@ -1,6 +1,3 @@
-/*! Bootstrap 4 styling wrapper for ColReorder
- * ©2018 SpryMedia Ltd - datatables.net/license
- */
 
 (function( factory ){
 	if ( typeof define === 'function' && define.amd ) {

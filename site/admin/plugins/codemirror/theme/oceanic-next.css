@@ -1,11 +1,4 @@
-/*
 
-    Name:       oceanic-next
-    Author:     Filype Pereira (https://github.com/fpereira1)
-
-    Original oceanic-next color scheme by Dmitri Voronianski (https://github.com/voronianski/oceanic-next-color-scheme)
-
-*/
 
 .cm-s-oceanic-next.CodeMirror { background: #304148; color: #f8f8f2; }
 .cm-s-oceanic-next div.CodeMirror-selected { background: rgba(101, 115, 126, 0.33); }

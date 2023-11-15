@@ -1,9 +1,3 @@
-/*
-Name:   DuoTone-Dark
-Author: by Bram de Haan, adapted from DuoTone themes by Simurai (http://simurai.com/projects/2016/01/01/duotone-themes)
-
-CodeMirror template by Jan T. Sott (https://github.com/idleberg), adapted by Bram de Haan (https://github.com/atelierbram/)
-*/
 
 .cm-s-duotone-dark.CodeMirror { background: #2a2734; color: #6c6783; }
 .cm-s-duotone-dark div.CodeMirror-selected { background: #545167!important; }

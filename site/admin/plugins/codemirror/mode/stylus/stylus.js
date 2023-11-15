@@ -1,7 +1,3 @@
-// CodeMirror, copyright (c) by Marijn Haverbeke and others
-// Distributed under an MIT license: https://codemirror.net/LICENSE
-
-// Stylus mode created by Dmitry Kiselyov http://git.io/AaRB
 
 (function(mod) {
   if (typeof exports == "object" && typeof module == "object") // CommonJS

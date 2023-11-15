@@ -1,16 +1,8 @@
-/**
- * --------------------------------------------
- * AdminLTE CardRefresh.js
- * License MIT
- * --------------------------------------------
- */
+
 
 import $ from 'jquery'
 
-/**
- * Constants
- * ====================================================
- */
+
 
 const NAME = 'CardRefresh'
 const DATA_KEY = 'lte.cardrefresh'

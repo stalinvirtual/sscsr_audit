@@ -1,16 +1,6 @@
-/**
- * --------------------------------------------
- * AdminLTE ExpandableTable.js
- * License MIT
- * --------------------------------------------
- */
 
 import $ from 'jquery'
 
-/**
-  * Constants
-  * ====================================================
-  */
 
 const NAME = 'ExpandableTable'
 const DATA_KEY = 'lte.expandableTable'

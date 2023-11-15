@@ -1,16 +1,7 @@
-/**
- * --------------------------------------------
- * AdminLTE TodoList.js
- * License MIT
- * --------------------------------------------
- */
+
 
 import $ from 'jquery'
 
-/**
- * Constants
- * ====================================================
- */
 
 const NAME = 'TodoList'
 const DATA_KEY = 'lte.todolist'

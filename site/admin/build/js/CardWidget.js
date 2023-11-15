@@ -1,16 +1,8 @@
-/**
- * --------------------------------------------
- * AdminLTE CardWidget.js
- * License MIT
- * --------------------------------------------
- */
+
 
 import $ from 'jquery'
 
-/**
- * Constants
- * ====================================================
- */
+
 
 const NAME = 'CardWidget'
 const DATA_KEY = 'lte.cardwidget'

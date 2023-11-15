@@ -1,9 +1,3 @@
-// CodeMirror, copyright (c) by Marijn Haverbeke and others
-// Distributed under an MIT license: https://codemirror.net/LICENSE
-
-// LUA mode. Ported to CodeMirror 2 from Franciszek Wawrzak's
-// CodeMirror 1 mode.
-// highlights keywords, strings, comments (no leveling supported! ("[==[")), tokens, basic indenting
 
 (function(mod) {
   if (typeof exports == "object" && typeof module == "object") // CommonJS

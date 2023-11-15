@@ -1,19 +1,4 @@
-// CodeMirror, copyright (c) by Marijn Haverbeke and others
-// Distributed under an MIT license: https://codemirror.net/LICENSE
 
-/*jshint unused:true, eqnull:true, curly:true, bitwise:true */
-/*jshint undef:true, latedef:true, trailing:true */
-/*global CodeMirror:true */
-
-// erlang mode.
-// tokenizer -> token types -> CodeMirror styles
-// tokenizer maintains a parse stack
-// indenter uses the parse stack
-
-// TODO indenter:
-//   bit syntax
-//   old guard/bif/conversion clashes (e.g. "float/1")
-//   type/spec/opaque
 
 (function(mod) {
   if (typeof exports == "object" && typeof module == "object") // CommonJS

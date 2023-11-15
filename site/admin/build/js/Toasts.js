@@ -1,16 +1,8 @@
-/**
- * --------------------------------------------
- * AdminLTE Toasts.js
- * License MIT
- * --------------------------------------------
- */
+
 
 import $ from 'jquery'
 
-/**
- * Constants
- * ====================================================
- */
+
 
 const NAME = 'Toasts'
 const DATA_KEY = 'lte.toasts'

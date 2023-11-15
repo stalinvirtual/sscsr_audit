@@ -1,9 +1,3 @@
-// CodeMirror, copyright (c) by Marijn Haverbeke and others
-// Distributed under an MIT license: https://codemirror.net/LICENSE
-
-// Mathematica mode copyright (c) 2015 by Calin Barbat
-// Based on code by Patrick Scheibe (halirutan)
-// See: https://github.com/halirutan/Mathematica-Source-Highlighting/tree/master/src/lang-mma.js
 
 (function(mod) {
   if (typeof exports == "object" && typeof module == "object") // CommonJS

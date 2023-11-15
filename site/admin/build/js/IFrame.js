@@ -1,16 +1,6 @@
-/**
- * --------------------------------------------
- * AdminLTE IFrame.js
- * License MIT
- * --------------------------------------------
- */
 
 import $ from 'jquery'
 
-/**
- * Constants
- * ====================================================
- */
 
 const NAME = 'IFrame'
 const DATA_KEY = 'lte.iframe'

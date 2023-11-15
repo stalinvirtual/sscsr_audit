@@ -1,11 +1,3 @@
-/*
-
-    Name:       gruvbox-dark
-    Author:     kRkk (https://github.com/krkk)
-
-    Original gruvbox color scheme by Pavel Pertsev (https://github.com/morhetz/gruvbox)
-
-*/
 
 .cm-s-gruvbox-dark.CodeMirror, .cm-s-gruvbox-dark .CodeMirror-gutters { background-color: #282828; color: #bdae93; }
 .cm-s-gruvbox-dark .CodeMirror-gutters {background: #282828; border-right: 0px;}

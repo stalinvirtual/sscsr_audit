@@ -1,17 +1,6 @@
 ;(function () {
 	'use strict';
 
-	/**
-	 * @preserve FastClick: polyfill to remove click delays on browsers with touch UIs.
-	 *
-	 * @codingstandard ftlabs-jsv2
-	 * @copyright The Financial Times Limited [All Rights Reserved]
-	 * @license MIT License (see LICENSE.txt)
-	 */
-
-	/*jslint browser:true, node:true*/
-	/*global define, Event, Node*/
-
 
 	/**
 	 * Instantiate fast-clicking listeners on the specified layer.

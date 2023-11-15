@@ -1,19 +1,7 @@
 (function () {
 	'use strict';
 
-	/*! DateTime picker for DataTables.net v1.0.1
-	 *
-	 * ©2020 SpryMedia Ltd, all rights reserved.
-	 * License: MIT datatables.net/license/mit
-	 */
 
-	/**
-	 * @summary     DateTime picker for DataTables.net
-	 * @version     1.0.1
-	 * @file        dataTables.dateTime.js
-	 * @author      SpryMedia Ltd
-	 * @contact     www.datatables.net/contact
-	 */
 	(function( factory ){
 		if ( typeof define === 'function' && define.amd ) {
 			// AMD

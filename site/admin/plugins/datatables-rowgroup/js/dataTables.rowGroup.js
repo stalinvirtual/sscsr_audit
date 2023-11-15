@@ -1,25 +1,3 @@
-/*! RowGroup 1.1.2
- * ©2017-2020 SpryMedia Ltd - datatables.net/license
- */
-
-/**
- * @summary     RowGroup
- * @description RowGrouping for DataTables
- * @version     1.1.2
- * @file        dataTables.rowGroup.js
- * @author      SpryMedia Ltd (www.sprymedia.co.uk)
- * @contact     datatables.net
- * @copyright   Copyright 2017-2020 SpryMedia Ltd.
- *
- * This source file is free software, available under the following license:
- *   MIT license - http://datatables.net/license/mit
- *
- * This source file is distributed in the hope that it will be useful, but
- * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
- * or FITNESS FOR A PARTICULAR PURPOSE. See the license files for details.
- *
- * For details please refer to: http://www.datatables.net
- */
 
 (function( factory ){
 	if ( typeof define === 'function' && define.amd ) {

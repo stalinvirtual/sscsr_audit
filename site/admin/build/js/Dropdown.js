@@ -1,16 +1,7 @@
-/**
- * --------------------------------------------
- * AdminLTE Dropdown.js
- * License MIT
- * --------------------------------------------
- */
+
 
 import $ from 'jquery'
 
-/**
- * Constants
- * ====================================================
- */
 
 const NAME = 'Dropdown'
 const DATA_KEY = 'lte.dropdown'

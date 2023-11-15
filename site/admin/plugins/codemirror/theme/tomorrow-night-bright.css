@@ -1,11 +1,4 @@
-/*
 
-    Name:       Tomorrow Night - Bright
-    Author:     Chris Kempson
-
-    Port done by Gerard Braad <me@gbraad.nl>
-
-*/
 
 .cm-s-tomorrow-night-bright.CodeMirror { background: #000000; color: #eaeaea; }
 .cm-s-tomorrow-night-bright div.CodeMirror-selected { background: #424242; }

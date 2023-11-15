@@ -1,11 +1,4 @@
-/*
 
-    Name:       shadowfox
-    Author:     overdodactyl (http://github.com/overdodactyl)
-
-    Original shadowfox color scheme by Firefox
-
-*/
 
 .cm-s-shadowfox.CodeMirror { background: #2a2a2e; color: #b1b1b3; }
 .cm-s-shadowfox div.CodeMirror-selected { background: #353B48; }

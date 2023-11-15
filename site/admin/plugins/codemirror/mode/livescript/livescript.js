@@ -1,10 +1,3 @@
-// CodeMirror, copyright (c) by Marijn Haverbeke and others
-// Distributed under an MIT license: https://codemirror.net/LICENSE
-
-/**
- * Link to the project's GitHub page:
- * https://github.com/duralog/CodeMirror
- */
 
 (function(mod) {
   if (typeof exports == "object" && typeof module == "object") // CommonJS

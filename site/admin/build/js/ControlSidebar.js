@@ -1,16 +1,8 @@
-/**
- * --------------------------------------------
- * AdminLTE ControlSidebar.js
- * License MIT
- * --------------------------------------------
- */
+
 
 import $ from 'jquery'
 
-/**
- * Constants
- * ====================================================
- */
+
 
 const NAME = 'ControlSidebar'
 const DATA_KEY = 'lte.controlsidebar'

@@ -1,6 +1,4 @@
-/*! SearchPanes 1.2.1
- * 2019-2020 SpryMedia Ltd - datatables.net/license
- */
+
 (function () {
     'use strict';
 

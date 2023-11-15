@@ -1,9 +1,3 @@
-/**
- * --------------------------------------------
- * AdminLTE Fullscreen.js
- * License MIT
- * --------------------------------------------
- */
 
 import $ from 'jquery'
 
@@ -24,10 +18,6 @@ const Default = {
   maximizeIcon: 'fa-expand-arrows-alt'
 }
 
-/**
- * Class Definition
- * ====================================================
- */
 
 class Fullscreen {
   constructor(_element, _options) {

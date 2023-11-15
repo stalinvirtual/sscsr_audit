@@ -1,6 +1,3 @@
-/*! Bootstrap integration for DataTables' Buttons
- * ©2016 SpryMedia Ltd - datatables.net/license
- */
 
 (function( factory ){
 	if ( typeof define === 'function' && define.amd ) {

@@ -1,16 +1,6 @@
-/**
- * --------------------------------------------
- * AdminLTE NavbarSearch.js
- * License MIT
- * --------------------------------------------
- */
+
 
 import $ from 'jquery'
-
-/**
- * Constants
- * ====================================================
- */
 
 const NAME = 'NavbarSearch'
 const DATA_KEY = 'lte.navbar-search'

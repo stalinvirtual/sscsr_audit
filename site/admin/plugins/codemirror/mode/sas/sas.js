@@ -1,25 +1,3 @@
-// CodeMirror, copyright (c) by Marijn Haverbeke and others
-// Distributed under an MIT license: https://codemirror.net/LICENSE
-
-
-// SAS mode copyright (c) 2016 Jared Dean, SAS Institute
-// Created by Jared Dean
-
-// TODO
-// indent and de-indent
-// identify macro variables
-
-
-//Definitions
-//  comment -- text within * ; or /* */
-//  keyword -- SAS language variable
-//  variable -- macro variables starts with '&' or variable formats
-//  variable-2 -- DATA Step, proc, or macro names
-//  string -- text within ' ' or " "
-//  operator -- numeric operator + / - * ** le eq ge ... and so on
-//  builtin -- proc %macro data run mend
-//  atom
-//  def
 
 (function(mod) {
   if (typeof exports == "object" && typeof module == "object") // CommonJS
