@@ -730,7 +730,7 @@ class Admin extends BackEndController
     }
     public function ajaxresponsemenuorder()
     {
-        if (isset(Helpers::cleanData($_POST["action"]))) {
+        if (isset($_POST["action"])) {
             if (Helpers::cleanData($_POST["action"]) == 'fetch_data') {
                 $menu = new Menu();
                 $ret = $menu->reorderMenus();
@@ -761,7 +761,7 @@ class Admin extends BackEndController
      */
     public function ajaxresponsenominationorder()
     {
-        if (isset(Helpers::cleanData($_POST["action"]))) {
+        if (isset($_POST["action"])) {
             if ($_POST["action"] == 'fetch_data') {
                 $nomination = new Category();
                 $ret = $nomination->reorderNomination();
@@ -792,8 +792,8 @@ class Admin extends BackEndController
      */
     public function ajaxresponseselectionpostreorder()
     {
-        if (isset(Helpers::cleanData($_POST["action"]))) {
-            if (Helpers::cleanData($_POST["action"]) == 'fetch_data') {
+        if (isset($_POST["action"])) {
+            if ($_POST["action"] == 'fetch_data') {
                 $sp = new Category();
                 $ret = $sp->reorderSelectionPost();
                 $data = $ret;
@@ -818,8 +818,8 @@ class Admin extends BackEndController
     }
     public function ajaxresponsesubmenuorder()
     {
-        if (isset(Helpers::cleanData($_POST["action"]))) {
-            if (Helpers::cleanData($_POST["action"]) == 'fetch_data') {
+        if (isset($_POST["action"])) {
+            if ($_POST["action"] == 'fetch_data') {
                 $menu = new Menu();
                 $ret = $menu->reorderSubMenus();
                 $data = $ret;
@@ -850,8 +850,8 @@ class Admin extends BackEndController
      */
     public function ajaxresponsesubmenuordernew()
     {
-        if (isset(Helpers::cleanData($_POST["action"]))) {
-            if (Helpers::cleanData($_POST["action"]) == 'fetch_data') {
+         if (isset($_POST["action"])) {
+            if ($_POST["action"] == 'fetch_data') {
                 $menu_id = Helpers::cleanData($_POST["menu_id"]);
                 if ($menu_id != 0) {
                     $message = 'selected';
@@ -873,7 +873,7 @@ class Admin extends BackEndController
     }
     public function ajaxresponsesubmenuordernewbyId()
     {
-        if (isset(Helpers::cleanData($_POST["action"]))) {
+         if (isset($_POST["action"])) {
             if ($_POST["action"] == 'fetch_data') {
                 $id = Helpers::cleanData($_POST["id"]);
                 $menu = new Menu();
@@ -2872,7 +2872,7 @@ HTML;
     public function ajaxResponseForDataTableLoad()
     {
         $request = 1;
-        if (isset(Helpers::cleanData($_POST['request']))) {
+        if (isset($_POST['request'])) {
             $request = Helpers::cleanData($_POST['request']);
         }
         if ($request == 1) {
@@ -3100,7 +3100,7 @@ HTML;
     public function ajaxResponseForSpDataTableLoad()
     {
         $request = 1;
-        if (isset(Helpers::cleanData($_POST['request']))) {
+        if (isset($_POST['request'])) {
             $request = Helpers::cleanData($_POST['request']);
         }
         if ($request == 1) {
@@ -3333,7 +3333,7 @@ HTML;
     public function ajaxResponseForTenderDataTableLoad()
     {
         $request = 1;
-        if (isset(Helpers::cleanData($_POST['request']))) {
+        if (isset($_POST['request'])) {
             $request = Helpers::cleanData($_POST['request']);
         }
         if ($request == 1) {
@@ -3558,7 +3558,7 @@ TEXT;
      */
     public function ajaxResponseForNoticeDataTableLoad(){
         $request = 1;
-        if (isset(Helpers::cleanData($_POST['request']))) {
+        if (isset($_POST['request'])) {
             $request = Helpers::cleanData($_POST['request']);
         }
         if ($request == 1) {
@@ -3767,7 +3767,7 @@ TEXT;
     public function ajaxResponseForNoticeDataTableLoad1()
     {
         $request = 1;
-        if (isset(Helpers::cleanData($_POST['request']))) {
+        if (isset($_POST['request'])) {
             $request = Helpers::cleanData($_POST['request']);
         }
         if ($request == 1) {
@@ -3973,7 +3973,7 @@ TEXT;
     public function ajaxResponseForGalleryDataTableLoad()
     {
         $request = 1;
-        if (isset(Helpers::cleanData($_POST['request']))) {
+        if (isset($_POST['request'])) {
             $request = Helpers::cleanData($_POST['request']);
         }
         if ($request == 1) {
@@ -4264,7 +4264,7 @@ TEXT;
     public function ajaxResponseForAnnouncementDataTableLoad()
     {
         $request = 1;
-        if (isset(Helpers::cleanData($_POST['request']))) {
+        if (isset($_POST['request'])) {
             $request = Helpers::cleanData($_POST['request']);
         }
         if ($request == 1) {
@@ -4548,7 +4548,7 @@ TEXT;
     public function ajaxResponseForDlistDataTableLoad   ()
     {
         $request = 1;
-        if (isset(Helpers::cleanData($_POST['request']))) {
+        if (isset($_POST['request'])) {
             $request = Helpers::cleanData($_POST['request']);
         }
         if ($request == 1) {
@@ -4867,7 +4867,7 @@ TEXT;
    public function ajaxResponseForInstructionsDataTableLoad()
    {
        $request = 1;
-       if (isset(Helpers::cleanData($_POST['request']))) {
+       if (isset($_POST['request'])) {
            $request = Helpers::cleanData($_POST['request']);
        }
        if ($request == 1) {
