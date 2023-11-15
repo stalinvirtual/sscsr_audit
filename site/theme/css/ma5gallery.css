@@ -1,10 +1,4 @@
-/*
-*   MA5Gallery
-*   v 1.5
-*   Copyright (c) 2015 Tomasz Kalinowski
-*   http://galeria.ma5.pl
-*   GitHub:https://github.com/ma-5/ma5-gallery
-*/
+
 @-webkit-keyframes animation-d-m {0% {-webkit-transform:translate3d(0, 100%, 0);} 100% {-webkit-transform:translate3d(0, 0, 0);}}
 @keyframes animation-d-m {0% {transform:translate3d(0, 100%, 0);} 100% {transform:translate3d(0, 0, 0);}}
 @-webkit-keyframes animation-m-u {0% {-webkit-transform:translate3d(0, 0, 0);} 100% {-webkit-transform:translate3d(0, -100%, 0);}}

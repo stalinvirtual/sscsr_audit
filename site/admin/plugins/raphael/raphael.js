@@ -1,11 +1,4 @@
-// ┌───────────────────────────────────────────────────────────────────────────────────────────────────────┐ \\
-// │ Raphaël 2.3.0 - JavaScript Vector Library                                                             │ \\
-// ├───────────────────────────────────────────────────────────────────────────────────────────────────────┤ \\
-// │ Copyright © 2008-2016 Dmitry Baranovskiy (http://raphaeljs.com)                                       │ \\
-// │ Copyright © 2008-2016 Sencha Labs (http://sencha.com)                                                 │ \\
-// ├───────────────────────────────────────────────────────────────────────────────────────────────────────┤ \\
-// │ Licensed under the MIT (https://github.com/DmitryBaranovskiy/raphael/blob/master/license.txt) license.│ \\
-// └───────────────────────────────────────────────────────────────────────────────────────────────────────┘ \\
+
 
 (function webpackUniversalModuleDefinition(root, factory) {
 	if(typeof exports === 'object' && typeof module === 'object')

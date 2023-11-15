@@ -8,10 +8,6 @@
 	}
 }(function( $ ) {
 
-/*
- * Translated default messages for the jQuery validation plugin.
- * Locale: KK (Kazakh; қазақ тілі)
- */
 $.extend( $.validator.messages, {
 	required: "Бұл өрісті міндетті түрде толтырыңыз.",
 	remote: "Дұрыс мағына енгізуіңізді сұраймыз.",

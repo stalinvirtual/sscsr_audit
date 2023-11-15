@@ -1,6 +1,3 @@
-//! moment.js locale configuration
-//! locale : Occitan, lengadocian dialecte [oc-lnc]
-//! author : Quentin PAGÈS : https://github.com/Quenty31
 
 ;(function (global, factory) {
    typeof exports === 'object' && typeof module !== 'undefined'

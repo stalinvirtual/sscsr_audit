@@ -8,10 +8,6 @@
 	}
 }(function( $ ) {
 
-/*
- * Translated default messages for the jQuery validation plugin.
- * Locale: MY (Malay; Melayu)
- */
 $.extend( $.validator.messages, {
 	required: "Medan ini diperlukan.",
 	remote: "Sila betulkan medan ini.",

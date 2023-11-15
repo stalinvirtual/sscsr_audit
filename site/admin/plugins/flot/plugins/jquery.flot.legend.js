@@ -1,6 +1,4 @@
-/* Flot plugin for drawing legends.
 
-*/
 
 (function($) {
     var defaultOptions = {

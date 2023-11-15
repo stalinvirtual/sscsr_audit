@@ -1,11 +1,4 @@
-/**
- * jQuery plugin "Lightspeed box".
- * Lightbox plugin with transitions and wait cursor.
- *
- * https://github.com/AlexEmashev/lsb-lightbox
- * Author: Alexander Emashev
- * License: The MIT public license.
- */
+
 (function ($) {
   'use strict';
   $.fn.lightspeedBox = function (options) {

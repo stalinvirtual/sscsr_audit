@@ -8,10 +8,6 @@
 	}
 }(function( $ ) {
 
-/*
- * Translated default messages for the jQuery validation plugin.
- * Locale: HU (Hungarian; Magyar)
- */
 $.extend( $.validator.messages, {
 	required: "Kötelező megadni.",
 	maxlength: $.validator.format( "Legfeljebb {0} karakter hosszú legyen." ),

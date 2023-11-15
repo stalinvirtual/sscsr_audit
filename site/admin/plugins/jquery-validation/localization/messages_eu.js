@@ -8,10 +8,7 @@
 	}
 }(function( $ ) {
 
-/*
- * Translated default messages for the jQuery validation plugin.
- * Locale: EU (Basque; euskara, euskera)
- */
+
 $.extend( $.validator.messages, {
 	required: "Eremu hau beharrezkoa da.",
 	remote: "Mesedez, bete eremu hau.",

@@ -1,10 +1,4 @@
-/*
-*   MA5Gallery
-*   v 1.6
-*   Copyright (c) 2015 Tomasz Kalinowski
-*   http://galeria.ma5.pl
-*   GitHub: https://github.com/ma-5/ma5-gallery
-*/ 
+
 ;
 $.fn.ma5preload = function() {
     $('body').append('<div class="ma5-preloadbox"></div>');

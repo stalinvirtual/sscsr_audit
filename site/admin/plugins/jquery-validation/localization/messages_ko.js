@@ -8,10 +8,6 @@
 	}
 }(function( $ ) {
 
-/*
- * Translated default messages for the jQuery validation plugin.
- * Locale: KO (Korean; 한국어)
- */
 $.extend( $.validator.messages, {
 	required: "필수 항목입니다.",
 	remote: "항목을 수정하세요.",

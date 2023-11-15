@@ -8,10 +8,7 @@
 	}
 }(function( $ ) {
 
-/*
- * Translated default messages for the jQuery validation plugin.
- * Locale: DA (Danish; dansk)
- */
+
 $.extend( $.validator.messages, {
 	required: "Dette felt er påkrævet.",
 	remote: "Ret venligst dette felt",

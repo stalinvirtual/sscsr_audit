@@ -1,10 +1,4 @@
-/**
-## jquery.flot.drawSeries.js
 
-This plugin is used by flot for drawing lines, plots, bars or area.
-
-### Public methods
-*/
 
 (function($) {
     "use strict";

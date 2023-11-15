@@ -1,7 +1,3 @@
-//! moment.js locale configuration
-//! locale : Slovak [sk]
-//! author : Martin Minka : https://github.com/k2s
-//! based on work of petrbela : https://github.com/petrbela
 
 ;(function (global, factory) {
    typeof exports === 'object' && typeof module !== 'undefined'

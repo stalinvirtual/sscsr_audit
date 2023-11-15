@@ -8,10 +8,6 @@
 	}
 }(function( $ ) {
 
-/*
- * Translated default messages for the jQuery validation plugin.
- * Locale: CS (Czech; čeština, český jazyk)
- */
 $.extend( $.validator.messages, {
 	required: "Tento údaj je povinný.",
 	remote: "Prosím, opravte tento údaj.",

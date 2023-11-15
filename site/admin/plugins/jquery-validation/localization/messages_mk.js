@@ -8,10 +8,6 @@
 	}
 }(function( $ ) {
 
-/*
- * Translated default messages for the jQuery validation plugin.
- * Locale: MK (Macedonian; македонски јазик)
- */
 $.extend( $.validator.messages, {
 	required: "Полето е задолжително.",
 	remote: "Поправете го ова поле",

@@ -1,6 +1,3 @@
-//! moment.js locale configuration
-//! locale : Gujarati [gu]
-//! author : Kaushik Thanki : https://github.com/Kaushik1987
 
 ;(function (global, factory) {
    typeof exports === 'object' && typeof module !== 'undefined'

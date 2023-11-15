@@ -8,11 +8,6 @@
 	}
 }(function( $ ) {
 
-/*
- * Translated default messages for the jQuery validation plugin.
- * Locale: PT (Portuguese; português)
- * Region: BR (Brazil)
- */
 $.extend( $.validator.messages, {
 
 	// Core

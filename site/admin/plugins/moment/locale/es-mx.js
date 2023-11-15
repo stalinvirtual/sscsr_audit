@@ -1,6 +1,3 @@
-//! moment.js locale configuration
-//! locale : Spanish (Mexico) [es-mx]
-//! author : JC Franco : https://github.com/jcfranco
 
 ;(function (global, factory) {
    typeof exports === 'object' && typeof module !== 'undefined'

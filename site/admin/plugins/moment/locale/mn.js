@@ -1,6 +1,3 @@
-//! moment.js locale configuration
-//! locale : Mongolian [mn]
-//! author : Javkhlantugs Nyamdorj : https://github.com/javkhaanj7
 
 ;(function (global, factory) {
    typeof exports === 'object' && typeof module !== 'undefined'

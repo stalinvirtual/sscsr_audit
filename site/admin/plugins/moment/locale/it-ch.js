@@ -1,6 +1,3 @@
-//! moment.js locale configuration
-//! locale : Italian (Switzerland) [it-ch]
-//! author : xfh : https://github.com/xfh
 
 ;(function (global, factory) {
    typeof exports === 'object' && typeof module !== 'undefined'

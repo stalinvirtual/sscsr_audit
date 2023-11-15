@@ -1,6 +1,3 @@
-//! moment.js locale configuration
-//! locale : Arabic (Lybia) [ar-ly]
-//! author : Ali Hmer: https://github.com/kikoanis
 
 ;(function (global, factory) {
    typeof exports === 'object' && typeof module !== 'undefined'

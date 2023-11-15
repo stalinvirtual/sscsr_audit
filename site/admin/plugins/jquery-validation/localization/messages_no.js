@@ -8,10 +8,7 @@
 	}
 }(function( $ ) {
 
-/*
- * Translated default messages for the jQuery validation plugin.
- * Locale: NO (Norwegian; Norsk)
- */
+
 $.extend( $.validator.messages, {
 	required: "Angi en verdi.",
 	remote: "Ugyldig verdi.",

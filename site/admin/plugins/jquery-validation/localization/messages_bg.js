@@ -8,10 +8,7 @@
 	}
 }(function( $ ) {
 
-/*
- * Translated default messages for the jQuery validation plugin.
- * Locale: BG (Bulgarian; български език)
- */
+
 $.extend( $.validator.messages, {
 	required: "Полето е задължително.",
 	remote: "Моля, въведете правилната стойност.",

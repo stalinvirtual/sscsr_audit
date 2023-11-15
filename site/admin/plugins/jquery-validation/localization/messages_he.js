@@ -8,10 +8,7 @@
 	}
 }(function( $ ) {
 
-/*
- * Translated default messages for the jQuery validation plugin.
- * Locale: HE (Hebrew; עברית)
- */
+
 $.extend( $.validator.messages, {
 	required: "השדה הזה הינו שדה חובה",
 	remote: "נא לתקן שדה זה",

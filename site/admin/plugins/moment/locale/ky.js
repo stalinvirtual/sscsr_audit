@@ -1,6 +1,3 @@
-//! moment.js locale configuration
-//! locale : Kyrgyz [ky]
-//! author : Chyngyz Arystan uulu : https://github.com/chyngyz
 
 ;(function (global, factory) {
    typeof exports === 'object' && typeof module !== 'undefined'

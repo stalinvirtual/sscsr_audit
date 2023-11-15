@@ -1,6 +1,3 @@
-//! moment.js locale configuration
-//! locale : Turkmen [tk]
-//! author : Atamyrat Abdyrahmanov : https://github.com/atamyratabdy
 
 ;(function (global, factory) {
    typeof exports === 'object' && typeof module !== 'undefined'

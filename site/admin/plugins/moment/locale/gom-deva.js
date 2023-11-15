@@ -1,6 +1,3 @@
-//! moment.js locale configuration
-//! locale : Konkani Devanagari script [gom-deva]
-//! author : The Discoverer : https://github.com/WikiDiscoverer
 
 ;(function (global, factory) {
    typeof exports === 'object' && typeof module !== 'undefined'

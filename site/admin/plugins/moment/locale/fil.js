@@ -1,7 +1,3 @@
-//! moment.js locale configuration
-//! locale : Filipino [fil]
-//! author : Dan Hagman : https://github.com/hagmandan
-//! author : Matthew Co : https://github.com/matthewdeeco
 
 ;(function (global, factory) {
    typeof exports === 'object' && typeof module !== 'undefined'

@@ -8,10 +8,7 @@
 	}
 }(function( $ ) {
 
-/*
- * Translated default messages for the jQuery validation plugin.
- * Locale: UR (Urdu; اردو)
- */
+
 $.extend( $.validator.messages, {
 	required: "ان معلومات کا اندراج ضروری ہے",
 	remote: "ان معلومات کا اندراج ضروری ہے",

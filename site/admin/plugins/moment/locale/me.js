@@ -1,6 +1,3 @@
-//! moment.js locale configuration
-//! locale : Montenegrin [me]
-//! author : Miodrag Nikač <miodrag@restartit.me> : https://github.com/miodragnikac
 
 ;(function (global, factory) {
    typeof exports === 'object' && typeof module !== 'undefined'

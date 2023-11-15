@@ -8,10 +8,6 @@
 	}
 }(function( $ ) {
 
-/*
- * Translated default messages for the jQuery validation plugin.
- * Locale: EL (Greek; ελληνικά)
- */
 $.extend( $.validator.messages, {
 	required: "Αυτό το πεδίο είναι υποχρεωτικό.",
 	remote: "Παρακαλώ διορθώστε αυτό το πεδίο.",

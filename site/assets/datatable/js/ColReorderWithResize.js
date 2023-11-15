@@ -1,33 +1,3 @@
-/*
- * File:        ColReorderWithResize.js
- * Version:     1.0.7
- * CVS:         $Id$
- * Description: Allow columns to be reordered in a DataTable
- * Author:      Allan Jardine (www.sprymedia.co.uk)
- * Author:      Christophe Battarel (www.altairis.fr)
- * Created:     Wed Sep 15 18:23:29 BST 2010
- * Modified:    July 2011 by Christophe Battarel - christophe.battarel@altairis.fr (columns resizable)
- * Modified:    February 2012 by Martin Marchetta - martin.marchetta@gmail.com
- *  1. Made the "hot area" for resizing a little wider (it was a little difficult to hit the exact border of a column for resizing)
- *  2. Resizing didn't work at all when using scroller (that plugin splits the table into 2 different tables: one for the header and another one for the body, so when you resized the header, the data columns didn't follow)
- *  3. Fixed collateral effects of sorting feature
- *  4. If sScrollX is enabled (i.e. horizontal scrolling), when resizing a column the width of the other columns is not changed, but the whole
- *     table is resized to give an Excel-like behavior (good suggestion by Allan)
- * Modified:    February 2012 by Christophe Battarel - christophe.battarel@altairis.fr (ColReorder v1.0.5 adaptation)
- * Modified:    September 16th 2012 by Hassan Kamara - h@phrmc.com
- * Language:    Javascript
- * License:     GPL v2 or BSD 3 point style
- * Project:     DataTables
- * Contact:     www.sprymedia.co.uk/contact
- * 
- * Copyright 2010-2011 Allan Jardine, all rights reserved.
- *
- * This source file is free software, under either the GPL v2 license or a
- * BSD style license, available at:
- *   http://datatables.net/license_gpl2
- *   http://datatables.net/license_bsd
- *
- */
 
 
 (function($, window, document) {

@@ -8,10 +8,7 @@
 	}
 }(function( $ ) {
 
-/*
- * Translated default messages for the jQuery validation plugin.
- * Locale: SI (Slovenian)
- */
+
 $.extend( $.validator.messages, {
 	required: "To polje je obvezno.",
 	remote: "Vpis v tem polju ni v pravi obliki.",

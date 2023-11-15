@@ -8,10 +8,7 @@
 	}
 }(function( $ ) {
 
-/*
- * Translated default messages for the jQuery validation plugin.
- * Locale: bn_BD (Bengali, Bangladesh)
- */
+
 $.extend( $.validator.messages, {
 	required: "এই তথ্যটি আবশ্যক।",
 	remote: "এই তথ্যটি ঠিক করুন।",

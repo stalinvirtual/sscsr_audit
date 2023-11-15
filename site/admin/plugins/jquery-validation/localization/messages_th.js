@@ -8,10 +8,7 @@
 	}
 }(function( $ ) {
 
-/*
- * Translated default messages for the jQuery validation plugin.
- * Locale: TH (Thai; ไทย)
- */
+
 $.extend( $.validator.messages, {
 	required: "โปรดระบุ",
 	remote: "โปรดแก้ไขให้ถูกต้อง",

@@ -8,10 +8,6 @@
 	}
 }(function( $ ) {
 
-/*
- * Translated default messages for the jQuery validation plugin.
- * Locale: VI (Vietnamese; Tiếng Việt)
- */
 $.extend( $.validator.messages, {
 	required: "Hãy nhập.",
 	remote: "Hãy sửa cho đúng.",

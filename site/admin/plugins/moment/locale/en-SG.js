@@ -1,6 +1,3 @@
-//! moment.js locale configuration
-//! locale : English (Singapore) [en-sg]
-//! author : Matthew Castrillon-Madrigal : https://github.com/techdimension
 
 ;(function (global, factory) {
    typeof exports === 'object' && typeof module !== 'undefined'

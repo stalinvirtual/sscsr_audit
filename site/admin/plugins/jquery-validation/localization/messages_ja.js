@@ -8,10 +8,6 @@
 	}
 }(function( $ ) {
 
-/*
- * Translated default messages for the jQuery validation plugin.
- * Locale: JA (Japanese; 日本語)
- */
 $.extend( $.validator.messages, {
 	required: "このフィールドは必須です。",
 	remote: "このフィールドを修正してください。",

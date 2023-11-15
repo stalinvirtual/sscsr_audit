@@ -8,10 +8,7 @@
 	}
 }(function( $ ) {
 
-/*
- * Translated default messages for the jQuery validation plugin.
- * Locale: Az (Azeri; azərbaycan dili)
- */
+
 $.extend( $.validator.messages, {
 	required: "Bu xana mütləq doldurulmalıdır.",
 	remote: "Zəhmət olmasa, düzgün məna daxil edin.",

@@ -1,10 +1,3 @@
-//! moment.js locale configuration
-//! locale : Arabic (Algeria) [ar-dz]
-//! author : Amine Roukh: https://github.com/Amine27
-//! author : Abdel Said: https://github.com/abdelsaid
-//! author : Ahmed Elkhatib
-//! author : forabi https://github.com/forabi
-//! author : Noureddine LOUAHEDJ : https://github.com/noureddinem
 
 ;(function (global, factory) {
    typeof exports === 'object' && typeof module !== 'undefined'

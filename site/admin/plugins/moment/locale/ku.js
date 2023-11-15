@@ -1,6 +1,3 @@
-//! moment.js locale configuration
-//! locale : Kurdish [ku]
-//! author : Shahram Mebashar : https://github.com/ShahramMebashar
 
 ;(function (global, factory) {
    typeof exports === 'object' && typeof module !== 'undefined'

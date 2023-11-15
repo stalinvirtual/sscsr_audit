@@ -1,6 +1,3 @@
-//! moment.js locale configuration
-//! locale : Swedish [sv]
-//! author : Jens Alm : https://github.com/ulmus
 
 ;(function (global, factory) {
    typeof exports === 'object' && typeof module !== 'undefined'

@@ -8,10 +8,6 @@
 	}
 }(function( $ ) {
 
-/*
- * Translated default messages for the jQuery validation plugin.
- * Locale: SD (Sindhi; سنڌي)
- */
 $.extend( $.validator.messages, {
     required: "هنن جاين جي ضرورت آهي",
     remote: "هنن جاين جي ضرورت آهي",

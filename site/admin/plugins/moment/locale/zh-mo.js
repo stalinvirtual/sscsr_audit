@@ -1,8 +1,3 @@
-//! moment.js locale configuration
-//! locale : Chinese (Macau) [zh-mo]
-//! author : Ben : https://github.com/ben-lin
-//! author : Chris Lam : https://github.com/hehachris
-//! author : Tan Yuanhong : https://github.com/le0tan
 
 ;(function (global, factory) {
    typeof exports === 'object' && typeof module !== 'undefined'

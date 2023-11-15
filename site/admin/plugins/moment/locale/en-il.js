@@ -1,6 +1,3 @@
-//! moment.js locale configuration
-//! locale : English (Israel) [en-il]
-//! author : Chris Gedrim : https://github.com/chrisgedrim
 
 ;(function (global, factory) {
    typeof exports === 'object' && typeof module !== 'undefined'

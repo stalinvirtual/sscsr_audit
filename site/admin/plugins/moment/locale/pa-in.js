@@ -1,6 +1,3 @@
-//! moment.js locale configuration
-//! locale : Punjabi (India) [pa-in]
-//! author : Harpreet Singh : https://github.com/harpreetkhalsagtbit
 
 ;(function (global, factory) {
    typeof exports === 'object' && typeof module !== 'undefined'

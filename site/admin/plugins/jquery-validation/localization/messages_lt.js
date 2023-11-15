@@ -8,10 +8,7 @@
 	}
 }(function( $ ) {
 
-/*
- * Translated default messages for the jQuery validation plugin.
- * Locale: LT (Lithuanian; lietuvių kalba)
- */
+
 $.extend( $.validator.messages, {
 	required: "Šis laukas yra privalomas.",
 	remote: "Prašau pataisyti šį lauką.",

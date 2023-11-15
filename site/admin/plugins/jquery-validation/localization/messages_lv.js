@@ -8,10 +8,7 @@
 	}
 }(function( $ ) {
 
-/*
- * Translated default messages for the jQuery validation plugin.
- * Locale: LV (Latvian; latviešu valoda)
- */
+
 $.extend( $.validator.messages, {
 	required: "Šis lauks ir obligāts.",
 	remote: "Lūdzu, pārbaudiet šo lauku.",

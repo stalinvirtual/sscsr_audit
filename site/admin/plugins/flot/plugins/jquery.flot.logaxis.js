@@ -1,22 +1,4 @@
-/* Pretty handling of log axes.
 
-Copyright (c) 2007-2014 IOLA and Ole Laursen.
-Copyright (c) 2015 Ciprian Ceteras cipix2000@gmail.com.
-Copyright (c) 2017 Raluca Portase
-Licensed under the MIT license.
-
-Set axis.mode to "log" to enable.
-*/
-
-/* global jQuery*/
-
-/**
-## jquery.flot.logaxis
-This plugin is used to create logarithmic axis. This includes tick generation,
-formatters and transformers to and from logarithmic representation.
-
-### Methods and hooks
-*/
 
 (function ($) {
     'use strict';

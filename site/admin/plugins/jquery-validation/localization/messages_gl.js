@@ -8,10 +8,7 @@
 	}
 }(function( $ ) {
 
-/*
- * Translated default messages for the jQuery validation plugin.
- * Locale: GL (Galician; Galego)
- */
+
 ( function( $ ) {
 	$.extend( $.validator.messages, {
 		required: "Este campo é obrigatorio.",

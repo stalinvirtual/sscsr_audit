@@ -8,10 +8,6 @@
 	}
 }(function( $ ) {
 
-/*
- * Translated default messages for the jQuery validation plugin.
- * Locale: HY_AM (Armenian; հայերեն լեզու)
- */
 $.extend( $.validator.messages, {
 	required: "Պարտադիր լրացման դաշտ",
 	remote: "Ներմուծեք ճիշտ արժեքը",

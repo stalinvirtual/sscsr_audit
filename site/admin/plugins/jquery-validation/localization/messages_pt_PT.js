@@ -8,11 +8,6 @@
 	}
 }(function( $ ) {
 
-/*
- * Translated default messages for the jQuery validation plugin.
- * Locale: PT (Portuguese; português)
- * Region: PT (Portugal)
- */
 $.extend( $.validator.messages, {
 	required: "Campo de preenchimento obrigat&oacute;rio.",
 	remote: "Por favor, corrija este campo.",

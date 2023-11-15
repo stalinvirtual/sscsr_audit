@@ -1,6 +1,3 @@
-//! moment.js locale configuration
-//! locale : Kannada [kn]
-//! author : Rajeev Naik : https://github.com/rajeevnaikte
 
 ;(function (global, factory) {
    typeof exports === 'object' && typeof module !== 'undefined'

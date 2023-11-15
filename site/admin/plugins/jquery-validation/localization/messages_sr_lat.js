@@ -8,10 +8,6 @@
 	}
 }(function( $ ) {
 
-/*
- * Translated default messages for the jQuery validation plugin.
- * Locale: SR (Serbian - Latin alphabet; srpski jezik - latinica)
- */
 $.extend( $.validator.messages, {
 	required: "Polje je obavezno.",
 	remote: "Sredite ovo polje.",

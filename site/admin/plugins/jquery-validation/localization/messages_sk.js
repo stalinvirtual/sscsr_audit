@@ -8,10 +8,6 @@
 	}
 }(function( $ ) {
 
-/*
- * Translated default messages for the jQuery validation plugin.
- * Locale: SK (Slovak; slovenčina, slovenský jazyk)
- */
 $.extend( $.validator.messages, {
 	required: "Povinné zadať.",
 	maxlength: $.validator.format( "Maximálne {0} znakov." ),

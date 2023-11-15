@@ -1,6 +1,3 @@
-//! moment.js locale configuration
-//! locale : Irish or Irish Gaelic [ga]
-//! author : André Silva : https://github.com/askpt
 
 ;(function (global, factory) {
    typeof exports === 'object' && typeof module !== 'undefined'

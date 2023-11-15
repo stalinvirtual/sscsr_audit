@@ -1,8 +1,3 @@
-//! moment.js locale configuration
-//! locale : Italian [it]
-//! author : Lorenzo : https://github.com/aliem
-//! author: Mattia Larentis: https://github.com/nostalgiaz
-//! author: Marco : https://github.com/Manfre98
 
 ;(function (global, factory) {
    typeof exports === 'object' && typeof module !== 'undefined'

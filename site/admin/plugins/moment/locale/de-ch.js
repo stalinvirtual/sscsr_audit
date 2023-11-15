@@ -1,6 +1,3 @@
-//! moment.js locale configuration
-//! locale : German (Switzerland) [de-ch]
-//! author : sschueller : https://github.com/sschueller
 
 ;(function (global, factory) {
    typeof exports === 'object' && typeof module !== 'undefined'

@@ -1,6 +1,3 @@
-//! moment.js locale configuration
-//! locale : Uyghur (China) [ug-cn]
-//! author: boyaq : https://github.com/boyaq
 
 ;(function (global, factory) {
    typeof exports === 'object' && typeof module !== 'undefined'

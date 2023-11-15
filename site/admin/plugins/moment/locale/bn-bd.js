@@ -1,6 +1,3 @@
-//! moment.js locale configuration
-//! locale : Bengali (Bangladesh) [bn-bd]
-//! author : Asraf Hossain Patoary : https://github.com/ashwoolford
 
 ;(function (global, factory) {
    typeof exports === 'object' && typeof module !== 'undefined'

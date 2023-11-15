@@ -8,10 +8,6 @@
 	}
 }(function( $ ) {
 
-/*
- * Translated default messages for the jQuery validation plugin.
- * Locale: CA (Catalan; català)
- */
 $.extend( $.validator.messages, {
 	required: "Aquest camp és obligatori.",
 	remote: "Si us plau, omple aquest camp.",

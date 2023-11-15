@@ -8,10 +8,7 @@
 	}
 }(function( $ ) {
 
-/*
- * Translated default messages for the jQuery validation plugin.
- * Locale: SV (Swedish; Svenska)
- */
+
 $.extend( $.validator.messages, {
 	required: "Detta f&auml;lt &auml;r obligatoriskt.",
 	remote: "Var snäll och åtgärda detta fält.",

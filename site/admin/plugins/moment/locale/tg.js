@@ -1,6 +1,3 @@
-//! moment.js locale configuration
-//! locale : Tajik [tg]
-//! author : Orif N. Jr. : https://github.com/orif-jr
 
 ;(function (global, factory) {
    typeof exports === 'object' && typeof module !== 'undefined'

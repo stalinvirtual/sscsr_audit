@@ -8,10 +8,7 @@
 	}
 }(function( $ ) {
 
-/*
- * Translated default messages for the jQuery validation plugin.
- * Locale: ZH (Chinese, 中文 (Zhōngwén), 汉语, 漢語)
- */
+
 $.extend( $.validator.messages, {
 	required: "这是必填字段",
 	remote: "请修正此字段",

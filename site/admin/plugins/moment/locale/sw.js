@@ -1,6 +1,3 @@
-//! moment.js locale configuration
-//! locale : Swahili [sw]
-//! author : Fahad Kassim : https://github.com/fadsel
 
 ;(function (global, factory) {
    typeof exports === 'object' && typeof module !== 'undefined'
