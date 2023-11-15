@@ -402,10 +402,10 @@ class PdfHelper extends Dompdf
                $key83 = $value["col_description"];
                $value83 = $value["col_value"] == "NA" ? "" : $value["col_value"];
                break;
-            case "85":
+            case "82":
                //Language
-               $key85 = $value["col_description"];
-               $value85 = $value["col_value"] == "NA" ? "NA" : $value["col_value"];
+               $key82 = $value["col_description"];
+               $value82 = $value["col_value"] == "NA" ? "NA" : $value["col_value"];
                break;
             case "84":
                //Compensatory Time 
@@ -668,7 +668,7 @@ class PdfHelper extends Dompdf
       <tr style="padding:10px">
          <td  style="text-align: left" width="50%" class="fontSizeClass"><b>' . $key7 . ': </b>' . $value7 . '</td>
          <td  style="text-align: left" width="24%" class="fontSizeClass"><b>' . $key8 . ': </b> ' . $value8 . ' </td>
-         <td  style="text-align: left" width="26%" class="fontSizeClass"><b>' . $key85 . ' : </b> ' . $value85 . ' </td>
+         <td  style="text-align: left" width="26%" class="fontSizeClass"><b>' . $key82 . ' : </b> ' . $value82 . ' </td>
       </tr>
    </table>
    <!-- Password For Examination and Gender -->
@@ -812,7 +812,7 @@ class PdfHelper extends Dompdf
          }
       }
       $tableArray = array(
-         "Date" => $date1,
+         "Date" =>date("d-m-Y", strtotime($date1)),
          "Shift" => $shift1,
          "Time" => $time1,
          "Paper/Session" => $paper1,
