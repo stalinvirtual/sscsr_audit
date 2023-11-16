@@ -124,7 +124,7 @@ $base_url =  "http://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
    white-space: nowrap;
 }
  </style>
-<script src = "https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js" > </script> 
+ <script src = "https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js" > </script>  
 <script>
     $(document).ready(function() {
 		var select2Dropdown = $("#examname");

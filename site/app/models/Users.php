@@ -35,16 +35,16 @@ class Users extends DB
         $user = $this->select("user_role")->from("user_role")->where(['id' => $id, 'status' => 'true']);
         return $user->user_role;
     }
-    public function authenticate($username, $md5Password)
+    public function authenticate($username, $Password)
     {
         $username = Helpers::cleanData($username);
-        $md5Password = Helpers::cleanData($md5Password);
+        $md5Password = Helpers::cleanData($Password);
 
         $fetch_row  = $this->select('accounts.username as username, accounts.password as cpassword, 
  accounts.user_id as userid, roles.role_id as roleid, roles.role_name as rolename')
             ->from("accounts")
             ->join("roles ", "accounts.user_role_id = roles.role_id", "JOIN")
-            ->where(['accounts.username' => $username, 'accounts.password' => $md5Password])
+            ->where(['accounts.username' => $username, 'accounts.password' => $Password])
             ->get_one(DB_ASSOC);
 
 

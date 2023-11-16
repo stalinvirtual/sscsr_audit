@@ -1,7 +1,6 @@
 <?php
 
 namespace App\Helpers;
-
 #use App\Models\Instructions;
 use App\Models\MstNotice;
 use App\Models\Post;
@@ -210,7 +209,6 @@ class Helpers
 	static function getInstructions()
 	{
 		$instructions_model = new Instructions();
-	
 		$getInstructionsList = $instructions_model->getInstructions();
 		return $getInstructionsList;
 	}
@@ -439,388 +437,32 @@ class Helpers
 		$faq_details = $faq->getFaqDatails();
 		return  $faq_details;
 	}
+	static function validateAndSanitizeHelper($input)
+	{
+		// Trim whitespace
+		$input = trim($input);
+		// Remove backslashes
+		$input = stripslashes($input);
+		// Use htmlspecialchars to encode special characters
+		$input = htmlspecialchars($input, ENT_QUOTES, 'UTF-8');
+		// Your additional validation logic goes here
+		// For example, checking if the input follows a specific pattern
+		return $input;
+	}
 	static function getAdmitCardDetails()
 	{
-
-	
-		
+		$_POST = filter_input_array(INPUT_POST, FILTER_DEFAULT);
 		$errorMsg = "";
+		if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 		// Verify CSRF token
-		
-			if (isset($_POST['examname'])) {
-				
-				if (!hash_equals($_SESSION['csrf_token'], $_POST['csrf_token'])) {
-		// Token mismatch, handle the error (e.g., log it or display an error message)
-		$errorMsg ="CSRF token verification failed.";
-	}
-
-		 $register_number     = trim($_POST['register_number']);
-				
-				$dob   = trim($_POST['dob']);
-				$examname = trim($_POST['examname']);
-				$examname = explode('_', $examname);
-				if ($examname[0] == 'phase') {
-					$exam_value = $examname[0] . '_' . $examname[1] . '_' . $examname[2] . '_' . $examname[3] . '_' . $examname[4];
-					$exam_type = $examname[4];
-					$tier_id = $examname[5];
-				} else {
-					$exam_value = $examname[0] . '_' . $examname[1] . '_' . $examname[2];
-					$exam_type = $examname[2];
-					$tier_id = $examname[3];
-				}
-				$roll_no =  isset($_POST['roll_number']) ? trim($_POST['roll_number']) : null;
-				$post_preference =  isset($_POST['post_preference_one']) ? trim($_POST['post_preference_one']) : null;
-				$data_array = array(
-					"table_name" => $exam_value,
-					"register_number" => $register_number,
-					"dob" => $dob,
-					"tier_id" => $tier_id,
-					"roll_no" => $roll_no,
-					"post_preference" => $post_preference
-				);
-	
-				
-				$tableName = $exam_value;
-				$admitcard = new Admitcard();
-				switch ($exam_type) {
-					case "tier":
-						//if exam type is written exam -start
-						$modelClass = new Admitcard();
-						$data =  $modelClass->getQueryListTIER();
-						//	$admitcard->savetest();
-						if ($admitcard->getAdmitcardforTierCount($data_array)) { 
-
-
-					//	exit;
-					//ob_start();
-							
-							if ($admitcard->getAdmitcardforTier($data_array)) {
-							
-								//exit;
-								$admitcardresults = $admitcard->getAdmitcardforTier($data_array);
-								//$this->printr($admitcardresults);
-								$array = json_decode(json_encode($admitcardresults), true);
-								$exam_name = $admitcard->getExamName($exam_value);
-								@$count = count((array)$admitcardresults);
-								$arrays = [];
-								foreach ($data as $val) {
-									foreach (array_keys($array) as $res) {
-										if ($res == $val->col_name) {
-											$col_value =  $array[$res];
-										}
-										if ($res == 'pdf_attachment') {
-											$pdf_name =  $array[$res];
-										}
-										if ($res == 'candidate_address') {
-											$candidate_address =  $array[$res];
-										}
-										if ($res == 'exam_code') {
-											$exam_year =  substr($array[$res], -4);
-										}
-									}
-									$arrays[] = array(
-										"col_name" => $val->col_name,
-										"col_description" => $val->col_description,
-										"is_tier" => $val->is_tier,
-										"is_tier_order" => $val->is_tier_order,
-										"col_value" => $col_value
-									);
-								}
-								$datavalue = (object)$arrays;
-								return ['admitcardresults' => $datavalue, 'year_of_exam' => $exam_year, 'count' => $count, "exam_name" => $exam_name, "pdf_name" => @$pdf_name, "exam_type" => $exam_type, "candidate_address" => $candidate_address, "tier_id" => $tier_id, "tableName" => $tableName, "regNo" => $register_number];
-						
-							} else {
-								$modelClass 		  = new Admitcard();
-								$data_from_fetch_tier 		 		  =  $modelClass->getNoTier($data_array);
-								$examDateObj    	  = $data_from_fetch_tier->date1;
-								$currentDateObj 	  = $data_from_fetch_tier->current_date;
-								//$currentDateObj 	  = "2023-10-18";
-								$downloadStartDateObj = $data_from_fetch_tier->enabledate;
-								$no_of_days           = $data_from_fetch_tier->no_of_days;
-								if ($currentDateObj > $examDateObj) {
-									$errorMsg   =  'Your scheduled date of Exam was over. You cannot download e-admit card';
-								} elseif ($currentDateObj < $downloadStartDateObj) {
-									$exam_date = date("d-m-Y", strtotime($examDateObj));
-									$download_date = date("d-m-Y", strtotime($downloadStartDateObj));
-									$errorMsg = "Your date of Exam $exam_date. You can download your e-admit card from $download_date ";
-								} else {
-									$errorMsg   = 'Exam is scheduled for a future date';
-								}
-							}
-						} else {
-							$errorMsg = "Your credentials are NOT correct. Please try with correct credentials";
-						}
-						
-						//ob_end_flush(); 
-						
-						break;
-					case "skill":
-						$modelClass = new Admitcard();
-						$data =  $modelClass->getQueryListSKILLTEST();  //1
-						if ($admitcard->getAdmitcardforTierCount($data_array)) {//2
-							if ($admitcard->getAdmitcardforSkillTest($data_array)) { //3
-								$admitcardresults = $admitcard->getAdmitcardforSkillTest($data_array);
-								//$this->printr($admitcardresults);
-								$array = json_decode(json_encode($admitcardresults), true);
-								$exam_name = $admitcard->getExamName($exam_value);
-								@$count = count((array)$admitcardresults);
-								$arrays = [];
-								foreach ($data as $val) {
-									foreach (array_keys($array) as $res) {
-										if ($res == $val->col_name) {
-											$col_value =  $array[$res];
-										}
-										if ($res == 'pdf_attachment') {
-											$pdf_name =  $array[$res];
-										}
-										if ($res == 'candidate_address') {
-											$candidate_address =  $array[$res];
-										}
-										if ($res == 'exam_code') {
-											$exam_year =  substr($array[$res], -4);
-										}
-									}
-									$arrays[] = array(
-										"col_name" => $val->col_name,
-										"col_description" => $val->col_description,
-										"is_skill" => $val->is_skill,//4
-										"is_skill_order" => $val->is_skill_order,
-										"col_value" => $col_value
-									);
-								}
-								$datavalue = (object)$arrays;
-								return ['admitcardresults' => $datavalue, 'count' => $count, "exam_name" => $exam_name, "pdf_name" => @$pdf_name, 'year_of_exam' => $exam_year, "exam_type" => $exam_type, "candidate_address" => $candidate_address, "tier_id" => $tier_id, "tableName" => $tableName, "regNo" => $register_number];
-							} else {
-								$modelClass 			  = new Admitcard();
-								$data 		 		  =  $modelClass->getNoSkillTest($data_array);//5
-								$examDateObj    	  = $data->skill_test_date;//6
-								$currentDateObj 	  = $data->current_date;//7
-								$downloadStartDateObj = $data->enableDate;
-								$no_of_days           = $data->no_of_days;
-								if ($currentDateObj > $examDateObj) {
-									$errorMsg   =  'Your scheduled date of Exam was over. You cannot download e-admit card';
-								} elseif ($currentDateObj < $downloadStartDateObj) {
-									$exam_date = date("d-m-Y", strtotime($examDateObj));
-									$download_date = date("d-m-Y", strtotime($downloadStartDateObj));
-									$errorMsg = "Your date of Exam $exam_date. You can download your e-admit card from $download_date ";
-								} else {
-									$errorMsg   = 'Exam is scheduled for a future date';
-								}
-							}
-						} else {
-							$errorMsg = "Your credentials are NOT correct. Please try with correct credentials";
-						}
-						break;
-					case "pet":
-						// If exam Type is PET Start
-						$modelClass = new Admitcard();
-						$data =  $modelClass->getQueryListPET();
-						if ($admitcard->getAdmitcardforTierCount($data_array)) {
-							if ($admitcard->getAdmitcardforPET($data_array)) {
-								$admitcardresults = $admitcard->getAdmitcardforPET($data_array);
-								/* echo "<pre>";
-				print_r($admitcardresults);
-				exit; */
-								$array = json_decode(json_encode($admitcardresults), true);
-								$exam_name = $admitcard->getExamName($exam_value);
-								@$count = count((array)$admitcardresults);
-								$arrays = [];
-								foreach ($data as $val) {
-									foreach (array_keys($array) as $res) {
-										if ($res == $val->col_name) {
-											$col_value =  $array[$res];
-										}
-										if ($res == 'pdf_attachment') {
-											@$pdf_name =  $array[$res];
-										}
-										if ($res == 'candidate_address') {
-											$candidate_address =  $array[$res];
-										}
-									}
-									$arrays[] = array(
-										"col_name" => $val->col_name,
-										"col_description" => $val->col_description,
-										"is_pet" => $val->is_pet,
-										"is_pet_order" => $val->is_pet_order,
-										"col_value" => $col_value
-									);
-								}
-								$datavalue = (object)$arrays;
-								$exam_year = $exam_name->table_exam_year;
-								return ['admitcardresults' => $datavalue, 'year_of_exam' => $exam_year, 'count' => $count, "exam_name" => $exam_name, "pdf_name" => @$pdf_name, "exam_type" => $exam_type, "candidate_address" => $candidate_address, "tier_id" => $tier_id, "tableName" => $tableName, "regNo" => $register_number];
-							} else {
-								$modelClass 			  = new Admitcard();
-								$data 		 		  =  $modelClass->getNoPET($data_array);
-								$examDateObj    	  = $data->pet_date;
-								$currentDateObj 	  = $data->current_date;
-								$downloadStartDateObj = $data->enabledate;
-								$no_of_days           = $data->no_of_days;
-								if ($currentDateObj > $examDateObj) {
-									$errorMsg   =  'Your scheduled date of Exam was over. You cannot download e-admit card';
-								} elseif ($currentDateObj < $downloadStartDateObj) {
-									$exam_date = date("d-m-Y", strtotime($examDateObj));
-									$download_date = date("d-m-Y", strtotime($downloadStartDateObj));
-									$errorMsg = "Your date of Exam $exam_date. You can download your e-admit card from $download_date ";
-								} else {
-									$errorMsg   = 'Exam is scheduled for a future date';
-								}
-							}
-						} else {
-							$errorMsg = "Your credentials are NOT correct. Please try with correct credentials";
-						}
-						// If exam Type is PET End
-						break;
-					case "dme":
-						// If exam Type is DME Start
-						$modelClass = new Admitcard();
-						$data =  $modelClass->getQueryListDME();
-						if ($admitcard->getAdmitcardforTierCount($data_array)) {
-							if ($admitcard->getAdmitcardforDME($data_array)) {
-								$admitcardresults = $admitcard->getAdmitcardforDME($data_array);
-								// echo "<pre>";
-								// print_r($admitcardresults);
-								// exit; 
-								$array = json_decode(json_encode($admitcardresults), true);
-								$exam_name = $admitcard->getExamName($exam_value);
-								$count = count((array)$admitcardresults);
-								$arrays = [];
-								foreach ($data as $val) {
-									foreach (array_keys($array) as $res) {
-										if ($res == $val->col_name) {
-											$col_value =  $array[$res];
-										}
-										if ($res == 'pdf_attachment') {
-											$pdf_name =  $array[$res];
-										}
-										if ($res == 'candidate_address') {
-											$candidate_address =  $array[$res];
-										}
-									}
-									$arrays[] = array(
-										"col_name" => $val->col_name,
-										"col_description" => $val->col_description,
-										"is_dme" => $val->is_dme,
-										"is_dme_order" => $val->is_dme_order,
-										"col_value" => $col_value
-									);
-								}
-								$datavalue = (object)$arrays;
-								//$this->printr($datavalue);
-								$exam_year = $exam_name->table_exam_year;
-								return ['admitcardresults' => $datavalue, 'year_of_exam' => $exam_year, 'count' => $count, "exam_name" => $exam_name, "pdf_name" => @$pdf_name, "exam_type" => $exam_type, "candidate_address" => $candidate_address, "tier_id" => $tier_id, "tableName" => $tableName, "regNo" => $register_number];
-							} else {
-								
-								$modelClass 			  = new Admitcard();
-								$data 		 		  =  $modelClass->getNoDME($data_array);
-							
-								$examDateObj    	  = $data->date_of_dme;
-								$currentDateObj 	  = $data->current_date;
-								$downloadStartDateObj = $data->enabledate;
-								$no_of_days           = $data->no_of_days;
-								if ($currentDateObj > $examDateObj) {
-									$errorMsg   =  'Your scheduled date of Exam was over. You cannot download e-admit card';
-								} elseif ($currentDateObj < $downloadStartDateObj) {
-									$exam_date = date("d-m-Y", strtotime($examDateObj));
-									$download_date = date("d-m-Y", strtotime($downloadStartDateObj));
-									$errorMsg = "Your date of Exam $exam_date. You can download your e-admit card from $download_date ";
-								} else {
-									$errorMsg   = 'Exam is scheduled for a future date';
-								}
-							}
-						} else {
-							$errorMsg = "Your credentials are NOT correct. Please try with correct credentials";
-						}
-						// If exam Type is DME End
-						break;
-					default:
-						//if exam type is DV -start
-						$modelClass = new Admitcard();
-						$data =  $modelClass->getQueryListDV();
-						if ($admitcard->getAdmitcardforTierCount($data_array)) {
-							if ($admitcard->getAdmitcardforDV($data_array)) {
-								$admitcardresults = $admitcard->getAdmitcardforDV($data_array);
-								$array = json_decode(json_encode($admitcardresults), true);
-								$exam_name = $admitcard->getExamName($exam_value);
-								$count = count((array)$admitcardresults);
-								$arrays = [];
-								foreach ($data as $val) {
-									foreach (array_keys($array) as $res) {
-										if ($res == $val->col_name) {
-											$col_value =  $array[$res];
-										}
-										if ($res == 'pdf_attachment') {
-											$pdf_name =  $array[$res];
-										}
-									}
-									$arrays[] = array(
-										"col_name" => $val->col_name,
-										"col_description" => $val->col_description,
-										"is_dv" => $val->is_dv,
-										"is_dv_order" => $val->is_dv_order,
-										"col_value" => $col_value
-									);
-								}
-								$datavalue = (object)$arrays;
-								$exam_year = $exam_name->table_exam_year;
-								//$this->printr($datavalue);
-								return [
-									'admitcardresults' => $datavalue,
-									'year_of_exam' => $exam_year,
-									'count' => $count,
-									"exam_name" => $exam_name,
-									"pdf_name" => @$pdf_name,
-									"exam_type" => $exam_type,
-									"tier_id" => $tier_id,
-									"tableName" => $tableName,
-									"regNo" => $register_number,
-									"post_preference" => $post_preference
-								];
-					} else {
-						
-						$modelClass 			  = new Admitcard();
-							$data 		 		  =  $modelClass->getNoDV( $data_array);
-							$examDateObj    	  = $data->dv_date;
-							$currentDateObj 	  = $data->current_date ;
-							//$currentDateObj 	  = "2023-10-22" ;
-							$downloadStartDateObj = $data->enabledate ;
-							$no_of_days           = $data->no_of_days;
-							if ($currentDateObj > $examDateObj) {
-								$errorMsg   =  'Your scheduled date of Exam was over. You cannot download e-admit card';
-							} elseif ($currentDateObj < $downloadStartDateObj) {
-								$exam_date = date("d-m-Y", strtotime($examDateObj));
-									$download_date = date("d-m-Y", strtotime($downloadStartDateObj));
-									$errorMsg = "Your date of Exam $exam_date. You can download your e-admit card from $download_date ";
-							} else {
-								$errorMsg   = 'Exam is scheduled for a future date';
-							}
-					}
-				}
-				else{
-					$errorMsg = "Your credentials are NOT correct. Please try with correct credentials";
-				}
-				//if exam type is DV -end
-		} // Switch Case End
-		
-		
-
-
-	}
-
-	
-		return ['errorMsg' => $errorMsg];
-	}
-	static function getAdmitCardPreviewDetails()
-	{
-		//echo $data;
-		$errorMsg = "";
-		if (isset($_POST['admit_card'])) {
+		if (isset($_POST['examname'])) {
 			if (!hash_equals($_SESSION['csrf_token'], $_POST['csrf_token'])) {
 				// Token mismatch, handle the error (e.g., log it or display an error message)
-				$errorMsg ="CSRF token verification failed.";
+				$errorMsg = "CSRF token verification failed.";
 			}
-			$register_number     = trim($_POST['register_number']);
-			$dob   = trim($_POST['dob']);
-			$examname = trim($_POST['examname']);
+			$register_number     = self::validateAndSanitizeHelper($_POST['register_number']);
+			$dob   = self::validateAndSanitizeHelper($_POST['dob']);
+			$examname = self::validateAndSanitizeHelper($_POST['examname']);
 			$examname = explode('_', $examname);
 			if ($examname[0] == 'phase') {
 				$exam_value = $examname[0] . '_' . $examname[1] . '_' . $examname[2] . '_' . $examname[3] . '_' . $examname[4];
@@ -831,9 +473,11 @@ class Helpers
 				$exam_type = $examname[2];
 				$tier_id = $examname[3];
 			}
-			//echo $exam_value;exit;
-			$roll_no =  isset($_POST['roll_number']) ? trim($_POST['roll_number']) : null;
-			$post_preference =  isset($_POST['post_preference_one']) ? trim($_POST['post_preference_one']) : null;
+			$roll_no_new = self::validateAndSanitizeHelper($_POST['roll_number']);
+			$roll_no =  isset($roll_no_new) ? $roll_no_new : null;
+
+			$post_preference_new = self::validateAndSanitizeHelper($_POST['post_preference_one']);
+			$post_preference =  isset($post_preference_new) ? $post_preference_new : null;
 			$data_array = array(
 				"table_name" => $exam_value,
 				"register_number" => $register_number,
@@ -849,12 +493,359 @@ class Helpers
 					//if exam type is written exam -start
 					$modelClass = new Admitcard();
 					$data =  $modelClass->getQueryListTIER();
+					//	$admitcard->savetest();
+					if ($admitcard->getAdmitcardforTierCount($data_array)) {
+						//	exit;
+						//ob_start();
+						if ($admitcard->getAdmitcardforTier($data_array)) {
+							//exit;
+							$admitcardresults = $admitcard->getAdmitcardforTier($data_array);
+							//$this->printr($admitcardresults);
+							$array = json_decode(json_encode($admitcardresults), true);
+							$exam_name = $admitcard->getExamName($exam_value);
+							@$count = count((array)$admitcardresults);
+							$arrays = [];
+							foreach ($data as $val) {
+								foreach (array_keys($array) as $res) {
+									if ($res == $val->col_name) {
+										$col_value =  $array[$res];
+									}
+									if ($res == 'pdf_attachment') {
+										$pdf_name =  $array[$res];
+									}
+									if ($res == 'candidate_address') {
+										$candidate_address =  $array[$res];
+									}
+									if ($res == 'exam_code') {
+										$exam_year =  substr($array[$res], -4);
+									}
+								}
+								$arrays[] = array(
+									"col_name" => $val->col_name,
+									"col_description" => $val->col_description,
+									"is_tier" => $val->is_tier,
+									"is_tier_order" => $val->is_tier_order,
+									"col_value" => $col_value
+								);
+							}
+							$datavalue = (object)$arrays;
+							return ['admitcardresults' => $datavalue, 'year_of_exam' => $exam_year, 'count' => $count, "exam_name" => $exam_name, "pdf_name" => @$pdf_name, "exam_type" => $exam_type, "candidate_address" => $candidate_address, "tier_id" => $tier_id, "tableName" => $tableName, "regNo" => $register_number];
+						} else {
+							$modelClass 		  = new Admitcard();
+							$data_from_fetch_tier 		 		  =  $modelClass->getNoTier($data_array);
+							$examDateObj    	  = $data_from_fetch_tier->date1;
+							$currentDateObj 	  = $data_from_fetch_tier->current_date;
+							//$currentDateObj 	  = "2023-10-18";
+							$downloadStartDateObj = $data_from_fetch_tier->enabledate;
+							$no_of_days           = $data_from_fetch_tier->no_of_days;
+							if ($currentDateObj > $examDateObj) {
+								$errorMsg   =  'Your scheduled date of Exam was over. You cannot download e-admit card';
+							} elseif ($currentDateObj < $downloadStartDateObj) {
+								$exam_date = date("d-m-Y", strtotime($examDateObj));
+								$download_date = date("d-m-Y", strtotime($downloadStartDateObj));
+								$errorMsg = "Your date of Exam $exam_date. You can download your e-admit card from $download_date ";
+							} else {
+								$errorMsg   = 'Exam is scheduled for a future date';
+							}
+						}
+					} else {
+						$errorMsg = "Your credentials are NOT correct. Please try with correct credentials";
+					}
+					//ob_end_flush(); 
+					break;
+				case "skill":
+					$modelClass = new Admitcard();
+					$data =  $modelClass->getQueryListSKILLTEST();  //1
+					if ($admitcard->getAdmitcardforTierCount($data_array)) { //2
+						if ($admitcard->getAdmitcardforSkillTest($data_array)) { //3
+							$admitcardresults = $admitcard->getAdmitcardforSkillTest($data_array);
+							//$this->printr($admitcardresults);
+							$array = json_decode(json_encode($admitcardresults), true);
+							$exam_name = $admitcard->getExamName($exam_value);
+							@$count = count((array)$admitcardresults);
+							$arrays = [];
+							foreach ($data as $val) {
+								foreach (array_keys($array) as $res) {
+									if ($res == $val->col_name) {
+										$col_value =  $array[$res];
+									}
+									if ($res == 'pdf_attachment') {
+										$pdf_name =  $array[$res];
+									}
+									if ($res == 'candidate_address') {
+										$candidate_address =  $array[$res];
+									}
+									if ($res == 'exam_code') {
+										$exam_year =  substr($array[$res], -4);
+									}
+								}
+								$arrays[] = array(
+									"col_name" => $val->col_name,
+									"col_description" => $val->col_description,
+									"is_skill" => $val->is_skill, //4
+									"is_skill_order" => $val->is_skill_order,
+									"col_value" => $col_value
+								);
+							}
+							$datavalue = (object)$arrays;
+							return ['admitcardresults' => $datavalue, 'count' => $count, "exam_name" => $exam_name, "pdf_name" => @$pdf_name, 'year_of_exam' => $exam_year, "exam_type" => $exam_type, "candidate_address" => $candidate_address, "tier_id" => $tier_id, "tableName" => $tableName, "regNo" => $register_number];
+						} else {
+							$modelClass 			  = new Admitcard();
+							$data 		 		  =  $modelClass->getNoSkillTest($data_array); //5
+							$examDateObj    	  = $data->skill_test_date; //6
+							$currentDateObj 	  = $data->current_date; //7
+							$downloadStartDateObj = $data->enableDate;
+							$no_of_days           = $data->no_of_days;
+							if ($currentDateObj > $examDateObj) {
+								$errorMsg   =  'Your scheduled date of Exam was over. You cannot download e-admit card';
+							} elseif ($currentDateObj < $downloadStartDateObj) {
+								$exam_date = date("d-m-Y", strtotime($examDateObj));
+								$download_date = date("d-m-Y", strtotime($downloadStartDateObj));
+								$errorMsg = "Your date of Exam $exam_date. You can download your e-admit card from $download_date ";
+							} else {
+								$errorMsg   = 'Exam is scheduled for a future date';
+							}
+						}
+					} else {
+						$errorMsg = "Your credentials are NOT correct. Please try with correct credentials";
+					}
+					break;
+				case "pet":
+					// If exam Type is PET Start
+					$modelClass = new Admitcard();
+					$data =  $modelClass->getQueryListPET();
+					if ($admitcard->getAdmitcardforTierCount($data_array)) {
+						if ($admitcard->getAdmitcardforPET($data_array)) {
+							$admitcardresults = $admitcard->getAdmitcardforPET($data_array);
+							/* echo "<pre>";
+				print_r($admitcardresults);
+				exit; */
+							$array = json_decode(json_encode($admitcardresults), true);
+							$exam_name = $admitcard->getExamName($exam_value);
+							@$count = count((array)$admitcardresults);
+							$arrays = [];
+							foreach ($data as $val) {
+								foreach (array_keys($array) as $res) {
+									if ($res == $val->col_name) {
+										$col_value =  $array[$res];
+									}
+									if ($res == 'pdf_attachment') {
+										@$pdf_name =  $array[$res];
+									}
+									if ($res == 'candidate_address') {
+										$candidate_address =  $array[$res];
+									}
+								}
+								$arrays[] = array(
+									"col_name" => $val->col_name,
+									"col_description" => $val->col_description,
+									"is_pet" => $val->is_pet,
+									"is_pet_order" => $val->is_pet_order,
+									"col_value" => $col_value
+								);
+							}
+							$datavalue = (object)$arrays;
+							$exam_year = $exam_name->table_exam_year;
+							return ['admitcardresults' => $datavalue, 'year_of_exam' => $exam_year, 'count' => $count, "exam_name" => $exam_name, "pdf_name" => @$pdf_name, "exam_type" => $exam_type, "candidate_address" => $candidate_address, "tier_id" => $tier_id, "tableName" => $tableName, "regNo" => $register_number];
+						} else {
+							$modelClass 			  = new Admitcard();
+							$data 		 		  =  $modelClass->getNoPET($data_array);
+							$examDateObj    	  = $data->pet_date;
+							$currentDateObj 	  = $data->current_date;
+							$downloadStartDateObj = $data->enabledate;
+							$no_of_days           = $data->no_of_days;
+							if ($currentDateObj > $examDateObj) {
+								$errorMsg   =  'Your scheduled date of Exam was over. You cannot download e-admit card';
+							} elseif ($currentDateObj < $downloadStartDateObj) {
+								$exam_date = date("d-m-Y", strtotime($examDateObj));
+								$download_date = date("d-m-Y", strtotime($downloadStartDateObj));
+								$errorMsg = "Your date of Exam $exam_date. You can download your e-admit card from $download_date ";
+							} else {
+								$errorMsg   = 'Exam is scheduled for a future date';
+							}
+						}
+					} else {
+						$errorMsg = "Your credentials are NOT correct. Please try with correct credentials";
+					}
+					// If exam Type is PET End
+					break;
+				case "dme":
+					// If exam Type is DME Start
+					$modelClass = new Admitcard();
+					$data =  $modelClass->getQueryListDME();
+					if ($admitcard->getAdmitcardforTierCount($data_array)) {
+						if ($admitcard->getAdmitcardforDME($data_array)) {
+							$admitcardresults = $admitcard->getAdmitcardforDME($data_array);
+							// echo "<pre>";
+							// print_r($admitcardresults);
+							// exit; 
+							$array = json_decode(json_encode($admitcardresults), true);
+							$exam_name = $admitcard->getExamName($exam_value);
+							$count = count((array)$admitcardresults);
+							$arrays = [];
+							foreach ($data as $val) {
+								foreach (array_keys($array) as $res) {
+									if ($res == $val->col_name) {
+										$col_value =  $array[$res];
+									}
+									if ($res == 'pdf_attachment') {
+										$pdf_name =  $array[$res];
+									}
+									if ($res == 'candidate_address') {
+										$candidate_address =  $array[$res];
+									}
+								}
+								$arrays[] = array(
+									"col_name" => $val->col_name,
+									"col_description" => $val->col_description,
+									"is_dme" => $val->is_dme,
+									"is_dme_order" => $val->is_dme_order,
+									"col_value" => $col_value
+								);
+							}
+							$datavalue = (object)$arrays;
+							//$this->printr($datavalue);
+							$exam_year = $exam_name->table_exam_year;
+							return ['admitcardresults' => $datavalue, 'year_of_exam' => $exam_year, 'count' => $count, "exam_name" => $exam_name, "pdf_name" => @$pdf_name, "exam_type" => $exam_type, "candidate_address" => $candidate_address, "tier_id" => $tier_id, "tableName" => $tableName, "regNo" => $register_number];
+						} else {
+							$modelClass 			  = new Admitcard();
+							$data 		 		  =  $modelClass->getNoDME($data_array);
+							$examDateObj    	  = $data->date_of_dme;
+							$currentDateObj 	  = $data->current_date;
+							$downloadStartDateObj = $data->enabledate;
+							$no_of_days           = $data->no_of_days;
+							if ($currentDateObj > $examDateObj) {
+								$errorMsg   =  'Your scheduled date of Exam was over. You cannot download e-admit card';
+							} elseif ($currentDateObj < $downloadStartDateObj) {
+								$exam_date = date("d-m-Y", strtotime($examDateObj));
+								$download_date = date("d-m-Y", strtotime($downloadStartDateObj));
+								$errorMsg = "Your date of Exam $exam_date. You can download your e-admit card from $download_date ";
+							} else {
+								$errorMsg   = 'Exam is scheduled for a future date';
+							}
+						}
+					} else {
+						$errorMsg = "Your credentials are NOT correct. Please try with correct credentials";
+					}
+					// If exam Type is DME End
+					break;
+				default:
+					//if exam type is DV -start
+					$modelClass = new Admitcard();
+					$data =  $modelClass->getQueryListDV();
+					if ($admitcard->getAdmitcardforTierCount($data_array)) {
+						if ($admitcard->getAdmitcardforDV($data_array)) {
+							$admitcardresults = $admitcard->getAdmitcardforDV($data_array);
+							$array = json_decode(json_encode($admitcardresults), true);
+							$exam_name = $admitcard->getExamName($exam_value);
+							$count = count((array)$admitcardresults);
+							$arrays = [];
+							foreach ($data as $val) {
+								foreach (array_keys($array) as $res) {
+									if ($res == $val->col_name) {
+										$col_value =  $array[$res];
+									}
+									if ($res == 'pdf_attachment') {
+										$pdf_name =  $array[$res];
+									}
+								}
+								$arrays[] = array(
+									"col_name" => $val->col_name,
+									"col_description" => $val->col_description,
+									"is_dv" => $val->is_dv,
+									"is_dv_order" => $val->is_dv_order,
+									"col_value" => $col_value
+								);
+							}
+							$datavalue = (object)$arrays;
+							$exam_year = $exam_name->table_exam_year;
+							//$this->printr($datavalue);
+							return [
+								'admitcardresults' => $datavalue,
+								'year_of_exam' => $exam_year,
+								'count' => $count,
+								"exam_name" => $exam_name,
+								"pdf_name" => @$pdf_name,
+								"exam_type" => $exam_type,
+								"tier_id" => $tier_id,
+								"tableName" => $tableName,
+								"regNo" => $register_number,
+								"post_preference" => $post_preference
+							];
+						} else {
+							$modelClass 			  = new Admitcard();
+							$data 		 		  =  $modelClass->getNoDV($data_array);
+							$examDateObj    	  = $data->dv_date;
+							$currentDateObj 	  = $data->current_date;
+							//$currentDateObj 	  = "2023-10-22" ;
+							$downloadStartDateObj = $data->enabledate;
+							$no_of_days           = $data->no_of_days;
+							if ($currentDateObj > $examDateObj) {
+								$errorMsg   =  'Your scheduled date of Exam was over. You cannot download e-admit card';
+							} elseif ($currentDateObj < $downloadStartDateObj) {
+								$exam_date = date("d-m-Y", strtotime($examDateObj));
+								$download_date = date("d-m-Y", strtotime($downloadStartDateObj));
+								$errorMsg = "Your date of Exam $exam_date. You can download your e-admit card from $download_date ";
+							} else {
+								$errorMsg   = 'Exam is scheduled for a future date';
+							}
+						}
+					} else {
+						$errorMsg = "Your credentials are NOT correct. Please try with correct credentials";
+					}
+					//if exam type is DV -end
+			} // Switch Case End
+		}
+	}
+		return ['errorMsg' => $errorMsg];
+	}
+	static function getAdmitCardPreviewDetails()
+	{
+		$_POST = filter_input_array(INPUT_POST, FILTER_DEFAULT);
+		//echo $data;
+		$errorMsg = "";
+		if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+		if (isset($_POST['admit_card'])) {
+			if (!hash_equals($_SESSION['csrf_token'], $_POST['csrf_token'])) {
+				// Token mismatch, handle the error (e.g., log it or display an error message)
+				$errorMsg = "CSRF token verification failed.";
+			}
+			$register_number     = self::validateAndSanitizeHelper($_POST['register_number']);
+			$dob   = self::validateAndSanitizeHelper($_POST['dob']);
+			$examname = self::validateAndSanitizeHelper($_POST['examname']);
+			$examname = explode('_', $examname);
+			if ($examname[0] == 'phase') {
+				$exam_value = $examname[0] . '_' . $examname[1] . '_' . $examname[2] . '_' . $examname[3] . '_' . $examname[4];
+				$exam_type = $examname[4];
+				$tier_id = $examname[5];
+			} else {
+				$exam_value = $examname[0] . '_' . $examname[1] . '_' . $examname[2];
+				$exam_type = $examname[2];
+				$tier_id = $examname[3];
+			}
+			//echo $exam_value;exit;
+			$roll_no_new = self::validateAndSanitizeHelper($_POST['roll_number']);
+			$roll_no =  isset($roll_no_new) ? $roll_no_new : null;
 
-
+			$post_preference_new = self::validateAndSanitizeHelper($_POST['post_preference_one']);
+			$post_preference =  isset($post_preference_new) ? $post_preference_new : null;
+			$data_array = array(
+				"table_name" => $exam_value,
+				"register_number" => $register_number,
+				"dob" => $dob,
+				"tier_id" => $tier_id,
+				"roll_no" => $roll_no,
+				"post_preference" => $post_preference
+			);
+			$tableName = $exam_value;
+			$admitcard = new Admitcard();
+			switch ($exam_type) {
+				case "tier":
+					//if exam type is written exam -start
+					$modelClass = new Admitcard();
+					$data =  $modelClass->getQueryListTIER();
 					//  $this->printr($data);
 					if ($admitcard->getAdmitcardforTierPreview($data_array)) {
-
-					
 						// $admitcardresults = $admitcard->getAdmitcardforDV($data_array);
 						// $array = json_decode(json_encode($admitcardresults), true);
 						// $exam_name = $admitcard->getExamName($exam_value);
@@ -1067,225 +1058,10 @@ class Helpers
 					//if exam type is DV -end
 			} // Switch Case End
 		}
+	}
 		return ['errorMsg' => $errorMsg];
 	}
-	// static function getAdmitCardPreviewDetails()
-	// {
-	// 	//echo $data;
-	// 	$errorMsg = "";
-	// 	if (isset($_POST['admit_card'])) {
-	// 		$register_number     = trim($_POST['register_number']);
-	// 		$dob   = trim($_POST['dob']);
-	// 		$examname = trim($_POST['examname']);
-	// 		$examname = explode('_', $examname);
-	// 		$exam_value = $examname[0] . '_' . $examname[1] . '_' . $examname[2];
-	// 		$exam_type = $examname[2];
-	// 		$tier_id = $examname[3];
-	// 		$data_array = array(
-	// 			"table_name" => $exam_value,
-	// 			"register_number" => $register_number,
-	// 			"dob" => $dob,
-	// 			"tier_id" => $tier_id
-	// 		);
-	// 		$admitcard = new Admitcard();
-	// 		switch ($exam_type) {
-	// 			case "tier":
-	// 				//if exam type is written exam -start
-	// 				$modelClass = new Admitcard();
-	// 				$data =  $modelClass->getQueryListTIER();
-	// 				// $this->printr($data);
-	// 				if ($admitcard->getAdmitcardforTier($data_array)) {
-	// 					$admitcardresults = $admitcard->getAdmitcardforTier($data_array);
-	// 					$array = json_decode(json_encode($admitcardresults), true);
-	// 					$exam_name = $admitcard->getExamName($exam_value);
-	// 					@$count = count(@$admitcardresults);
-	// 					$arrays = [];
-	// 					foreach ($data as $val) {
-	// 						foreach (array_keys($array) as $res) {
-	// 							if ($res == $val->col_name) {
-	// 								$col_value =  $array[$res];
-	// 							}
-	// 							if ($res == 'pdf_attachment') {
-	// 								$pdf_name =  $array[$res];
-	// 							}
-	// 							if ($res == 'candidate_address') {
-	// 								$candidate_address =  $array[$res];
-	// 							}
-	// 							if ($res == 'exam_code') {
-	// 								$exam_year =  substr($array[$res], -4);
-	// 							}
-	// 						}
-	// 						$arrays[] = array(
-	// 							"col_name" => $val->col_name,
-	// 							"col_description" => $val->col_description,
-	// 							"is_tier" => $val->is_tier,
-	// 							"is_tier_order" => $val->is_tier_order,
-	// 							"col_value" => $col_value
-	// 						);
-	// 					}
-	// 					$datavalue = (object)$arrays;
-	// 					return ['admitcardresults' => $datavalue, 'year_of_exam' => $exam_year, 'count' => $count, "exam_name" => $exam_name, "pdf_name" => @$pdf_name, "exam_type" => $exam_type, "candidate_address" => $candidate_address];
-	// 				} else {
-	// 					$errorMsg = "Wrong Register Number  or Date of Birth or Exam";
-	// 				}
-	// 				//if exam type is written exam -end
-	// 				break;
-	// 			case "skill":
-	// 				$modelClass = new Admitcard();
-	// 				$data =  $modelClass->getQueryListSKILLTEST();
-	// 				if ($admitcard->getAdmitcardforSkillTest($data_array)) {
-	// 					$admitcardresults = $admitcard->getAdmitcardforSkillTest($data_array);
-	// 					//$this->printr($admitcardresults);
-	// 					$array = json_decode(json_encode($admitcardresults), true);
-	// 					$exam_name = $admitcard->getExamName($exam_value);
-	// 					@$count = count(@$admitcardresults);
-	// 					$arrays = [];
-	// 					foreach ($data as $val) {
-	// 						foreach (array_keys($array) as $res) {
-	// 							if ($res == $val->col_name) {
-	// 								$col_value =  $array[$res];
-	// 							}
-	// 							if ($res == 'pdf_attachment') {
-	// 								$pdf_name =  $array[$res];
-	// 							}
-	// 							if ($res == 'candidate_address') {
-	// 								$candidate_address =  $array[$res];
-	// 							}
-	// 						}
-	// 						$arrays[] = array(
-	// 							"col_name" => $val->col_name,
-	// 							"col_description" => $val->col_description,
-	// 							"is_skill" => $val->is_skill,
-	// 							"is_skill_order" => $val->is_skill_order,
-	// 							"col_value" => $col_value
-	// 						);
-	// 					}
-	// 					$datavalue = (object)$arrays;
-	// 					return ['admitcardresults' => $datavalue, 'count' => $count, "exam_name" => $exam_name, "pdf_name" => @$pdf_name, "exam_type" => $exam_type, "candidate_address" => $candidate_address];
-	// 				} else {
-	// 					$errorMsg = "Wrong Register Number  or Date of Birth or Exam";
-	// 				}
-	// 				break;
-	// 			case "pet":
-	// 				// If exam Type is PET Start
-	// 				$modelClass = new Admitcard();
-	// 				$data =  $modelClass->getQueryListPET();
-	// 				if ($admitcard->getAdmitcardforPET($data_array)) {
-	// 					$admitcardresults = $admitcard->getAdmitcardforPET($data_array);
-	// 					/* echo "<pre>";
-	// 					   print_r($admitcardresults);
-	// 					   exit; */
-	// 					$array = json_decode(json_encode($admitcardresults), true);
-	// 					$exam_name = $admitcard->getExamName($exam_value);
-	// 					@$count = count(@$admitcardresults);
-	// 					$arrays = [];
-	// 					foreach ($data as $val) {
-	// 						foreach (array_keys($array) as $res) {
-	// 							if ($res == $val->col_name) {
-	// 								$col_value =  $array[$res];
-	// 							}
-	// 							if ($res == 'pdf_attachment') {
-	// 								@$pdf_name =  $array[$res];
-	// 							}
-	// 							if ($res == 'candidate_address') {
-	// 								$candidate_address =  $array[$res];
-	// 							}
-	// 						}
-	// 						$arrays[] = array(
-	// 							"col_name" => $val->col_name,
-	// 							"col_description" => $val->col_description,
-	// 							"is_pet" => $val->is_pet,
-	// 							"is_pet_order" => $val->is_pet_order,
-	// 							"col_value" => $col_value
-	// 						);
-	// 					}
-	// 					$datavalue = (object)$arrays;
-	// 					$exam_year = $exam_name->table_exam_year;
-	// 					return ['admitcardresults' => $datavalue, 'year_of_exam' => $exam_year, 'count' => $count, "exam_name" => $exam_name, "pdf_name" => @$pdf_name, "exam_type" => $exam_type, "candidate_address" => $candidate_address];
-	// 				} else {
-	// 					$errorMsg = "Wrong Register Number  or Date of Birth or Exam";
-	// 				}
-	// 				// If exam Type is PET End
-	// 				break;
-	// 			case "dme":
-	// 				// If exam Type is DME Start
-	// 				$modelClass = new Admitcard();
-	// 				$data =  $modelClass->getQueryListDME();
-	// 				if ($admitcard->getAdmitcardforDME($data_array)) {
-	// 					$admitcardresults = $admitcard->getAdmitcardforDME($data_array);
-	// 					// echo "<pre>";
-	// 					// print_r($admitcardresults);
-	// 					// exit; 
-	// 					$array = json_decode(json_encode($admitcardresults), true);
-	// 					$exam_name = $admitcard->getExamName($exam_value);
-	// 					$count = count((array)$admitcardresults);
-	// 					$arrays = [];
-	// 					foreach ($data as $val) {
-	// 						foreach (array_keys($array) as $res) {
-	// 							if ($res == $val->col_name) {
-	// 								$col_value =  $array[$res];
-	// 							}
-	// 							if ($res == 'pdf_attachment') {
-	// 								$pdf_name =  $array[$res];
-	// 							}
-	// 							if ($res == 'candidate_address') {
-	// 								$candidate_address =  $array[$res];
-	// 							}
-	// 						}
-	// 						$arrays[] = array(
-	// 							"col_name" => $val->col_name,
-	// 							"col_description" => $val->col_description,
-	// 							"is_dme" => $val->is_dme,
-	// 							"is_dme_order" => $val->is_dme_order,
-	// 							"col_value" => $col_value
-	// 						);
-	// 					}
-	// 					$datavalue = (object)$arrays;
-	// 					//$this->printr($datavalue);
-	// 					return ['admitcardresults' => $datavalue, 'count' => $count, "exam_name" => $exam_name, "pdf_name" => @$pdf_name, "exam_type" => $exam_type, "candidate_address" => $candidate_address];
-	// 				} else {
-	// 					$errorMsg = "Wrong Register Number  or Date of Birth or Exam";
-	// 				}
-	// 				// If exam Type is DME End
-	// 				break;
-	// 			default:
-	// 				//if exam type is DV -start
-	// 				$modelClass = new Admitcard();
-	// 				$data =  $modelClass->getQueryListDV();
-	// 				if ($admitcard->getAdmitcardforDV($data_array)) {
-	// 					$admitcardresults = $admitcard->getAdmitcardforDV($data_array);
-	// 					$array = json_decode(json_encode($admitcardresults), true);
-	// 					$exam_name = $admitcard->getExamName($exam_value);
-	// 					$count = count((array)$admitcardresults);
-	// 					$arrays = [];
-	// 					foreach ($data as $val) {
-	// 						foreach (array_keys($array) as $res) {
-	// 							if ($res == $val->col_name) {
-	// 								$col_value =  $array[$res];
-	// 							}
-	// 							if ($res == 'pdf_attachment') {
-	// 								$pdf_name =  $array[$res];
-	// 							}
-	// 						}
-	// 						$arrays[] = array(
-	// 							"col_name" => $val->col_name,
-	// 							"col_description" => $val->col_description,
-	// 							"is_dv" => $val->is_dv,
-	// 							"is_dv_order" => $val->is_dv_order,
-	// 							"col_value" => $col_value
-	// 						);
-	// 					}
-	// 					$datavalue = (object)$arrays;
-	// 					//$this->printr($datavalue);
-	// 					return ['admitcardresults' => $datavalue, 'count' => $count, "exam_name" => $exam_name, "pdf_name" => @$pdf_name, "exam_type" => $exam_type];
-	// 				} else {
-	// 					$errorMsg = "Wrong Register Number  or Date of Birth or Exam";
-	// 				}
-	// 				//if exam type is DV -end
-	// 		} // Switch Case End
-	// 	}
-	// 	return ['errorMsg' => $errorMsg];
-	// }
+	
 	static function getNominationListforAdmin()
 	{
 		$nomination = new Nomination();
@@ -1406,7 +1182,6 @@ class Helpers
 		$loginuserlists = $loginusermodel->getLoginList();
 		return  $loginuserlists;
 	}
-	
 	static function getPhaseMasterListforAdmin()
 	{
 		$phasemastermodel = new PhaseMaster();
@@ -1419,8 +1194,6 @@ class Helpers
 		$searchyeargetlists = $searchyearmodel->getSearchyearListDisplay();
 		return  $searchyeargetlists;
 	}
-	
-
 	static function getPhotoGalleryListforAdmin()
 	{
 		$gallerymodel = new Gallery();
@@ -1447,243 +1220,252 @@ class Helpers
 	static function getAdmitCardbyEmailIntegration($data_array)
 	{
 		$errorMsg = "";
-		if (isset($_POST['admit_card'])) {
-			$register_number     = trim($_POST['register_number']);
-			$dob   = trim($_POST['dob']);
-			$examname = trim($_POST['examname']);
-			$examname = explode('_', $examname);
-			if ($examname[0] == 'phase') {
-				$exam_value = $examname[0] . '_' . $examname[1] . '_' . $examname[2] . '_' . $examname[3] . '_' . $examname[4];
-				$exam_type = $examname[4];
-				$tier_id = $examname[5];
-			} else {
-				$exam_value = $examname[0] . '_' . $examname[1] . '_' . $examname[2];
-				$exam_type = $examname[2];
-				$tier_id = $examname[3];
+		$_POST = filter_input_array(INPUT_POST, FILTER_DEFAULT);
+		if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+			if (isset($_POST['admit_card'])) {
+				$register_number     = self::validateAndSanitizeHelper($_POST['register_number']);
+				$dob   = self::validateAndSanitizeHelper($_POST['dob']);
+				$examname = self::validateAndSanitizeHelper($_POST['examname']);
+				$examname = explode('_', $examname);
+				if ($examname[0] == 'phase') {
+					$exam_value = $examname[0] . '_' . $examname[1] . '_' . $examname[2] . '_' . $examname[3] . '_' . $examname[4];
+					$exam_type = $examname[4];
+					$tier_id = $examname[5];
+				} else {
+					$exam_value = $examname[0] . '_' . $examname[1] . '_' . $examname[2];
+					$exam_type = $examname[2];
+					$tier_id = $examname[3];
+				}
+				$roll_no_new = self::validateAndSanitizeHelper($_POST['roll_number']);
+			$roll_no =  isset($roll_no_new) ? $roll_no_new : null;
+
+			$post_preference_new = self::validateAndSanitizeHelper($_POST['post_preference_one']);
+			$post_preference =  isset($post_preference_new) ? $post_preference_new : null;
+
+
+
+				$data_array = array(
+					"table_name" => $exam_value,
+					"register_number" => $register_number,
+					"dob" => $dob,
+					"tier_id" => $tier_id,
+					"roll_no" => $roll_no,
+					"post_preference" => $post_preference
+				);
+				$tableName = $exam_value;
+				$admitcard = new Admitcard();
+				switch ($exam_type) {
+					case "tier":
+						//if exam type is written exam -start
+						$modelClass = new Admitcard();
+						$data =  $modelClass->getQueryListTIER();
+						// $this->printr($data);
+						if ($admitcard->getAdmitcardforTierPreview($data_array)) {
+							$admitcardresults = $admitcard->getAdmitcardforTierPreview($data_array);
+							$array = json_decode(json_encode($admitcardresults), true);
+							$exam_name = $admitcard->getExamName($exam_value);
+							@$count = count((array)$admitcardresults);
+							$arrays = [];
+							foreach ($data as $val) {
+								foreach (array_keys($array) as $res) {
+									if ($res == $val->col_name) {
+										$col_value =  $array[$res];
+									}
+									if ($res == 'pdf_attachment') {
+										$pdf_name =  $array[$res];
+									}
+									if ($res == 'candidate_address') {
+										$candidate_address =  $array[$res];
+									}
+									if ($res == 'exam_code') {
+										$exam_year =  substr($array[$res], -4);
+									}
+								}
+								$arrays[] = array(
+									"col_name" => $val->col_name,
+									"col_description" => $val->col_description,
+									"is_tier" => $val->is_tier,
+									"is_tier_order" => $val->is_tier_order,
+									"col_value" => $col_value
+								);
+							}
+							$datavalue = (object)$arrays;
+							return ['admitcardresults' => $datavalue, 'year_of_exam' => $exam_year, 'count' => $count, "exam_name" => $exam_name, "pdf_name" => @$pdf_name, "exam_type" => $exam_type, "candidate_address" => $candidate_address, "tier_id" => $tier_id, "tableName" => $tableName, "regNo" => $register_number];
+						} else {
+							$errorMsg = "Your credentials are NOT correct. Please try with correct credentials";
+						}
+						//if exam type is written exam -end
+						break;
+					case "skill":
+						$modelClass = new Admitcard();
+						$data =  $modelClass->getQueryListSKILLTEST();
+						if ($admitcard->getAdmitcardforSkillTestPreview($data_array)) {
+							$admitcardresults = $admitcard->getAdmitcardforSkillTestPreview($data_array);
+							$array = json_decode(json_encode($admitcardresults), true);
+							$exam_name = $admitcard->getExamName($exam_value);
+							@$count = count((array)$admitcardresults);
+							$arrays = [];
+							foreach ($data as $val) {
+								foreach (array_keys($array) as $res) {
+									if ($res == $val->col_name) {
+										$col_value =  $array[$res];
+									}
+									if ($res == 'pdf_attachment') {
+										$pdf_name =  $array[$res];
+									}
+									if ($res == 'candidate_address') {
+										$candidate_address =  $array[$res];
+									}
+									if ($res == 'exam_code') {
+										$exam_year =  substr($array[$res], -4);
+									}
+								}
+								$arrays[] = array(
+									"col_name" => $val->col_name,
+									"col_description" => $val->col_description,
+									"is_skill" => $val->is_skill,
+									"is_skill_order" => $val->is_skill_order,
+									"col_value" => $col_value
+								);
+							}
+							$datavalue = (object)$arrays;
+							return ['admitcardresults' => $datavalue, 'count' => $count, "exam_name" => $exam_name, "pdf_name" => @$pdf_name, 'year_of_exam' => $exam_year, "exam_type" => $exam_type, "candidate_address" => $candidate_address, "tier_id" => $tier_id, "tableName" => $tableName, "regNo" => $register_number];
+						} else {
+							$errorMsg = "Your credentials are NOT correct. Please try with correct credentials";
+						}
+						break;
+					case "pet":
+						// If exam Type is PET Start
+						$modelClass = new Admitcard();
+						$data =  $modelClass->getQueryListPET();
+						if ($admitcard->getAdmitcardforPET($data_array)) {
+							$admitcardresults = $admitcard->getAdmitcardforPET($data_array);
+							/* echo "<pre>";
+							print_r($admitcardresults);
+							exit; */
+							$array = json_decode(json_encode($admitcardresults), true);
+							$exam_name = $admitcard->getExamName($exam_value);
+							@$count = count((array)$admitcardresults);
+							$arrays = [];
+							foreach ($data as $val) {
+								foreach (array_keys($array) as $res) {
+									if ($res == $val->col_name) {
+										$col_value =  $array[$res];
+									}
+									if ($res == 'pdf_attachment') {
+										@$pdf_name =  $array[$res];
+									}
+									if ($res == 'candidate_address') {
+										$candidate_address =  $array[$res];
+									}
+								}
+								$arrays[] = array(
+									"col_name" => $val->col_name,
+									"col_description" => $val->col_description,
+									"is_pet" => $val->is_pet,
+									"is_pet_order" => $val->is_pet_order,
+									"col_value" => $col_value
+								);
+							}
+							$datavalue = (object)$arrays;
+							$exam_year = $exam_name->table_exam_year;
+							return ['admitcardresults' => $datavalue, 'year_of_exam' => $exam_year, 'count' => $count, "exam_name" => $exam_name, "pdf_name" => @$pdf_name, "exam_type" => $exam_type, "candidate_address" => $candidate_address, "tier_id" => $tier_id, "tableName" => $tableName, "regNo" => $register_number];
+						} else {
+							$errorMsg = "Your credentials are NOT correct. Please try with correct credentials";
+						}
+						// If exam Type is PET End
+						break;
+					case "dme":
+						// If exam Type is DME Start
+						$modelClass = new Admitcard();
+						$data =  $modelClass->getQueryListDME();
+						if ($admitcard->getAdmitcardforDME($data_array)) {
+							$admitcardresults = $admitcard->getAdmitcardforDME($data_array);
+							// echo "<pre>";
+							// print_r($admitcardresults);
+							// exit; 
+							$array = json_decode(json_encode($admitcardresults), true);
+							$exam_name = $admitcard->getExamName($exam_value);
+							$count = count((array)$admitcardresults);
+							$arrays = [];
+							foreach ($data as $val) {
+								foreach (array_keys($array) as $res) {
+									if ($res == $val->col_name) {
+										$col_value =  $array[$res];
+									}
+									if ($res == 'pdf_attachment') {
+										$pdf_name =  $array[$res];
+									}
+									if ($res == 'candidate_address') {
+										$candidate_address =  $array[$res];
+									}
+								}
+								$arrays[] = array(
+									"col_name" => $val->col_name,
+									"col_description" => $val->col_description,
+									"is_dme" => $val->is_dme,
+									"is_dme_order" => $val->is_dme_order,
+									"col_value" => $col_value
+								);
+							}
+							$datavalue = (object)$arrays;
+							//$this->printr($datavalue);
+							$exam_year = $exam_name->table_exam_year;
+							return ['admitcardresults' => $datavalue, 'year_of_exam' => $exam_year, 'count' => $count, "exam_name" => $exam_name, "pdf_name" => @$pdf_name, "exam_type" => $exam_type, "candidate_address" => $candidate_address, "tier_id" => $tier_id, "tableName" => $tableName, "regNo" => $register_number];
+						} else {
+							$errorMsg = "Your credentials are NOT correct. Please try with correct credentials";
+						}
+						// If exam Type is DME End
+						break;
+					default:
+						//if exam type is DV -start
+						$modelClass = new Admitcard();
+						$data =  $modelClass->getQueryListDV();
+						if ($admitcard->getAdmitcardforDVPreview($data_array)) {
+							$admitcardresults = $admitcard->getAdmitcardforDVPreview($data_array);
+							$array = json_decode(json_encode($admitcardresults), true);
+							$exam_name = $admitcard->getExamName($exam_value);
+							$count = count((array)$admitcardresults);
+							$arrays = [];
+							foreach ($data as $val) {
+								foreach (array_keys($array) as $res) {
+									if ($res == $val->col_name) {
+										$col_value =  $array[$res];
+									}
+									if ($res == 'pdf_attachment') {
+										$pdf_name =  $array[$res];
+									}
+								}
+								$arrays[] = array(
+									"col_name" => $val->col_name,
+									"col_description" => $val->col_description,
+									"is_dv" => $val->is_dv,
+									"is_dv_order" => $val->is_dv_order,
+									"col_value" => $col_value
+								);
+							}
+							$datavalue = (object)$arrays;
+							$exam_year = $exam_name->table_exam_year;
+							//$this->printr($datavalue);
+							return [
+								'admitcardresults' => $datavalue,
+								'year_of_exam' => $exam_year,
+								'count' => $count,
+								"exam_name" => $exam_name,
+								"pdf_name" => @$pdf_name,
+								"exam_type" => $exam_type,
+								"tier_id" => $tier_id,
+								"tableName" => $tableName,
+								"regNo" => $register_number,
+								"post_preference" => $post_preference
+							];
+						} else {
+							$errorMsg = "Your credentials are NOT correct. Please try with correct credentials";
+						}
+						//if exam type is DV -end
+				} // Switch Case End
 			}
-			$roll_no =  isset($_POST['roll_number']) ? trim($_POST['roll_number']) : null;
-			$post_preference =  isset($_POST['post_preference_one']) ? trim($_POST['post_preference_one']) : null;
-			$data_array = array(
-				"table_name" => $exam_value,
-				"register_number" => $register_number,
-				"dob" => $dob,
-				"tier_id" => $tier_id,
-				"roll_no" => $roll_no,
-				"post_preference" => $post_preference
-			);
-			$tableName = $exam_value;
-			$admitcard = new Admitcard();
-			switch ($exam_type) {
-				case "tier":
-					//if exam type is written exam -start
-					$modelClass = new Admitcard();
-					$data =  $modelClass->getQueryListTIER();
-					// $this->printr($data);
-					if ($admitcard->getAdmitcardforTierPreview($data_array)) {
-						$admitcardresults = $admitcard->getAdmitcardforTierPreview($data_array);
-						$array = json_decode(json_encode($admitcardresults), true);
-						$exam_name = $admitcard->getExamName($exam_value);
-						@$count = count((array)$admitcardresults);
-						$arrays = [];
-						foreach ($data as $val) {
-							foreach (array_keys($array) as $res) {
-								if ($res == $val->col_name) {
-									$col_value =  $array[$res];
-								}
-								if ($res == 'pdf_attachment') {
-									$pdf_name =  $array[$res];
-								}
-								if ($res == 'candidate_address') {
-									$candidate_address =  $array[$res];
-								}
-								if ($res == 'exam_code') {
-									$exam_year =  substr($array[$res], -4);
-								}
-							}
-							$arrays[] = array(
-								"col_name" => $val->col_name,
-								"col_description" => $val->col_description,
-								"is_tier" => $val->is_tier,
-								"is_tier_order" => $val->is_tier_order,
-								"col_value" => $col_value
-							);
-						}
-						$datavalue = (object)$arrays;
-						return ['admitcardresults' => $datavalue, 'year_of_exam' => $exam_year, 'count' => $count, "exam_name" => $exam_name, "pdf_name" => @$pdf_name, "exam_type" => $exam_type, "candidate_address" => $candidate_address, "tier_id" => $tier_id, "tableName" => $tableName, "regNo" => $register_number];
-					} else {
-						$errorMsg = "Your credentials are NOT correct. Please try with correct credentials";
-					}
-					//if exam type is written exam -end
-					break;
-				case "skill":
-					$modelClass = new Admitcard();
-					$data =  $modelClass->getQueryListSKILLTEST();
-					if ($admitcard->getAdmitcardforSkillTestPreview($data_array)) {
-						$admitcardresults = $admitcard->getAdmitcardforSkillTestPreview($data_array);
-						$array = json_decode(json_encode($admitcardresults), true);
-						$exam_name = $admitcard->getExamName($exam_value);
-						@$count = count((array)$admitcardresults);
-						$arrays = [];
-						foreach ($data as $val) {
-							foreach (array_keys($array) as $res) {
-								if ($res == $val->col_name) {
-									$col_value =  $array[$res];
-								}
-								if ($res == 'pdf_attachment') {
-									$pdf_name =  $array[$res];
-								}
-								if ($res == 'candidate_address') {
-									$candidate_address =  $array[$res];
-								}
-								if ($res == 'exam_code') {
-									$exam_year =  substr($array[$res], -4);
-								}
-							}
-							$arrays[] = array(
-								"col_name" => $val->col_name,
-								"col_description" => $val->col_description,
-								"is_skill" => $val->is_skill,
-								"is_skill_order" => $val->is_skill_order,
-								"col_value" => $col_value
-							);
-						}
-						$datavalue = (object)$arrays;
-						return ['admitcardresults' => $datavalue, 'count' => $count, "exam_name" => $exam_name, "pdf_name" => @$pdf_name, 'year_of_exam' => $exam_year, "exam_type" => $exam_type, "candidate_address" => $candidate_address, "tier_id" => $tier_id, "tableName" => $tableName, "regNo" => $register_number];
-					} else {
-						$errorMsg = "Your credentials are NOT correct. Please try with correct credentials";
-					}
-					break;
-				case "pet":
-					// If exam Type is PET Start
-					$modelClass = new Admitcard();
-					$data =  $modelClass->getQueryListPET();
-					if ($admitcard->getAdmitcardforPET($data_array)) {
-						$admitcardresults = $admitcard->getAdmitcardforPET($data_array);
-						/* echo "<pre>";
-						print_r($admitcardresults);
-						exit; */
-						$array = json_decode(json_encode($admitcardresults), true);
-						$exam_name = $admitcard->getExamName($exam_value);
-						@$count = count((array)$admitcardresults);
-						$arrays = [];
-						foreach ($data as $val) {
-							foreach (array_keys($array) as $res) {
-								if ($res == $val->col_name) {
-									$col_value =  $array[$res];
-								}
-								if ($res == 'pdf_attachment') {
-									@$pdf_name =  $array[$res];
-								}
-								if ($res == 'candidate_address') {
-									$candidate_address =  $array[$res];
-								}
-							}
-							$arrays[] = array(
-								"col_name" => $val->col_name,
-								"col_description" => $val->col_description,
-								"is_pet" => $val->is_pet,
-								"is_pet_order" => $val->is_pet_order,
-								"col_value" => $col_value
-							);
-						}
-						$datavalue = (object)$arrays;
-						$exam_year = $exam_name->table_exam_year;
-						return ['admitcardresults' => $datavalue, 'year_of_exam' => $exam_year, 'count' => $count, "exam_name" => $exam_name, "pdf_name" => @$pdf_name, "exam_type" => $exam_type, "candidate_address" => $candidate_address, "tier_id" => $tier_id, "tableName" => $tableName, "regNo" => $register_number];
-					} else {
-						$errorMsg = "Your credentials are NOT correct. Please try with correct credentials";
-					}
-					// If exam Type is PET End
-					break;
-				case "dme":
-					// If exam Type is DME Start
-					$modelClass = new Admitcard();
-					$data =  $modelClass->getQueryListDME();
-					if ($admitcard->getAdmitcardforDME($data_array)) {
-						$admitcardresults = $admitcard->getAdmitcardforDME($data_array);
-						// echo "<pre>";
-						// print_r($admitcardresults);
-						// exit; 
-						$array = json_decode(json_encode($admitcardresults), true);
-						$exam_name = $admitcard->getExamName($exam_value);
-						$count = count((array)$admitcardresults);
-						$arrays = [];
-						foreach ($data as $val) {
-							foreach (array_keys($array) as $res) {
-								if ($res == $val->col_name) {
-									$col_value =  $array[$res];
-								}
-								if ($res == 'pdf_attachment') {
-									$pdf_name =  $array[$res];
-								}
-								if ($res == 'candidate_address') {
-									$candidate_address =  $array[$res];
-								}
-							}
-							$arrays[] = array(
-								"col_name" => $val->col_name,
-								"col_description" => $val->col_description,
-								"is_dme" => $val->is_dme,
-								"is_dme_order" => $val->is_dme_order,
-								"col_value" => $col_value
-							);
-						}
-						$datavalue = (object)$arrays;
-						//$this->printr($datavalue);
-						$exam_year = $exam_name->table_exam_year;
-						return ['admitcardresults' => $datavalue, 'year_of_exam' => $exam_year, 'count' => $count, "exam_name" => $exam_name, "pdf_name" => @$pdf_name, "exam_type" => $exam_type, "candidate_address" => $candidate_address, "tier_id" => $tier_id, "tableName" => $tableName, "regNo" => $register_number];
-					} else {
-						$errorMsg = "Your credentials are NOT correct. Please try with correct credentials";
-					}
-					// If exam Type is DME End
-					break;
-				default:
-					//if exam type is DV -start
-					$modelClass = new Admitcard();
-					$data =  $modelClass->getQueryListDV();
-					if ($admitcard->getAdmitcardforDVPreview($data_array)) {
-						$admitcardresults = $admitcard->getAdmitcardforDVPreview($data_array);
-						$array = json_decode(json_encode($admitcardresults), true);
-						$exam_name = $admitcard->getExamName($exam_value);
-						$count = count((array)$admitcardresults);
-						$arrays = [];
-						foreach ($data as $val) {
-							foreach (array_keys($array) as $res) {
-								if ($res == $val->col_name) {
-									$col_value =  $array[$res];
-								}
-								if ($res == 'pdf_attachment') {
-									$pdf_name =  $array[$res];
-								}
-							}
-							$arrays[] = array(
-								"col_name" => $val->col_name,
-								"col_description" => $val->col_description,
-								"is_dv" => $val->is_dv,
-								"is_dv_order" => $val->is_dv_order,
-								"col_value" => $col_value
-							);
-						}
-						$datavalue = (object)$arrays;
-						$exam_year = $exam_name->table_exam_year;
-						//$this->printr($datavalue);
-						return [
-							'admitcardresults' => $datavalue,
-							'year_of_exam' => $exam_year,
-							'count' => $count,
-							"exam_name" => $exam_name,
-							"pdf_name" => @$pdf_name,
-							"exam_type" => $exam_type,
-							"tier_id" => $tier_id,
-							"tableName" => $tableName,
-							"regNo" => $register_number,
-							"post_preference" => $post_preference
-						];
-					} else {
-						$errorMsg = "Your credentials are NOT correct. Please try with correct credentials";
-					}
-					//if exam type is DV -end
-			} // Switch Case End
-		}
+	}
 		return ['errorMsg' => $errorMsg];
 	}
 	static function getArchives($category, $modelClassName, $functionName)
