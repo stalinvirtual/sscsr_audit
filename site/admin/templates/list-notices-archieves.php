@@ -53,7 +53,7 @@
 										$uploadPath = 'notices' . '/' . $noticelist->attachment;
 										$file_location = $this->route->get_base_url() . "/" . $uploadPath;
 										?>
-										<a href="<?= $file_location ?>" target="_blank"><?= $noticelist->attachment ?></a><br>
+										<a href="<?= $file_location ?>" rel = "noopener noreferrer" target="_blank"><?= $noticelist->attachment ?></a><br>
 									</td>
 									<td><?php if ($noticelist->p_status == 1) {
 											echo '<i class="fa fa-flag" aria-hidden="true"  style="color:green"></i>';

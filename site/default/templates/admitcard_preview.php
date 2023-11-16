@@ -93,7 +93,7 @@ $base_url = "http://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
 									<div style="text-align:center;margin-bottom:20px ">( cgle 2019 / 91000299330 /
 										29-07-1995 ) </div>
 									<form class="form-signin" action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post"
-										style="max-width:585px !important;" target="_blank" id="admit_card_preview_from">
+										style="max-width:585px !important;" rel = "noopener noreferrer" target="_blank" id="admit_card_preview_from">
 										<label for="exampleInputEmail1">Select Exam Name</label>
 										<select name="examname" id="examname" 
 											class="form-control col-md-3 col-sm-2">

@@ -78,7 +78,7 @@ echo $this->get_header();
                             $uploadPath = 'nominations' . '/' . $childlist->attachment;
                             $file_location = $this->route->get_base_url() . "/" . $uploadPath; ?>
 
-                            <a class="pdfanchorclass" href="<?= $file_location ?>" target="_blank"><?= $childlist->pdf_name ?></a>,<br>
+                            <a class="pdfanchorclass" href="<?= $file_location ?>" rel = "noopener noreferrer"  target="_blank"><?= $childlist->pdf_name ?></a>,<br>
                           <?php }
 
 

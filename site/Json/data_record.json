@@ -1,109 +1,9 @@
 {
     "errorMsg": "",
-    "nominations": {
-        "0": {
-            "nomination_id": 1105,
-            "exam_name": "test nomini",
-            "category_id": 1,
-            "effect_from_date": "2023-11-16",
-            "effect_to_date": "2023-11-24",
-            "creation_date": "2023-11-09 11:13:48",
-            "p_status": "1",
-            "category_name": "CGL"
-        },
-        "1": {
-            "nomination_id": 1106,
-            "exam_name": "test ",
-            "category_id": 1,
-            "effect_from_date": "2023-11-09",
-            "effect_to_date": "2023-11-23",
-            "creation_date": "2023-11-09 11:27:39",
-            "p_status": "1",
-            "category_name": "CGL"
-        }
-    },
-    "nominationchildlist": [
-        {
-            "nomination_child_id": 1074,
-            "nomination_id": 1105,
-            "pdf_name": "test sp",
-            "attachment": "17349-exam-detailsp.pdf",
-            "status": 1
-        },
-        {
-            "nomination_child_id": 1075,
-            "nomination_id": 1106,
-            "pdf_name": "PDf 1",
-            "attachment": "67442-81000268411.pdf",
-            "status": 1
-        },
-        {
-            "nomination_child_id": 1076,
-            "nomination_id": 1107,
-            "pdf_name": "list",
-            "attachment": "97631-24report.pdf",
-            "status": 1
-        },
-        {
-            "nomination_child_id": 1077,
-            "nomination_id": 1108,
-            "pdf_name": "ok",
-            "attachment": "50786-24report.pdf",
-            "status": 1
-        }
-    ],
-    "nominations_latest_news": {
-        "0": {
-            "nomination_id": 1106,
-            "exam_name": "test ",
-            "category_id": 1,
-            "effect_from_date": "2023-11-09",
-            "effect_to_date": "2023-11-23",
-            "creation_date": "2023-11-09 11:27:39",
-            "p_status": "1",
-            "category_name": "CGL"
-        },
-        "1": {
-            "nomination_id": 1105,
-            "exam_name": "test nomini",
-            "category_id": 1,
-            "effect_from_date": "2023-11-16",
-            "effect_to_date": "2023-11-24",
-            "creation_date": "2023-11-09 11:13:48",
-            "p_status": "1",
-            "category_name": "CGL"
-        }
-    },
-    "nominationchildlist_latest_news": [
-        {
-            "nomination_child_id": 1074,
-            "nomination_id": 1105,
-            "pdf_name": "test sp",
-            "attachment": "17349-exam-detailsp.pdf",
-            "status": 1
-        },
-        {
-            "nomination_child_id": 1075,
-            "nomination_id": 1106,
-            "pdf_name": "PDf 1",
-            "attachment": "67442-81000268411.pdf",
-            "status": 1
-        },
-        {
-            "nomination_child_id": 1076,
-            "nomination_id": 1107,
-            "pdf_name": "list",
-            "attachment": "97631-24report.pdf",
-            "status": 1
-        },
-        {
-            "nomination_child_id": 1077,
-            "nomination_id": 1108,
-            "pdf_name": "ok",
-            "attachment": "50786-24report.pdf",
-            "status": 1
-        }
-    ],
+    "nominations": {},
+    "nominationchildlist": [],
+    "nominations_latest_news": {},
+    "nominationchildlist_latest_news": [],
     "selectionposts_latest_news": {},
     "selectpostschildlist_latest_news": [
         {
@@ -133,35 +33,50 @@
             "pdf_name": "",
             "attachment": "2438-sms.pdf",
             "status": 1
-        },
-        {
-            "selection_post_child_id": 78,
-            "selection_post_id": 62,
-            "pdf_name": "PDf 1",
-            "attachment": "70116-81000268411.pdf",
-            "status": 1
-        },
-        {
-            "selection_post_child_id": 79,
-            "selection_post_id": 62,
-            "pdf_name": "nomination_d",
-            "attachment": "58301-81000268411_withfooter.pdf",
-            "status": 1
         }
     ],
-    "notice_latest_news": [],
+    "notice_latest_news": [
+        {
+            "notice_id": 1,
+            "notice_name": "Cgle Examination Notice",
+            "effect_from_date": "2023-11-08",
+            "effect_to_date": "2023-11-16",
+            "creation_date": "2023-11-08 12:35:03",
+            "p_status": "1",
+            "category_id": 1,
+            "category_name": "CGL"
+        }
+    ],
     "noticechildlist_latest_news": [
         {
-            "notice_child_id": 11,
-            "notice_id": 5,
-            "pdf_name": "nomination_d",
-            "attachment": "92841-stalin-sept-mpr.pdf",
+            "notice_child_id": 1,
+            "notice_id": 1,
+            "pdf_name": "Notice cgle",
+            "attachment": "35478-81000268411_barcode.pdf",
+            "status": 0
+        },
+        {
+            "notice_child_id": 2,
+            "notice_id": 1,
+            "pdf_name": "Notice cgle2",
+            "attachment": "4330-exam-detailsp.pdf",
             "status": 0
         }
     ],
     "tenders_latest_news": [],
     "announcements_latest_news": [],
     "notices": [
+        {
+            "notice_id": 33,
+            "pdf_name": "Important Notice about Helpdesk Facility for grievances of Applicants",
+            "attachment": "11678-important_notice_29082023-about-tollfree-phone-number.pdf",
+            "effect_from_date": "2023-09-05",
+            "effect_to_date": "2023-12-05",
+            "p_status": "1",
+            "category_id": 8,
+            "creation_date": "2023-09-05 09:01:32",
+            "category_name": "OTHERS"
+        },
         {
             "notice_id": 36,
             "pdf_name": "Corrigendum Notice - Constables (Executive) in Delhi Police Examination 2023",
@@ -171,7 +86,7 @@
             "p_status": "1",
             "category_id": 6,
             "creation_date": "2023-09-05 09:16:05",
-            "category_name": "CONSTABLE-GD"
+            "category_name": "CONSTABLE"
         },
         {
             "notice_id": 35,
@@ -182,10 +97,48 @@
             "p_status": "1",
             "category_id": 6,
             "creation_date": "2023-09-05 09:14:56",
-            "category_name": "CONSTABLE-GD"
+            "category_name": "CONSTABLE"
         }
     ],
-    "ilinkforFirstFourRow": [],
+    "ilinkforFirstFourRow": [
+        {
+            "id": 118,
+            "link_name": "SSC HQ website",
+            "menu_link": "https:\/\/ssc.nic.in\/",
+            "creation_date": "2022-07-12 00:00:00",
+            "status": 1
+        },
+        {
+            "id": 119,
+            "link_name": "Archives",
+            "menu_link": "IndexController\/nominationarchives",
+            "creation_date": "2022-08-25 00:00:00",
+            "status": 1
+        },
+        {
+            "id": 117,
+            "link_name": "SSC(SR) Old website",
+            "menu_link": "http:\/\/www.sscsr.gov.in",
+            "creation_date": "2022-06-28 00:00:00",
+            "status": 1
+        },
+        {
+            "id": 121,
+            "link_name": "National Career Service",
+            "menu_link": "https:\/\/www.ncs.gov.in\/",
+            "creation_date": "2023-07-25 00:00:00",
+            "status": 1
+        }
+    ],
     "ilinkforAfterFirstFourRow": [],
-    "gallery_id_based_images": {}
+    "gallery_id_based_images": {
+        "0": {
+            "gallery_id": 63,
+            "event_id": 20,
+            "year": "2023",
+            "image_id": 99,
+            "image_path": "15881-17357-2021-01-28.jpg",
+            "event_name": "General"
+        }
+    }
 }

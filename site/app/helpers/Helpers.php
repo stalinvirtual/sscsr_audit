@@ -440,7 +440,7 @@ class Helpers
 	static function validateAndSanitizeHelper($input)
 	{
 		// Trim whitespace
-		$input = trim($input);
+		$input = trim($input ?? '');
 		// Remove backslashes
 		$input = stripslashes($input);
 		// Use htmlspecialchars to encode special characters

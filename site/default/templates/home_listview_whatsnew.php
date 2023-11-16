@@ -50,7 +50,7 @@ if (count($nominations_latest_news) > 0) {
                 $pdfCount++;
                 $uploadPath = 'nominations' . '/' . $childlist->attachment;
                 $file_location = $this->route->get_base_url() . "/" . $uploadPath;
-                $li .= '<a style="color:blue;text-decoration:underline" href="' . $file_location . '" target="_blank">' . $nomination->exam_name."_".$childlist->pdf_name . "(Nomination)" . '</a> |';
+                $li .= '<a style="color:blue;text-decoration:underline" href="' . $file_location . '" rel = "noopener noreferrer" target="_blank">' . $nomination->exam_name."_".$childlist->pdf_name . "(Nomination)" . '</a> |';
             }
         }
         
@@ -81,7 +81,7 @@ if (count($selectionposts_latest_news) > 0) {
                 $pdfCount++;
 				$uploadPath = 'selectionposts' . '/' . $childlist->attachment;
                 $file_location = $this->route->get_base_url() . "/" . $uploadPath;
-                $li .= '<a style="color:blue;text-decoration:underline" href="' . $file_location . '" target="_blank">' . $selectionpost->exam_name."_".$childlist->pdf_name . "(Selection Post)" . '</a> |';
+                $li .= '<a style="color:blue;text-decoration:underline" href="' . $file_location . '" rel = "noopener noreferrer" target="_blank">' . $selectionpost->exam_name."_".$childlist->pdf_name . "(Selection Post)" . '</a> |';
             }
         }
         
@@ -106,7 +106,7 @@ if (count($notices_latest_news) > 0) {
        
         $uploadPath = 'notices' . '/' . $noticelist->attachment;
         $file_location = $this->route->get_base_url() . "/" . $uploadPath;
-        $li.= '<a style="color:blue;text-decoration:underline" href="' . $file_location . '" target="_blank">' . $noticelist->pdf_name . '(Notice)</a>';
+        $li.= '<a style="color:blue;text-decoration:underline" href="' . $file_location . '" rel = "noopener noreferrer" target="_blank">' . $noticelist->pdf_name . '(Notice)</a>';
 		if ($current_date == $nl_date) {
             $p = '<img src="images/new.gif" style="width:40px">';
 			$li.= '</li>';
@@ -131,7 +131,7 @@ if (count($tenders_latest_news) > 0) {
        
         $uploadPath = 'tender' . '/' . $tendercreationlist->attachment;
         $file_location = $this->route->get_base_url() . "/" . $uploadPath;
-        $li.= '<a style="color:blue;text-decoration:underline" href="' . $file_location . '" target="_blank">' . $tendercreationlist->pdf_name . '(Tender)</a>';
+        $li.= '<a style="color:blue;text-decoration:underline" href="' . $file_location . '" rel = "noopener noreferrer" target="_blank">' . $tendercreationlist->pdf_name . '(Tender)</a>';
 		if ($current_date == $tender_date) {
             $p = '<img src="images/new.gif" style="width:40px">';
 			$li.= '</li>';
@@ -167,7 +167,7 @@ foreach ($tenders_li as $li) {
 			
 				<div style="margin:10px;padding:10px">
 				<div class="btnClass">
-										<a href='<?php echo $whats_newpage; ?>' target="_blank">
+										<a href='<?php echo $whats_newpage; ?>' rel = "noopener noreferrer" target="_blank">
 											<button class="GFG btn-secondary">
 												View All
 											</button>

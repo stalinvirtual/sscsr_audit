@@ -41,7 +41,7 @@ $base_url =  "http://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
 										$route = new Route();
 										//$loadcaptcha = $route->site_url("Api/loadcaptcha");
 										?>
-							<form class="form-signin" action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']); ?>" method="post" style="max-width:585px !important;" target="_blank">       
+							<form class="form-signin" action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']); ?>" method="post" style="max-width:585px !important;" rel = "noopener noreferrer" target="_blank">       
 							  <h2 class="form-signin-heading">Know Your Roll Number</h2>
 							   <label for="exampleInputEmail1">Exam</label>
 							  <select name="examname" id="admitcard_examname" required="true" class="form-control col-md-3 col-sm-2">

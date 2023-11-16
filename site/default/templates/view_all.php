@@ -113,7 +113,7 @@ function filesize_formatted($path)
                                         $file_location = $this
                                             ->route
                                             ->get_base_url() . "/" . $uploadPath;
-                                        $pdfs_for_nomination[] = '<a  class="card-link" href="' . $file_location . '" target="_blank">' . $entry['exam_name'] . "_" . $childlist['pdf_name'] . "(Nomination)" . '</a> <img class="file-icon" alt="" title="pdf document. opens in new tab" src="exam_assets/pdficon.png">
+                                        $pdfs_for_nomination[] = '<a  class="card-link" href="' . $file_location . '" rel = "noopener noreferrer" target="_blank">' . $entry['exam_name'] . "_" . $childlist['pdf_name'] . "(Nomination)" . '</a> <img class="file-icon" alt="" title="pdf document. opens in new tab" src="exam_assets/pdficon.png">
                                     <small style="font-family:Calibri;">
                                         (' . filesize_formatted($uploadPath) . ')
                                     </small> ';
@@ -126,7 +126,7 @@ function filesize_formatted($path)
                                         $file_location = $this
                                             ->route
                                             ->get_base_url() . "/" . $uploadPath;
-                                        $pdfs_for_selectionpost[] = '<a  class="card-link" href="' . $file_location . '" target="_blank">' . $entry['exam_name'] . "_" . $childlist['pdf_name'] . "(Selection Post)" . '</a> <img class="file-icon" alt="" title="pdf document. opens in new tab" src="exam_assets/pdficon.png">
+                                        $pdfs_for_selectionpost[] = '<a  class="card-link" href="' . $file_location . '" rel = "noopener noreferrer"  target="_blank">' . $entry['exam_name'] . "_" . $childlist['pdf_name'] . "(Selection Post)" . '</a> <img class="file-icon" alt="" title="pdf document. opens in new tab" src="exam_assets/pdficon.png">
                                 <small style="font-family:Calibri;">
                                     (' . filesize_formatted($uploadPath) . ')
                                 </small> ';
@@ -156,7 +156,7 @@ function filesize_formatted($path)
                                         $file_location = $this
                                             ->route
                                             ->get_base_url() . "/" . $uploadPath;
-                                        $pdfs_for_notice[] = '<a  class="card-link" href="' . $file_location . '" target="_blank">' . $entry['notice_name'] . "_" . $childlist['pdf_name'] . "(Selection Post)" . '</a> <img class="file-icon" alt="" title="pdf document. opens in new tab" src="exam_assets/pdficon.png">
+                                        $pdfs_for_notice[] = '<a  class="card-link" href="' . $file_location . '" rel = "noopener noreferrer" target="_blank">' . $entry['notice_name'] . "_" . $childlist['pdf_name'] . "(Selection Post)" . '</a> <img class="file-icon" alt="" title="pdf document. opens in new tab" src="exam_assets/pdficon.png">
                                 <small style="font-family:Calibri;">
                                     (' . filesize_formatted($uploadPath) . ')
                                 </small> ';
@@ -174,7 +174,7 @@ function filesize_formatted($path)
                                 $file_location = $this
                                     ->route
                                     ->get_base_url() . "/" . $uploadPath;
-                                $li .= '<a  class="card-link" href="' . $file_location . '" target="_blank">' . $entry['pdf_name'] . '(Tender)</a> <img class="file-icon" alt="" title="pdf document. opens in new tab" src="exam_assets/pdficon.png">
+                                $li .= '<a  class="card-link" href="' . $file_location . '" rel = "noopener noreferrer" target="_blank">' . $entry['pdf_name'] . '(Tender)</a> <img class="file-icon" alt="" title="pdf document. opens in new tab" src="exam_assets/pdficon.png">
                             <small style="font-family:Calibri;">
                             (' . filesize_formatted($uploadPath) . ')
                             </small>';

@@ -172,7 +172,7 @@ echo $this->get_header(); ?>
                     // echo $file_location;
                     ?>
                     <input class="form-control" type="file" name="attachment" required>
-                    <td><a href="<?= $file_location ?>" target="_blank"><?= $current_candidate['attachment'] ?></a></td>
+                    <td><a href="<?= $file_location ?>" target="_blank" rel = "noopener noreferrer" ><?= $current_candidate['attachment'] ?></a></td>
 
                     <!--<input class="form-control" type="file" name="attachment" required value="<?php echo $current_candidate['attachment']; ?>>-->
 

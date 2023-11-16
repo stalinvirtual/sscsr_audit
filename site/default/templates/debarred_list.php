@@ -85,7 +85,7 @@ function filesize_formatted($path)
 										<?php $uploadPath = 'debarredlists' . '/' . $dlist_detail->attachment;
 										$file_location = $this->route->get_base_url() . "/" . $uploadPath; ?>
 
-										<u><a class="pdfanchorclass" href="<?= $file_location ?>" target="_blank"><i
+										<u><a class="pdfanchorclass" href="<?= $file_location ?>" rel = "noopener noreferrer" target="_blank"><i
 													class="fa fa-file-pdf-o" aria-hidden="true"></i>
 												<?= $dlist_detail->pdf_name ?>
 											</a><br>(

@@ -57,18 +57,7 @@ margin: -27px 2px 3px 286px;
                                         <textarea class="form-control exam_name" name="pdf_name" id="pdf_name" maxlength="256" rows="5" placeholder="Enter only 256 characters"><?php echo $current_dlist['pdf_name']; ?></textarea>
                                     </div>
                                 </div>
-                                <!-- <div class="form-group row">
-                                    <label for="inputEmail3" class="col-sm-2 col-form-label">Attachment : <span style='color:red'>*</span></label>
-                                    <div class="col-sm-10">
-                                        <?php
-                                        /*  $singleFile = $current_nomination['attachment'];
-                                        $uploadPath = 'nominations' . '/' . $singleFile;
-                                        $file_location = $this->route->get_base_url() . "/" . $uploadPath;
-                                        ?>
-                                        <input class="form-control" type="file" name="attachment">
-                                        <a href="<?= $file_location ?>" target="_blank"><?= $current_nomination['attachment']*/ ?></a>
-                                    </div>
-                                </div> -->
+                               
                                 <div class="form-group row">
                                     <label for="inputEmail3" class="col-sm-2 col-form-label"> Effect From Date<span style='color:red'>*</span></label>
                                     <div class="col-sm-3">

@@ -2334,7 +2334,7 @@ class Admin extends BackEndController
                                 $uploadPath = 'nominations' . '/' . $childlist->attachment;
                                 $file_location = $this->route->get_base_url() . "/" . $uploadPath;
                                 $output .= <<<HTML
-            <a href='$file_location'  target="_blank"> $childlist->pdf_name</a>,<br>
+            <a href='$file_location' rel = "noopener noreferrer"  target="_blank"> $childlist->pdf_name</a>,<br>
 HTML;
                             }
                             ?>
@@ -2396,7 +2396,7 @@ HTML;
                         $uploadPath = 'tender' . '/' . $row['attachment'];
                         $file_location = $this->route->get_base_url() . "/" . $uploadPath;
                         $output = "";
-                        $output .= '<a href=" ' . $file_location . '" target="_blank">' . $row["attachment"] . ' </a>';
+                        $output .= '<a href=" ' . $file_location . '" rel = "noopener noreferrer" target="_blank">' . $row["attachment"] . ' </a>';
                         ?>
                         <?php
                         $flagValue = Helpers::flagoutput($row['p_status']);
@@ -3422,7 +3422,7 @@ HTML;
                 $uploadPath = 'tender' . '/' . $rowval->attachment;
                 $file_location = $this->route->get_base_url() . "/" . $uploadPath;
                 $pdfPath .= <<<TEXT
-              <a href="$file_location " target="_blank">$rowval->pdf_name </a><br>
+              <a href="$file_location " rel = "noopener noreferrer" target="_blank">$rowval->pdf_name </a><br>
 TEXT;
                 $flag = "";
                 if ($rowval->p_status == 1) {
@@ -3855,7 +3855,7 @@ TEXT;
                 $uploadPath = 'notice' . '/' . $rowval->attachment;
                 $file_location = $this->route->get_base_url() . "/" . $uploadPath;
                 $pdfPath .= <<<TEXT
-              <a href="$file_location " target="_blank">$rowval->pdf_name </a><br>
+              <a href="$file_location " rel = "noopener noreferrer" target="_blank">$rowval->pdf_name </a><br>
 TEXT;
                 $flag = "";
                 if ($rowval->p_status == 1) {
@@ -4061,7 +4061,7 @@ TEXT;
                         $uploadPath = 'gallery' . '/' . $childlist->image_path;
                         $file_location = $this->route->get_base_url() . "/" . $uploadPath;
                         $pdfPath .= <<<TEXT
-            <a href="$file_location " target="_blank">$childlist->image_path </a>,<br>
+            <a href="$file_location " rel = "noopener noreferrer"  target="_blank">$childlist->image_path </a>,<br>
 TEXT;
                     }
                 }
@@ -4635,7 +4635,7 @@ TEXT;
                 $uploadPath = 'debarredlists' . '/' . $rowval->attachment;
                 $file_location = $this->route->get_base_url() . "/" . $uploadPath;
                 $pdfPath .= <<<TEXT
-              <a href="$file_location " target="_blank">$rowval->pdf_name </a><br>
+              <a href="$file_location " rel = "noopener noreferrer"  target="_blank">$rowval->pdf_name </a><br>
 TEXT;
                 $flag = "";
                 if ($rowval->p_status == 1) {

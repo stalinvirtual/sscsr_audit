@@ -112,6 +112,7 @@ $csrf_token = $_SESSION['csrf_token'];
 
 .errormsg{
 	  background: antiquewhite;
+      width:49%;
 }
 i.fa.fa-exclamation-triangle {
     width: inherit;

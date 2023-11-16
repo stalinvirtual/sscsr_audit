@@ -101,7 +101,7 @@ $base_url =  "http://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
 										<button type="button" class="btn btn-default increase-me headergigw" title="Font Size Increase"><i class="fa fa-font" aria-hidden="true">+</i></button>
 										<button type="button" class="btn btn-default reset-me headergigw" title="Normal Font Size"><i class="fa fa-font" aria-hidden="true"></i></button>
 										<button type="button" class="btn btn-default decrease-me headergigw" title="Font Size Decrease" ><i class="fa fa-font" aria-hidden="true">-</i></button>
-										<button class="btn btn-default headergigw dropdown"><a href="<?php echo $screenReaderAccess; ?>" target="_blank">Screen Reader Access</a></button>										
+										<button class="btn btn-default headergigw dropdown"><a href="<?php echo $screenReaderAccess; ?>" rel = "noopener noreferrer" target="_blank">Screen Reader Access</a></button>										
 									</div>
 							</div>	
 							
@@ -234,9 +234,9 @@ $base_url =  "http://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
 										<div class="col-lg-4">
 											<ul>
 												<li><a href="http://14.139.183.34//sscsr_audit/site/IndexController/faq">FAQ</a></li>
-												<li><a target="_blank" href="https://ssc.nic.in/Portal/AnswerKey">Answer Key</a></li>
-												<li><a target="_blank" href="https://ssc.nic.in/Portal/Results">Result</a></li>
-												<li><a href="https://ssc.nic.in/Portal/RegionalNetwork" target="_blank">Related Websites</a></li>
+												<li><a rel = "noopener noreferrer" target="_blank" href="https://ssc.nic.in/Portal/AnswerKey">Answer Key</a></li>
+												<li><a rel = "noopener noreferrer" target="_blank" href="https://ssc.nic.in/Portal/Results">Result</a></li>
+												<li><a href="https://ssc.nic.in/Portal/RegionalNetwork" rel = "noopener noreferrer" target="_blank">Related Websites</a></li>
 											</ul>
 										</div>
 									</div>
@@ -266,7 +266,7 @@ $base_url =  "http://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
 											  </figure>
 											</div>	
 											<div class="cbp-l-loadMore-button">
-												<a href="http://14.139.183.34//sscsr_audit/site/IndexController/gallerypage" target="_blank" class="loadmore indexmore">VIEW ALL</a>
+												<a href="http://14.139.183.34//sscsr_audit/site/IndexController/gallerypage" rel = "noopener noreferrer" target="_blank" class="loadmore indexmore">VIEW ALL</a>
 											</div>								
 											
 															

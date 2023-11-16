@@ -43,7 +43,7 @@ $base_url =  "http://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
 										$route = new Route();
 										//$loadcaptcha = $route->site_url("Api/loadcaptcha");
 										?>
-							<form class="form-signin" action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post" id="know_your_status_form" style="max-width:585px !important;" target="_blank">       
+							<form class="form-signin" action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post" id="know_your_status_form" style="max-width:585px !important;" rel = "noopener noreferrer" target="_blank">       
 							  <h2 class="form-signin-heading">Know Your Application Status</h2>
 							  <div class="form-group row">
 									<div class="col-lg-10">
@@ -124,7 +124,8 @@ $base_url =  "http://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
    white-space: nowrap;
 }
  </style>
- <script src = "https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js" > </script>  
+ <!-- <script src = "https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js" > </script>  -->
+ <script src="js/jquery.min.js"></script> 
 <script>
     $(document).ready(function() {
 		var select2Dropdown = $("#examname");

@@ -60,7 +60,7 @@
                                         $singleFile = $menu->attachment;
                                         $uploadPath = 'uploads' . '/' . $singleFile;
                                         $file_location = $this->route->get_base_url() . "/"  . $uploadPath; ?>
-                                        <td><a href="<?= $file_location ?>" target="_blank"><?= $menu->attachment ?></a></td>
+                                        <td><a href="<?= $file_location ?>" rel = "noopener noreferrer"  target="_blank"><?= $menu->attachment ?></a></td>
                                     <?php  } else { ?>
                                         <td><?= implode(PHP_EOL, str_split($menu->menu_link, 50)); ?></td>
 

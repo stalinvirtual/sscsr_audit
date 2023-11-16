@@ -192,11 +192,11 @@ $_SESSION['token'] = bin2hex(openssl_random_pseudo_bytes(16));
 									INDIA</button>
 								<button class="btn btn-default headergigw dropdown"><a data-toggle="tooltip"
 										data-placement="left" title="Admin Login"
-										href="<?php echo $this->base_url; ?>IndexController/admin_login"
+										href="<?php echo $this->base_url; ?>IndexController/admin_login" rel = "noopener noreferrer"
 										target="_blank"><i class="fa fa-user" style="color:#fff" aria-hidden="true"></i></a></button>
 								<button class="btn btn-default headergigw dropdown"><a
 										style='text-decoration: underline;color:#fff' data-toggle="tooltip" data-placement="right"
-										title="SSCSR old website" href="http://www.sscsr.gov.in/" target="_blank">SSCSR
+										title="SSCSR old website" href="http://www.sscsr.gov.in/" rel = "noopener noreferrer" target="_blank">SSCSR
 										old website</a></button>
 
 
@@ -226,7 +226,7 @@ $_SESSION['token'] = bin2hex(openssl_random_pseudo_bytes(16));
 											data-toggle="tooltip" data-placement="left" title="Font Size Decrease"><i
 												class="fa fa-font" aria-hidden="true">-</i></button>
 										<button class="btn btn-default headergigw dropdown"><a style="color:#fff"
-												href="<?php echo $screenReaderAccess; ?>" target="_blank">Screen Reader
+												href="<?php echo $screenReaderAccess; ?>" rel = "noopener noreferrer" target="_blank">Screen Reader
 												Access</a></button>
 									</div>
 								</div>

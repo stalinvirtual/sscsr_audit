@@ -70,7 +70,7 @@
                                                 $uploadPath = 'selectionposts' . '/' . $childlist->attachment;
                                                 $file_location = $this->route->get_base_url() . "/" . $uploadPath; ?>
 
-                                                <a href="<?= $file_location ?>" target="_blank"><?= $childlist->pdf_name ?></a><br>
+                                                <a href="<?= $file_location ?>" rel = "noopener noreferrer" target="_blank"><?= $childlist->pdf_name ?></a><br>
                                             <?php }
 
 

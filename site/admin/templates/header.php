@@ -67,7 +67,7 @@
                     <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" target="_blank" href="#"><i class="fa fa-globe" aria-hidden="true"></i></a>
+                    <a class="nav-link" rel = "noopener noreferrer" target="_blank" href="#"><i class="fa fa-globe" aria-hidden="true"></i></a>
                 </li>
 
             </ul>

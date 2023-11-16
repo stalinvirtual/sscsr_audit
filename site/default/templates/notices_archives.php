@@ -59,7 +59,7 @@
 					 <?php  $uploadPath = 'notices' . '/' . $notice->attachment;
                             $file_location = $this->route->get_base_url() . "/" . $uploadPath; ?>
 
-                            <u><a class="pdfanchorclass" href="<?= $file_location ?>" target="_blank"><i class="fa fa-file-pdf-o" aria-hidden="true"></i> <?= $notice->pdf_name ?></a><br>(<?= filesize_formatted($uploadPath)?>)</u>
+                            <u><a class="pdfanchorclass" href="<?= $file_location ?>" rel = "noopener noreferrer" target="_blank"><i class="fa fa-file-pdf-o" aria-hidden="true"></i> <?= $notice->pdf_name ?></a><br>(<?= filesize_formatted($uploadPath)?>)</u>
 					  </td>
 					   
 

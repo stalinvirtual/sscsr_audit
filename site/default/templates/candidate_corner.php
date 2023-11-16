@@ -41,13 +41,13 @@ $knowyourvenuedetails = $route->site_url("IndexController/knowyourvenuedetails")
 					<ul>
 						<li class="cbp-item graphic">
 							
-							<a href="<?php echo $knowyourstatus;?>"  target="_blank"><h4 class="ccn">Know<br>your<br>Application<br>status</h4></a>
+							<a href="<?php echo $knowyourstatus;?>"  rel = "noopener noreferrer" target="_blank"><h4 class="ccn">Know<br>your<br>Application<br>status</h4></a>
                         </li>
 						<li class="cbp-item graphic">
-							<a href="<?php echo $knowyourvenuedetails;?>"  target="_blank"><h4 class="ccn">Know your<br>Date and City of Exam</h4></a>
+							<a href="<?php echo $knowyourvenuedetails;?>" rel = "noopener noreferrer"  target="_blank"><h4 class="ccn">Know your<br>Date and City of Exam</h4></a>
 						</li>
 						<li class="cbp-item graphic">
-							<a href="<?php echo $admitcard;?>"  target="_blank"><h4 class="ccn">Admit Card <br>or<br> Call Letter</h4></a>
+							<a href="<?php echo $admitcard;?>" rel = "noopener noreferrer"  target="_blank"><h4 class="ccn">Admit Card <br>or<br> Call Letter</h4></a>
 						</li>
 					</ul>
 				</div>

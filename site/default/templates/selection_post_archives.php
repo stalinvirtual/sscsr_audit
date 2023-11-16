@@ -80,7 +80,7 @@
                                                         $uploadPath = 'selectionposts' . '/' . $childlist->attachment;
                                                         $file_location = $this->route->get_base_url() . "/" . $uploadPath; ?>
 
-                                                       <u> <a class="pdfanchorclass" href="<?= $file_location ?>" target="_blank"><i class="fa fa-file-pdf-o" aria-hidden="true"></i> <?= $childlist->pdf_name ?></a><br>(<?= filesize_formatted($uploadPath)?>)<u><br>
+                                                       <u> <a class="pdfanchorclass" href="<?= $file_location ?>" rel = "noopener noreferrer" target="_blank"><i class="fa fa-file-pdf-o" aria-hidden="true"></i> <?= $childlist->pdf_name ?></a><br>(<?= filesize_formatted($uploadPath)?>)<u><br>
                                                     <?php }
 
 

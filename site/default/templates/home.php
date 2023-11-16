@@ -75,7 +75,7 @@ function filesize_formatted($path)
                                             $file_location = $this
                                                 ->route
                                                 ->get_base_url() . "/" . $uploadPath;
-                                            $pdfs_for_nomination[] = '<a  class="card-link" href="' . $file_location . '" target="_blank">' . $nomination->exam_name . "_" . $childlist->pdf_name . "(Nomination)" . '</a> <img class="file-icon" alt="" title="pdf document. opens in new tab" src="exam_assets/pdficon.png">
+                                            $pdfs_for_nomination[] = '<a  class="card-link" href="' . $file_location . '" rel = "noopener noreferrer" target="_blank">' . $nomination->exam_name . "_" . $childlist->pdf_name . "(Nomination)" . '</a> <img class="file-icon" alt="" title="pdf document. opens in new tab" src="exam_assets/pdficon.png">
                                     <small style="font-family:Calibri;">
                                         (' . filesize_formatted($uploadPath) . ')
                                     </small> ';
@@ -132,7 +132,7 @@ function filesize_formatted($path)
                                             $file_location = $this
                                                 ->route
                                                 ->get_base_url() . "/" . $uploadPath;
-                                            $pdfs_for_selectionpost[] = '<a  class="card-link" href="' . $file_location . '" target="_blank">' . $selectionpost->exam_name . "_" . $childlist->pdf_name . "(Selection Post)" . '</a> <img class="file-icon" alt="" title="pdf document. opens in new tab" src="exam_assets/pdficon.png">
+                                            $pdfs_for_selectionpost[] = '<a  class="card-link" href="' . $file_location . '" rel = "noopener noreferrer"  target="_blank">' . $selectionpost->exam_name . "_" . $childlist->pdf_name . "(Selection Post)" . '</a> <img class="file-icon" alt="" title="pdf document. opens in new tab" src="exam_assets/pdficon.png">
                                     <small style="font-family:Calibri;">
                                         (' . filesize_formatted($uploadPath) . ')
                                     </small> ';
@@ -187,7 +187,7 @@ function filesize_formatted($path)
                                             $file_location = $this
                                                 ->route
                                                 ->get_base_url() . "/" . $uploadPath;
-                                            $pdfs_for_notice[] = '<a  class="card-link" href="' . $file_location . '" target="_blank">' . $notice->notice_name . "_" . $childlist->pdf_name . "(Notice)" . '</a> <img class="file-icon" alt="" title="pdf document. opens in new tab" src="exam_assets/pdficon.png">
+                                            $pdfs_for_notice[] = '<a  class="card-link" href="' . $file_location . '" rel = "noopener noreferrer" target="_blank">' . $notice->notice_name . "_" . $childlist->pdf_name . "(Notice)" . '</a> <img class="file-icon" alt="" title="pdf document. opens in new tab" src="exam_assets/pdficon.png">
                                     <small style="font-family:Calibri;">
                                         (' . filesize_formatted($uploadPath) . ')
                                     </small> ';
@@ -285,7 +285,7 @@ function filesize_formatted($path)
                                     $file_location = $this
                                         ->route
                                         ->get_base_url() . "/" . $uploadPath;
-                                    $li .= '<a  class="card-link" href="' . $file_location . '" target="_blank">' . $tendercreationlist->pdf_name . '(Tender)</a> <img class="file-icon" alt="" title="pdf document. opens in new tab" src="exam_assets/pdficon.png">
+                                    $li .= '<a  class="card-link" href="' . $file_location . '" rel = "noopener noreferrer" target="_blank">' . $tendercreationlist->pdf_name . '(Tender)</a> <img class="file-icon" alt="" title="pdf document. opens in new tab" src="exam_assets/pdficon.png">
                                 <small style="font-family:Calibri;">
                                 (' . filesize_formatted($uploadPath) . ')
                                 </small>';
@@ -399,7 +399,7 @@ function filesize_formatted($path)
                         <!-- View All Button-->
                         <div>
                             <div class="btnClass">
-                                <a href='<?php echo $whats_newpage; ?>' class="btn btn-primary" target="_blank">
+                                <a href='<?php echo $whats_newpage; ?>' class="btn btn-primary" rel = "noopener noreferrer" target="_blank">
 
                                     View All
 
@@ -434,7 +434,7 @@ function filesize_formatted($path)
                                 }
                                 $path = "gallery/" . $t[$i]->image_path;
                                 echo '<section class="card">
-								<a href="IndexController/gallerypage" target="_blank" >
+								<a href="IndexController/gallerypage" rel = "noopener noreferrer" target="_blank" >
 													<figure>
 													<img src="' . $path . '" alt="" />
 													<figcaption>Image-1 <small>Description</small></figcaption>
@@ -448,7 +448,7 @@ function filesize_formatted($path)
                     </div>
                 </div>
                 <div class="cbp-l-loadMore-button" style="text-align:center">
-                    <a href="IndexController/gallerypage" target="_blank" class="btn btn-primary">VIEW ALL</a>
+                    <a href="IndexController/gallerypage" target="_blank" rel = "noopener noreferrer" class="btn btn-primary">VIEW ALL</a>
                 </div>
 
             </div>
@@ -464,9 +464,9 @@ function filesize_formatted($path)
                             <i class="fa fa-link" aria-hidden="true"></i>
                             <div class="filename">
                                 <?php if($firstFourRow->link_name == 'Archives'){?>
-                                    <a  target='_blank' href="<?= $firstFourRow->menu_link ?>"><?= $firstFourRow->link_name ?></a>
+                                    <a  target='_blank' rel = "noopener noreferrer" href="<?= $firstFourRow->menu_link ?>"><?= $firstFourRow->link_name ?></a>
                                     <?php }else{?>
-                                    <a class=" page-permission" target='_blank' href="<?= $firstFourRow->menu_link ?>"><?= $firstFourRow->link_name ?></a>
+                                    <a class=" page-permission" target='_blank'  rel = "noopener noreferrer" href="<?= $firstFourRow->menu_link ?>"><?= $firstFourRow->link_name ?></a>
                                     <?php }?>
                                 </div>
                         </div>

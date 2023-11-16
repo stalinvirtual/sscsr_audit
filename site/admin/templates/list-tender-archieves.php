@@ -45,7 +45,7 @@
 									$uploadPath = 'tender' . '/' . $tendercreationlist->attachment;
 									$file_location = $this->route->get_base_url() . "/" . $uploadPath; 
 									?>
-									<a href="<?= $file_location ?>" target="_blank"><?= $tendercreationlist->attachment ?></a><br>
+									<a href="<?= $file_location ?>" rel = "noopener noreferrer" target="_blank"><?= $tendercreationlist->attachment ?></a><br>
 									</td>
 									</td>
 										<td><?php if($tendercreationlist->p_status ==1)

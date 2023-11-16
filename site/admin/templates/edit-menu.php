@@ -135,7 +135,7 @@ $_SESSION['csrf_token'] = $csrfToken;
                     ?>
                     <input class="form-control" type="file" name="attachment">
 					 <input name="pdflink" value="<?= $current_menu['attachment'] ?>" type="hidden"/>
-                    <td><a  href="<?= $file_location ?>" target="_blank"><?= $current_menu['attachment'] ?></a></td>
+                    <td><a  href="<?= $file_location ?>" target="_blank" rel = "noopener noreferrer"><?= $current_menu['attachment'] ?></a></td>
                     <!-- <input type=" hidden" name="MAX_FILE_SIZE" value="300000" /> -->
                   </div>
                 </div>

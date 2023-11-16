@@ -70,7 +70,7 @@ date_default_timezone_set("Etc/GMT+8");
                                                $uploadPath = 'nominations' . '/' . $childlist->attachment;
                                                $file_location = $this->route->get_base_url() . "/" . $uploadPath; ?>
  
-                                               <a href="<?= $file_location ?>" target="_blank"><?= $childlist->pdf_name ?></a>,<br>
+                                               <a href="<?= $file_location ?>" rel = "noopener noreferrer"  target="_blank"><?= $childlist->pdf_name ?></a>,<br>
                                            <?php }
  
  

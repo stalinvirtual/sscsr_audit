@@ -116,7 +116,7 @@ if (!isset($_SERVER['HTTP_REFERER']) || !isset($_SESSION['sess_user'])) {
 									<span id="uploading_header_info"></span>
 									<div id="container" style='width:160px; margin: 0 auto'>
 										<div id="loader" style="display: none;">
-											<img src="images/settings1.gif" alt="Loading...">
+											<img src="images/settings.gif" alt="Loading...">
 										</div>
 									</div>
 									<br>
