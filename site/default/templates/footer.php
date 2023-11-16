@@ -13,7 +13,7 @@
 			<div class="col-sm-1 col-lg-1 ">
 			</div>
 			<div class="col-sm-2 col-lg-2  nicLogo">
-				<img src="https://tnsta.gov.in/common/img/niclogo.png"
+				<img src="exam_assets/niclogo.png"
 					alt="National Informatics Centre opens a new window" width="150"></a>
 			</div>
 			<div class="col-sm-7 col-lg-7 footer_content_div">

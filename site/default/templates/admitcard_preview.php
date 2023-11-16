@@ -47,10 +47,23 @@ $base_url = "http://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
 		.form-control {
 			height: 39px !important;
 		}
+		.errormsg {
+    text-align: center;
+    margin-left: 188px;
+    font-weight: 600;
+    width: 58%;
+}
+#wrapper {
+	width:100%;
+	/* margin:0;	 */
+	padding:0;
+	background:#faebeb;
+	margin-top: -126px;
+}
 	</style>
 </head>
 </head>
-<body>
+<body style="background:#faebeb">
 	
 	<div id="wrapper" class="admitcard-preview-wrapper">
 		<section class="buttons">
@@ -72,6 +85,9 @@ $base_url = "http://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
 										//unset($errorMsg);
 									}
 									$route = new Route();
+									
+									$csrfToken = bin2hex(random_bytes(32));
+									$_SESSION['csrf_token'] = $csrfToken;
 									//$loadcaptcha = $route->site_url("Api/loadcaptcha");
 									?>
 									<div style="text-align:center;margin-bottom:20px ">( cgle 2019 / 91000299330 /
@@ -119,6 +135,7 @@ $base_url = "http://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
 											</div>
 										</div>
 										<br>
+										<input type="hidden" name="csrf_token" value="<?php echo $csrfToken; ?>">
 										<button class="btn btn-lg btn-sscsrthemecolor btn-block" type="submit"
 											name="admit_card">Preview</button>
 									</form>

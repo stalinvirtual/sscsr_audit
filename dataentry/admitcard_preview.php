@@ -43,7 +43,7 @@ if (!isset($_SERVER['HTTP_REFERER']) || !isset($_SESSION['sess_user'])) {
 <style>
 	.videoWrapper {
 		position: relative;
-		padding-bottom: 56.25%;
+		padding-bottom: 44%;
 		/* 16:9 */
 		padding-top: 25px;
 		height: 0;

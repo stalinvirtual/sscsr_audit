@@ -4608,7 +4608,7 @@
         return 'No results found';
       },
       searching: function () {
-        return 'Searchingâ€¦';
+        return 'Searching....';
       }
     };
   });

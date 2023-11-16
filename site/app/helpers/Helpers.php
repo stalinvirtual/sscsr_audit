@@ -814,6 +814,10 @@ class Helpers
 		//echo $data;
 		$errorMsg = "";
 		if (isset($_POST['admit_card'])) {
+			if (!hash_equals($_SESSION['csrf_token'], $_POST['csrf_token'])) {
+				// Token mismatch, handle the error (e.g., log it or display an error message)
+				$errorMsg ="CSRF token verification failed.";
+			}
 			$register_number     = trim($_POST['register_number']);
 			$dob   = trim($_POST['dob']);
 			$examname = trim($_POST['examname']);
