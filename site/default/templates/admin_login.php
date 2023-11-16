@@ -44,13 +44,13 @@ $_SESSION['csrf_token'] = $csrfToken;
 							$loadcaptcha = $route->site_url("Api/loadcaptcha");
 							$token = $_SESSION['token'];
 							?>
-							<form class="form-signin" id="dept_login" action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post" autocomplete="off">
+							<form class="form-signin" id="dept_login" action="<?php echo htmlentities($_SERVER['PHP_SELF']); ?>" method="post" autocomplete="off">
 								<h2 class="form-signin-heading">Department Login</h2>
 								<label for="exampleInputEmail1">User Name</label>
-								<input type="text" class="form-control" placeholder="Username " name="username" id="username"  oncopy="return false" onpaste="return false"  />
+								<input type="text" class="form-control" placeholder="Username " name="uname" id="username"  oncopy="return false" onpaste="return false"  />
 								<br>
 								<label for="exampleInputEmail1">Password</label>
-								<input type="password" class="form-control" placeholder="Password " name="password"  id="password" oncopy="return false" onpaste="return false"/>
+								<input type="password" class="form-control" placeholder="Password " name="pwd"  id="password" oncopy="return false" onpaste="return false"/>
 								<br>
 
 

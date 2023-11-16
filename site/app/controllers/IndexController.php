@@ -130,9 +130,9 @@ class IndexController extends FrontEndController
 				// 	return ['errorMsg' => $errorMsg];
 				// }
 				try{
-					if (!empty(Helpers::cleanData($_POST['username'])) && !empty(Helpers::cleanData($_POST['password']))) {
-						$decyptedusername = Helpers::encrypt_with_cryptoJS_and_decrypt_with_php(Helpers::cleanData($_POST['username']));
-						$decyptedpassword = Helpers::encrypt_with_cryptoJS_and_decrypt_with_php(Helpers::cleanData($_POST['password']));
+					if (!empty(Helpers::cleanData($_POST['uname'])) && !empty(Helpers::cleanData($_POST['pwd']))) {
+						$decyptedusername = Helpers::encrypt_with_cryptoJS_and_decrypt_with_php(Helpers::cleanData($_POST['uname']));
+						$decyptedpassword = Helpers::encrypt_with_cryptoJS_and_decrypt_with_php(Helpers::cleanData($_POST['pwd']));
 						$username = Helpers::cleanData(trim($decyptedusername));
 
 						$username = htmlspecialchars($username, ENT_QUOTES, 'UTF-8');

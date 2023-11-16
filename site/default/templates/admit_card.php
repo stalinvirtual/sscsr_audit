@@ -70,7 +70,7 @@ error_reporting(0);
 								</div>
 							</div>
 							<!-- Modal-->
-							<form class="form-signin" action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post" id="download_admit_card_from" style="max-width:585px !important;" rel = "noopener noreferrer" target="_blank">
+							<form class="form-signin" action="<?php echo htmlentities($_SERVER['PHP_SELF']); ?>" method="post" id="download_admit_card_from" style="max-width:585px !important;" rel = "noopener noreferrer" target="_blank">
 								<h2 class="form-signin-heading">Download Admit Card</h2>
 								<div class="form-group row">
 									<div class="col-lg-10">
