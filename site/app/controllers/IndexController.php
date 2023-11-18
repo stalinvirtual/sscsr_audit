@@ -144,8 +144,11 @@ class IndexController extends FrontEndController
 							// Password is correct
 							$user = new User();
 							if ($user->authenticate($username, $password)) {
+								session_start();
+								session_regenerate_id();
 								$route = new Route();
 								$route->redirect($route->site_url("Admin/dashboard/?action=listnominations"));
+								
 							}
 							else{
 								$errorMsg = "Wrong Username or password";

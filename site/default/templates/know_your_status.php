@@ -124,12 +124,9 @@ $base_url =  "http://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
    white-space: nowrap;
 }
  </style>
-<<<<<<< Updated upstream
  <!-- <script src = "https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js" > </script>  -->
  <script src="js/jquery.min.js"></script> 
-=======
  <!-- <script src = "https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js" > </script>   -->
->>>>>>> Stashed changes
 <script>
     $(document).ready(function() {
 		var select2Dropdown = $("#examname");

@@ -14,27 +14,23 @@ $faq = $route->site_url("IndexController/faq");
 </div>
 <section class=" " style="background:#faebeb ;margin-bottom:1px; border: 3px solid #faebeb;">
 	<div class="customer-logos slider" style="background:#fff;border-radius: 10px; width:100%;">
-	<div class="slide"><a href="https://dipp.gov.in/" rel="noopener noreferrer" target="_blank"
+	<div class="slide"><a href="https://www.pmindia.gov.in/en/" rel="noopener noreferrer" target="_blank"
 				class="thumbnail page-permission"
 				aria-label="Government of Tamil Nadu - External site that opens in a new window"><img
 					src="images/logo_pmindia.png" height="100px" alt="Image"
 					class="img-responsive1" title=" Department for Promotion of Industry and Internal Trade"></a></div>
-	<!-- <div class="slide"><a href="https://dipp.gov.in/" rel="noopener noreferrer" target="_blank"
-				class="thumbnail page-permission"
-				aria-label="Government of Tamil Nadu - External site that opens in a new window"><img
-					src="images/logo_incredible_india.png" height="100px" alt="Image"
-					class="img-responsive1" title=" Department for Promotion of Industry and Internal Trade"></a></div> -->
-	<div class="slide"><a href="https://dipp.gov.in/" rel="noopener noreferrer" target="_blank"
+	
+	<div class="slide"><a href="https://digitalindia.gov.in/" rel="noopener noreferrer" target="_blank"
 				class="thumbnail page-permission"
 				aria-label="Government of Tamil Nadu - External site that opens in a new window"><img
 					src="images/logo_digital_india.png" height="100px" alt="Image"
 					class="img-responsive1" title=" Department for Promotion of Industry and Internal Trade"></a></div>
-	<div class="slide"><a href="https://dipp.gov.in/" rel="noopener noreferrer" target="_blank"
+	<div class="slide"><a href="https://www.makeinindia.com/" rel="noopener noreferrer" target="_blank"
 				class="thumbnail page-permission"
 				aria-label="Government of Tamil Nadu - External site that opens in a new window"><img
 					src="images/logo_make_in_india.png" height="100px" alt="Image"
 					class="img-responsive1" title=" Department for Promotion of Industry and Internal Trade"></a></div>
-		<div class="slide"><a href="https://gandhi.gov.in/" rel="noopener noreferrer" target="_blank"
+		<div class="slide"><a href="https://www.india.gov.in/" rel="noopener noreferrer" target="_blank"
 				class="thumbnail page-permission"
 				aria-label="Government of Tamil Nadu - External site that opens in a new window"><img
 					src="images/logo_india_gov.png" height="100px" alt="Image"

@@ -8,37 +8,37 @@
     <title>Staff Selection Commision</title>
 
     <!-- Google Font: Source Sans Pro -->
-    <link rel="stylesheet" href="<?php echo $this->theme_url; ?>/dist/css/font.css">
+    <link rel="stylesheet" href="<?php echo htmlentities($this->theme_url); ?>/dist/css/font.css">
     <!-- Font Awesome -->
-    <link rel="stylesheet" href="<?php echo $this->theme_url; ?>/plugins/fontawesome-free/css/all.min.css">
+    <link rel="stylesheet" href="<?php echo htmlentities($this->theme_url); ?>/plugins/fontawesome-free/css/all.min.css">
     <!-- Ionicons -->
-    <link rel="stylesheet" href="<?php echo $this->theme_url; ?>/dist/css/ionicons.min.css">
+    <link rel="stylesheet" href="<?php echo htmlentities($this->theme_url); ?>/dist/css/ionicons.min.css">
     <!-- Tempusdominus Bootstrap 4 -->
-    <link rel="stylesheet" href="<?php echo $this->theme_url; ?>/plugins/tempusdominus-bootstrap-4/css/tempusdominus-bootstrap-4.min.css">
+    <link rel="stylesheet" href="<?php echo htmlentities($this->theme_url); ?>/plugins/tempusdominus-bootstrap-4/css/tempusdominus-bootstrap-4.min.css">
     <!-- iCheck -->
-    <link rel="stylesheet" href="<?php echo $this->theme_url; ?>/plugins/icheck-bootstrap/icheck-bootstrap.min.css">
+    <link rel="stylesheet" href="<?php echo htmlentities($this->theme_url); ?>/plugins/icheck-bootstrap/icheck-bootstrap.min.css">
     <!-- JQVMap -->
-    <!-- <link rel="stylesheet" href="<?php echo $this->theme_url; ?>/plugins/jqvmap/jqvmap.min.css"> -->
+    <!-- <link rel="stylesheet" href="<?php echo htmlentities($this->theme_url); ?>/plugins/jqvmap/jqvmap.min.css"> -->
     <!-- Theme style -->
-    <link rel="stylesheet" href="<?php echo $this->theme_url; ?>/dist/css/adminlte.min.css">
+    <link rel="stylesheet" href="<?php echo htmlentities($this->theme_url); ?>/dist/css/adminlte.min.css">
 
     <!-- overlayScrollbars -->
-    <link rel="stylesheet" href="<?php echo $this->theme_url; ?>/plugins/overlayScrollbars/css/OverlayScrollbars.min.css">
+    <link rel="stylesheet" href="<?php echo htmlentities($this->theme_url); ?>/plugins/overlayScrollbars/css/OverlayScrollbars.min.css">
     <!-- Daterange picker -->
-    <link rel="stylesheet" href="<?php echo $this->theme_url; ?>/plugins/daterangepicker/daterangepicker.css">
+    <link rel="stylesheet" href="<?php echo htmlentities($this->theme_url); ?>/plugins/daterangepicker/daterangepicker.css">
     <!-- summernote -->
-    <link rel="stylesheet" href="<?php echo $this->theme_url; ?>/plugins/summernote/summernote-bs4.min.css">
+    <link rel="stylesheet" href="<?php echo htmlentities($this->theme_url); ?>/plugins/summernote/summernote-bs4.min.css">
     <!-- DataTables -->
-    <link rel="stylesheet" href="<?php echo $this->theme_url; ?>/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css">
-    <link rel="stylesheet" href="<?php echo $this->theme_url; ?>/plugins/datatables-responsive/css/responsive.bootstrap4.min.css">
-    <link rel="stylesheet" href="<?php echo $this->theme_url; ?>/plugins/datatables-buttons/css/buttons.bootstrap4.min.css">
-    <link rel="stylesheet" href="<?php echo $this->theme_url; ?>/dist/css/custom.css">
+    <link rel="stylesheet" href="<?php echo htmlentities($this->theme_url); ?>/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css">
+    <link rel="stylesheet" href="<?php echo htmlentities($this->theme_url); ?>/plugins/datatables-responsive/css/responsive.bootstrap4.min.css">
+    <link rel="stylesheet" href="<?php echo htmlentities($this->theme_url); ?>/plugins/datatables-buttons/css/buttons.bootstrap4.min.css">
+    <link rel="stylesheet" href="<?php echo htmlentities($this->theme_url); ?>/dist/css/custom.css">
 
 
 
 
 
-    <!--<script src="<?php //echo $this->theme_url; 
+    <!--<script src="<?php //echo htmlentities($this->theme_url); 
                         ?>/dist/js/custom.js"></script>-->
 
 
@@ -56,7 +56,7 @@
 
         <!-- Preloader -->
         <div class="preloader flex-column justify-content-center align-items-center">
-            <img class="animation__shake" src="<?php echo $this->theme_url; ?>/dist/img/AdminLTELogo.png" alt="AdminLTELogo" height="60" width="60">
+            <img class="animation__shake" src="<?php echo htmlentities($this->theme_url); ?>/dist/img/AdminLTELogo.png" alt="AdminLTELogo" height="60" width="60">
         </div>
 
         <!-- Navbar -->
@@ -90,7 +90,7 @@
                 <li class="nav-item dropdown user user-menu">
 
                     <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">
-                        <img src="<?php echo $this->theme_url; ?>/dist/img/admin.png" class="user-image img-circle elevation-2 alt=" User Image">
+                        <img src="<?php echo htmlentities($this->theme_url); ?>/dist/img/admin.png" class="user-image img-circle elevation-2 alt=" User Image">
                         <span class="hidden-xs"><?php echo $logged_user['username']; ?></span>
                         <span class="hidden-xs">(<?php echo $logged_user['rolename']; ?>)</span>
 
@@ -139,7 +139,7 @@
             <a href="" class="brand-link">
 
                 Staff Selection Commision
-                <!-- <img src="<?php echo $this->theme_url; ?>/dist/img/AdminLTELogo.png" alt="AdminLTE Logo" class="brand-image img-circle elevation-3" style="opacity: .8">
+                <!-- <img src="<?php echo htmlentities($this->theme_url); ?>/dist/img/AdminLTELogo.png" alt="AdminLTE Logo" class="brand-image img-circle elevation-3" style="opacity: .8">
 <span class="brand-text font-weight-light">AdminLTE 3</span> -->
             </a>
 

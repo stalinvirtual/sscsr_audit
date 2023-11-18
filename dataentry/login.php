@@ -151,13 +151,7 @@ $csrf_token = $_SESSION['csrf_token'];
 							echo "class=errorMsg";
 						} ?>
 					</div>
-					<input type="text" id="captcha" name="captcha" placeholder="Enter captcha" required style="margin-left: 85px;">
-					<div class="containerred">
-						<img src="captcha.php" alt="CAPTCHA" id="captcha_code">
-						<div>
-						<button name='submit' class="btnRefresh" onClick="refreshCaptcha();"><i class="fa fa-refresh" aria-hidden="true"></i></button>
-					</div>
-					</div>
+					
 					<input type="hidden" name="csrf_token" value="<?php echo $csrf_token; ?>">
 
 					<input value="Submit" class="btn" type="submit" name="submit">
@@ -181,8 +175,8 @@ $csrf_token = $_SESSION['csrf_token'];
 		$pass = htmlspecialchars(cleanData($pass));
 		$pass = md5($pass);
 		
-		$userEnteredCaptcha = $_POST['captcha'];
-		$actualCaptcha = $_SESSION['captcha_code'];
+		//$userEnteredCaptcha = $_POST['captcha'];
+		//$actualCaptcha = $_SESSION['captcha_code'];
 		if ($user == "") {
 			$errorMsg = "error :  Enter a User Name.";
 			$code = "1";
@@ -190,10 +184,7 @@ $csrf_token = $_SESSION['csrf_token'];
 			$errorMsg = "error : Please Enter Password.";
 			$code = "2";
 		} else {
-			if (strcasecmp($userEnteredCaptcha, $actualCaptcha) != 0) {//Captcha not correct
-				echo "<p class='err_msg'>CAPTCHA validation failed.</p>";
-			}//Captcha not correct
-			else{ //Captcha correct
+			
 			$sql2 = "SELECT * FROM erp_login_details WHERE  u_name =:u_name AND u_pass =:u_pass ";
 			$stmt2 = $pdo->prepare($sql2);
 			$stmt2->execute(['u_name' => $user, 'u_pass' => $pass]);
@@ -266,7 +257,7 @@ $csrf_token = $_SESSION['csrf_token'];
 				</div>
 	<?php
 			}
-		}
+		//}
 	   }//captcha 
 	   $_SESSION['csrf_token'] = bin2hex(random_bytes(32));
 	}
@@ -309,21 +300,6 @@ $csrf_token = $_SESSION['csrf_token'];
         });
 
 	});
-
-	// $("button.force_logout").on("click", function() {
-    //     $.ajax({
-    //         url: 'force_logout.php',
-    //         type: 'POST',
-    //         success: function(response) {
-    //             // Upon success (optional), handle any UI changes or redirects
-    //             window.location.href = 'index.php'; // Redirect to login page or any suitable page
-    //         },
-    //         error: function(xhr, status, error) {
-    //             // Handle any errors or failed log-out attempts
-    //             console.error(error);
-    //         }
-    //     });
-    // });
 
 
 		$("#dataentry_login").validate({

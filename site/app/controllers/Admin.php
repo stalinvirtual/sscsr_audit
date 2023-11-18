@@ -543,8 +543,8 @@ class Admin extends BackEndController
                 $page_id = isset($_POST['page_id']) ? $_POST['page_id'] : 0;
                 $page = new \App\Models\Page();
                 $page_data = [
-                    'page_content' => htmlspecialchars($_POST['page_content']),
-                    'title' => Helpers::cleanData($_POST['title']),
+                    'page_content' => $this->validateAndSanitizeAdmin($_POST['page_content']),
+                    'title' => $this->validateAndSanitizeAdmin($_POST['title']),
                     'status' => 0,
                 ];
                 if ($page_id == 0) {
@@ -932,6 +932,21 @@ class Admin extends BackEndController
         }
         $this->render("dashboard", $data);
     }
+    public function validateAndSanitizeAdmin($input) {
+        // Trim whitespace
+        $input = trim($input);
+
+        // Remove backslashes
+        $input = stripslashes($input);
+        
+        // Use htmlspecialchars to encode special characters
+        $input = htmlspecialchars($input, ENT_QUOTES, 'UTF-8');
+        
+        // Your additional validation logic goes here
+        // For example, checking if the input follows a specific pattern
+        
+        return $input;
+}
     public function editNomination()
     {
         $data = [];

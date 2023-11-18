@@ -64,7 +64,7 @@ $_SESSION['token'] = bin2hex(openssl_random_pseudo_bytes(16));
 	<meta name="description" content="SSCSR - Staff Selection Commission" />
 	<meta
 		http-equiv="Content-Security-Policy: default-src 'none'; script-src 'self'; connect-src 'self'; img-src 'self'; style-src 'self';">
-	<base href="<?php echo $this->base_url; ?>" />
+	<base href="<?php echo htmlentities($this->base_url); ?>" />
 	<!--css -->
 	<link rel="shortcut icon" type="image/png" href="img/logo.png" />
 	<link href="css/bootstrap.min.css" rel="stylesheet" />
@@ -192,7 +192,7 @@ $_SESSION['token'] = bin2hex(openssl_random_pseudo_bytes(16));
 									INDIA</button>
 								<button class="btn btn-default headergigw dropdown"><a data-toggle="tooltip"
 										data-placement="left" title="Admin Login"
-										href="<?php echo $this->base_url; ?>IndexController/admin_login" rel = "noopener noreferrer"
+										href="<?php echo htmlentities($this->base_url); ?>IndexController/admin_login" rel = "noopener noreferrer"
 										target="_blank"><i class="fa fa-user" style="color:#fff" aria-hidden="true"></i></a></button>
 								<button class="btn btn-default headergigw dropdown"><a
 										style='text-decoration: underline;color:#fff' data-toggle="tooltip" data-placement="right"
@@ -226,7 +226,7 @@ $_SESSION['token'] = bin2hex(openssl_random_pseudo_bytes(16));
 											data-toggle="tooltip" data-placement="left" title="Font Size Decrease"><i
 												class="fa fa-font" aria-hidden="true">-</i></button>
 										<button class="btn btn-default headergigw dropdown"><a style="color:#fff"
-												href="<?php echo $screenReaderAccess; ?>" rel = "noopener noreferrer" target="_blank">Screen Reader
+												href="<?php echo htmlentities($screenReaderAccess); ?>" rel = "noopener noreferrer" target="_blank">Screen Reader
 												Access</a></button>
 									</div>
 								</div>
@@ -258,7 +258,7 @@ $_SESSION['token'] = bin2hex(openssl_random_pseudo_bytes(16));
 								<div class="row">
 									
 									<div class="col-xs-2" style="margin-left: 20px;">
-										<a href="<?php echo $candidateCorner; ?>"><img data-toggle="tooltip"
+										<a href="<?php echo htmlentities($candidateCorner); ?>"><img data-toggle="tooltip"
 												title="Candidate Corner" src="images/header-icons/result.png"
 												width="80px" style="margin-top:20px;" class="shortcut_icon" />
 												<h6 class="corner" style="color:#a94442">Candidate Corner </h6>
@@ -289,7 +289,7 @@ $_SESSION['token'] = bin2hex(openssl_random_pseudo_bytes(16));
 			<div class="navbar buttons">
 				<div class="container">
 					<div class="navbar-collapse collapse ">
-						<?php echo $renderedMenu; ?>
+						<?php echo htmlentities($renderedMenu); ?>
 
 					</div>
 				</div>

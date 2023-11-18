@@ -126,7 +126,7 @@ $_SESSION['csrf_token'] = $csrfToken;
                         </option>
                       <?php endforeach; ?>
                     </select>
-                    <!-- <input class="form-control" type="text" name="language_code" required value="<? php // echo $current_page['language_code']; 
+                    <!-- <input class="form-control" type="text" name="language_code" required value="<?php // echo $current_page['language_code']; 
                                                                                                       ?>">-->
                   </div>
                 </div>

@@ -97,6 +97,8 @@ $_SESSION['csrf_token'] = $csrfToken;
 
 
 <?php include "footer2.php"; ?>
+
+<script src="js/jquery.min.js"></script> 
 <script>
 	function refreshCaptcha() {
 		var url = '<?php echo $loadcaptcha; ?>';
@@ -105,13 +107,13 @@ $_SESSION['csrf_token'] = $csrfToken;
 	$(document).ready(function() {
 		$("#dept_login").validate({
 			rules: {
-				username: {
+				uname: {
 					required: true,
 					maxlength: 15,
 					lettersOnly: true
 
 				},
-				password: {
+				pwd: {
 					required: true,
 					minlength: 8, // Minimum length of 8 characters
                     //strongPassword: true // Custom rule for strong password
@@ -120,12 +122,12 @@ $_SESSION['csrf_token'] = $csrfToken;
 
 			},
 			messages: {
-				username: {
+				uname: {
 					required: "Please enter your username",
 					maxlength: "Username must be maximum 15 characters long",
 					lettersOnly: "Username must contain only letters"
 				},
-				password: {
+				pwd: {
 					required: "Please enter your password",
 					minlength: "Password must be at least 8 characters long.",
                    // strongPassword: "Password must contain at least one uppercase letter, one lowercase letter, one digit, and one special character."
