@@ -120,15 +120,16 @@ class IndexController extends FrontEndController
 		$errorMsg = "";
 		$_POST = filter_input_array(INPUT_POST, FILTER_DEFAULT);
 			if (isset($_POST['login'])) {
-				// if (!hash_equals($_SESSION['csrf_token'], $_POST['csrf_token'])) {
-				// 	// Token mismatch, handle the error (e.g., log it or display an error message)
-				// 	$errorMsg ="CSRF token verification failed.";
-				// }
+				if (!hash_equals($_SESSION['csrf_token'], $_POST['csrf_token'])) {
+					// Token mismatch, handle the error (e.g., log it or display an error message)
+				
+					 $errorMsg ="CSRF token verification failed.";
+				}
 				// // check captcha here
-				// if (false == $this->checkCaptcha($_POST['captcha_code'])) {
-				// 	$errorMsg = "Invalid Captcha";
-				// 	return ['errorMsg' => $errorMsg];
-				// }
+				if (false == $this->checkCaptcha($_POST['captcha_code'])) {
+					$errorMsg = "Invalid Captcha";
+					return ['errorMsg' => $errorMsg];
+				}
 				try{
 					if (!empty(Helpers::cleanData($_POST['uname'])) && !empty(Helpers::cleanData($_POST['pwd']))) {
 						$decyptedusername = Helpers::encrypt_with_cryptoJS_and_decrypt_with_php(Helpers::cleanData($_POST['uname']));

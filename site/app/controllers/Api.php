@@ -69,7 +69,7 @@ class Api extends FrontEndController
         $_SESSION["captcha_code"] = $captcha_code;
 
         $target_layer = imagecreatetruecolor(70, 30);
-        $captcha_background = imagecolorallocate($target_layer, 255, 160, 119);
+        $captcha_background = imagecolorallocate($target_layer, 169, 68, 66);
 
         imagefill($target_layer, 0, 0, $captcha_background);
         $captcha_text_color = imagecolorallocate($target_layer, 0, 0, 0);

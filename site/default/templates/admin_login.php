@@ -56,12 +56,12 @@ $_SESSION['csrf_token'] = $csrfToken;
 
 								<!-- Captcha Start-->
 
-								 <!-- <label for="exampleInputEmail1">Captcha</label>
+								 <label for="exampleInputEmail1">Captcha</label>
 								<input type="text" name="captcha_code" id="captcha" class="demoInputBox form-control" placeholder="Captcha" required="" autocomplete="off">
 								<br>
-								<img src="<?php //echo $loadcaptcha;?>" style="width:100px"  id="captcha_code" alt="captcha"/>
+								<img src="<?php echo $loadcaptcha;?>" style="width:100px;border-radius: 22px;margin-left: 70px;"  id="captcha_code" alt="captcha"/>
 								<button name="submit" class="btnRefresh" onClick="refreshCaptcha();"><i class="fa fa-refresh" aria-hidden="true"></i></button>
-							  <br> -->
+							  <br>
 							   <!-- Captcha End -->
 							<!-- onClick="return Validate();" -->
 							<input type="hidden" name="csrf_token" value="<?php echo $csrfToken; ?>">
@@ -93,12 +93,23 @@ $_SESSION['csrf_token'] = $csrfToken;
 	.errormsg{
 		margin-left: 171px !important;
 	}
+	.btnRefresh {
+		background-color: #fff;
+    border: #fff solid 2px;
+    font-size: 33px;
+    margin-top: 3px;
+    position: absolute;
+    margin-left: 13px;
+    /* margin-bottom: -49px; */
+}
 </style>
 
 
 <?php include "footer2.php"; ?>
 
+<!-- <script src="js/jquery.min.js"></script>  -->
 <script src="js/jquery.min.js"></script> 
+<script src="js/jquery.validate.min.js" crossorigin="anonymous"></script>
 <script>
 	function refreshCaptcha() {
 		var url = '<?php echo $loadcaptcha; ?>';
@@ -174,5 +185,6 @@ $_SESSION['csrf_token'] = $csrfToken;
     }, "Password must contain at least one uppercase letter, one lowercase letter, one digit, and one special character.");
     });
 </script>
+
 
 <?php echo $this->get_footer(); ?>

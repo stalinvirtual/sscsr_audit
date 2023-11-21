@@ -448,7 +448,7 @@ function filesize_formatted($path)
                     </div>
                 </div>
                 <div class="cbp-l-loadMore-button" style="text-align:center">
-                    <a href="IndexController/gallerypage" target="_blank" rel = "noopener noreferrer" class="btn btn-primary">VIEW ALL</a>
+                    <a href="IndexController/gallerypage"  class="btn btn-primary">VIEW ALL</a>
                 </div>
 
             </div>

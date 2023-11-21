@@ -75,7 +75,7 @@ class PageController extends FrontEndController
         $replace_array = [$this->route->get_base_url(), $this->theme_url];
         $page->page_original_content = html_entity_decode(stripslashes($page->page_content));
 
-        $page->page_content = html_entity_decode(stripslashes(str_replace($placeholder_array, $replace_array, $page->page_content)));
-        $page->last_content = html_entity_decode(stripslashes(str_replace($placeholder_array, $replace_array, $page->last_content)));
+        $page->page_content = html_entity_decode(stripslashes(str_replace($placeholder_array, $replace_array, $page->page_content ?? '')));
+        $page->last_content = html_entity_decode(stripslashes(str_replace($placeholder_array, $replace_array, $page->last_content ?? '')));
     }
 }

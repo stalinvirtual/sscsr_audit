@@ -476,15 +476,14 @@ class Helpers
 			$roll_no_new = self::validateAndSanitizeHelper($_POST['roll_number']);
 			$roll_no =  isset($roll_no_new) ? $roll_no_new : null;
 
-			$post_preference_new = self::validateAndSanitizeHelper($_POST['post_preference_one']);
-			$post_preference =  isset($post_preference_new) ? $post_preference_new : null;
+			// $post_preference_new = self::validateAndSanitizeHelper($_POST['post_preference_one']);
+			// $post_preference =  isset($post_preference_new) ? $post_preference_new : null;
 			$data_array = array(
 				"table_name" => $exam_value,
 				"register_number" => $register_number,
 				"dob" => $dob,
 				"tier_id" => $tier_id,
-				"roll_no" => $roll_no,
-				"post_preference" => $post_preference
+				"roll_no" => $roll_no
 			);
 			$tableName = $exam_value;
 			$admitcard = new Admitcard();

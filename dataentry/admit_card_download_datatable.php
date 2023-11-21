@@ -117,7 +117,7 @@ if (!isset($_SERVER['HTTP_REFERER']) && empty($_SERVER['HTTP_REFERER']) || !isse
 								<div class="form-group">
 									<label for="exam_year" class="col-sm-2 control-label">Select Year<font style="color:red"
 											;>*</font> </label>
-									<div class="col-sm-6">
+									<div class="col-sm-2">
 										<input type="text" min="<?php echo date('Y') - 5; ?>"
 											max="<?php echo date('Y') + 5; ?>" step="1" name="exam_year" id="exam_year"
 											maxlength="4"
@@ -136,7 +136,7 @@ if (!isset($_SERVER['HTTP_REFERER']) && empty($_SERVER['HTTP_REFERER']) || !isse
 								<div class="form-group selectedTableFormat">
 									<label for="selectedTableFormat" class="col-sm-2 control-label">Table For<font
 											style="color:red" ;>*</font> </label>
-									<div class="col-sm-6">
+									<div class="col-sm-3">
 										<select name="selectedTableFormat" required="true" id="selectedTableFormat"
 											class="form-control">
 											<option value=""></option>
@@ -154,7 +154,7 @@ if (!isset($_SERVER['HTTP_REFERER']) && empty($_SERVER['HTTP_REFERER']) || !isse
 								<div class="form-group selectedtier">
 									<label for="selectedtier" class="col-sm-2 control-label">Exam Tier<font
 											style="color:red" ;>*</font> </label>
-									<div class="col-sm-6">
+									<div class="col-sm-2">
 										<select name="selectedtier" required="true" id="selectedtier" class="form-control">
 											<!-- <option value="0" selected="selected">Select Tier</option> -->
 										</select>
@@ -284,6 +284,7 @@ if (!isset($_SERVER['HTTP_REFERER']) && empty($_SERVER['HTTP_REFERER']) || !isse
 
 		.errormsg {
 			background: antiquewhite;
+			width: 50%;
 		}
 
 		i.fa.fa-exclamation-triangle {

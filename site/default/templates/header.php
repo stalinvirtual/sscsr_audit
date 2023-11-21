@@ -289,7 +289,7 @@ $_SESSION['token'] = bin2hex(openssl_random_pseudo_bytes(16));
 			<div class="navbar buttons">
 				<div class="container">
 					<div class="navbar-collapse collapse ">
-						<?php echo htmlentities($renderedMenu); ?>
+						<?php echo $renderedMenu; ?>
 
 					</div>
 				</div>
