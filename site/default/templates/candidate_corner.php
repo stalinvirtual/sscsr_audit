@@ -1,7 +1,7 @@
 <?php 
 namespace App\Controllers;
-use App\System\Route; 
-include "header.php";
+use App\System\Route;
+echo $this->get_header();
 $route = new Route();
 $candidateCorner = $route->site_url("IndexController/candidateCorner");
 $admitcard = $route->site_url("IndexController/admitcard");

@@ -9,6 +9,12 @@ error_reporting(E_ALL ^ E_DEPRECATED);
 class Route
 {
 
+    public function validateAndSanitizeHost($host){
+        $sanitizedHost = preg_replace('/[^a-zA-Z0-9\-\.]/', '', $host);
+        return $sanitizedHost;
+
+    }
+
     public function get_app_url()
     {
         $app_url = $_SERVER['REQUEST_SCHEME'] . "://" . $_SERVER['HTTP_HOST'];
@@ -24,7 +30,9 @@ class Route
     }
     public function get_base_url()
     {
-        $app_url = $_SERVER['REQUEST_SCHEME'] . "://" . $_SERVER['HTTP_HOST'];
+        $host = isset($_SERVER['HTTP_HOST']) ? $_SERVER['HTTP_HOST'] : '';
+        $validHost = $this->validateAndSanitizeHost($host);
+        $app_url = $_SERVER['REQUEST_SCHEME'] . "://" . $validHost;
         $url_parts = explode("/", $_SERVER['SCRIPT_NAME']);
         array_pop($url_parts);
         $url_parts_string = implode("/", $url_parts);

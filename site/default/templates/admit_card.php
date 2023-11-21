@@ -80,33 +80,7 @@ error_reporting(0);
 										</select>
 									</div>
 								</div>
-								<!-- Old Design--->
-								<!-- <div class="form-group row">
-									<div class="col-lg-6">
-										<label for="dob">Registration Number<span class="qnsround" data-toggle='tooltip' title='cut,copy,paste is not allowed . Type it Manually'>?</span></label>
-										<input class="form-control" placeholder="Registration Number" name="register_number" autocomplete="off" maxlength="11" id="register_number" value="" type="text" onkeypress="return isNumber(event)" required>
-									</div>
-								</div>
-								<div class="form-group row">
-									<div class="col-lg-6">
-										<div class='roll_pp_div' style='display:none'>
-											<label for="exampleInputEmail1">Roll Number <span class="qnsround" data-toggle='tooltip' title='cut,copy,paste is not allowed . Type it Manually'>?</span></label>
-											<input type="text" class="form-control" placeholder="Roll Number" name="roll_number" id="roll_number" value="" autocomplete="off" />
-										</div>
-									</div>
-								</div>
-								<div class="form-group row">
-									<div class="col-lg-6">
-										<div class="post_preference_div_select" style="display: none;">
-											<label for="exampleInputEmail1">Post No(s)</label>
-											<select class="form-control" name="post_preference_one" id="post_preference_one">
-											</select>
-										</div>
-									</div>
-								</div> -->
-								<!-- Old Design--->
-								<!-- <label for="exampleInputEmail1">Date of Birth</label>
-								<input type="date" class="form-control" placeholder="DOB " name="dob" required="" id="password" autocomplete="off" /> -->
+								
 								<!-- New Design Starting -->
 								<div class="form-group row">
 									<div class="col-lg-12">

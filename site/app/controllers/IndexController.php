@@ -1,5 +1,7 @@
 <?php
+
 namespace App\Controllers;
+
 use App\System\Route;
 use App\Helpers\Helpers;
 use App\Helpers\PdfHelper;
@@ -119,56 +121,47 @@ class IndexController extends FrontEndController
 	{
 		$errorMsg = "";
 		$_POST = filter_input_array(INPUT_POST, FILTER_DEFAULT);
-			if (isset($_POST['login'])) {
-				if (!hash_equals($_SESSION['csrf_token'], $_POST['csrf_token'])) {
-					// Token mismatch, handle the error (e.g., log it or display an error message)
-				
-					 $errorMsg ="CSRF token verification failed.";
-				}
-				// // check captcha here
-				if (false == $this->checkCaptcha($_POST['captcha_code'])) {
-					$errorMsg = "Invalid Captcha";
-					return ['errorMsg' => $errorMsg];
-				}
-				try{
-					if (!empty(Helpers::cleanData($_POST['uname'])) && !empty(Helpers::cleanData($_POST['pwd']))) {
-						$decyptedusername = Helpers::encrypt_with_cryptoJS_and_decrypt_with_php(Helpers::cleanData($_POST['uname']));
-						$decyptedpassword = Helpers::encrypt_with_cryptoJS_and_decrypt_with_php(Helpers::cleanData($_POST['pwd']));
-						$username = Helpers::cleanData(trim($decyptedusername));
-
-						$username = htmlspecialchars($username, ENT_QUOTES, 'UTF-8');
-
-
-						$password = Helpers::cleanData(trim($decyptedpassword));
-						$hashedPassword = password_hash($password, PASSWORD_BCRYPT);
-						if (password_verify($password, $hashedPassword)) { //password verify check
-							// Password is correct
-							$user = new User();
-							if ($user->authenticate($username, $password)) {
-								session_start();
-								session_regenerate_id();
-								$route = new Route();
-								$route->redirect($route->site_url("Admin/dashboard/?action=listnominations"));
-								
-							}
-							else{
-								$errorMsg = "Wrong Username or password";
-							}
-						}
-						else{ //password verify check 
-							$errorMsg = "Wrong Password";
-						}
-					} else {
-						$errorMsg = "Invalid credentials";
-					}
-				}
-				catch (Exception $e) 
-				{
-					header('HTTP/1.1 '.$e->getCode().' Internal Server Booboo');
-					header('Content-Type: application/json');
-					echo json_encode(array('message' => $e->getMessage(), 'code' => $e->getCode()));
-				} 
+		if (isset($_POST['login'])) {
+			if (!hash_equals($_SESSION['csrf_token'], $_POST['csrf_token'])) {
+				// Token mismatch, handle the error (e.g., log it or display an error message)
+				$errorMsg = "CSRF token verification failed.";
 			}
+			// // check captcha here
+			if (false == $this->checkCaptcha($_POST['captcha_code'])) {
+				$errorMsg = "Invalid Captcha";
+				return ['errorMsg' => $errorMsg];
+			}
+			try {
+				if (!empty(Helpers::cleanData($_POST['uname'])) && !empty(Helpers::cleanData($_POST['pwd']))) {
+					$decyptedusername = Helpers::encrypt_with_cryptoJS_and_decrypt_with_php(Helpers::cleanData($_POST['uname']));
+					$decyptedpassword = Helpers::encrypt_with_cryptoJS_and_decrypt_with_php(Helpers::cleanData($_POST['pwd']));
+					$username = Helpers::cleanData(trim($decyptedusername));
+					$username = htmlspecialchars($username, ENT_QUOTES, 'UTF-8');
+					$password = Helpers::cleanData(trim($decyptedpassword));
+					$hashedPassword = password_hash($password, PASSWORD_BCRYPT);
+					if (password_verify($password, $hashedPassword)) { //password verify check
+						// Password is correct
+						$user = new User();
+						if ($user->authenticate($username, $password)) {
+							session_start();
+							session_regenerate_id();
+							$route = new Route();
+							$route->redirect($route->site_url("Admin/dashboard/?action=listnominations"));
+						} else {
+							$errorMsg = "Wrong Username or password";
+						}
+					} else { //password verify check 
+						$errorMsg = "Wrong Password";
+					}
+				} else {
+					$errorMsg = "Invalid credentials";
+				}
+			} catch (Exception $e) {
+				header('HTTP/1.1 ' . $e->getCode() . ' Internal Server Booboo');
+				header('Content-Type: application/json');
+				echo json_encode(array('message' => $e->getMessage(), 'code' => $e->getCode()));
+			}
+		}
 		//CSRF Token else end
 		if (isset($_GET['logout']) && $_GET['logout'] == true) {
 			session_destroy();
@@ -182,19 +175,12 @@ class IndexController extends FrontEndController
 	}
 	public function admitcard($data = array())
 	{
-		// $uriSegments = explode("/", parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH));
-		// $lastUriSegment = array_pop($uriSegments);
-		//$data = $this->getadmitcard(); 	
 		$data = Helpers::getAdmitCardDetails();
-		//echo  '<>'
 		$tablename = @$data['tableName']; // si_2019_tier
 		$tierId = @$data['tier_id']; //1
 		$regNo = @$data['regNo']; //10000328837
 		$examname = explode('_', $tablename ?? '');
-		// si2019_1_10000328837
 		$updateId = @$examname[0] . @$examname[1] . '_' . @$tierId . '_' . @$regNo;
-		//echo $updateId;
-		//$this->printr($data);
 		date_default_timezone_set("Asia/Calcutta");
 		$updated_time = $date = date("Y-m-d H:i:s");
 		@$cnt = $data['count'];
@@ -349,20 +335,17 @@ class IndexController extends FrontEndController
 	{
 		Helpers::getAdmitCardDetails("admitcard");
 	}
-	public function validateAndSanitize($input) {
-		    // Trim whitespace
-			$input = trim($input);
-    
-			// Remove backslashes
-			$input = stripslashes($input);
-			
-			// Use htmlspecialchars to encode special characters
-			$input = htmlspecialchars($input, ENT_QUOTES, 'UTF-8');
-			
-			// Your additional validation logic goes here
-			// For example, checking if the input follows a specific pattern
-			
-			return $input;
+	public function validateAndSanitize($input)
+	{
+		// Trim whitespace
+		$input = trim($input);
+		// Remove backslashes
+		$input = stripslashes($input);
+		// Use htmlspecialchars to encode special characters
+		$input = htmlspecialchars($input, ENT_QUOTES, 'UTF-8');
+		// Your additional validation logic goes here
+		// For example, checking if the input follows a specific pattern
+		return $input;
 	}
 	public function getknowyourstatus()
 	{
@@ -372,7 +355,7 @@ class IndexController extends FrontEndController
 			if (isset($_POST['kyas'])) {
 				if (!hash_equals($_SESSION['csrf_token'], $_POST['csrf_token'])) {
 					// Token mismatch, handle the error (e.g., log it or display an error message)
-					$errorMsg ="CSRF token verification failed.";
+					$errorMsg = "CSRF token verification failed.";
 				}
 				$register_number = $this->validateAndSanitize($_POST['register_number']);
 				$dob = $this->validateAndSanitize($_POST['dob']);
@@ -400,7 +383,7 @@ class IndexController extends FrontEndController
 				}
 			}
 		}
-		 // CSRF Token IF end
+		// CSRF Token IF end
 		return ['errorMsg' => $errorMsg];
 	}
 	public function nomination()
@@ -455,14 +438,14 @@ class IndexController extends FrontEndController
 			return false;
 		}
 	}
-	
 	public function getExamDetails()
 	{
 		//get matched data 
 		try {
 			$exam = new Exam();
-			$q = isset($_GET['q']) ? $_GET['q'] : "";
-			$exam_details = $exam->getExamfromExamDetailsTbl($q);
+			$q = isset($_GET['q']) ? $_GET['q'] : '';
+			$sanitized_input = htmlspecialchars($q, ENT_QUOTES, 'UTF-8');
+			$exam_details = $exam->getExamfromExamDetailsTbl($sanitized_input);
 		} catch (Exception $Ex) {
 			echo "Error" . $sql . "</br>" . $Ex;
 		}
@@ -485,8 +468,9 @@ class IndexController extends FrontEndController
 		//get matched data 
 		try {
 			$exam = new Exam();
-			$q = isset($_GET['q']) ? $_GET['q'] : "";
-			$exam_details = $exam->getTierBasedTblCity($q);
+			$q = isset($_GET['q']) ? $_GET['q'] : '';
+			$sanitized_input = htmlspecialchars($q, ENT_QUOTES, 'UTF-8');
+			$exam_details = $exam->getTierBasedTblCity($sanitized_input);
 		} catch (Exception $Ex) {
 			echo "Error" . $sql . "</br>" . $Ex;
 		}
@@ -509,8 +493,9 @@ class IndexController extends FrontEndController
 		//get matched data 
 		try {
 			$exam = new Exam();
-			$q = isset($_GET['q']) ? $_GET['q'] : "";
-			$exam_details = $exam->getTierBasedTblCardPreview($q);
+			$q = isset($_GET['q']) ? $_GET['q'] : '';
+			$sanitized_input = htmlspecialchars($q, ENT_QUOTES, 'UTF-8');
+			$exam_details = $exam->getTierBasedTblCardPreview($sanitized_input);
 		} catch (Exception $Ex) {
 			echo "Error" . $sql . "</br>" . $Ex;
 		}
@@ -533,8 +518,9 @@ class IndexController extends FrontEndController
 		//get matched data 
 		try {
 			$exam = new Exam();
-			$q = isset($_GET['q']) ? $_GET['q'] : "";
-			$exam_details = $exam->getTierBasedTblCard($q);
+			$q = isset($_GET['q']) ? $_GET['q'] : '';
+			$sanitized_input = htmlspecialchars($q, ENT_QUOTES, 'UTF-8');
+			$exam_details = $exam->getTierBasedTblCard($sanitized_input);
 		} catch (Exception $Ex) {
 			echo "Error" . $sql . "</br>" . $Ex;
 		}
@@ -557,8 +543,9 @@ class IndexController extends FrontEndController
 		//get matched data 
 		try {
 			$exam = new Exam();
-			$q = isset($_GET['q']) ? $_GET['q'] : "";
-			$exam_details = $exam->getTierBasedTblPreview($q);
+			$q = isset($_GET['q']) ? $_GET['q'] : '';
+			$sanitized_input = htmlspecialchars($q, ENT_QUOTES, 'UTF-8');
+			$exam_details = $exam->getTierBasedTblPreview($sanitized_input);
 		} catch (Exception $Ex) {
 			echo "Error" . $sql . "</br>" . $Ex;
 		}
@@ -584,8 +571,9 @@ class IndexController extends FrontEndController
 		//get matched data 
 		try {
 			$exam = new Exam();
-			$q = isset($_GET['q']) ? $_GET['q'] : "";
-			$exam_details = $exam->getTierBasedMaster($q);
+			$q = isset($_GET['q']) ? $_GET['q'] : '';
+			$sanitized_input = htmlspecialchars($q, ENT_QUOTES, 'UTF-8');
+			$exam_details = $exam->getTierBasedMaster($sanitized_input);
 		} catch (Exception $Ex) {
 			echo "Error" . $sql . "</br>" . $Ex;
 		}
@@ -605,8 +593,9 @@ class IndexController extends FrontEndController
 		//get matched data 
 		try {
 			$phase = new Phase();
-			$q = isset($_GET['q']) ? $_GET['q'] : "";
-			$phase_details = $phase->getPhasefromPhaseDetailsTbl($q);
+			$q = isset($_GET['q']) ? $_GET['q'] : '';
+			$sanitized_input = htmlspecialchars($q, ENT_QUOTES, 'UTF-8');
+			$phase_details = $phase->getPhasefromPhaseDetailsTbl($sanitized_input);
 		} catch (Exception $Ex) {
 			echo "Error" . $sql . "</br>" . $Ex;
 		}
@@ -626,8 +615,9 @@ class IndexController extends FrontEndController
 		//get matched data 
 		try {
 			$Gallery = new Gallery();
-			$q = isset($_GET['q']) ? $_GET['q'] : "";
-			$gallery_event_years = $Gallery->getGalleryDistinctedYears($q);
+			$q = isset($_GET['q']) ? $_GET['q'] : '';
+			$sanitized_input = htmlspecialchars($q, ENT_QUOTES, 'UTF-8');
+			$gallery_event_years = $Gallery->getGalleryDistinctedYears($sanitized_input);
 		} catch (Exception $Ex) {
 			echo "Error" . $sql . "</br>" . $Ex;
 		}
@@ -647,17 +637,9 @@ class IndexController extends FrontEndController
 		//get matched data 
 		try {
 			$Gallery = new Gallery();
-
-		
 			if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 				$year = $this->validateAndSanitize($_POST['year']);
-	
 			}
-
-
-
-
-
 			$gallery_event_by_years = $Gallery->getGalleryEventsByYears($year);
 		} catch (Exception $Ex) {
 			echo "Error" . $sql . "</br>" . $Ex;
@@ -675,14 +657,9 @@ class IndexController extends FrontEndController
 	}
 	public function EventBasedLightBox()
 	{
-
-
-
 		if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 			$id = $this->validateAndSanitize($_POST['id']);
-
 		}
-	
 		//get matched data 
 		try {
 			$Gallery = new Gallery();
@@ -706,9 +683,7 @@ class IndexController extends FrontEndController
 	{
 		if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 			$year = $this->validateAndSanitize($_POST['year']);
-
 		}
-		
 		try {
 			$Gallery = new Gallery();
 			$fetchRecordsObject = $Gallery->photoGalleryGroup($year);
@@ -734,16 +709,10 @@ class IndexController extends FrontEndController
 		//get matched data 
 		try {
 			$Gallery = new Gallery();
-
 			if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 				$gallery_id = $this->validateAndSanitize($_POST['gallery_id']);
 				$q = (isset($gallery_id)) ? $gallery_id : "on";
-	
 			}
-
-
-
-		
 			$gallery_id_based_images = $Gallery->getGalleryidBasedImagesModel($q);
 		} catch (Exception $Ex) {
 			echo "Error" . $sql . "</br>" . $Ex;
@@ -760,16 +729,9 @@ class IndexController extends FrontEndController
 	}
 	public function GalleryidBasedEvents()
 	{
-		
 		if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 			$year = $this->validateAndSanitize($_POST['year']);
-
 		}
-
-
-
-
-
 		//get matched data 
 		try {
 			$Gallery = new Gallery();
@@ -905,7 +867,7 @@ class IndexController extends FrontEndController
 			if (isset($_POST['admit_card'])) {
 				if (!hash_equals($_SESSION['csrf_token'], $_POST['csrf_token'])) {
 					// Token mismatch, handle the error (e.g., log it or display an error message)
-					$errorMsg ="CSRF token verification failed.";
+					$errorMsg = "CSRF token verification failed.";
 				}
 				$register_number = $this->validateAndSanitize($_POST['register_number']);
 				$dob = $this->validateAndSanitize($_POST['dob']);
@@ -923,8 +885,6 @@ class IndexController extends FrontEndController
 				$roll_no_new = $this->validateAndSanitize($_POST['roll_number']);
 				$roll_no = isset($roll_no_new) ? $roll_no_new : null;
 				$post_preference_new = $this->validateAndSanitize($_POST['post_preference_one']);
-
-
 				$post_preference = isset($post_preference_new) ? $post_preference_new : null;
 				$data_array = array(
 					"table_name" => $exam_value,
@@ -965,16 +925,12 @@ class IndexController extends FrontEndController
 	{
 		$_POST = filter_input_array(INPUT_POST, FILTER_DEFAULT);
 		if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-
-			
-		$selectedTableFormat = $this->validateAndSanitize($_POST['selectedTableFormat']);
-		$selectedTableFormatValue = explode('_', $selectedTableFormat);
-		$exam_type = $selectedTableFormatValue[1];
-		$table_name = $this->validateAndSanitize($_POST['examname']) . "_" . $this->validateAndSanitize($_POST['exam_year']) . "_" . $exam_type;
-		$tier_id = $this->validateAndSanitize($_POST['selectedtier']);
-
+			$selectedTableFormat = $this->validateAndSanitize($_POST['selectedTableFormat']);
+			$selectedTableFormatValue = explode('_', $selectedTableFormat);
+			$exam_type = $selectedTableFormatValue[1];
+			$table_name = $this->validateAndSanitize($_POST['examname']) . "_" . $this->validateAndSanitize($_POST['exam_year']) . "_" . $exam_type;
+			$tier_id = $this->validateAndSanitize($_POST['selectedtier']);
 		}
-		
 		$data_array = array(
 			"table_name" => $table_name,
 			"tier_id" => $tier_id,
@@ -1025,16 +981,10 @@ class IndexController extends FrontEndController
 	public function getPostPreferenceValue()
 	{
 		$_POST = filter_input_array(INPUT_POST, FILTER_DEFAULT);
-
 		if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 			$roll_no = $this->validateAndSanitize($_POST['roll_no']);
-		    $examname = $this->validateAndSanitize($_POST['examname']);
-
+			$examname = $this->validateAndSanitize($_POST['examname']);
 		}
-		
-
-
-
 		$examnameArray = explode('_', $examname);
 		$table_name = $examnameArray[0] . '_' . $examnameArray[1] . '_' . $examnameArray[2] . '_' . $examnameArray[3] . '_' . $examnameArray[4];
 		$type = $examnameArray[4];
@@ -1070,26 +1020,25 @@ class IndexController extends FrontEndController
 	}
 	public function getadmitcardCount()
 	{
-			
-			$_POST = filter_input_array(INPUT_POST, FILTER_DEFAULT);
-			if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-				$examname = $this->validateAndSanitize($_POST['examname']);
-				$register_number = $this->validateAndSanitize($_POST['register_number']);
-				$roll_number = $this->validateAndSanitize($_POST['roll_number']);
-				$dob = $this->validateAndSanitize($_POST['dob']);
-			}
-			$data_array = array(
-				'examname'        => $examname,
-				'register_number' => $register_number,
-				'roll_number'     => $roll_number,
-				'dob'             => $dob
-			);
-			$admit_card_model = new Admitcard();
-			$admit_card_model_details = $admit_card_model->getAdmitcardforTierCount($data_array);
-			$response =  $admit_card_model_details;
-			$json_response = json_encode($response);
-			header('Content-Type: application/json');
-			echo $json_response;
+		$_POST = filter_input_array(INPUT_POST, FILTER_DEFAULT);
+		if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+			$examname = $this->validateAndSanitize($_POST['examname']);
+			$register_number = $this->validateAndSanitize($_POST['register_number']);
+			$roll_number = $this->validateAndSanitize($_POST['roll_number']);
+			$dob = $this->validateAndSanitize($_POST['dob']);
+		}
+		$data_array = array(
+			'examname'        => $examname,
+			'register_number' => $register_number,
+			'roll_number'     => $roll_number,
+			'dob'             => $dob
+		);
+		$admit_card_model = new Admitcard();
+		$admit_card_model_details = $admit_card_model->getAdmitcardforTierCount($data_array);
+		$response =  $admit_card_model_details;
+		$json_response = json_encode($response);
+		header('Content-Type: application/json');
+		echo $json_response;
 		//Helpers::gethelperadmitcardCount($data);
 	}
 }

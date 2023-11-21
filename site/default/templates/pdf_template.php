@@ -56,7 +56,7 @@ class PDF extends FPDF
 	$this->Cell(0,0,'Email Id:', 0, 0, '', false );
 	$this->SetY(30);$this->SetX(134);
 	$this->SetFont('Arial','U',9);
-	$this->Cell(0,0,'sscsr.tn@nic.in', 0, 0, '', false );
+	$this->Cell(0,0,'', 0, 0, '', false );
 
 
 

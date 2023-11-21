@@ -57,11 +57,6 @@ $_SESSION['csrf_token'] = $csrfToken;
 										<input class="form-control"  autocomplete="off" name="register_number" id="username" maxlength="11" value="" type="text" placeholder="Registration Number" onkeypress="return isNumber(event)" required>
 									</div>
 							 </div>
-							    <!-- <label for="exampleInputEmail1">Register Number</label>
-							  <input type="text" class="form-control" placeholder="Application Number" name="register_number" id = "username" required="" autocomplete="off" />
-							  <br> -->
-							  <!-- <label for="exampleInputEmail1">Date of Birth</label> -->
-							  <!-- <input type="date" class="form-control" placeholder="DOB " name="dob" required="" id = "password" autocomplete="off"/>   -->
 							  <div class="form-group row">
 									<div class="col-lg-4">
 										<label for="dob">Date of Birth</label>

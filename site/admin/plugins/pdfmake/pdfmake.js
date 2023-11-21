@@ -17316,7 +17316,7 @@ var objectAssign = __webpack_require__(357);
 /*!
  * The buffer module from node.js, for the browser.
  *
- * @author   Feross Aboukhadijeh <feross@feross.org> <http://feross.org>
+ * @author   Feross Aboukhadijeh 
  * @license  MIT
  */
 function compare(a, b) {

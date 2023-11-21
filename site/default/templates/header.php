@@ -1,35 +1,27 @@
 <?php
-
-
-
 namespace App\Controllers;
-
 use App\System\Route;
-
-
-
 /****
  *  Code Added 05_07_2022
  * 
  * 
  */
-
+header("Access-Control-Allow-Origin: *");
+header("Access-Control-Allow-Methods: GET, POST, OPTIONS");
+header("Access-Control-Allow-Headers: Content-Type, Authorization");
 header("X-Frame-Options:DENY");
 header("X-Content-Type-Options:nosniff");
 header("X-XSS-Protection:0; mode=block");
-header("Access-Control-Allow-Origin:*");
-header("content-secuity-policy:default-src 'self'");
+// header("Content-Security-Policy: default-src 'self';");
 header("Set-Cookie: HttpOnly");
 header("Set-Cookie: name=value; HttpOnly");
 header_remove("X-Powered-By");
 ini_set('expose_php', 'off');
-
 /****
  * 
  * Code Added 05_07_2022
  * 
  */
-
 $route = new Route();
 $adminpage = $route->site_url("IndexController/admin_login");
 $nominationpage = $route->site_url("IndexController/nomination");
@@ -42,19 +34,10 @@ $dlist = $route->site_url("IndexController/dlist");
 $screenReaderAccess = $route->site_url("IndexController/ScreenReaderAccess");
 $candidateCorner = $route->site_url("IndexController/candidateCorner");
 //$sitemap = $route->site_url("IndexController/sitemap");
-
-$base_url = "http://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
-
-
-
-
-
+#$base_url = "http://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
 $_SESSION['token'] = bin2hex(openssl_random_pseudo_bytes(16));
-
 ?>
-
 <html>
-
 <head>
 	<meta charset="utf-8">
 	<title>
@@ -75,9 +58,7 @@ $_SESSION['token'] = bin2hex(openssl_random_pseudo_bytes(16));
 	<link href="css/slick/slick-theme.css" rel="stylesheet" />
 	<link href="css/sitemap.css" rel="stylesheet" />
 	<link id="t-colors" href="skins/default.css" rel="stylesheet" />
-
 	<script src="js/jquery.min.js"></script>
-
 	<link rel="stylesheet" type="text/css" href="assets/datatable/css/jquery.dataTables.min.css">
 	<link rel="stylesheet" href="assets/datatable/css/responsive.dataTables.min.css">
 	<link rel="stylesheet" href="assets/datatable/css/buttons.dataTables.min.css">
@@ -86,31 +67,21 @@ $_SESSION['token'] = bin2hex(openssl_random_pseudo_bytes(16));
 	<link rel="stylesheet" href="assets/datatable/css/select.dataTables.min.css">
 	<link rel="stylesheet" href="assets/datatable/css/dataTables.checkboxes.css">
 	<link href="css/select2.min.css" rel="stylesheet" />
-
-
-
-
 	<link href="css/custom.css" rel="stylesheet" />
 	<script src="assets/datatable/js/validate.js"></script>
-	<script src="assets/datatable/js/custom_validate.js"></script>
 	<script src="assets/datatable/js/enc.js"></script>
 	<script src="assets/datatable/js/md5.js"></script>
 	<script src="assets/datatable/js/md5.min.js"></script>
-
 	<style>
-	
-
 		#wrapper {
 			min-height: 80%;
 		}
-
 		.flex-wrapper {
 			display: flex;
 			min-height: 100vh;
 			flex-direction: column;
 			justify-content: space-between;
 		}
-
 		@media (max-width: 787px) {
 			.common-style-center {
 				text-align: center;
@@ -119,7 +90,6 @@ $_SESSION['token'] = bin2hex(openssl_random_pseudo_bytes(16));
 	</style>
 </head>
 </head>
-
 <body class="flex-wrapper">
 	<?php
 	function generateDynamicTitle()
@@ -128,7 +98,6 @@ $_SESSION['token'] = bin2hex(openssl_random_pseudo_bytes(16));
 		$urlPath = trim($urlPath, '/');
 		$pathSegments = explode('/', $urlPath);
 		$current_page = end($pathSegments);
-
 		switch ($current_page) {
 			case "site":
 				echo "Home | SSCSR";
@@ -170,15 +139,10 @@ $_SESSION['token'] = bin2hex(openssl_random_pseudo_bytes(16));
 			case "ScreenReaderAccess":
 				echo "Home | ScreenReaderAccess | SSCSR";
 				break;
-
-
 			default:
 				echo "Home | SSCSR";
 		}
 	}
-
-
-
 	?>
 	<div id="wrapper">
 		<div>
@@ -198,12 +162,8 @@ $_SESSION['token'] = bin2hex(openssl_random_pseudo_bytes(16));
 										style='text-decoration: underline;color:#fff' data-toggle="tooltip" data-placement="right"
 										title="SSCSR old website" href="http://www.sscsr.gov.in/" rel = "noopener noreferrer" target="_blank">SSCSR
 										old website</a></button>
-
-
-
 							</div>
 							<div class=" col-lg-6  search_btn common-style-center">
-
 								<div id="font-setting-buttons">
 									<div class="btn-group">
 										<button type="button" class="btn btn-default headergigw"
@@ -230,13 +190,10 @@ $_SESSION['token'] = bin2hex(openssl_random_pseudo_bytes(16));
 												Access</a></button>
 									</div>
 								</div>
-
 							</div>
 						</div>
 					</div>
 				</div>
-
-
 				<div class="navbar navbar-default ">
 					<div class="container headruler">
 						<div class="row">
@@ -252,11 +209,8 @@ $_SESSION['token'] = bin2hex(openssl_random_pseudo_bytes(16));
 									<h4 class="goverment">Southern Region, Chennai</h4>
 								</a>
 							</div>
-
-
 							<div class="container">
 								<div class="row">
-									
 									<div class="col-xs-2" style="margin-left: 20px;">
 										<a href="<?php echo htmlentities($candidateCorner); ?>"><img data-toggle="tooltip"
 												title="Candidate Corner" src="images/header-icons/result.png"
@@ -275,7 +229,6 @@ $_SESSION['token'] = bin2hex(openssl_random_pseudo_bytes(16));
 											<span class="icon-bar"></span>
 										</button>
 									</div>
-
 								</div>
 							</div>
 						</div>
@@ -283,16 +236,11 @@ $_SESSION['token'] = bin2hex(openssl_random_pseudo_bytes(16));
 				</div>
 			</header>
 			<!-- end header -->
-
-
-
 			<div class="navbar buttons">
 				<div class="container">
 					<div class="navbar-collapse collapse ">
 						<?php echo $renderedMenu; ?>
-
 					</div>
 				</div>
 			</div>
-
 		</div>
