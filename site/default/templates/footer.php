@@ -1,3 +1,9 @@
+<?php 
+namespace App\Controllers;
+use App\Helpers\Helpers;
+$encryptionKey = bin2hex(random_bytes(32)); 
+$encryptedValue = Helpers::encryptData("2", $encryptionKey);
+?>
 <section class="section5 buttons">
 	<div class="container-fluid bgColor">
 		<div class="row" style="background:#a94442;">
@@ -130,7 +136,7 @@
 			}
 		})
 		// Know your status
-		var baseurl = '<?php echo $this->route->site_url("IndexController/getExamDetails/q/2"); ?>';
+		var baseurl = '<?php echo $this->route->site_url("IndexController/getExamDetails/q/$encryptedValue"); ?>';
 		$('#examname').select2();
 		$('#examname').select2({
 			language: {
@@ -161,7 +167,7 @@
 		});
 		// Know your status
 		// Selection Posts Start
-		var baseurl = '<?php echo $this->route->site_url("IndexController/getPhaseDetails/q/2"); ?>';
+		var baseurl = '<?php echo $this->route->site_url("IndexController/getPhaseDetails/q/$encryptedValue"); ?>';
 		$('#phasename').select2();
 		$('#phasename').select2({
 			placeholder: 'Select Phase Name',
@@ -183,28 +189,10 @@
 		});
 		// var baseurl = '<?php //echo $this->route->site_url("IndexController/getGalleryYears/q/2"); 
 		?> ';  
-		// $('#gallery_year').select2();
-		// $('#gallery_year').select2({
-		//     placeholder: 'Select Year Name',
-		//     ajax: {
-		//       url: baseurl,
-		//       dataType: 'json',
-		// 	  data: function (data) {
-		//                 return {
-		//                     q: data.term // search term
-		//                 };
-		//             },
-		//       processResults: function (data) {
-		//         return {
-		//           results: data
-		//         };
-		//       },
-		//       cache: true
-		//     }
-		//   });
+		
 		//Selection Posts End 
 		//  Admit card Exam Name AJAX
-		var baseurl = '<?php echo $this->route->site_url("IndexController/getTierBasedExamDetailsCard/q/2"); ?>';
+		var baseurl = '<?php echo $this->route->site_url("IndexController/getTierBasedExamDetailsCard/q/$encryptedValue"); ?>';
 		$('#admitcard_examname').select2();
 		$('#admitcard_examname').select2({
 			language: {
@@ -229,7 +217,7 @@
 				cache: true
 			}
 		});
-		var baseurl2 = '<?php echo $this->route->site_url("IndexController/getTierBasedExamDetailsCardPreview/q/2"); ?>';
+		var baseurl2 = '<?php echo $this->route->site_url("IndexController/getTierBasedExamDetailsCardPreview/q/$encryptedValue"); ?>';
 		$('#admitcard_preview_examname').select2();
 		$('#admitcard_preview_examname').select2({
 			language: {
@@ -254,7 +242,7 @@
 				cache: true
 			}
 		});
-		var baseurl = '<?php echo $this->route->site_url("IndexController/getTierBasedExamDetailsCity/q/2"); ?>';
+		var baseurl = '<?php echo $this->route->site_url("IndexController/getTierBasedExamDetailsCity/q/$encryptedValue"); ?>';
 		$('#city_examname').select2();
 		$('#city_examname').select2({
 			language: {
@@ -346,7 +334,7 @@
 		});
 		//  Admit card Exam Name AJAX
 		//  Admit card Exam Name AJAX
-		var baseurl = '<?php echo $this->route->site_url("IndexController/getTierMaster/q/2"); ?>';
+		var baseurl = '<?php echo $this->route->site_url("IndexController/getTierMaster/q/$encryptedValue"); ?>';
 		$('#tier_id').select2();
 		$('#tier_id').select2({
 			placeholder: 'Select Tier Name',

@@ -1,6 +1,7 @@
 <?php
 namespace App\Controllers;
 use App\System\Route;
+
 /****
  *  Code Added 05_07_2022
  * 
@@ -17,6 +18,10 @@ header("Set-Cookie: HttpOnly");
 header("Set-Cookie: name=value; HttpOnly");
 header_remove("X-Powered-By");
 ini_set('expose_php', 'off');
+
+
+
+
 /****
  * 
  * Code Added 05_07_2022

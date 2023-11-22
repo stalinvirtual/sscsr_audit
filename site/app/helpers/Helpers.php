@@ -1607,4 +1607,16 @@ class Helpers
 		$actionoutput .= "</form>";
 		return $actionoutput;
 	}
+	static function encryptData($data, $key) {
+		$iv = random_bytes(16);
+		$encryptedData = base64_encode(openssl_encrypt($data, 'aes-256-cbc', $key, 0, $iv));
+		return urlencode($iv . ':' . $encryptedData); // Concatenate IV and encrypted data, then URL encode
+	}
+	
+	// Decryption function
+	static function decryptData($data, $key) {
+		$data = urldecode($data);
+		list($iv, $encryptedData) = explode(':', $data, 2);
+		return openssl_decrypt(base64_decode($encryptedData), 'aes-256-cbc', $key, 0, $iv);
+	}
 }

@@ -120,15 +120,23 @@ class IndexController extends FrontEndController
 	public function login()
 	{
 		$errorMsg = "";
+		//if (!isset($_SESSION)) {
+			//session_start();
+		//}
 		$_POST = filter_input_array(INPUT_POST, FILTER_DEFAULT);
 		if (isset($_POST['login'])) {
+
+			//session_start();
 			if (!hash_equals($_SESSION['csrf_token'], $_POST['csrf_token'])) {
 				// Token mismatch, handle the error (e.g., log it or display an error message)
 				$errorMsg = "CSRF token verification failed.";
+				http_response_code(402); // Unauthorized
 			}
 			// // check captcha here
 			if (false == $this->checkCaptcha($_POST['captcha_code'])) {
 				$errorMsg = "Invalid Captcha";
+				http_response_code(402); // Unauthorized
+       			
 				return ['errorMsg' => $errorMsg];
 			}
 			try {
@@ -143,18 +151,29 @@ class IndexController extends FrontEndController
 						// Password is correct
 						$user = new User();
 						if ($user->authenticate($username, $password)) {
-							session_start();
+							
 							session_regenerate_id();
 							$route = new Route();
+							http_response_code(200); // Unauthorized
 							$route->redirect($route->site_url("Admin/dashboard/?action=listnominations"));
+							
+        					
 						} else {
+							http_response_code(402); // Unauthorized
 							$errorMsg = "Wrong Username or password";
+							
+        					
 						}
 					} else { //password verify check 
+						http_response_code(402); // Unauthorized
 						$errorMsg = "Wrong Password";
+						
+       					
 					}
 				} else {
 					$errorMsg = "Invalid credentials";
+					http_response_code(402); // Unauthorized
+       				echo json_encode(['message' => 'Invalid credentials']);
 				}
 			} catch (Exception $e) {
 				header('HTTP/1.1 ' . $e->getCode() . ' Internal Server Booboo');
@@ -443,7 +462,8 @@ class IndexController extends FrontEndController
 		//get matched data 
 		try {
 			$exam = new Exam();
-			$q = isset($_GET['q']) ? $_GET['q'] : '';
+			$encryptionKey = bin2hex(random_bytes(32));
+			$q = isset($_GET['q']) ? Helpers::decryptData($_GET['q'], $encryptionKey) : '';
 			$sanitized_input = htmlspecialchars($q, ENT_QUOTES, 'UTF-8');
 			$exam_details = $exam->getExamfromExamDetailsTbl($sanitized_input);
 		} catch (Exception $Ex) {
@@ -468,7 +488,8 @@ class IndexController extends FrontEndController
 		//get matched data 
 		try {
 			$exam = new Exam();
-			$q = isset($_GET['q']) ? $_GET['q'] : '';
+			$encryptionKey = bin2hex(random_bytes(32));
+			$q = isset($_GET['q']) ? Helpers::decryptData($_GET['q'], $encryptionKey) : '';
 			$sanitized_input = htmlspecialchars($q, ENT_QUOTES, 'UTF-8');
 			$exam_details = $exam->getTierBasedTblCity($sanitized_input);
 		} catch (Exception $Ex) {
@@ -493,7 +514,8 @@ class IndexController extends FrontEndController
 		//get matched data 
 		try {
 			$exam = new Exam();
-			$q = isset($_GET['q']) ? $_GET['q'] : '';
+			$encryptionKey = bin2hex(random_bytes(32));
+			$q = isset($_GET['q']) ? Helpers::decryptData($_GET['q'], $encryptionKey) : '';
 			$sanitized_input = htmlspecialchars($q, ENT_QUOTES, 'UTF-8');
 			$exam_details = $exam->getTierBasedTblCardPreview($sanitized_input);
 		} catch (Exception $Ex) {
@@ -518,7 +540,8 @@ class IndexController extends FrontEndController
 		//get matched data 
 		try {
 			$exam = new Exam();
-			$q = isset($_GET['q']) ? $_GET['q'] : '';
+			$encryptionKey = bin2hex(random_bytes(32));
+			$q = isset($_GET['q']) ? Helpers::decryptData($_GET['q'], $encryptionKey) : '';
 			$sanitized_input = htmlspecialchars($q, ENT_QUOTES, 'UTF-8');
 			$exam_details = $exam->getTierBasedTblCard($sanitized_input);
 		} catch (Exception $Ex) {
@@ -571,7 +594,8 @@ class IndexController extends FrontEndController
 		//get matched data 
 		try {
 			$exam = new Exam();
-			$q = isset($_GET['q']) ? $_GET['q'] : '';
+			$encryptionKey = bin2hex(random_bytes(32));
+			$q = isset($_GET['q']) ? Helpers::decryptData($_GET['q'], $encryptionKey) : '';
 			$sanitized_input = htmlspecialchars($q, ENT_QUOTES, 'UTF-8');
 			$exam_details = $exam->getTierBasedMaster($sanitized_input);
 		} catch (Exception $Ex) {
@@ -593,7 +617,8 @@ class IndexController extends FrontEndController
 		//get matched data 
 		try {
 			$phase = new Phase();
-			$q = isset($_GET['q']) ? $_GET['q'] : '';
+			$encryptionKey = bin2hex(random_bytes(32));
+			$q = isset($_GET['q']) ? Helpers::decryptData($_GET['q'], $encryptionKey) : '';
 			$sanitized_input = htmlspecialchars($q, ENT_QUOTES, 'UTF-8');
 			$phase_details = $phase->getPhasefromPhaseDetailsTbl($sanitized_input);
 		} catch (Exception $Ex) {
