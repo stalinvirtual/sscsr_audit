@@ -30,7 +30,7 @@ use App\Models\Nominationchild as Nominationchild;
 use App\Models\NominationArchieves as NominationArchieves;
 use App\Models\Selectionpostschild as Selectionpostschild;
 use App\Models\SelectionpostArchives as SelectionpostArchives;
-use App\Models\SelectionpostschildArchives as SelectionpostschildArchives;
+use App\Models\SelectionpostschildArchives as SelectionpostschildArcirclechives;
 use App\Models\PhaseMaster as PhaseMaster;
 use App\Models\SearchYear as SearchYear;
 use App\Models\Instructions as Instructions;
@@ -378,6 +378,7 @@ class Admin extends BackEndController
     private function saveMenu()
     {
         $message = $message_type = "";
+        
         if (isset($_POST['csrf_token']) && hash_equals($_SESSION['csrf_token'], $_POST['csrf_token'])) {
             if (isset($_POST['save-menu'])) {
                 if (@htmlentities($_POST['is_redirect_popup']) == 'on') {
@@ -599,9 +600,11 @@ class Admin extends BackEndController
      */
     public function deleteMenu()
     {
+   
         $data = [];
         $message = $message_type = "";
         $menu_id = $this->data['params'][0];
+       
         $menu = new \App\Models\Menu();
         if ($menu->deleteMenu($menu_id)) {
             $message = "Menu Deleted successfully";

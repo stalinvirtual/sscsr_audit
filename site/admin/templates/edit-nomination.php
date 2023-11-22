@@ -81,7 +81,7 @@ $_SESSION['csrf_token'] = $csrfToken; ?>
                                     <div class="col-sm-6">
                                         <textarea class="form-control exam_name" name="exam_name" rows="5"
                                             placeholder="Enter only 256 characters"
-                                            id='exam_name'><?php echo $current_nomination['exam_name']; ?></textarea>
+                                            id='exam_name' required><?php echo $current_nomination['exam_name']; ?></textarea>
                                     </div>
                                 </div>
                                 <div class="form-group row">

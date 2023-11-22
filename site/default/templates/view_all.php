@@ -18,6 +18,7 @@ function filesize_formatted($path)
     $power = $size > 0 ? floor(log($size, 1024)) : 0;
     return number_format($size / pow(1024, $power), 2, '.', ',') . ' ' . $units[$power];
 }
+error_reporting(0);
 ?>
 <section class="buttons">
     <div class="container">
@@ -80,8 +81,9 @@ function filesize_formatted($path)
 
                     // Get the subset of data for the current page
                     $currentPageData = array_slice($combinedData, $offset, $itemsPerPage);
+                   
                     foreach ($currentPageData as $entry) {
-          
+       
                         $Date = date("Y-m-d", strtotime($entry['effect_from_date']));
                         $li = '<li class="card">';
                         $timestamp = strtotime($Date);
@@ -99,15 +101,14 @@ function filesize_formatted($path)
 
 
                             $combinedDataChild = array_merge($data['nominationchildlist_latest_news'], $data['selectpostschildlist_latest_news']);
-
+                        
                             $pdfCount = 0; // Counter for PDFs
                             $pdfs_for_nomination = array();
                             $pdfs_for_selectionpost = array();
                             foreach ($combinedDataChild as $childlist) {
                                 if ($entry['nomination_id']) {
+                                   
                                     if ($entry['nomination_id'] == $childlist['nomination_id']) {
-
-
                                         $pdfCount++;
                                         $uploadPath = "nominations" . "/" . $childlist['attachment'];
                                         $file_location = $this
@@ -136,7 +137,7 @@ function filesize_formatted($path)
                             }
                             $li .= implode(' , ', $pdfs_for_nomination);
                             $li .= implode(' , ', $pdfs_for_selectionpost);
-                            $li .= implode(' , ', $pdfs_for_notice);
+                        
 
                         }
                         elseif (isset($entry['notice_name'])) {

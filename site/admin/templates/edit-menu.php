@@ -20,7 +20,7 @@ $_SESSION['csrf_token'] = $csrfToken;
         </div>
         <div class="col-sm-6">
           <ol class="breadcrumb float-sm-right">
-            <li class="breadcrumb-item"><a href="#">Home</a></li>
+            <li class="breadcrumb-item"><a href="<?php echo $published_menus_list_link?>">Home</a></li>
             <li class="breadcrumb-item active">Menu Creation </li>
           </ol>
         </div>
@@ -133,8 +133,8 @@ $_SESSION['csrf_token'] = $csrfToken;
                     $uploadPath = 'uploads' . '/' . $singleFile;
                     $file_location = $this->route->get_base_url() . "/"  . $uploadPath;
                     ?>
-                    <input class="form-control" type="file" name="attachment">
-					 <input name="pdflink" value="<?= $current_menu['attachment'] ?>" type="hidden"/>
+                    <input class="form-control pdfmenu" type="file" name="attachment">
+					 <input name="pdflink"  value="<?= $current_menu['attachment'] ?>" type="hidden"/>
                     <td><a  href="<?= $file_location ?>" target="_blank" rel = "noopener noreferrer"><?= $current_menu['attachment'] ?></a></td>
                     <!-- <input type=" hidden" name="MAX_FILE_SIZE" value="300000" /> -->
                   </div>
@@ -263,4 +263,20 @@ var menus = '<?php echo $t; ?>';
 $( "#menu_parent_id" ).append( menus );
   }
 }
+
+$(document).ready(function () {
+var myfile = "";
+     
+        $('.pdfmenu').on('change', function () {
+            myfile = $(this).val();
+            var ext = myfile.split('.').pop();
+            if (ext == "pdf") {
+                return true;
+            } else {
+                swal("Accept Only PDF Files", "", "warning");
+                $('.pdfmenu').val('');
+                return;
+            }
+        });
+      });
 </script>

@@ -125,20 +125,13 @@ class IndexController extends FrontEndController
 		//}
 		$_POST = filter_input_array(INPUT_POST, FILTER_DEFAULT);
 		if (isset($_POST['login'])) {
+			
+			if (hash_equals($_SESSION['csrf_token'], $_POST['csrf_token'])) {
 
-			//session_start();
-			if (!hash_equals($_SESSION['csrf_token'], $_POST['csrf_token'])) {
-				// Token mismatch, handle the error (e.g., log it or display an error message)
-				$errorMsg = "CSRF token verification failed.";
-				http_response_code(402); // Unauthorized
-			}
 			// // check captcha here
-			if (false == $this->checkCaptcha($_POST['captcha_code'])) {
-				$errorMsg = "Invalid Captcha";
-				http_response_code(402); // Unauthorized
-       			
-				return ['errorMsg' => $errorMsg];
-			}
+			if (true == $this->checkCaptcha($_POST['captcha_code'])) {
+			
+			
 			try {
 				if (!empty(Helpers::cleanData($_POST['uname'])) && !empty(Helpers::cleanData($_POST['pwd']))) {
 					$decyptedusername = Helpers::encrypt_with_cryptoJS_and_decrypt_with_php(Helpers::cleanData($_POST['uname']));
@@ -154,33 +147,36 @@ class IndexController extends FrontEndController
 							
 							session_regenerate_id();
 							$route = new Route();
-							http_response_code(200); // Unauthorized
+							http_response_code(200); 
 							$route->redirect($route->site_url("Admin/dashboard/?action=listnominations"));
 							
-        					
 						} else {
 							http_response_code(402); // Unauthorized
 							$errorMsg = "Wrong Username or password";
-							
-        					
+							http_response_code(402); 
 						}
 					} else { //password verify check 
 						http_response_code(402); // Unauthorized
 						$errorMsg = "Wrong Password";
-						
-       					
+						http_response_code(402); 
 					}
 				} else {
 					$errorMsg = "Invalid credentials";
-					http_response_code(402); // Unauthorized
-       				echo json_encode(['message' => 'Invalid credentials']);
+					http_response_code(402); 
 				}
 			} catch (Exception $e) {
 				header('HTTP/1.1 ' . $e->getCode() . ' Internal Server Booboo');
 				header('Content-Type: application/json');
 				echo json_encode(array('message' => $e->getMessage(), 'code' => $e->getCode()));
 			}
+		}else{
+			$errorMsg = "Invalid Captcha";
+			http_response_code(402); 
+
+				
 		}
+	}
+	}
 		//CSRF Token else end
 		if (isset($_GET['logout']) && $_GET['logout'] == true) {
 			session_destroy();

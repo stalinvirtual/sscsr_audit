@@ -10,7 +10,7 @@ class Route
 {
 
     public function validateAndSanitizeHost($host){
-        $sanitizedHost = preg_replace('/[^a-zA-Z0-9\-\.]/', '', $host);
+        $sanitizedHost = preg_replace('/[^a-zA-Z0-9\-\.:]/', '', $host);
         return $sanitizedHost;
 
     }
@@ -31,7 +31,9 @@ class Route
     public function get_base_url()
     {
         $host = isset($_SERVER['HTTP_HOST']) ? $_SERVER['HTTP_HOST'] : '';
+     
         $validHost = $this->validateAndSanitizeHost($host);
+        
         $app_url = $_SERVER['REQUEST_SCHEME'] . "://" . $validHost;
         $url_parts = explode("/", $_SERVER['SCRIPT_NAME']);
         array_pop($url_parts);

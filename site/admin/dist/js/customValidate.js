@@ -11,27 +11,31 @@ $("#menu_form").validate({
     menu_link: {
       required: true
     },
+    attachment:{required:true},
     menu_name: {
       required: true,
       maxlength:30,
-      restrictedChars: true
+      restrictedChars: true,
+      lettersOnly:true
     }
     // Add more rules as needed
   },
   messages: {
     is_footer_menu: {
-      required: "Please select an option"
+      required: "Please select an option."
     },
     menu_type: {
-      required: "Please select an option"
+      required: "Please select an option."
     },
     menu_link: {
-      required: "Please enter a link"
+      required: "Please enter a link."
     },
+    attachment: "Please provide a Attachment.",
     menu_name: {
-      required: "Please enter a menu name",
-      maxlength: "Menu Name should be maximum length of 30 characters",
-      restrictedChars: "Special characters are not allowed."
+      required: "Please enter a menu name.",
+      maxlength: "Menu Name should be maximum length of 30 characters.",
+      restrictedChars: "Special characters are not allowed.",
+      lettersOnly: "Menu Name contains only letters"
     }
     // Add more messages as needed
   },
@@ -41,6 +45,10 @@ $.validator.addMethod("restrictedChars", function (value, element) {
   var restrictedChars = /[@#$%^*<>;:=_?~,{}\\]/;
   return !restrictedChars.test(value);
 }, "Special characters are not allowed.");
+// Custom rule for letters only
+$.validator.addMethod("lettersOnly", function(value, element) {
+  return this.optional(element) || /^[a-zA-Z]+$/.test(value);
+}, "Username must contain only letters");
 });
 $(document).ready(function () {
 // phase Master

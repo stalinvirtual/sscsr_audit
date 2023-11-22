@@ -261,42 +261,14 @@
       
                             </li>-->
 
-                        <li class="nav-item">
-                            <a href="#" class="nav-link">
-                                <i class="nav-icon fas fa-edit"></i>
-                                <p>
-                                    Nomination
-                                    <i class="fas fa-angle-left right"></i>
-                                </p>
-                            </a>
-                            <ul class="nav nav-treeview" style="display: none;">
                                 <li class="nav-item">
                                     <a href="<?php echo $list_nomination_link; ?>" class="nav-link">
-                                        <i class="far fa-circle nav-icon"></i>
+                                        <i class="fas fa-edit nav-icon"></i>
                                         <p>Nomination </p>
                                     </a>
                                 </li>
-                                <!-- <li class="nav-item">
-                                    <a href="<?php //echo $nomination_archieves;
-                                                ?>" class="nav-link">
-                                        <i class="far fa-circle nav-icon"></i>
-                                        <p>Nomination Archieves</p>
-                                    </a>
-                                </li> -->
+                                
 
-                            </ul>
-                        </li>
-
-                        <!-- <li class="nav-item">
-                            <a href="<?php //echo $list_nomination_link;
-                                        ?>" class="nav-link">
-                                <i class="nav-icon fas fa-edit"></i>
-                                <p>
-                                    Nomination
-
-                                </p>
-                            </a>
-                        </li> -->
 
 
                         <li class="nav-item">
@@ -326,12 +298,53 @@
                             </ul>
                         </li>
 
+                         <!-- Notice Div-->
+                       
+                                        <li class="nav-item">
+                                            <a href="<?php echo $notice_link;
+                                                        ?>" class="nav-link">
+                                                <i class="fas fa-edit nav-icon"></i>
+                                                <p>Notice </p>
+                                            </a>
+                                        </li>
+                                    
+                                <!-- Notice Div-->
 
 
+  <!-- Tender Div-->
+  
+                                <li class="nav-item">
+                                    <a href="<?php echo $list_of_tenders;
+                                                ?>" class="nav-link">
+                                        <i class="fas fa-edit nav-icon"></i>
+                                        <p>Tender </p>
+                                    </a>
+                                </li>
+                               
+                        <!-- Tender Div-->
 
 
+ <!-- announcement -->
 
+                                <li class="nav-item">
+                                    <a href="<?php echo $list_of_announcements;
+                                                ?>" class="nav-link">
+                                        <i class="fas fa-edit nav-icon"></i>
+                                        <p>Announcement </p>
+                                    </a>
+                                </li>
+                          
+                        <!-- announcement -->
+                        <li class="nav-item">
+                            <a href="<?php echo $list_debarred_lists_link;
+                                        ?>" class="nav-link">
+                                <i class="nav-icon fas fa-edit"></i>
+                                <p>
+                                    Debarred Lists
 
+                                </p>
+                            </a>
+                        </li>
 
                         <li class="nav-item">
                             <a href="#" class="nav-link">
@@ -359,16 +372,7 @@
 
                             </ul>
                         </li>
-                        <li class="nav-item">
-                            <a href="<?php echo $list_debarred_lists_link;
-                                        ?>" class="nav-link">
-                                <i class="nav-icon fas fa-edit"></i>
-                                <p>
-                                    Debarred Lists
-
-                                </p>
-                            </a>
-                        </li>
+                    
                         <?php if ((@$is_superadmin == 1)) { ?>
                             <li class="nav-item">
                                 <a href="<?php echo $list_of_login_user_details;
@@ -440,49 +444,7 @@
                                 </p>
                             </a>
                             <ul class="nav nav-treeview" style="display: none;">
-                                <!-- <li class="nav-item">
-                                    <a href="<?php echo $notice_link;
-                                                ?>" class="nav-link">
-                                        <i class="far fa-circle nav-icon"></i>
-                                        <p>Notice</p>
-                                    </a>
-                                </li> -->
-
-                                <!-- Notice Div-->
-                                <li class="nav-item">
-                                    <a href="#" class="nav-link">
-                                        <i class="nav-icon fas fa-edit"></i>
-                                        <p>
-                                            Notice
-                                            <i class="fas fa-angle-left right"></i>
-                                        </p>
-                                    </a>
-                                    <ul class="nav nav-treeview" style="display: none;">
-                                        <li class="nav-item">
-                                            <a href="<?php echo $notice_link;
-                                                        ?>" class="nav-link">
-                                                <i class="far fa-circle nav-icon"></i>
-                                                <p>Notice </p>
-                                            </a>
-                                        </li>
-                                        <!-- <li class="nav-item">
-                                            <a href="<?php //echo $notices_archieves_by_month;
-                                                        ?>" class="nav-link">
-                                                <i class="far fa-circle nav-icon"></i>
-                                                <p>Notice Archieves</p>
-                                            </a>
-                                        </li> -->
-
-                                    </ul>
-                                </li>
-                                <!-- Notice Div-->
-
-
-
-
-
-
-
+                              
                                 <li class="nav-item">
                                     <a href="<?php echo $list_of_faq;
                                                 ?>" class="nav-link">
@@ -490,68 +452,11 @@
                                         <p>FAQ </p>
                                     </a>
                                 </li>
-
-                            </ul>
-                        </li>
-                        <!--  Faq--->
-
-                        <!-- Tender Div-->
-                        <li class="nav-item">
-                            <a href="#" class="nav-link">
-                                <i class="nav-icon fas fa-edit"></i>
-                                <p>
-                                    Tender
-                                    <i class="fas fa-angle-left right"></i>
-                                </p>
-                            </a>
-                            <ul class="nav nav-treeview" style="display: none;">
-                                <li class="nav-item">
-                                    <a href="<?php echo $list_of_tenders;
-                                                ?>" class="nav-link">
-                                        <i class="far fa-circle nav-icon"></i>
-                                        <p>Tender </p>
-                                    </a>
-                                </li>
-                                <!-- <li class="nav-item">
-                                    <a href="<?php echo $tender_archieves_by_month;
-                                                ?>" class="nav-link">
-                                        <i class="far fa-circle nav-icon"></i>
-                                        <p>Tender Archieves</p>
-                                    </a>
-                                </li> -->
-                            </ul>
-                        </li>
-                        <!-- Tender Div-->
-
-                        
-                        <!-- announcement -->
-                        <li class="nav-item">
-                            <a href="#" class="nav-link">
-                                <i class="nav-icon fas fa-edit"></i>
-                                <p>
-                                    Announcement
-                                    <i class="fas fa-angle-left right"></i>
-                                </p>
-                            </a>
-                            <ul class="nav nav-treeview" style="display: none;">
-                                <li class="nav-item">
-                                    <a href="<?php echo $list_of_announcements;
-                                                ?>" class="nav-link">
-                                        <i class="far fa-circle nav-icon"></i>
-                                        <p>Announcement </p>
-                                    </a>
-                                </li>
-                             
-                            </ul>
-                        </li>
-                        <!-- announcement -->
-
-
-                        <?php if (@$is_superadmin == 1 || @$is_admin == 1) { ?>
+                                <?php if (@$is_superadmin == 1 || @$is_admin == 1) { ?>
                         <li class="nav-item">
                             <a href="<?php echo $important_link;
                                         ?>" class="nav-link">
-                                <i class="nav-icon fas fa-edit"></i>
+                                <i class="nav-icon far fa-circle"></i>
                                 <p>
                                     Important Links
 
@@ -561,7 +466,40 @@
                         </li>
                         
                         <?php } ?>
+
+
                         <li class="nav-item">
+                                        <a href="<?php echo $list_of_search_year;
+                                                    ?>" class="nav-link">
+                                            <i class="far fa-circle nav-icon"></i>
+                                            <p>Search Year</p>
+                                        </a>
+                                    </li>
+
+                                    <li class="nav-item">
+                            <a href="<?php echo $list_of_instructions;
+                                        ?>" class="nav-link">
+                                <i class="nav-icon far fa-circle"></i>
+                                <p>
+                                    Important Instructions
+
+                                </p>
+                            </a>
+
+                        </li>
+
+                            </ul>
+                        </li>
+                        <!--  Faq--->
+
+                      
+
+                        
+                       
+
+
+                        
+                        <!-- <li class="nav-item">
                                 <a href="#" class="nav-link">
                                     <i class="nav-icon fas fa-edit"></i>
                                     <p>
@@ -570,28 +508,11 @@
                                     </p>
                                 </a>
                                 <ul class="nav nav-treeview" style="display: none;">
-                                    <li class="nav-item">
-                                        <a href="<?php echo $list_of_search_year;
-                                                    ?>" class="nav-link">
-                                            <i class="far fa-circle nav-icon"></i>
-                                            <p>Search Year</p>
-                                        </a>
-                                    </li>
                                     
 
                                 </ul>
-                            </li>
-                            <li class="nav-item">
-                            <a href="<?php echo $list_of_instructions;
-                                        ?>" class="nav-link">
-                                <i class="nav-icon fas fa-edit"></i>
-                                <p>
-                                    Important Instructions
-
-                                </p>
-                            </a>
-
-                        </li>
+                            </li> -->
+                      
 
                     </ul>
                 </nav>
