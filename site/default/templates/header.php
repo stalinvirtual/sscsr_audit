@@ -7,9 +7,11 @@ use App\System\Route;
  * 
  * 
  */
-header("Access-Control-Allow-Origin: *");
+header("Access-Control-Allow-Origin: 10.163.2.51");
 header("Access-Control-Allow-Methods: GET, POST, OPTIONS");
 header("Access-Control-Allow-Headers: Content-Type, Authorization");
+
+header('Content-Type: text/html; charset=utf-8');
 header("X-Frame-Options:DENY");
 header("X-Content-Type-Options:nosniff");
 header("X-XSS-Protection:0; mode=block");

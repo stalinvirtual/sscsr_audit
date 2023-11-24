@@ -23,7 +23,7 @@
 	<!-- font-awesome icons -->
 	<link rel="stylesheet" href="css/font.css" type="text/css" />
 	<!-- //datatable -->
-	<!-- <script src="js/jquery-3.3.1.js"></script> -->
+	
 	<script src="js/jquery.js"></script>
 	<script src="js/modernizr.js"></script>
 	<script src="js/jquery.cookie.js"></script>

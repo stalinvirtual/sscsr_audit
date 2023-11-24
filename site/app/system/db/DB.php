@@ -114,6 +114,7 @@ class DB
     public function select($columns = "*")
     {
         $this->query = "SELECT " . $columns;
+       // echo  $this->query;
         return $this;
     }
     public function from($table = "")
@@ -218,6 +219,7 @@ class DB
     public function order_by($order_by)
     {
         $this->query .= " ORDER BY $order_by";
+      //  echo  $this->query;
         return $this;
     }
     public function get_list($rows_per_page = "all", $page_no = 1, $result_type = null)

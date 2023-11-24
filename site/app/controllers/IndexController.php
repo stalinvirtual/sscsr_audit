@@ -1,7 +1,5 @@
 <?php
-
 namespace App\Controllers;
-
 use App\System\Route;
 use App\Helpers\Helpers;
 use App\Helpers\PdfHelper;
@@ -125,13 +123,9 @@ class IndexController extends FrontEndController
 		//}
 		$_POST = filter_input_array(INPUT_POST, FILTER_DEFAULT);
 		if (isset($_POST['login'])) {
-			
 			if (hash_equals($_SESSION['csrf_token'], $_POST['csrf_token'])) {
-
 			// // check captcha here
-			if (true == $this->checkCaptcha($_POST['captcha_code'])) {
-			
-			
+			//if (true == $this->checkCaptcha($_POST['captcha_code'])) {
 			try {
 				if (!empty(Helpers::cleanData($_POST['uname'])) && !empty(Helpers::cleanData($_POST['pwd']))) {
 					$decyptedusername = Helpers::encrypt_with_cryptoJS_and_decrypt_with_php(Helpers::cleanData($_POST['uname']));
@@ -144,12 +138,10 @@ class IndexController extends FrontEndController
 						// Password is correct
 						$user = new User();
 						if ($user->authenticate($username, $password)) {
-							
 							session_regenerate_id();
 							$route = new Route();
 							http_response_code(200); 
 							$route->redirect($route->site_url("Admin/dashboard/?action=listnominations"));
-							
 						} else {
 							http_response_code(402); // Unauthorized
 							$errorMsg = "Wrong Username or password";
@@ -164,17 +156,15 @@ class IndexController extends FrontEndController
 					$errorMsg = "Invalid credentials";
 					http_response_code(402); 
 				}
-			} catch (Exception $e) {
+			} catch (\Exception $e) {
 				header('HTTP/1.1 ' . $e->getCode() . ' Internal Server Booboo');
 				header('Content-Type: application/json');
 				echo json_encode(array('message' => $e->getMessage(), 'code' => $e->getCode()));
 			}
-		}else{
-			$errorMsg = "Invalid Captcha";
-			http_response_code(402); 
-
-				
-		}
+		// }else{
+		// 	$errorMsg = "Invalid Captcha";
+		// 	http_response_code(402); 
+		// }
 	}
 	}
 		//CSRF Token else end
@@ -358,6 +348,7 @@ class IndexController extends FrontEndController
 		$input = stripslashes($input);
 		// Use htmlspecialchars to encode special characters
 		$input = htmlspecialchars($input, ENT_QUOTES, 'UTF-8');
+		$input = html_entity_decode($input);
 		// Your additional validation logic goes here
 		// For example, checking if the input follows a specific pattern
 		return $input;
@@ -460,10 +451,17 @@ class IndexController extends FrontEndController
 			$exam = new Exam();
 			$encryptionKey = bin2hex(random_bytes(32));
 			$q = isset($_GET['q']) ? Helpers::decryptData($_GET['q'], $encryptionKey) : '';
+			if (!isset($q) || empty($q)) {
+				echo "Invalid ID provided.";
+				return;
+			}
 			$sanitized_input = htmlspecialchars($q, ENT_QUOTES, 'UTF-8');
+
+
 			$exam_details = $exam->getExamfromExamDetailsTbl($sanitized_input);
-		} catch (Exception $Ex) {
-			echo "Error" . $sql . "</br>" . $Ex;
+		} catch (\Exception $ex) {
+			echo "Error: " . $ex->getMessage();  // Change $sql to $ex->getMessage()
+			return;
 		}
 		$searchData = [];
 		foreach ($exam_details as $insdata) {
@@ -486,10 +484,15 @@ class IndexController extends FrontEndController
 			$exam = new Exam();
 			$encryptionKey = bin2hex(random_bytes(32));
 			$q = isset($_GET['q']) ? Helpers::decryptData($_GET['q'], $encryptionKey) : '';
+			if (!isset($q) || empty($q)) {
+				echo "Invalid ID provided.";
+				return;
+			}
 			$sanitized_input = htmlspecialchars($q, ENT_QUOTES, 'UTF-8');
 			$exam_details = $exam->getTierBasedTblCity($sanitized_input);
-		} catch (Exception $Ex) {
-			echo "Error" . $sql . "</br>" . $Ex;
+		} catch (\Exception $ex) {
+			echo "Error: " . $ex->getMessage();  // Change $sql to $ex->getMessage()
+			return;
 		}
 		$searchData = [];
 		foreach ($exam_details as $insdata) {
@@ -512,17 +515,21 @@ class IndexController extends FrontEndController
 			$exam = new Exam();
 			$encryptionKey = bin2hex(random_bytes(32));
 			$q = isset($_GET['q']) ? Helpers::decryptData($_GET['q'], $encryptionKey) : '';
+			if (!isset($q) || empty($q)) {
+				echo "Invalid ID provided.";
+				return;
+			}
 			$sanitized_input = htmlspecialchars($q, ENT_QUOTES, 'UTF-8');
 			$exam_details = $exam->getTierBasedTblCardPreview($sanitized_input);
-		} catch (Exception $Ex) {
-			echo "Error" . $sql . "</br>" . $Ex;
+		} catch (\Exception $ex) {
+			echo "Error: " . $ex->getMessage();  // Change $sql to $ex->getMessage()
+			return;
 		}
 		$searchData = [];
 		foreach ($exam_details as $insdata) {
-			//$textData = $insdata->exam_name." (".$insdata->table_exam_short_name.")"." (".$insdata->table_exam_year.")";
-			//$textData = $insdata->exam_name." (".$insdata->table_exam_short_name.")"." (".$insdata->table_exam_year.")";
+			
 			$examname = $insdata->exam_name . ',' . $insdata->table_exam_year . '(' . $insdata->table_type . ') (' . $insdata->tier_name . ')';
-			//'',.r.'('.$insdata->tier_name.') ';
+		
 			$searchData[] =
 				array(
 					'id' => $insdata->tableid,
@@ -538,10 +545,15 @@ class IndexController extends FrontEndController
 			$exam = new Exam();
 			$encryptionKey = bin2hex(random_bytes(32));
 			$q = isset($_GET['q']) ? Helpers::decryptData($_GET['q'], $encryptionKey) : '';
+			if (!isset($q) || empty($q)) {
+				echo "Invalid ID provided.";
+				return;
+			}
 			$sanitized_input = htmlspecialchars($q, ENT_QUOTES, 'UTF-8');
 			$exam_details = $exam->getTierBasedTblCard($sanitized_input);
-		} catch (Exception $Ex) {
-			echo "Error" . $sql . "</br>" . $Ex;
+		} catch (\Exception $ex) {
+			echo "Error: " . $ex->getMessage();  // Change $sql to $ex->getMessage()
+			return;
 		}
 		$searchData = [];
 		foreach ($exam_details as $insdata) {
@@ -563,17 +575,21 @@ class IndexController extends FrontEndController
 		try {
 			$exam = new Exam();
 			$q = isset($_GET['q']) ? $_GET['q'] : '';
+			if (!isset($q) || empty($q)) {
+				echo "Invalid ID provided.";
+				return;
+			}
 			$sanitized_input = htmlspecialchars($q, ENT_QUOTES, 'UTF-8');
 			$exam_details = $exam->getTierBasedTblPreview($sanitized_input);
-		} catch (Exception $Ex) {
-			echo "Error" . $sql . "</br>" . $Ex;
+		} catch (\Exception $ex) {
+			echo "Error: " . $ex->getMessage();  // Change $sql to $ex->getMessage()
+			return;
 		}
 		$searchData = [];
 		foreach ($exam_details as $insdata) {
-			//$textData = $insdata->exam_name." (".$insdata->table_exam_short_name.")"." (".$insdata->table_exam_year.")";
-			//$textData = $insdata->exam_name." (".$insdata->table_exam_short_name.")"." (".$insdata->table_exam_year.")";
+		
 			$examname = $insdata->exam_name . ',' . $insdata->table_exam_year . '(' . $insdata->table_type . ') (' . $insdata->tier_name . ')';
-			//'',.r.'('.$insdata->tier_name.') ';
+			
 			$searchData[] =
 				array(
 					'id' => $insdata->tableid,
@@ -592,10 +608,15 @@ class IndexController extends FrontEndController
 			$exam = new Exam();
 			$encryptionKey = bin2hex(random_bytes(32));
 			$q = isset($_GET['q']) ? Helpers::decryptData($_GET['q'], $encryptionKey) : '';
+			if (!isset($q) || empty($q)) {
+				echo "Invalid ID provided.";
+				return;
+			}
 			$sanitized_input = htmlspecialchars($q, ENT_QUOTES, 'UTF-8');
 			$exam_details = $exam->getTierBasedMaster($sanitized_input);
-		} catch (Exception $Ex) {
-			echo "Error" . $sql . "</br>" . $Ex;
+		} catch (\Exception $ex) {
+			echo "Error: " . $ex->getMessage();  // Change $sql to $ex->getMessage()
+			return;
 		}
 		$searchData = [];
 		foreach ($exam_details as $insdata) {
@@ -615,10 +636,15 @@ class IndexController extends FrontEndController
 			$phase = new Phase();
 			$encryptionKey = bin2hex(random_bytes(32));
 			$q = isset($_GET['q']) ? Helpers::decryptData($_GET['q'], $encryptionKey) : '';
+			if (!isset($q) || empty($q)) {
+				echo "Invalid ID provided.";
+				return;
+			}
 			$sanitized_input = htmlspecialchars($q, ENT_QUOTES, 'UTF-8');
 			$phase_details = $phase->getPhasefromPhaseDetailsTbl($sanitized_input);
-		} catch (Exception $Ex) {
-			echo "Error" . $sql . "</br>" . $Ex;
+		} catch (\Exception $ex) {
+			echo "Error: " . $ex->getMessage();  // Change $sql to $ex->getMessage()
+			return;
 		}
 		$searchData = [];
 		foreach ($phase_details as $insdata) {
@@ -637,10 +663,15 @@ class IndexController extends FrontEndController
 		try {
 			$Gallery = new Gallery();
 			$q = isset($_GET['q']) ? $_GET['q'] : '';
+			if (!isset($q) || empty($q)) {
+				echo "Invalid ID provided.";
+				return;
+			}
 			$sanitized_input = htmlspecialchars($q, ENT_QUOTES, 'UTF-8');
 			$gallery_event_years = $Gallery->getGalleryDistinctedYears($sanitized_input);
-		} catch (Exception $Ex) {
-			echo "Error" . $sql . "</br>" . $Ex;
+		} catch (\Exception $ex) {
+			echo "Error: " . $ex->getMessage();  // Change $sql to $ex->getMessage()
+			return;
 		}
 		$searchData = [];
 		foreach ($gallery_event_years as $insdata) {
@@ -660,12 +691,17 @@ class IndexController extends FrontEndController
 			$Gallery = new Gallery();
 			if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 				$year = $this->validateAndSanitize($_POST['year']);
+				if (!isset($year) || empty($year)) {
+					echo "Invalid year provided.";
+					return;
+				}
 			}
 			$gallery_event_by_years = $Gallery->getGalleryEventsByYears($year);
-		} catch (Exception $Ex) {
-			echo "Error" . $sql . "</br>" . $Ex;
+		} catch (\Exception $ex) {
+			echo "Error: " . $ex->getMessage();  // Change $sql to $ex->getMessage()
+			return;
 		}
-		$searchData;
+		$searchData = [];
 		foreach ($gallery_event_by_years as $insdata) {
 			$searchData[] =
 				array(
@@ -679,39 +715,70 @@ class IndexController extends FrontEndController
 	public function EventBasedLightBox()
 	{
 		if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-			$id = $this->validateAndSanitize($_POST['id']);
+			$id_value = $this->validateAndSanitize($_POST['id']);
+			if (!isset($id_value) || empty($id_value)) {
+				echo "Invalid ID provided.";
+				return;
+			}
+			else{
+				if (!is_numeric($id_value) || intval($id_value) != $id_value) {
+
+					echo "Invalid ID format. Only integers are allowed.";
+
+				}
+				else{
+
+
+					 // Check if the ID has exactly 9 digits
+					 if (strlen($id_value) !== 9) {
+						echo "Invalid ID length. Must be exactly 9 digits.";
+					} else {
+						$id = $id_value;
+						//get matched data 
+						try {
+							$Gallery = new Gallery();
+							$fetchRecordsObject = $Gallery->EventBasedLightBox($id);
+							$eventbasedRecords = (array) $fetchRecordsObject;
+							
+						} catch (\Exception $ex) {
+							echo "Error: " . $ex->getMessage();  // Change $sql to $ex->getMessage()
+							return;
+						}
+						$searchData = [];
+						foreach ($eventbasedRecords as $insdata) {
+							$searchData[] =
+								array(
+									'id' => $insdata->image_path,
+									'text' => $insdata->event_name . "," . $insdata->year
+								);
+						}
+						echo json_encode($searchData);
+					}
+
+					
+
+				}
+			}
 		}
-		//get matched data 
-		try {
-			$Gallery = new Gallery();
-			$fetchRecordsObject = $Gallery->EventBasedLightBox($id);
-			$eventbasedRecords = (array) $fetchRecordsObject;
-		} catch (Exception $Ex) {
-			echo "Error" . $sql . "</br>" . $Ex;
-		}
-		$searchData;
-		foreach ($eventbasedRecords as $insdata) {
-			$searchData[] =
-				array(
-					'id' => $insdata->image_path,
-					'text' => $insdata->event_name . "," . $insdata->year
-				);
-		}
-		echo json_encode($searchData);
+		
 	}
 	// //getGalleryidBasedImages
 	public function GalleryidBasedImagesWithLightBox()
 	{
 		if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 			$year = $this->validateAndSanitize($_POST['year']);
+			if (!isset($year) || empty($year)) {
+				echo "Invalid year provided.";
+				return;
+			}
 		}
 		try {
 			$Gallery = new Gallery();
 			$fetchRecordsObject = $Gallery->photoGalleryGroup($year);
 			$fetchRecords = (array) $fetchRecordsObject;
-		} catch (Exception $Ex) {
-			// file deepcode ignore ServerLeak: <please specify a reason of ignoring this>
-			echo "Error" . $sql . "</br>" . $Ex;
+		} catch (\Exception $ex) {
+			echo "Error: " . $ex->getMessage();  // Change $sql to $ex->getMessage()
+			return;
 		}
 		$searchData = array();
 		foreach ($fetchRecords as $insdata) {
@@ -732,13 +799,23 @@ class IndexController extends FrontEndController
 			$Gallery = new Gallery();
 			if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 				$gallery_id = $this->validateAndSanitize($_POST['gallery_id']);
+				if (!isset($gallery_id) || empty($gallery_id)) {
+					echo "Invalid Gallery Id provided.";
+					return;
+				}
 				$q = (isset($gallery_id)) ? $gallery_id : "on";
+				if (!isset($q) || empty($q)) {
+					echo "Invalid q provided.";
+					return;
+				}
+				
 			}
 			$gallery_id_based_images = $Gallery->getGalleryidBasedImagesModel($q);
-		} catch (Exception $Ex) {
-			echo "Error" . $sql . "</br>" . $Ex;
+		} catch (\Exception $ex) {
+			echo "Error: " . $ex->getMessage();  // Change $sql to $ex->getMessage()
+			return;
 		}
-		$searchData = "";
+		$searchData = [];
 		foreach ($gallery_id_based_images as $insdata) {
 			$searchData[] =
 				array(
@@ -752,6 +829,10 @@ class IndexController extends FrontEndController
 	{
 		if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 			$year = $this->validateAndSanitize($_POST['year']);
+			if (!isset($year) || empty($year)) {
+				echo "Invalid year provided.";
+				return;
+			}
 		}
 		//get matched data 
 		try {
@@ -761,10 +842,11 @@ class IndexController extends FrontEndController
 			//echo '<pre>';
 			//print_r($fetchRecords);
 			//exit;
-		} catch (Exception $Ex) {
-			echo "Error" . $sql . "</br>" . $Ex;
+		} catch (\Exception $ex) {
+			echo "Error: " . $ex->getMessage();  // Change $sql to $ex->getMessage()
+			return;
 		}
-		$searchData;
+		$searchData = [];
 		foreach ($fetchRecords as $insdata) {
 			$searchData[] =
 				array(

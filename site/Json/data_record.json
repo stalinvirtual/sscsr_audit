@@ -2,6 +2,16 @@
     "errorMsg": "",
     "nominations": {
         "0": {
+            "nomination_id": 1107,
+            "exam_name": "rstdyt",
+            "category_id": 1,
+            "effect_from_date": "2023-11-22",
+            "effect_to_date": "2023-11-30",
+            "creation_date": "2023-11-22 11:13:51",
+            "p_status": "1",
+            "category_name": "CGL"
+        },
+        "1": {
             "nomination_id": 1106,
             "exam_name": "Test",
             "category_id": 1,
@@ -19,10 +29,55 @@
             "pdf_name": "test pdf",
             "attachment": "84920-document-(1).pdf",
             "status": 1
+        },
+        {
+            "nomination_child_id": 1081,
+            "nomination_id": 1107,
+            "pdf_name": "test sp",
+            "attachment": "58094-exam-detailsp.pdf",
+            "status": 1
+        },
+        {
+            "nomination_child_id": 1082,
+            "nomination_id": 1108,
+            "pdf_name": "one",
+            "attachment": "99829-sscsr_dataentry_18_nov_2023.pdf",
+            "status": 1
+        },
+        {
+            "nomination_child_id": 1083,
+            "nomination_id": 1109,
+            "pdf_name": "one",
+            "attachment": "82082-sscsr_dataentry_17-11-2023_sa.pdf",
+            "status": 1
+        },
+        {
+            "nomination_child_id": 1084,
+            "nomination_id": 1110,
+            "pdf_name": "One",
+            "attachment": "21212-sscsr_dataentry_18_nov_2023.pdf",
+            "status": 1
+        },
+        {
+            "nomination_child_id": 1085,
+            "nomination_id": 1111,
+            "pdf_name": "ome",
+            "attachment": "93271-sscsr_dataentry_18_nov_2023.pdf",
+            "status": 1
         }
     ],
     "nominations_latest_news": {
         "0": {
+            "nomination_id": 1107,
+            "exam_name": "rstdyt",
+            "category_id": 1,
+            "effect_from_date": "2023-11-22",
+            "effect_to_date": "2023-11-30",
+            "creation_date": "2023-11-22 11:13:51",
+            "p_status": "1",
+            "category_name": "CGL"
+        },
+        "1": {
             "nomination_id": 1106,
             "exam_name": "Test",
             "category_id": 1,
@@ -39,6 +94,41 @@
             "nomination_id": 1106,
             "pdf_name": "test pdf",
             "attachment": "84920-document-(1).pdf",
+            "status": 1
+        },
+        {
+            "nomination_child_id": 1081,
+            "nomination_id": 1107,
+            "pdf_name": "test sp",
+            "attachment": "58094-exam-detailsp.pdf",
+            "status": 1
+        },
+        {
+            "nomination_child_id": 1082,
+            "nomination_id": 1108,
+            "pdf_name": "one",
+            "attachment": "99829-sscsr_dataentry_18_nov_2023.pdf",
+            "status": 1
+        },
+        {
+            "nomination_child_id": 1083,
+            "nomination_id": 1109,
+            "pdf_name": "one",
+            "attachment": "82082-sscsr_dataentry_17-11-2023_sa.pdf",
+            "status": 1
+        },
+        {
+            "nomination_child_id": 1084,
+            "nomination_id": 1110,
+            "pdf_name": "One",
+            "attachment": "21212-sscsr_dataentry_18_nov_2023.pdf",
+            "status": 1
+        },
+        {
+            "nomination_child_id": 1085,
+            "nomination_id": 1111,
+            "pdf_name": "ome",
+            "attachment": "93271-sscsr_dataentry_18_nov_2023.pdf",
             "status": 1
         }
     ],
