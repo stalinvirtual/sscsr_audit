@@ -36,6 +36,7 @@ use App\Models\SearchYear as SearchYear;
 use App\Models\Instructions as Instructions;
 use App\Models\MstNotice as MstNotice;
 use App\Models\MstNoticeChild as MstNoticeChild;
+use App\Models\Exam as Exam;
 ini_set('display_errors', '1');
 ini_set('display_startup_errors', '1');
 error_reporting(E_ALL);
@@ -149,11 +150,11 @@ class Admin extends BackEndController
         "create_announcement_link" => "Admin/editannouncements",
         "edit_announcement_link" => "Admin/editannouncements/{id}",
         "delete_announcement_link" => "admin/deleteannouncement/{id}",
-         //Important Instructions
-         "list_of_instructions" => "Admin/dashboard/?action=listofinstructions",
-         "create_instructions_link" => "Admin/editinstructions",
-         "edit_instructions_link" => "Admin/editinstructions/{id}",
-         "delete_instructions_link" => "admin/deleteinstructions/{id}",
+        //Important Instructions
+        "list_of_instructions" => "Admin/dashboard/?action=listofinstructions",
+        "create_instructions_link" => "Admin/editinstructions",
+        "edit_instructions_link" => "Admin/editinstructions/{id}",
+        "delete_instructions_link" => "admin/deleteinstructions/{id}",
         "common_archives__link" => "admin/archiveBtnFunction/{id}",
         "copy_tender_link" => "admin/copy-tender/{id}",
         "list_of_importantlinks" => "Admin/dashboard/?action=listofimportantlinks",
@@ -178,11 +179,11 @@ class Admin extends BackEndController
         "edit_gallery_link" => "Admin/editgallery/{id}",
         "delete_gallery_link" => "admin/deletegallery/{id}",
         //Photo Category 
-         //SearchYear
-         "list_of_search_year" => "Admin/dashboard/?action=listofsearchyear",
-         "create_search_year_link" => "Admin/editsearchyear",
-         "edit_search_year_link" => "Admin/editsearchyear/{id}",
-         "delete_search_year_link" => "admin/deletesearchyear/{id}",
+        //SearchYear
+        "list_of_search_year" => "Admin/dashboard/?action=listofsearchyear",
+        "create_search_year_link" => "Admin/editsearchyear",
+        "edit_search_year_link" => "Admin/editsearchyear/{id}",
+        "delete_search_year_link" => "admin/deletesearchyear/{id}",
     );
     public function __construct($param_data = array())
     {
@@ -195,7 +196,6 @@ class Admin extends BackEndController
     }
     public function index()
     {
-        print_r($_POST);
         $this->dashboard();
     }
     public function dashboard()
@@ -378,7 +378,6 @@ class Admin extends BackEndController
     private function saveMenu()
     {
         $message = $message_type = "";
-        
         if (isset($_POST['csrf_token']) && hash_equals($_SESSION['csrf_token'], $_POST['csrf_token'])) {
             if (isset($_POST['save-menu'])) {
                 if (@htmlentities($_POST['is_redirect_popup']) == 'on') {
@@ -407,11 +406,11 @@ class Admin extends BackEndController
                 } else {
                     $final_file = "";
                 }
-                $menu_type = htmlentities($_POST['menu_type']);
+                $menu_type = $this->validateAndSanitizeAdmin($_POST['menu_type']);
                 // echo $menu_type;
                 if ($menu_type == 1) {
                     $page = new Page();
-                    $menu_page_id_value = htmlentities($_POST['menu_page_id']);
+                    $menu_page_id_value = $this->validateAndSanitizeAdmin($_POST['menu_page_id']);
                     $menu_page_id = (int) $menu_page_id_value;
                     $data['pages'] = $page->pageDetails($menu_page_id);
                     // print_r($data['pages']);
@@ -419,31 +418,31 @@ class Admin extends BackEndController
                     $page_title_remove_whitespace = str_replace(' ', '', $page_title);
                     $page_title_lowercase = strtolower($page_title_remove_whitespace);
                     $menu_link = $page_title_lowercase;
-                    $menu_name = htmlentities($_POST['menu_name']);
+                    $menu_name = $this->validateAndSanitizeAdmin($_POST['menu_name']);
                 } else if ($menu_type == 2) {
-                    $menu_link = htmlentities($_POST['menu_link']);
-                    $menu_name = htmlentities($_POST['menu_name']);
+                    $menu_link = $this->validateAndSanitizeAdmin($_POST['menu_link']);
+                    $menu_name = $this->validateAndSanitizeAdmin($_POST['menu_name']);
                 } else if ($menu_type == 3) {
                     $menu_link = "";
-                    $menu_name = Helpers::cleanData($_POST['menu_name']);
+                    $menu_name = $this->validateAndSanitizeAdmin($_POST['menu_name']);
                 } else {
-                    $menu_name = Helpers::cleanData($_POST['menu_name']) . '&nbsp;<i class="fa fa-angle-down"></i>';
-                    $menu_link = Helpers::cleanData($_POST['menu_link']);
+                    $menu_name = $this->validateAndSanitizeAdmin($_POST['menu_name']) . '&nbsp;<i class="fa fa-angle-down"></i>';
+                    $menu_link = $this->validateAndSanitizeAdmin($_POST['menu_link']);
                 }
                 $menu = new \App\Models\Menu();
                 $lastinsertedid = $menu->lastInsertedID();
                 if ($final_file == '') {
-                    $final_file = Helpers::cleanData($_POST['pdflink']);
+                    $final_file = $this->validateAndSanitizeAdmin($_POST['pdflink']);
                 }
                 if ($menu_id == 0) {
                     $menu_order = $lastinsertedid->max + 1;
                     $menu_data = [
-                        'menu_parent_id' => Helpers::cleanData($_POST['menu_parent_id']),
+                        'menu_parent_id' => $this->validateAndSanitizeAdmin($_POST['menu_parent_id']),
                         'menu_name' => $menu_name,
                         'menu_link' => $menu_link,
-                        'menu_type' => Helpers::cleanData($_POST['menu_type']),
-                        'menu_page_id' => (int) Helpers::cleanData($_POST['menu_page_id']),
-                        'menu_route' => Helpers::cleanData($_POST['menu_route']),
+                        'menu_type' => $this->validateAndSanitizeAdmin($_POST['menu_type']),
+                        'menu_page_id' => (int) $this->validateAndSanitizeAdmin($_POST['menu_page_id']),
+                        'menu_route' => $this->validateAndSanitizeAdmin($_POST['menu_route']),
                         'menu_order' => $menu_order,
                         'status' => 0,
                         'attachment' => $final_file,
@@ -559,10 +558,10 @@ class Admin extends BackEndController
                     }
                 } else { // update menu
                     $page_data = [
-                        'page_content' => htmlspecialchars($_POST['page_content']),
+                        'page_content' => Helpers::cleanData($_POST['page_content']),
                         'title' => Helpers::cleanData($_POST['title']),
                         'status' => 0,
-                        'last_content' => $_POST['page_content'],
+                        'last_content' => Helpers::cleanData($_POST['page_content']),
                     ];
                     /* echo "<pre>";
                 print_r($page_data);
@@ -600,11 +599,9 @@ class Admin extends BackEndController
      */
     public function deleteMenu()
     {
-   
         $data = [];
         $message = $message_type = "";
         $menu_id = $this->data['params'][0];
-       
         $menu = new \App\Models\Menu();
         if ($menu->deleteMenu($menu_id)) {
             $message = "Menu Deleted successfully";
@@ -853,7 +850,7 @@ class Admin extends BackEndController
      */
     public function ajaxresponsesubmenuordernew()
     {
-         if (isset($_POST["action"])) {
+        if (isset($_POST["action"])) {
             if ($_POST["action"] == 'fetch_data') {
                 $menu_id = Helpers::cleanData($_POST["menu_id"]);
                 if ($menu_id != 0) {
@@ -867,16 +864,16 @@ class Admin extends BackEndController
                 //print_r($ret);
                 echo '<option value="">Select Menu </option>';
                 foreach ($ret as $val) { ?>
-                                        <option value="<?php echo $val->menu_parent_id; ?>" <?php if ($val->menu_parent_id == $menu_id) {
-                                               echo $message;
-                                           } ?>><?php echo $val->parent_name; ?></option>
-                                    <?php }
+                    <option value="<?php echo $val->menu_parent_id; ?>" <?php if ($val->menu_parent_id == $menu_id) {
+                                                                            echo $message;
+                                                                        } ?>><?php echo $val->parent_name; ?></option>
+                    <?php }
             }
         }
     }
     public function ajaxresponsesubmenuordernewbyId()
     {
-         if (isset($_POST["action"])) {
+        if (isset($_POST["action"])) {
             if ($_POST["action"] == 'fetch_data') {
                 $id = Helpers::cleanData($_POST["id"]);
                 $menu = new Menu();
@@ -935,21 +932,18 @@ class Admin extends BackEndController
         }
         $this->render("dashboard", $data);
     }
-    public function validateAndSanitizeAdmin($input) {
+    public function validateAndSanitizeAdmin($input)
+    {
         // Trim whitespace
         $input = trim($input);
-
         // Remove backslashes
         $input = stripslashes($input);
-        
         // Use htmlspecialchars to encode special characters
         $input = htmlspecialchars($input, ENT_QUOTES, 'UTF-8');
-        
         // Your additional validation logic goes here
         // For example, checking if the input follows a specific pattern
-        
         return $input;
-}
+    }
     public function editNomination()
     {
         $data = [];
@@ -1007,7 +1001,6 @@ class Admin extends BackEndController
                         if (count($_FILES) > 0) { //uploaded File 
                             foreach ($_FILES['pdf_file']['name'] as $i => $name) {
                                 $item_name = Helpers::cleanData($_POST['pdf_name'][$i]);
-                                $item_name = htmlspecialchars($item_name);
                                 $tmp_name = $_FILES['pdf_file']['tmp_name'][$i];
                                 $error = $_FILES['pdf_file']['error'][$i];
                                 $size = $_FILES['pdf_file']['size'][$i];
@@ -1052,7 +1045,6 @@ class Admin extends BackEndController
                         foreach ($_FILES['pdf_file']['name'] as $i => $name) {
                             if ($_FILES['pdf_file']['size'][$i] != 0) {
                                 $item_name = Helpers::cleanData($_POST['pdf_name'][$i]);
-                                $item_name = htmlspecialchars($item_name);
                                 $child_id = isset($_POST['nomination_child_id'][$i]) ? $_POST['nomination_child_id'][$i] : 0;
                                 $tmp_name = $_FILES['pdf_file']['tmp_name'][$i];
                                 $error = $_FILES['pdf_file']['error'][$i];
@@ -1346,66 +1338,66 @@ class Admin extends BackEndController
     private function saveDlist()
     {
         $message = $message_type = "";
-        if (isset($_POST['csrf_token']) && hash_equals($_SESSION['csrf_token'], $_POST['csrf_token'])) { 
-        if (isset($_POST['save_dlist'])) {
-            $dlist_id = isset($_POST['id']) ? $_POST['id'] : 0;
-            if (isset($_FILES['attachment']) && $_FILES['attachment']['name'] != "") {
-                //pdf upload function
-                $file = rand(1000, 100000) . "-" . $_FILES['attachment']['name'];
-                $file_loc = $_FILES['attachment']['tmp_name'];
-                $file_size = $_FILES['attachment']['size'];
-                $file_type = $_FILES['attachment']['type'];
-                $folder = './debarredlists/';
-                $new_size = $file_size / 1024;
-                /* make file name in lower case */
-                $new_file_name = strtolower($file);
-                /* make file name in lower case */
-                $final_file = str_replace(' ', '-', $new_file_name);
-                if (move_uploaded_file($file_loc, $folder . $final_file)) { // echo "File is valid, and was successfully uploaded.\n";
+        if (isset($_POST['csrf_token']) && hash_equals($_SESSION['csrf_token'], $_POST['csrf_token'])) {
+            if (isset($_POST['save_dlist'])) {
+                $dlist_id = isset($_POST['id']) ? $_POST['id'] : 0;
+                if (isset($_FILES['attachment']) && $_FILES['attachment']['name'] != "") {
+                    //pdf upload function
+                    $file = rand(1000, 100000) . "-" . $_FILES['attachment']['name'];
+                    $file_loc = $_FILES['attachment']['tmp_name'];
+                    $file_size = $_FILES['attachment']['size'];
+                    $file_type = $_FILES['attachment']['type'];
+                    $folder = './debarredlists/';
+                    $new_size = $file_size / 1024;
+                    /* make file name in lower case */
+                    $new_file_name = strtolower($file);
+                    /* make file name in lower case */
+                    $final_file = str_replace(' ', '-', $new_file_name);
+                    if (move_uploaded_file($file_loc, $folder . $final_file)) { // echo "File is valid, and was successfully uploaded.\n";
+                    } else {
+                        echo "File size greater than 300kb!\n\n";
+                    }
+                    //pdf upload function
                 } else {
-                    echo "File size greater than 300kb!\n\n";
+                    $final_file = "";
                 }
-                //pdf upload function
-            } else {
-                $final_file = "";
-            }
-            if ($final_file == '') {
-                $final_file = Helpers::cleanData($_POST['pdflink']);
-            }
-            $effect_from_date = date('Y-m-d', strtotime(Helpers::cleanData($_POST['effect_from_date'])));
-            $effect_to_date =  date('Y-m-d', strtotime(Helpers::cleanData($_POST['effect_to_date'])));
-            $dlist_data = [
-                'pdf_name' => Helpers::cleanData($_POST['pdf_name']),
-                'attachment' => $final_file,
-                'effect_from_date' => $effect_from_date,
-                'effect_to_date' => $effect_to_date,
-                'p_status' => '0'
-            ];
-            /* echo "<pre>";
+                if ($final_file == '') {
+                    $final_file = Helpers::cleanData($_POST['pdflink']);
+                }
+                $effect_from_date = date('Y-m-d', strtotime(Helpers::cleanData($_POST['effect_from_date'])));
+                $effect_to_date =  date('Y-m-d', strtotime(Helpers::cleanData($_POST['effect_to_date'])));
+                $dlist_data = [
+                    'pdf_name' => Helpers::cleanData($_POST['pdf_name']),
+                    'attachment' => $final_file,
+                    'effect_from_date' => $effect_from_date,
+                    'effect_to_date' => $effect_to_date,
+                    'p_status' => '0'
+                ];
+                /* echo "<pre>";
             print_r($menu_data);
             exit; */
-            $dlist = new \App\Models\Debarredlists();
-            if ($dlist_id == 0) { // insert new menu 
-                if ($dlist->addDlist($dlist_data)) {
-                    $message = "Debarred List  Added successfully";
-                    $message_type = "success";
-                } else {
-                    $message = "Error adding Debarred List";
-                    $message_type = "warning";
+                $dlist = new \App\Models\Debarredlists();
+                if ($dlist_id == 0) { // insert new menu 
+                    if ($dlist->addDlist($dlist_data)) {
+                        $message = "Debarred List  Added successfully";
+                        $message_type = "success";
+                    } else {
+                        $message = "Error adding Debarred List";
+                        $message_type = "warning";
+                    }
+                } else { // update menu
+                    if ($dlist->updateDlist($dlist_data, $dlist_id)) {
+                        $message = "Debarred List Updated successfully";
+                        $message_type = "success";
+                    } else {
+                        $message = "Error updating Debarred List";
+                        $message_type = "warning";
+                    }
                 }
-            } else { // update menu
-                if ($dlist->updateDlist($dlist_data, $dlist_id)) {
-                    $message = "Debarred List Updated successfully";
-                    $message_type = "success";
-                } else {
-                    $message = "Error updating Debarred List";
-                    $message_type = "warning";
-                }
+                $_SESSION['notification'] = ['message' => $message, 'message_type' => $message_type];
+                $this->route->redirect($this->route->site_url("Admin/dashboard/?action=listdebarredlists"));
             }
-            $_SESSION['notification'] = ['message' => $message, 'message_type' => $message_type];
-            $this->route->redirect($this->route->site_url("Admin/dashboard/?action=listdebarredlists"));
         }
-    }
     }
     public function deletedebarredlists()
     {
@@ -1456,66 +1448,66 @@ class Admin extends BackEndController
     {
         $message = $message_type = "";
         if (isset($_POST['csrf_token']) && hash_equals($_SESSION['csrf_token'], $_POST['csrf_token'])) {
-        if (isset($_POST['save_tender'])) {
-            $tenderid = isset($_POST['id']) ? $_POST['id'] : 0;
-            if (isset($_FILES['attachment']) && $_FILES['attachment']['name'] != "") {
-                //pdf upload function
-                $file = rand(1000, 100000) . "-" . $_FILES['attachment']['name'];
-                $file_loc = $_FILES['attachment']['tmp_name'];
-                $file_size = $_FILES['attachment']['size'];
-                $file_type = $_FILES['attachment']['type'];
-                $folder = './tender/';
-                $new_size = $file_size / 1024;
-                /* make file name in lower case */
-                $new_file_name = strtolower($file);
-                /* make file name in lower case */
-                $final_file = str_replace(' ', '-', $new_file_name);
-                if (move_uploaded_file($file_loc, $folder . $final_file)) { // echo "File is valid, and was successfully uploaded.\n";
+            if (isset($_POST['save_tender'])) {
+                $tenderid = isset($_POST['id']) ? $_POST['id'] : 0;
+                if (isset($_FILES['attachment']) && $_FILES['attachment']['name'] != "") {
+                    //pdf upload function
+                    $file = rand(1000, 100000) . "-" . $_FILES['attachment']['name'];
+                    $file_loc = $_FILES['attachment']['tmp_name'];
+                    $file_size = $_FILES['attachment']['size'];
+                    $file_type = $_FILES['attachment']['type'];
+                    $folder = './tender/';
+                    $new_size = $file_size / 1024;
+                    /* make file name in lower case */
+                    $new_file_name = strtolower($file);
+                    /* make file name in lower case */
+                    $final_file = str_replace(' ', '-', $new_file_name);
+                    if (move_uploaded_file($file_loc, $folder . $final_file)) { // echo "File is valid, and was successfully uploaded.\n";
+                    } else {
+                        echo "File size greater than 300kb!\n\n";
+                    }
+                    //pdf upload function
                 } else {
-                    echo "File size greater than 300kb!\n\n";
+                    $final_file = "";
                 }
-                //pdf upload function
-            } else {
-                $final_file = "";
-            }
-            if ($final_file == '') {
-                $final_file = Helpers::cleanData($_POST['pdflink']);
-            }
-            $effect_from_date = date('Y-m-d', strtotime(Helpers::cleanData($_POST['effect_from_date'])));
-            $effect_to_date = date('Y-m-d', strtotime(Helpers::cleanData($_POST['effect_to_date'])));
-            $tenderlist_data = [
-                'pdf_name' => Helpers::cleanData($_POST['pdf_name']),
-                'attachment' => $final_file,
-                'effect_from_date' => $effect_from_date,
-                'effect_to_date' => $effect_to_date,
-                'p_status' => '0',
-                'creation_date' => date('Y-m-d H:i:s')
-            ];
-            /* echo "<pre>";
+                if ($final_file == '') {
+                    $final_file = Helpers::cleanData($_POST['pdflink']);
+                }
+                $effect_from_date = date('Y-m-d', strtotime(Helpers::cleanData($_POST['effect_from_date'])));
+                $effect_to_date = date('Y-m-d', strtotime(Helpers::cleanData($_POST['effect_to_date'])));
+                $tenderlist_data = [
+                    'pdf_name' => Helpers::cleanData($_POST['pdf_name']),
+                    'attachment' => $final_file,
+                    'effect_from_date' => $effect_from_date,
+                    'effect_to_date' => $effect_to_date,
+                    'p_status' => '0',
+                    'creation_date' => date('Y-m-d H:i:s')
+                ];
+                /* echo "<pre>";
             print_r($menu_data);
             exit; */
-            $tender = new \App\Models\Tender();
-            if ($tenderid == 0) { // insert new menu 
-                if ($tender->addTender($tenderlist_data)) {
-                    $message = "Tender  Added successfully";
-                    $message_type = "success";
-                } else {
-                    $message = "Error adding Tender";
-                    $message_type = "warning";
+                $tender = new \App\Models\Tender();
+                if ($tenderid == 0) { // insert new menu 
+                    if ($tender->addTender($tenderlist_data)) {
+                        $message = "Tender  Added successfully";
+                        $message_type = "success";
+                    } else {
+                        $message = "Error adding Tender";
+                        $message_type = "warning";
+                    }
+                } else { // update menu
+                    if ($tender->updateTender($tenderlist_data, $tenderid)) {
+                        $message = "Tender Updated successfully";
+                        $message_type = "success";
+                    } else {
+                        $message = "Error updating Tender";
+                        $message_type = "warning";
+                    }
                 }
-            } else { // update menu
-                if ($tender->updateTender($tenderlist_data, $tenderid)) {
-                    $message = "Tender Updated successfully";
-                    $message_type = "success";
-                } else {
-                    $message = "Error updating Tender";
-                    $message_type = "warning";
-                }
+                $_SESSION['notification'] = ['message' => $message, 'message_type' => $message_type];
+                $this->route->redirect($this->route->site_url("Admin/dashboard/?action=listoftenders"));
             }
-            $_SESSION['notification'] = ['message' => $message, 'message_type' => $message_type];
-            $this->route->redirect($this->route->site_url("Admin/dashboard/?action=listoftenders"));
         }
-    }
     }
     public function deleteTender()
     {
@@ -1611,40 +1603,40 @@ class Admin extends BackEndController
     {
         $message = $message_type = "";
         if (isset($_POST['csrf_token']) && hash_equals($_SESSION['csrf_token'], $_POST['csrf_token'])) {
-        if (isset($_POST['save_important_link'])) {
-            $ilid = isset($_POST['id']) ? $_POST['id'] : 0;
-            $creation_date = date('Y-m-d', strtotime(Helpers::cleanData($_POST['creation_date'])));
-            $illist_data = [
-                'link_name' => Helpers::cleanData($_POST['link_name']),
-                'menu_link' => Helpers::cleanData($_POST['menu_link']),
-                'creation_date' => $creation_date,
-                'status' => '0'
-            ];
-            /* echo "<pre>";
+            if (isset($_POST['save_important_link'])) {
+                $ilid = isset($_POST['id']) ? $_POST['id'] : 0;
+                $creation_date = date('Y-m-d', strtotime(Helpers::cleanData($_POST['creation_date'])));
+                $illist_data = [
+                    'link_name' => Helpers::cleanData($_POST['link_name']),
+                    'menu_link' => Helpers::cleanData($_POST['menu_link']),
+                    'creation_date' => $creation_date,
+                    'status' => '0'
+                ];
+                /* echo "<pre>";
             print_r($illist_data);
             exit; */
-            $il = new \App\Models\ImportantLinks();
-            if ($ilid == 0) { // insert new menu 
-                if ($il->addImportantLinks($illist_data)) {
-                    $message = "Important Link Added successfully";
-                    $message_type = "success";
-                } else {
-                    $message = "Error adding Important Link";
-                    $message_type = "warning";
+                $il = new \App\Models\ImportantLinks();
+                if ($ilid == 0) { // insert new menu 
+                    if ($il->addImportantLinks($illist_data)) {
+                        $message = "Important Link Added successfully";
+                        $message_type = "success";
+                    } else {
+                        $message = "Error adding Important Link";
+                        $message_type = "warning";
+                    }
+                } else { // update menu
+                    if ($il->updateImportantLinks($illist_data, $ilid)) {
+                        $message = "Important Link Updated successfully";
+                        $message_type = "success";
+                    } else {
+                        $message = "Error updating Important Link";
+                        $message_type = "warning";
+                    }
                 }
-            } else { // update menu
-                if ($il->updateImportantLinks($illist_data, $ilid)) {
-                    $message = "Important Link Updated successfully";
-                    $message_type = "success";
-                } else {
-                    $message = "Error updating Important Link";
-                    $message_type = "warning";
-                }
+                $_SESSION['notification'] = ['message' => $message, 'message_type' => $message_type];
+                $this->route->redirect($this->route->site_url("Admin/dashboard/?action=listofimportantlinks"));
             }
-            $_SESSION['notification'] = ['message' => $message, 'message_type' => $message_type];
-            $this->route->redirect($this->route->site_url("Admin/dashboard/?action=listofimportantlinks"));
         }
-    }
     }
     #################   Important Links  End    ###################
     ####### Login Users Edit Form#########
@@ -1771,58 +1763,58 @@ class Admin extends BackEndController
     {
         $message = $message_type = "";
         if (isset($_POST['csrf_token']) && hash_equals($_SESSION['csrf_token'], $_POST['csrf_token'])) {
-        if (isset($_POST['save_category'])) {
-            if (isset($_POST['id']) && !empty($_POST['id'])) {
-                $category_id = $_POST['id'];
-            } else {
-                $category_id = 0;
-            }
-            $categorylist = new \App\Models\Category();
-            if ($_POST['categoryforwhat'] == 'selection_post') {
-                $sp = 1;
-                $nm = 0;
-            } else {
-                $sp = 0;
-                $nm = 1;
-            }
-            if ($category_id == 0) { //insert
-                $string = htmlspecialchars(strip_tags($_POST['category_name']));
-                $categorylist_data = [
-                    'category_name' => Helpers::cleanData($string),
-                    'show_in_selection_post' => $sp,
-                    'show_in_nomination' => $nm,
-                    'creation_date' => date('Y-m-d H:i:s'),
-                    'status' => 0
-                ];
-                // insert new menu 
-                if ($categorylist->addCategory($categorylist_data)) {
-                    $message = "Category Added successfully";
-                    $message_type = "success";
+            if (isset($_POST['save_category'])) {
+                if (isset($_POST['id']) && !empty($_POST['id'])) {
+                    $category_id = $_POST['id'];
                 } else {
-                    $message = "Error adding Category";
-                    $message_type = "warning";
+                    $category_id = 0;
                 }
-            } else { // update menu
                 $categorylist = new \App\Models\Category();
-                $categorylist_data = [
-                    'category_name' => Helpers::cleanData($_POST['category_name']),
-                    'show_in_selection_post' => $sp,
-                    'show_in_nomination' => $nm,
-                    'creation_date' => date('Y-m-d H:i:s'),
-                    //'status' =>$status
-                ];
-                if ($categorylist->updateCategory($categorylist_data, $category_id)) {
-                    $message = "Category Updated successfully";
-                    $message_type = "success";
+                if ($_POST['categoryforwhat'] == 'selection_post') {
+                    $sp = 1;
+                    $nm = 0;
                 } else {
-                    $message = "Error updating Category";
-                    $message_type = "warning";
+                    $sp = 0;
+                    $nm = 1;
                 }
+                if ($category_id == 0) { //insert
+                    $string = htmlspecialchars(strip_tags($_POST['category_name']));
+                    $categorylist_data = [
+                        'category_name' => Helpers::cleanData($string),
+                        'show_in_selection_post' => $sp,
+                        'show_in_nomination' => $nm,
+                        'creation_date' => date('Y-m-d H:i:s'),
+                        'status' => 0
+                    ];
+                    // insert new menu 
+                    if ($categorylist->addCategory($categorylist_data)) {
+                        $message = "Category Added successfully";
+                        $message_type = "success";
+                    } else {
+                        $message = "Error adding Category";
+                        $message_type = "warning";
+                    }
+                } else { // update menu
+                    $categorylist = new \App\Models\Category();
+                    $categorylist_data = [
+                        'category_name' => Helpers::cleanData($_POST['category_name']),
+                        'show_in_selection_post' => $sp,
+                        'show_in_nomination' => $nm,
+                        'creation_date' => date('Y-m-d H:i:s'),
+                        //'status' =>$status
+                    ];
+                    if ($categorylist->updateCategory($categorylist_data, $category_id)) {
+                        $message = "Category Updated successfully";
+                        $message_type = "success";
+                    } else {
+                        $message = "Error updating Category";
+                        $message_type = "warning";
+                    }
+                }
+                $_SESSION['notification'] = ['message' => $message, 'message_type' => $message_type];
+                $this->route->redirect($this->route->site_url("Admin/dashboard/?action=listofcategory"));
             }
-            $_SESSION['notification'] = ['message' => $message, 'message_type' => $message_type];
-            $this->route->redirect($this->route->site_url("Admin/dashboard/?action=listofcategory"));
         }
-    }
     }
     public function deleteCategory()
     {
@@ -1903,11 +1895,12 @@ class Admin extends BackEndController
         $this->prepare_menus($data);
         $this->render("edit-notice", $data);
     }
-    private function saveNotice(){
+    private function saveNotice()
+    {
         $message = $message_type = "";
         if (isset($_POST['csrf_token']) && hash_equals($_SESSION['csrf_token'], $_POST['csrf_token'])) {
             if (isset($_POST['save_notice'])) {
-                 $notice_id = isset($_POST['id']) ? $_POST['id'] : 0;
+                $notice_id = isset($_POST['id']) ? $_POST['id'] : 0;
                 $notice = new \App\Models\MstNotice();
                 $notice_name = trim(htmlspecialchars($_POST['notice_name']));
                 $notice_data = [
@@ -2309,7 +2302,7 @@ class Admin extends BackEndController
     {
         $year = Helpers::cleanData($_POST['year']);
         $month = Helpers::cleanData($_POST['month']);
-        $elink = Helpers::cleanData( $_POST['elink']);
+        $elink = Helpers::cleanData($_POST['elink']);
         $dlink = Helpers::cleanData($_POST['dlink']);
         $alink = Helpers::cleanData($_POST['alink']);
         $effect_from_date = Helpers::cleanData($_POST['effect_from_date']);
@@ -2338,14 +2331,14 @@ class Admin extends BackEndController
                 $is_publisher = $user->is_publisher(); // publisher
                 $data['is_publisher'] = $is_publisher;
                 if (count($arrayValue) > 0) {
-                    foreach ($arrayValue as $row):
+                    foreach ($arrayValue as $row) :
                         $delete_nomination_link_str = str_replace("{id}", $row['nomination_id'], $dlink);
                         $edit_nomination_link_str = str_replace("{id}", $row['nomination_id'], $elink);
                         $archive_nomination_link_str = str_replace("{id}", $row['nomination_id'], $alink);
                         $nominationchildclass = new Nominationchild();
                         $nominationchildlist = $nominationchildclass->getNominationchild();
                         $output = "";
-                        foreach ($nominationchildlist as $key => $childlist):
+                        foreach ($nominationchildlist as $key => $childlist) :
                             $selected = "";
                             if ($row['nomination_id'] == $childlist->nomination_id) {
                                 $selected = "selected=\"selected\"";
@@ -2355,41 +2348,41 @@ class Admin extends BackEndController
             <a href='$file_location' rel = "noopener noreferrer"  target="_blank"> $childlist->pdf_name</a>,<br>
 HTML;
                             }
-                            ?>
-                                                <?php endforeach; ?>
-                                                <?php $flagValue = Helpers::flagoutput($row['p_status']);
-                                                $rolebasedValue = Helpers::roleBased();
-                                                if ($rolebasedValue['is_superadmin'] == 1) {
-                                                    $primaryid = $row['nomination_id'];
-                                                    $publishbaseurl = $this->route->site_url("Admin/ajaxresponseforPublish");
-                                                    $archivesbaseurl = $this->route->site_url("Admin/ajaxresponseforArchives");
-                                                    $redirecturl = $this->route->site_url("Admin/dashboard/?action=listnominations&&status=0");
-                                                    $status = $row['p_status'];
-                                                    $actionoutputValue = Helpers::iconOperation($edit_nomination_link_str, $delete_nomination_link_str, $archive_nomination_link_str, $primaryid, $idname, $publishbaseurl, $archivesbaseurl, $redirecturl, $status, "Nomination");
-                                                } else if ($rolebasedValue['is_admin'] == 1) {
-                                                    $primaryid = $row['nomination_id'];
-                                                    $publishbaseurl = $this->route->site_url("Admin/ajaxresponseforPublish");
-                                                    $archivesbaseurl = $this->route->site_url("Admin/ajaxresponseforArchives");
-                                                    $redirecturl = $this->route->site_url("Admin/dashboard/?action=listnominations&&status=0");
-                                                    $status = $row['p_status'];
-                                                    $actionoutputValue = Helpers::iconOperation($edit_nomination_link_str, $delete_nomination_link_str, $archive_nomination_link_str, $primaryid, $idname, $publishbaseurl, $archivesbaseurl, $redirecturl, $status, "Nomination");
-                                                } elseif ($rolebasedValue['is_uploader'] == 1) {
-                                                    $primaryid = $row['nomination_id'];
-                                                    $publishbaseurl = $this->route->site_url("Admin/ajaxresponseforPublish");
-                                                    $archivesbaseurl = $this->route->site_url("Admin/ajaxresponseforArchives");
-                                                    $redirecturl = $this->route->site_url("Admin/dashboard/?action=listnominations&&status=0");
-                                                    $status = $row['p_status'];
-                                                    $actionoutputValue = Helpers::iconOperation($edit_nomination_link_str, $delete_nomination_link_str, $archive_nomination_link_str, $primaryid, $idname, $publishbaseurl, $archivesbaseurl, $redirecturl, $status, "Nomination");
-                                                } else {
-                                                    // if (@$_GET['status'] == 0 && $row['p_status'] != 1) {
-                                                    //     echo '<i class="fa fa-eye nomination-publish-button" style="color:#007bff"></i>';
-                                                    // }
-                                                }
-                                                // echo  $output;
-                                                // $outputarray =explode(" ",$output);
-                                                // $outputarray = array($output);
-                                                // print_r( $outputarray);
-                                                @$array['data'][] = array($primaryid, $row['exam_name'], $row['category_name'], $output, $row['effect_from_date'], $row['effect_to_date'], $flagValue, $actionoutputValue);
+                    ?>
+                        <?php endforeach; ?>
+                        <?php $flagValue = Helpers::flagoutput($row['p_status']);
+                        $rolebasedValue = Helpers::roleBased();
+                        if ($rolebasedValue['is_superadmin'] == 1) {
+                            $primaryid = $row['nomination_id'];
+                            $publishbaseurl = $this->route->site_url("Admin/ajaxresponseforPublish");
+                            $archivesbaseurl = $this->route->site_url("Admin/ajaxresponseforArchives");
+                            $redirecturl = $this->route->site_url("Admin/dashboard/?action=listnominations&&status=0");
+                            $status = $row['p_status'];
+                            $actionoutputValue = Helpers::iconOperation($edit_nomination_link_str, $delete_nomination_link_str, $archive_nomination_link_str, $primaryid, $idname, $publishbaseurl, $archivesbaseurl, $redirecturl, $status, "Nomination");
+                        } else if ($rolebasedValue['is_admin'] == 1) {
+                            $primaryid = $row['nomination_id'];
+                            $publishbaseurl = $this->route->site_url("Admin/ajaxresponseforPublish");
+                            $archivesbaseurl = $this->route->site_url("Admin/ajaxresponseforArchives");
+                            $redirecturl = $this->route->site_url("Admin/dashboard/?action=listnominations&&status=0");
+                            $status = $row['p_status'];
+                            $actionoutputValue = Helpers::iconOperation($edit_nomination_link_str, $delete_nomination_link_str, $archive_nomination_link_str, $primaryid, $idname, $publishbaseurl, $archivesbaseurl, $redirecturl, $status, "Nomination");
+                        } elseif ($rolebasedValue['is_uploader'] == 1) {
+                            $primaryid = $row['nomination_id'];
+                            $publishbaseurl = $this->route->site_url("Admin/ajaxresponseforPublish");
+                            $archivesbaseurl = $this->route->site_url("Admin/ajaxresponseforArchives");
+                            $redirecturl = $this->route->site_url("Admin/dashboard/?action=listnominations&&status=0");
+                            $status = $row['p_status'];
+                            $actionoutputValue = Helpers::iconOperation($edit_nomination_link_str, $delete_nomination_link_str, $archive_nomination_link_str, $primaryid, $idname, $publishbaseurl, $archivesbaseurl, $redirecturl, $status, "Nomination");
+                        } else {
+                            // if (@$_GET['status'] == 0 && $row['p_status'] != 1) {
+                            //     echo '<i class="fa fa-eye nomination-publish-button" style="color:#007bff"></i>';
+                            // }
+                        }
+                        // echo  $output;
+                        // $outputarray =explode(" ",$output);
+                        // $outputarray = array($output);
+                        // print_r( $outputarray);
+                        @$array['data'][] = array($primaryid, $row['exam_name'], $row['category_name'], $output, $row['effect_from_date'], $row['effect_to_date'], $flagValue, $actionoutputValue);
                     endforeach;
                     //echo '<pre>';
                     //print_r($array);
@@ -2416,7 +2409,7 @@ HTML;
                         $output = "";
                         $output .= '<a href=" ' . $file_location . '" rel = "noopener noreferrer" target="_blank">' . $row["attachment"] . ' </a>';
                         ?>
-                        <?php
+<?php
                         $flagValue = Helpers::flagoutput($row['p_status']);
                         $rolebasedValue = Helpers::roleBased();
                         if ($rolebasedValue['is_admin'] == 1) {
@@ -2697,45 +2690,45 @@ HTML;
     private function saveFaq()
     {
         $message = $message_type = "";
-        if (isset($_POST['csrf_token']) && hash_equals($_SESSION['csrf_token'], $_POST['csrf_token'])) {  
-        if (isset($_POST['save_faq'])) {
-            $faq_id = isset($_POST['id']) ? $_POST['id'] : 0;
-            $effect_from_date = date('Y-m-d', strtotime(Helpers::cleanData($_POST['effect_from_date'])));
-            $faq_title = Helpers::cleanData($_POST['faq_title']);
-            $faq_title_cs = Helpers::e($faq_title);
-            $faq_content = Helpers::cleanData($_POST['faq_content']);
-            $faq_content_cs = Helpers::e($faq_content);
-            $faqlist_data = [
-                'faq_title' => $faq_title_cs,
-                'faq_content' => $faq_content_cs,
-                'effect_from_date' => $effect_from_date,
-                'p_status' => '0'
-            ];
-            /* echo "<pre>";
+        if (isset($_POST['csrf_token']) && hash_equals($_SESSION['csrf_token'], $_POST['csrf_token'])) {
+            if (isset($_POST['save_faq'])) {
+                $faq_id = isset($_POST['id']) ? $_POST['id'] : 0;
+                $effect_from_date = date('Y-m-d', strtotime(Helpers::cleanData($_POST['effect_from_date'])));
+                $faq_title = Helpers::cleanData($_POST['faq_title']);
+                $faq_title_cs = Helpers::e($faq_title);
+                $faq_content = Helpers::cleanData($_POST['faq_content']);
+                $faq_content_cs = Helpers::e($faq_content);
+                $faqlist_data = [
+                    'faq_title' => $faq_title_cs,
+                    'faq_content' => $faq_content_cs,
+                    'effect_from_date' => $effect_from_date,
+                    'p_status' => '0'
+                ];
+                /* echo "<pre>";
             print_r($menu_data);
             exit; */
-            $faqlist = new \App\Models\Faq();
-            if ($faq_id == 0) { // insert new menu 
-                if ($faqlist->addFaq($faqlist_data)) {
-                    $message = "Faq   Added successfully";
-                    $message_type = "success";
-                } else {
-                    $message = "Error adding Faq";
-                    $message_type = "warning";
+                $faqlist = new \App\Models\Faq();
+                if ($faq_id == 0) { // insert new menu 
+                    if ($faqlist->addFaq($faqlist_data)) {
+                        $message = "Faq   Added successfully";
+                        $message_type = "success";
+                    } else {
+                        $message = "Error adding Faq";
+                        $message_type = "warning";
+                    }
+                } else { // update menu
+                    if ($faqlist->updateFaq($faqlist_data, $faq_id)) {
+                        $message = "Faq Updated successfully";
+                        $message_type = "success";
+                    } else {
+                        $message = "Error updating Faq";
+                        $message_type = "warning";
+                    }
                 }
-            } else { // update menu
-                if ($faqlist->updateFaq($faqlist_data, $faq_id)) {
-                    $message = "Faq Updated successfully";
-                    $message_type = "success";
-                } else {
-                    $message = "Error updating Faq";
-                    $message_type = "warning";
-                }
+                $_SESSION['notification'] = ['message' => $message, 'message_type' => $message_type];
+                $this->route->redirect($this->route->site_url("Admin/dashboard/?action=listoffaq"));
             }
-            $_SESSION['notification'] = ['message' => $message, 'message_type' => $message_type];
-            $this->route->redirect($this->route->site_url("Admin/dashboard/?action=listoffaq"));
         }
-    }
     }
     public function deleteFaq()
     {
@@ -2794,59 +2787,21 @@ HTML;
     {
         $message = $message_type = "";
         if (isset($_POST['csrf_token']) && hash_equals($_SESSION['csrf_token'], $_POST['csrf_token'])) {
-        if (isset($_POST['save_gallery'])) {
-            $gallery_id = isset($_POST['gallery_id']) ? $_POST['gallery_id'] : 0;
-            $gallery_model = new \App\Models\Gallery();
-            $gallery_data = [
-                'year' => Helpers::cleanData($_POST['year']),
-                'event_id' => Helpers::cleanData($_POST['event_id']),
-                // 'effect_from_date' => date('Y-m-d', strtotime(Helpers::cleanData($_POST['effect_from_date']))),
-                //'effect_to_date' => date('Y-m-d', strtotime(Helpers::cleanData($_POST['effect_to_date']))),
-            ];
-            if ($gallery_id == 0) {
-                // insert new menu 
-                if ($gallery_model->addGallery($gallery_data)) {
-                    $lastinsertsql = $gallery_model->lastInsertedId();
-                    $lastinsertedid = $lastinsertsql['max'];
-                    foreach ($_FILES['image_file']['name'] as $i => $name) {
-                        $tmp_name = $_FILES['image_file']['tmp_name'][$i];
-                        $error = $_FILES['image_file']['error'][$i];
-                        $size = $_FILES['image_file']['size'][$i];
-                        $type = $_FILES['image_file']['type'][$i];
-                        $folder = './gallery/';
-                        $file = rand(1000, 100000) . "-" . $_FILES['image_file']['name'][$i];
-                        $new_file_name = strtolower($file);
-                        $final_file = str_replace(' ', '-', $new_file_name);
-                        if (move_uploaded_file($tmp_name, $folder . $final_file)) { // echo "File is valid, and was successfully uploaded.\n";
-                        } else {
-                            echo "File size greater than 300kb!\n\n";
-                        }
-                        $gallery_model_child = new \App\Models\GalleryChild();
-                        $gallery_child_data = [
-                            'gallery_id' => $lastinsertedid,
-                            'image_path' => $final_file,
-                            'status' => 1
-                        ];
-                        $gallery_model_child->addGalleryChild($gallery_child_data);
-                    }
-                    $message = "Gallery Added successfully";
-                    $message_type = "success";
-                } else {
-                    $message = "Error adding Gallery";
-                    $message_type = "warning";
-                }
-            } else { // update menu
+            if (isset($_POST['save_gallery'])) {
+                $gallery_id = isset($_POST['gallery_id']) ? $_POST['gallery_id'] : 0;
+                $gallery_model = new \App\Models\Gallery();
                 $gallery_data = [
                     'year' => Helpers::cleanData($_POST['year']),
                     'event_id' => Helpers::cleanData($_POST['event_id']),
-                    //'effect_from_date' => date('Y-m-d', strtotime(Helpers::cleanData($_POST['effect_from_date']))),
-                    // 'effect_to_date' => date('Y-m-d', strtotime(Helpers::cleanData($_POST['effect_to_date']))),
-                    'p_status' => '0',
+                    // 'effect_from_date' => date('Y-m-d', strtotime(Helpers::cleanData($_POST['effect_from_date']))),
+                    //'effect_to_date' => date('Y-m-d', strtotime(Helpers::cleanData($_POST['effect_to_date']))),
                 ];
-                if ($gallery_model->updateGallery($gallery_data, $gallery_id)) {
-                    foreach ($_FILES['image_file']['name'] as $i => $name) {
-                        if ($_FILES['image_file']['size'][$i] != 0) {
-                            $child_id = isset($_POST['image_id'][$i]) ? $_POST['image_id'][$i] : 0;
+                if ($gallery_id == 0) {
+                    // insert new menu 
+                    if ($gallery_model->addGallery($gallery_data)) {
+                        $lastinsertsql = $gallery_model->lastInsertedId();
+                        $lastinsertedid = $lastinsertsql['max'];
+                        foreach ($_FILES['image_file']['name'] as $i => $name) {
                             $tmp_name = $_FILES['image_file']['tmp_name'][$i];
                             $error = $_FILES['image_file']['error'][$i];
                             $size = $_FILES['image_file']['size'][$i];
@@ -2860,31 +2815,69 @@ HTML;
                                 echo "File size greater than 300kb!\n\n";
                             }
                             $gallery_model_child = new \App\Models\GalleryChild();
-                            $lastinsertsql = $gallery_model->lastInsertedId();
-                            $lastinsertedid = $lastinsertsql['max'];
                             $gallery_child_data = [
                                 'gallery_id' => $lastinsertedid,
                                 'image_path' => $final_file,
                                 'status' => 1
                             ];
-                            if ($child_id == 0) {
-                                $gallery_model_child->addGalleryChild($gallery_child_data);
-                            } else {
-                                $gallery_model_child->updateGalleryChild($gallery_child_data, $child_id);
-                            }
-                        } //Validation
+                            $gallery_model_child->addGalleryChild($gallery_child_data);
+                        }
+                        $message = "Gallery Added successfully";
+                        $message_type = "success";
+                    } else {
+                        $message = "Error adding Gallery";
+                        $message_type = "warning";
                     }
-                    $message = "Gallery Updated successfully";
-                    $message_type = "success";
-                } else {
-                    $message = "Error updating Gallery";
-                    $message_type = "warning";
+                } else { // update menu
+                    $gallery_data = [
+                        'year' => Helpers::cleanData($_POST['year']),
+                        'event_id' => Helpers::cleanData($_POST['event_id']),
+                        //'effect_from_date' => date('Y-m-d', strtotime(Helpers::cleanData($_POST['effect_from_date']))),
+                        // 'effect_to_date' => date('Y-m-d', strtotime(Helpers::cleanData($_POST['effect_to_date']))),
+                        'p_status' => '0',
+                    ];
+                    if ($gallery_model->updateGallery($gallery_data, $gallery_id)) {
+                        foreach ($_FILES['image_file']['name'] as $i => $name) {
+                            if ($_FILES['image_file']['size'][$i] != 0) {
+                                $child_id = isset($_POST['image_id'][$i]) ? $_POST['image_id'][$i] : 0;
+                                $tmp_name = $_FILES['image_file']['tmp_name'][$i];
+                                $error = $_FILES['image_file']['error'][$i];
+                                $size = $_FILES['image_file']['size'][$i];
+                                $type = $_FILES['image_file']['type'][$i];
+                                $folder = './gallery/';
+                                $file = rand(1000, 100000) . "-" . $_FILES['image_file']['name'][$i];
+                                $new_file_name = strtolower($file);
+                                $final_file = str_replace(' ', '-', $new_file_name);
+                                if (move_uploaded_file($tmp_name, $folder . $final_file)) { // echo "File is valid, and was successfully uploaded.\n";
+                                } else {
+                                    echo "File size greater than 300kb!\n\n";
+                                }
+                                $gallery_model_child = new \App\Models\GalleryChild();
+                                $lastinsertsql = $gallery_model->lastInsertedId();
+                                $lastinsertedid = $lastinsertsql['max'];
+                                $gallery_child_data = [
+                                    'gallery_id' => $lastinsertedid,
+                                    'image_path' => $final_file,
+                                    'status' => 1
+                                ];
+                                if ($child_id == 0) {
+                                    $gallery_model_child->addGalleryChild($gallery_child_data);
+                                } else {
+                                    $gallery_model_child->updateGalleryChild($gallery_child_data, $child_id);
+                                }
+                            } //Validation
+                        }
+                        $message = "Gallery Updated successfully";
+                        $message_type = "success";
+                    } else {
+                        $message = "Error updating Gallery";
+                        $message_type = "warning";
+                    }
                 }
+                $_SESSION['notification'] = ['message' => $message, 'message_type' => $message_type];
+                $this->route->redirect($this->route->site_url("Admin/dashboard/?action=listofphotogallery"));
             }
-            $_SESSION['notification'] = ['message' => $message, 'message_type' => $message_type];
-            $this->route->redirect($this->route->site_url("Admin/dashboard/?action=listofphotogallery"));
         }
-    }
     }
     #######################   Gallery  End #####################
     public function ajaxResponseForDataTableLoad()
@@ -2970,10 +2963,10 @@ HTML;
                      * 
                      */
                 } else {
-                   // $action = "<p style='color:green'>Published</p>";
-                   $unpublishButton = "<button  title='Un Publish' style='height:24px' class='btn btn-sm btn-danger unpublishbtn iconWidth' data-id='" . $rowval->nomination_id . "'><i class='fa  fa-eye'></i></button>";
-                   $green_text = "<p style='color:green'>Published</p>";
-                   $action =  $green_text . $unpublishButton ;
+                    // $action = "<p style='color:green'>Published</p>";
+                    $unpublishButton = "<button  title='Un Publish' style='height:24px' class='btn btn-sm btn-danger unpublishbtn iconWidth' data-id='" . $rowval->nomination_id . "'><i class='fa  fa-eye'></i></button>";
+                    $green_text = "<p style='color:green'>Published</p>";
+                    $action =  $green_text . $unpublishButton;
                 }
                 $pdfPath = "";
                 $pdfLinks = []; // Initialize an array to store the PDF links
@@ -3096,7 +3089,7 @@ HTML;
         if (!empty(Helpers::cleanData($_POST["action"]))) {
             $nomination = new Nomination();
             $nomination_list_data = Helpers::cleanData($_POST['ids']);
-           if (Helpers::cleanData($_POST["action"]) == 'archive') {
+            if (Helpers::cleanData($_POST["action"]) == 'archive') {
                 if ($nomination->archiveNominationStatus($nomination_list_data)) {
                     $message = "Nomination  Archived successfully";
                     $message_type = "success";
@@ -3198,7 +3191,7 @@ HTML;
                 } else {
                     $unpublishButton = "<button  title='Un Publish' style='height:24px' class='btn btn-sm btn-danger sp_unpublishbtn iconWidth' data-id='" . $rowval->selection_post_id . "'><i class='fa  fa-eye'></i></button>";
                     $green_text = "<p style='color:green'>Published</p>";
-                    $action =  $green_text . $unpublishButton ;
+                    $action =  $green_text . $unpublishButton;
                 }
                 $pdfPath = "";
                 $pdfLinks = []; // Initialize an array to store the PDF links
@@ -3296,8 +3289,8 @@ HTML;
                 exit;
             }
         }
-         // Un Publish Selection Post
-         if ($request == 7) {
+        // Un Publish Selection Post
+        if ($request == 7) {
             $id = Helpers::cleanData($_POST['id']);
             $sp_data = [
                 'p_status' => '0',
@@ -3322,7 +3315,7 @@ HTML;
         if (!empty(Helpers::cleanData($_POST["action"]))) {
             $sp = new Selectionpost();
             $sp_list_data = Helpers::cleanData($_POST['ids']);
-           if (Helpers::cleanData($_POST["action"]) == 'archive') {
+            if (Helpers::cleanData($_POST["action"]) == 'archive') {
                 if ($sp->archiveSelectionPostStatus($sp_list_data)) {
                     $message = " Selection Post Archived successfully";
                     $message_type = "success";
@@ -3431,8 +3424,8 @@ HTML;
                 } else {
                     $unpublishButton = "<button  title='Un Publish' style='height:24px' class='btn btn-sm btn-danger tender_unpublishbtn iconWidth' data-id='" . $rowval->tender_id . "'><i class='fa  fa-eye'></i></button>";
                     $green_text = "<p style='color:green'>Published</p>";
-                    $action =  $green_text . $unpublishButton ;
-                   // $action = "<p style='color:green'>Published</p>";
+                    $action =  $green_text . $unpublishButton;
+                    // $action = "<p style='color:green'>Published</p>";
                 }
                 $pdfPath = "";
                 $selected = "";
@@ -3548,7 +3541,7 @@ TEXT;
         if (!empty(Helpers::cleanData($_POST["action"]))) {
             $tender = new Tender();
             $tender_list_data = Helpers::cleanData($_POST['ids']);
-           if (Helpers::cleanData($_POST["action"]) == 'archive') {
+            if (Helpers::cleanData($_POST["action"]) == 'archive') {
                 if ($tender->archiveTenderStatus($tender_list_data)) {
                     $message = " Tender Archived successfully";
                     $message_type = "success";
@@ -3574,7 +3567,8 @@ TEXT;
      * Notice
      * 
      */
-    public function ajaxResponseForNoticeDataTableLoad(){
+    public function ajaxResponseForNoticeDataTableLoad()
+    {
         $request = 1;
         if (isset($_POST['request'])) {
             $request = Helpers::cleanData($_POST['request']);
@@ -3664,7 +3658,7 @@ TEXT;
                 } else {
                     $unpublishButton = "<button  title='Un Publish' style='height:30px;margin-left:10px' class='btn btn-sm btn-danger notice_unpublishbtn iconWidth' data-id='" . $rowval->notice_id . "'><i class='fa  fa-eye'></i></button>";
                     $green_text = "<p style='color:green;margin-top:8px'>Published</p></div>";
-                    $action = "<div class='flex-container'>". $green_text . $unpublishButton ."</div>";
+                    $action = "<div class='flex-container'>" . $green_text . $unpublishButton . "</div>";
                 }
                 $pdfPath = "";
                 $pdfLinks = []; // Initialize an array to store the PDF links
@@ -3707,80 +3701,80 @@ TEXT;
             echo json_encode($response);
             exit;
         } //request 1
-               // Delete Notice
-               if ($request == 4) {
-                $id = Helpers::cleanData($_POST['id']);
-                // Check id
-                ## Fetch records
-                $model = new MstNotice();
-                $checkId = $model->checkMstNoticeId($id);
-                $checkIdCount = $checkId->checkid;
-                if ($checkIdCount > 0) {
-                    $deleteQuery = $model->deleteMstNotice($id);
-                    echo 1;
-                    exit;
-                } else {
-                    echo 0;
-                    exit;
-                }
+        // Delete Notice
+        if ($request == 4) {
+            $id = Helpers::cleanData($_POST['id']);
+            // Check id
+            ## Fetch records
+            $model = new MstNotice();
+            $checkId = $model->checkMstNoticeId($id);
+            $checkIdCount = $checkId->checkid;
+            if ($checkIdCount > 0) {
+                $deleteQuery = $model->deleteMstNotice($id);
+                echo 1;
+                exit;
+            } else {
+                echo 0;
+                exit;
             }
-            // Archive Notice
-            if ($request == 5) {
-                $id = Helpers::cleanData($_POST['id']);
-                // Check id
-                ## Fetch records
-                $model = new MstNotice();
-                $checkId = $model->checkMstNoticeId($id);
-                $checkIdCount = $checkId->checkid;
-                if ($checkIdCount > 0) {
-                    $archiveQuery = $model->archiveMstNoticeStatus($id);
-                    echo 1;
-                    exit;
-                } else {
-                    echo 0;
-                    exit;
-                }
+        }
+        // Archive Notice
+        if ($request == 5) {
+            $id = Helpers::cleanData($_POST['id']);
+            // Check id
+            ## Fetch records
+            $model = new MstNotice();
+            $checkId = $model->checkMstNoticeId($id);
+            $checkIdCount = $checkId->checkid;
+            if ($checkIdCount > 0) {
+                $archiveQuery = $model->archiveMstNoticeStatus($id);
+                echo 1;
+                exit;
+            } else {
+                echo 0;
+                exit;
             }
-            // Publish Notice
-            if ($request == 6) {
-                $id = Helpers::cleanData($_POST['id']);
-                $notice_data = [
-                    'p_status' => '1',
-                ];
-                // Check id
-                ## Fetch records
-                $model = new MstNotice();
-                $checkId = $model->checkMstNoticeId($id);
-                 $checkIdCount = $checkId->checkid;
-                if ($checkIdCount > 0) {
-                    $publishQuery = $model->updateMstNoticeState($notice_data, $id);
-                    echo 1;
-                    exit;
-                } else {
-                    echo 0;
-                    exit;
-                }
+        }
+        // Publish Notice
+        if ($request == 6) {
+            $id = Helpers::cleanData($_POST['id']);
+            $notice_data = [
+                'p_status' => '1',
+            ];
+            // Check id
+            ## Fetch records
+            $model = new MstNotice();
+            $checkId = $model->checkMstNoticeId($id);
+            $checkIdCount = $checkId->checkid;
+            if ($checkIdCount > 0) {
+                $publishQuery = $model->updateMstNoticeState($notice_data, $id);
+                echo 1;
+                exit;
+            } else {
+                echo 0;
+                exit;
             }
-             // Un Publish Notice
-             if ($request == 7) {
-                $id = Helpers::cleanData($_POST['id']);
-                $notice_data = [
-                    'p_status' => '0',
-                ];
-                // Check id
-                ## Fetch records
-                $model = new MstNotice();
-                $checkId = $model->checkMstNoticeId($id);
-                 $checkIdCount = $checkId->checkid;
-                if ($checkIdCount > 0) {
-                    $publishQuery = $model->updateMstNoticeState($notice_data, $id);
-                    echo 1;
-                    exit;
-                } else {
-                    echo 0;
-                    exit;
-                }
+        }
+        // Un Publish Notice
+        if ($request == 7) {
+            $id = Helpers::cleanData($_POST['id']);
+            $notice_data = [
+                'p_status' => '0',
+            ];
+            // Check id
+            ## Fetch records
+            $model = new MstNotice();
+            $checkId = $model->checkMstNoticeId($id);
+            $checkIdCount = $checkId->checkid;
+            if ($checkIdCount > 0) {
+                $publishQuery = $model->updateMstNoticeState($notice_data, $id);
+                echo 1;
+                exit;
+            } else {
+                echo 0;
+                exit;
             }
+        }
     }
     public function ajaxResponseForNoticeDataTableLoad1()
     {
@@ -3963,7 +3957,7 @@ TEXT;
         if (!empty(Helpers::cleanData($_POST["action"]))) {
             $notice = new MstNotice();
             $notice_list_data = Helpers::cleanData($_POST['ids']);
-           if (Helpers::cleanData($_POST["action"]) == 'archive') {
+            if (Helpers::cleanData($_POST["action"]) == 'archive') {
                 if ($notice->archiveMstNoticeStatus($notice_list_data)) {
                     $message = " Notice Archived successfully";
                     $message_type = "success";
@@ -4168,7 +4162,7 @@ TEXT;
         if (!empty(Helpers::cleanData($_POST["action"]))) {
             $notice = new Gallery();
             $notice_list_data = Helpers::cleanData($_POST['ids']);
-           if (Helpers::cleanData($_POST["action"]) == 'archive') {
+            if (Helpers::cleanData($_POST["action"]) == 'archive') {
                 if ($notice->archiveGalleryStatus($notice_list_data)) {
                     $message = " Gallery  Archived successfully";
                     $message_type = "success";
@@ -4468,41 +4462,41 @@ TEXT;
     {
         $message = $message_type = "";
         if (isset($_POST['csrf_token']) && hash_equals($_SESSION['csrf_token'], $_POST['csrf_token'])) {
-        if (isset($_POST['save_announcement'])) {
-            $announcement_id = isset($_POST['announcement_id']) ? $_POST['announcement_id'] : 0;
-            $announcement_name = $_POST['announcement_name'];
-            $announcement_content = $_POST['announcement_content'];
-            $effect_from_date = date('Y-m-d', strtotime(Helpers::cleanData($_POST['effect_from_date'])));
-            $effect_to_date = date('Y-m-d', strtotime(Helpers::cleanData($_POST['effect_to_date'])));
-            $announcementlist_data = [
-                "announcement_name" => $announcement_name,
-                "announcement_content" => $announcement_content,
-                "effect_from_date" => $effect_from_date,
-                "effect_to_date" => $effect_to_date,
-                'creation_date' => date('Y-m-d H:i:s'),
-            ];
-            $announcement = new \App\Models\Announcements();
-            if ($announcement_id == 0) { // insert new menu 
-                if ($announcement->addAnnouncement($announcementlist_data)) {
-                    $message = "Announcement  Added successfully";
-                    $message_type = "success";
-                } else {
-                    $message = "Error adding Announcement";
-                    $message_type = "warning";
+            if (isset($_POST['save_announcement'])) {
+                $announcement_id = isset($_POST['announcement_id']) ? $_POST['announcement_id'] : 0;
+                $announcement_name = $_POST['announcement_name'];
+                $announcement_content = $_POST['announcement_content'];
+                $effect_from_date = date('Y-m-d', strtotime(Helpers::cleanData($_POST['effect_from_date'])));
+                $effect_to_date = date('Y-m-d', strtotime(Helpers::cleanData($_POST['effect_to_date'])));
+                $announcementlist_data = [
+                    "announcement_name" => $announcement_name,
+                    "announcement_content" => $announcement_content,
+                    "effect_from_date" => $effect_from_date,
+                    "effect_to_date" => $effect_to_date,
+                    'creation_date' => date('Y-m-d H:i:s'),
+                ];
+                $announcement = new \App\Models\Announcements();
+                if ($announcement_id == 0) { // insert new menu 
+                    if ($announcement->addAnnouncement($announcementlist_data)) {
+                        $message = "Announcement  Added successfully";
+                        $message_type = "success";
+                    } else {
+                        $message = "Error adding Announcement";
+                        $message_type = "warning";
+                    }
+                } else { // update menu
+                    if ($announcement->updateAnnouncement($announcementlist_data, $announcement_id)) {
+                        $message = "Announcement Updated successfully";
+                        $message_type = "success";
+                    } else {
+                        $message = "Error updating Announcement";
+                        $message_type = "warning";
+                    }
                 }
-            } else { // update menu
-                if ($announcement->updateAnnouncement($announcementlist_data, $announcement_id)) {
-                    $message = "Announcement Updated successfully";
-                    $message_type = "success";
-                } else {
-                    $message = "Error updating Announcement";
-                    $message_type = "warning";
-                }
+                $_SESSION['notification'] = ['message' => $message, 'message_type' => $message_type];
+                $this->route->redirect($this->route->site_url("Admin/dashboard/?action=listofannouncements"));
             }
-            $_SESSION['notification'] = ['message' => $message, 'message_type' => $message_type];
-            $this->route->redirect($this->route->site_url("Admin/dashboard/?action=listofannouncements"));
         }
-    }
     }
     public function deleteAnnouncement()
     {
@@ -4542,7 +4536,7 @@ TEXT;
             // echo '<pre>';
             // print_r($_POST);
             // exit;
-           if (Helpers::cleanData($_POST["action"]) == 'archive') {
+            if (Helpers::cleanData($_POST["action"]) == 'archive') {
                 if ($announcement->archiveAnnouncementStatus($announcement_list_data)) {
                     $message = " Announcements Archived successfully";
                     $message_type = "success";
@@ -4557,13 +4551,13 @@ TEXT;
         $_SESSION['notification'] = ['message' => $message, 'message_type' => $message_type];
         $this->route->redirect($this->route->site_url("Admin/dashboard/?action=listofannouncements"));
     }
-      /*****
+    /*****
      * 
      * 
      * Debarred List 
      * 
      */
-    public function ajaxResponseForDlistDataTableLoad   ()
+    public function ajaxResponseForDlistDataTableLoad()
     {
         $request = 1;
         if (isset($_POST['request'])) {
@@ -4642,10 +4636,10 @@ TEXT;
                      * 
                      */
                 } else {
-                   // $action = "<p style='color:green'>Published</p>";
+                    // $action = "<p style='color:green'>Published</p>";
                     $unpublishButton = "<button  title='Unpublish' style='height:24px' class='btn btn-sm btn-danger dl_unpublishbtn iconWidth' data-id='" . $rowval->debarred_lists_id . "'><i class='fa  fa-eye'></i></button>";
                     $green_text = "<p style='color:green'>Published</p>";
-                    $action =  $green_text . $unpublishButton ;
+                    $action =  $green_text . $unpublishButton;
                 }
                 $pdfPath = "";
                 $selected = "";
@@ -4735,8 +4729,8 @@ TEXT;
                 exit;
             }
         }
-          // Unpublish Dlist
-          if ($request == 7) {
+        // Unpublish Dlist
+        if ($request == 7) {
             $id = Helpers::cleanData($_POST['id']);
             $dlist_data = [
                 'p_status' => '0',
@@ -4761,7 +4755,7 @@ TEXT;
         if (!empty(Helpers::cleanData($_POST["action"]))) {
             $dlist = new Debarredlists();
             $dlist_list_data = Helpers::cleanData($_POST['ids']);
-           if (Helpers::cleanData($_POST["action"]) == 'archive') {
+            if (Helpers::cleanData($_POST["action"]) == 'archive') {
                 if ($dlist->archiveDlistStatus($dlist_list_data)) {
                     $message = " Debarred List Archived successfully";
                     $message_type = "success";
@@ -4782,8 +4776,8 @@ TEXT;
      * Debarredlists 
      * 
      */
-     //search Year
-     public function editsearchyear()
+    //search Year
+    public function editsearchyear()
     {
         $data = [];
         $this->savesearchyear();
@@ -4822,7 +4816,7 @@ TEXT;
                 ];
                 $searchyear = new \App\Models\SearchYear();
                 if ($searchyear_id == 0) { // insert new menu 
-                  //  echo "@@@";
+                    //  echo "@@@";
                     if ($searchyear->addSearchyear($searchyear_data)) {
                         $message = "Search Year Added successfully";
                         $message_type = "success";
@@ -4831,7 +4825,7 @@ TEXT;
                         $message_type = "warning";
                     }
                 } else { // update menu
-                   // echo '####';
+                    // echo '####';
                     if ($searchyear->updateSearchyear($searchyear_data, $searchyear_id)) {
                         $message = "Search Year Updated successfully";
                         $message_type = "success";
@@ -4882,290 +4876,290 @@ TEXT;
      * Module : Important instructions Master
      * 
      */
-   public function ajaxResponseForInstructionsDataTableLoad()
-   {
-       $request = 1;
-       if (isset($_POST['request'])) {
-           $request = Helpers::cleanData($_POST['request']);
-       }
-       if ($request == 1) {
-           ## Read value
-           $draw = Helpers::cleanData($_POST['draw']);
-           $row = Helpers::cleanData($_POST['start']);
-           $rowperpage = Helpers::cleanData($_POST['length']); // Rows display per page
-           $columnIndex = Helpers::cleanData($_POST['order'][0]['column']); // Column index
-           $columnName = Helpers::cleanData($_POST['columns'][$columnIndex]['data']); // Column name
-           $columnSortOrder = Helpers::cleanData($_POST['order'][0]['dir']); // asc or desc
-           $searchValue = Helpers::cleanData($_POST['search']['value']); // Search value
-           ## Search 
-           $searchQuery = " ";
-           if ($searchValue != '') {
-               $searchQuery = "   pdf_name ilike '%" . $searchValue . "%' or 
+    public function ajaxResponseForInstructionsDataTableLoad()
+    {
+        $request = 1;
+        if (isset($_POST['request'])) {
+            $request = Helpers::cleanData($_POST['request']);
+        }
+        if ($request == 1) {
+            ## Read value
+            $draw = Helpers::cleanData($_POST['draw']);
+            $row = Helpers::cleanData($_POST['start']);
+            $rowperpage = Helpers::cleanData($_POST['length']); // Rows display per page
+            $columnIndex = Helpers::cleanData($_POST['order'][0]['column']); // Column index
+            $columnName = Helpers::cleanData($_POST['columns'][$columnIndex]['data']); // Column name
+            $columnSortOrder = Helpers::cleanData($_POST['order'][0]['dir']); // asc or desc
+            $searchValue = Helpers::cleanData($_POST['search']['value']); // Search value
+            ## Search 
+            $searchQuery = " ";
+            if ($searchValue != '') {
+                $searchQuery = "   pdf_name ilike '%" . $searchValue . "%' or 
             TO_CHAR(effect_from_date, 'yyyy-mm-dd') like'%" . $searchValue . "%'  or
             TO_CHAR(effect_to_date, 'yyyy-mm-dd') like'%" . $searchValue . "%' 
              ";
-           }
-           ## Total number of records without filtering
-           $model = new Instructions();
-           $year = trim(Helpers::cleanData($_POST['year']));
-           $month = trim(Helpers::cleanData($_POST['month']));
-           $effect_from_date = date('Y-m-d', strtotime(Helpers::cleanData($_POST['effect_from_date'])));
-           $effect_to_date = date('Y-m-d', strtotime(Helpers::cleanData($_POST['effect_to_date'])));;
-           $totalRecordsWithoutFiltering = $model->totalRecordsWithOutFiltering();
-           $totalRecords = $totalRecordsWithoutFiltering->allcount;
-           ## Total number of records with filtering
-           $totalRecordsWithFiltering = $model->totalRecordsWithFiltering($searchQuery);
-           $totalRecordwithFilter = $totalRecordsWithFiltering->allcount;
-           $fetchRecordsObject = $model->getInstructionsDetails($year, $month, $effect_from_date, $effect_to_date, $searchQuery);
-           $fetchRecords = (array) $fetchRecordsObject;
-           $edit_instructions_link = $this->links['edit_instructions_link'];
-           $data = array();
-           foreach ($fetchRecords as $rowval) {
-               $edit_instructions_link_str = str_replace("{id}", $rowval->ins_id, $edit_instructions_link);
-               $baseurl = $this->route->site_url($edit_instructions_link_str);
-               $updateButton = "<a href= '" . $baseurl . "' name='menu_update' class='iconSize'> 
+            }
+            ## Total number of records without filtering
+            $model = new Instructions();
+            $year = trim(Helpers::cleanData($_POST['year']));
+            $month = trim(Helpers::cleanData($_POST['month']));
+            $effect_from_date = date('Y-m-d', strtotime(Helpers::cleanData($_POST['effect_from_date'])));
+            $effect_to_date = date('Y-m-d', strtotime(Helpers::cleanData($_POST['effect_to_date'])));;
+            $totalRecordsWithoutFiltering = $model->totalRecordsWithOutFiltering();
+            $totalRecords = $totalRecordsWithoutFiltering->allcount;
+            ## Total number of records with filtering
+            $totalRecordsWithFiltering = $model->totalRecordsWithFiltering($searchQuery);
+            $totalRecordwithFilter = $totalRecordsWithFiltering->allcount;
+            $fetchRecordsObject = $model->getInstructionsDetails($year, $month, $effect_from_date, $effect_to_date, $searchQuery);
+            $fetchRecords = (array) $fetchRecordsObject;
+            $edit_instructions_link = $this->links['edit_instructions_link'];
+            $data = array();
+            foreach ($fetchRecords as $rowval) {
+                $edit_instructions_link_str = str_replace("{id}", $rowval->ins_id, $edit_instructions_link);
+                $baseurl = $this->route->site_url($edit_instructions_link_str);
+                $updateButton = "<a href= '" . $baseurl . "' name='menu_update' class='iconSize'> 
      <button type='button' title='Edit' class='btn btn-secondary iconWidth updateUser'><i class='fas fa-edit'></i></button>
      </a>";
-               // Delete Button
-               $deleteButton = "<button title='Delete' class='btn btn-sm btn-danger iconWidth deletebtn' style='height:30px'  data-id='" . $rowval->ins_id . "'><i class='fa fa-trash'></i></button>";
-               //$archivesButton = "<button  title='Archive' style='height:30px' class='btn btn-sm btn-primary archivebtn' data-id='" . $rowval->ins_id . "'><i class='fa  fa-archive'></i></button>";
-               if ($rowval->p_status != 1) {
-                   /****
-                    * Role Checking
-                    * 
-                    * 
-                    */
-                   $user = new User();
-                   $loginUser = $user->getUser();
-                   $is_superadmin = $user->is_superadmin();
-                   $is_admin = $user->is_admin();
-                   $is_uploader = $user->is_uploader();
-                   $is_publisher = $user->is_publisher();
-                   $array = array(
-                       "super_admin" => $user->is_superadmin() ? $user->is_superadmin() : "",
-                       "admin" => $user->is_admin() ? $user->is_admin() : "",
-                       "uploader" => $user->is_uploader() ? $user->is_uploader() : "",
-                       "publisher" => $user->is_publisher() ? $user->is_publisher() : "",
-                   );
-                   if ($array['uploader'] == 1) {
-                       $action = $updateButton . " " . $deleteButton;
-                   } else if ($array['publisher'] == 1) {
-                       $publishButton = "<button  title='Publish' style='height:30px' class='btn btn-sm btn-success publishbtn iconWidth' data-id='" . $rowval->ins_id . "'><i class='fa  fa-eye'></i></button>";
-                       $action = $publishButton;
-                   } else if ($array['admin'] == 1) {
-                       $publishButton = "<button  title='Publish' style='height:30px' class='btn btn-sm btn-success publishbtn iconWidth' data-id='" . $rowval->ins_id . "'><i class='fa  fa-eye'></i></button>";
-                       $action = $updateButton . " " . $deleteButton . " " . $publishButton;
-                   } else {
-                   }
-                   /****
-                    * Role Checking
-                    * 
-                    * 
-                    */
-               } else {
-                   $action = "<p style='color:green'>Published</p>";
-               }
-               $data[] = array(
-                   "ins_id" => $rowval->ins_id,
-                   "ins_name" => $rowval->ins_name,
-                   "ins_content" => $rowval->ins_content,
-                   "effect_from_date" => $rowval->effect_from_date,
-                   "effect_to_date" => $rowval->effect_to_date,
-                   "action" => $action,
-               );
-           }
-           ## Response
-           $response = array(
-               "draw" => intval($draw),
-               "iTotalRecords" => $totalRecords,
-               "iTotalDisplayRecords" => $totalRecordwithFilter,
-               "aaData" => $data
-           );
-           echo json_encode($response);
-           exit;
-       } //request 1
-       // Che
-       // Delete Instructions
-       if ($request == 4) {
-           $id = Helpers::cleanData($_POST['id']);
-           // echo $id;
-           // exit;
-           // Check id
-           ## Fetch records
-           $model = new Instructions();
-           $checkId = $model->checkInstructionsId($id);
-           $checkIdCount = $checkId->checkid;
-           if ($checkIdCount > 0) {
-               $deleteQuery = $model->deleteInstructions($id);
-               echo 1;
-               exit;
-           } else {
-               echo 0;
-               exit;
-           }
-       }
-       // Archive Instructions
-       if ($request == 5) {
-           $id = Helpers::cleanData($_POST['id']);
-           // Check id
-           ## Fetch records
-           $model = new Instructions();
-           $checkId = $model->checkInstructionsId($id);
-           $checkIdCount = $checkId->checkid;
-           if ($checkIdCount > 0) {
-               $archiveQuery = $model->archiveInstructionsStatus($id);
-               echo 1;
-               exit;
-           } else {
-               echo 0;
-               exit;
-           }
-       }
-       // Publish Instructions
-       if ($request == 6) {
-           $id = Helpers::cleanData($_POST['id']);
-           $ins_data = [
-               'p_status' => '1',
-           ];
-           // Check id
-           ## Fetch records
-           $model = new Instructions();
-           $checkId = $model->checkInstructionsId($id);
-           $checkIdCount = $checkId->checkid;
-           if ($checkIdCount > 0) {
-               $publishQuery = $model->updateInstructionsState($ins_data, $id);
-               echo 1;
-               exit;
-           } else {
-               echo 0;
-               exit;
-           }
-       }
-   }
-   public function editInstructions()
-   {
-       $data = [];
-       $this->saveInstructions();
-       $user = new User();
-       $loginUser = $user->getUser();
-       ########  Role checking ########
-       $is_superadmin = $user->is_superadmin(); // super admin 
-       $data['is_superadmin'] = $is_superadmin; // super admin 
-       $is_admin = $user->is_admin(); // admin 
-       $data['is_admin'] = $is_admin; // admin 
-       $is_uploader = $user->is_uploader(); //uploader
-       $data['is_uploader'] = $is_uploader; //uploader
-       $is_publisher = $user->is_publisher(); // publisher
-       $data['is_publisher'] = $is_publisher; // publisher
-       ########  Role Checking ########
-       $data['logged_user'] = $loginUser;
-       $instructionslists = new Instructions();
-       // chek if the id is available in the params 
-       $ins_id = (isset($this->data['params'][0])) ? $this->data['params'][0] : 0;
-       $current_instructions = $instructionslists->getInstructionsby($ins_id, DB_ASSOC);
-       $data['current_instructions'] = $current_instructions;
-       $this->prepare_menus($data);
-       $this->render("edit-instructions", $data);
-   }
-   private function saveInstructions()
-   {
-       $message = $message_type = "";
-       if (isset($_POST['csrf_token']) && hash_equals($_SESSION['csrf_token'], $_POST['csrf_token'])) {
-       if (isset($_POST['save_instructions'])) {
-           $ins_id = isset($_POST['ins_id']) ? $_POST['ins_id'] : 0;
-           $ins_name = $_POST['ins_name'];
-           $ins_content = $_POST['ins_content'];
-           $effect_from_date = date('Y-m-d', strtotime(Helpers::cleanData($_POST['effect_from_date'])));
-           $effect_to_date = date('Y-m-d', strtotime(Helpers::cleanData($_POST['effect_to_date'])));
-           $instructionslist_data = [
-               "ins_name"          => $ins_name,
-               "ins_content"       => $ins_content,
-               "effect_from_date"  => $effect_from_date,
-               "effect_to_date"    => $effect_to_date,
-               'creation_date'     => date('Y-m-d H:i:s'),
-           ];
-           $instructions = new \App\Models\Instructions();
-           if ($ins_id == 0) { // insert new menu 
-               if ($instructions->addInstructions($instructionslist_data)) {
-                   $message = "Instructions  Added successfully";
-                   $message_type = "success";
-               } else {
-                   $message = "Error adding Instructions";
-                   $message_type = "warning";
-               }
-           } else { // update menu
-               if ($instructions->updateInstructions($instructionslist_data, $ins_id)) {
-                   $message = "Instructions Updated successfully";
-                   $message_type = "success";
-               } else {
-                   $message = "Error updating Instructions";
-                   $message_type = "warning";
-               }
-           }
-           $_SESSION['notification'] = ['message' => $message, 'message_type' => $message_type];
-           $this->route->redirect($this->route->site_url("Admin/dashboard/?action=listofinstructions"));
-       }
-   }
-   }
-   public function deleteInstructions()
-   {
-       $data = [];
-       $message = $message_type = "";
-       $ins_id = $this->data['params'][0];
-       $instructions = new Instructions();
-       if ($instructions->deleteInstructionsStatus($ins_id)) {
-           $message = "Instructions   Deleted successfully";
-           $message_type = "success";
-       } else {
-           $message = "Error deleting Instructions ";
-       }
-       $_SESSION['notification'] = ['message' => $message, 'message_type' => $message_type];
-       $this->route->redirect($this->route->site_url("Admin/dashboard/?action=instructions_archieves_by_month"));
-   }
-   public function archiveInstructions()
-   {
-       $data = [];
-       $message = $message_type = "";
-       $ins_id = $this->data['params'][0];
-       $instructions = new Instructions();
-       if ($instructions->archiveInstructionsStatus($ins_id)) {
-           $message = "Instructions   Archived successfully";
-           $message_type = "success";
-       } else {
-           $message = "Error Archiving Instructions ";
-       }
-       $_SESSION['notification'] = ['message' => $message, 'message_type' => $message_type];
-       $this->route->redirect($this->route->site_url("Admin/dashboard/?action=instructions_archieves_by_month"));
-   }
-   public function commonInstructionsArchive()
-   {
-       if (!empty(Helpers::cleanData($_POST["action"]))) {
-           $instructions = new Instructions();
-           $instructions_list_data = Helpers::cleanData($_POST['ids']);
-           // echo '<pre>';
-           // print_r($_POST);
-           // exit;
-          if (Helpers::cleanData($_POST["action"]) == 'archive') {
-               if ($instructions->archiveInstructionsStatus($instructions_list_data)) {
-                   $message = " Instructions Archived successfully";
-                   $message_type = "success";
-               }
-           } else {
-               if ($instructions->deleteInstructions($instructions_list_data)) {
-                   $message = " Instructions  Deleted successfully";
-                   $message_type = "success";
-               }
-           }
-       }
-       $_SESSION['notification'] = ['message' => $message, 'message_type' => $message_type];
-       $this->route->redirect($this->route->site_url("Admin/dashboard/?action=listofinstructions"));
-   }
-   /**
-    * Author: Stalin Thomas
-    * 
-    * created on : 26-10-2023
-    * 
-    * Module : Important instructions Master
-    * 
-    */
+                // Delete Button
+                $deleteButton = "<button title='Delete' class='btn btn-sm btn-danger iconWidth deletebtn' style='height:30px'  data-id='" . $rowval->ins_id . "'><i class='fa fa-trash'></i></button>";
+                //$archivesButton = "<button  title='Archive' style='height:30px' class='btn btn-sm btn-primary archivebtn' data-id='" . $rowval->ins_id . "'><i class='fa  fa-archive'></i></button>";
+                if ($rowval->p_status != 1) {
+                    /****
+                     * Role Checking
+                     * 
+                     * 
+                     */
+                    $user = new User();
+                    $loginUser = $user->getUser();
+                    $is_superadmin = $user->is_superadmin();
+                    $is_admin = $user->is_admin();
+                    $is_uploader = $user->is_uploader();
+                    $is_publisher = $user->is_publisher();
+                    $array = array(
+                        "super_admin" => $user->is_superadmin() ? $user->is_superadmin() : "",
+                        "admin" => $user->is_admin() ? $user->is_admin() : "",
+                        "uploader" => $user->is_uploader() ? $user->is_uploader() : "",
+                        "publisher" => $user->is_publisher() ? $user->is_publisher() : "",
+                    );
+                    if ($array['uploader'] == 1) {
+                        $action = $updateButton . " " . $deleteButton;
+                    } else if ($array['publisher'] == 1) {
+                        $publishButton = "<button  title='Publish' style='height:30px' class='btn btn-sm btn-success publishbtn iconWidth' data-id='" . $rowval->ins_id . "'><i class='fa  fa-eye'></i></button>";
+                        $action = $publishButton;
+                    } else if ($array['admin'] == 1) {
+                        $publishButton = "<button  title='Publish' style='height:30px' class='btn btn-sm btn-success publishbtn iconWidth' data-id='" . $rowval->ins_id . "'><i class='fa  fa-eye'></i></button>";
+                        $action = $updateButton . " " . $deleteButton . " " . $publishButton;
+                    } else {
+                    }
+                    /****
+                     * Role Checking
+                     * 
+                     * 
+                     */
+                } else {
+                    $action = "<p style='color:green'>Published</p>";
+                }
+                $data[] = array(
+                    "ins_id" => $rowval->ins_id,
+                    "ins_name" => $rowval->ins_name,
+                    "ins_content" => $rowval->ins_content,
+                    "effect_from_date" => $rowval->effect_from_date,
+                    "effect_to_date" => $rowval->effect_to_date,
+                    "action" => $action,
+                );
+            }
+            ## Response
+            $response = array(
+                "draw" => intval($draw),
+                "iTotalRecords" => $totalRecords,
+                "iTotalDisplayRecords" => $totalRecordwithFilter,
+                "aaData" => $data
+            );
+            echo json_encode($response);
+            exit;
+        } //request 1
+        // Che
+        // Delete Instructions
+        if ($request == 4) {
+            $id = Helpers::cleanData($_POST['id']);
+            // echo $id;
+            // exit;
+            // Check id
+            ## Fetch records
+            $model = new Instructions();
+            $checkId = $model->checkInstructionsId($id);
+            $checkIdCount = $checkId->checkid;
+            if ($checkIdCount > 0) {
+                $deleteQuery = $model->deleteInstructions($id);
+                echo 1;
+                exit;
+            } else {
+                echo 0;
+                exit;
+            }
+        }
+        // Archive Instructions
+        if ($request == 5) {
+            $id = Helpers::cleanData($_POST['id']);
+            // Check id
+            ## Fetch records
+            $model = new Instructions();
+            $checkId = $model->checkInstructionsId($id);
+            $checkIdCount = $checkId->checkid;
+            if ($checkIdCount > 0) {
+                $archiveQuery = $model->archiveInstructionsStatus($id);
+                echo 1;
+                exit;
+            } else {
+                echo 0;
+                exit;
+            }
+        }
+        // Publish Instructions
+        if ($request == 6) {
+            $id = Helpers::cleanData($_POST['id']);
+            $ins_data = [
+                'p_status' => '1',
+            ];
+            // Check id
+            ## Fetch records
+            $model = new Instructions();
+            $checkId = $model->checkInstructionsId($id);
+            $checkIdCount = $checkId->checkid;
+            if ($checkIdCount > 0) {
+                $publishQuery = $model->updateInstructionsState($ins_data, $id);
+                echo 1;
+                exit;
+            } else {
+                echo 0;
+                exit;
+            }
+        }
+    }
+    public function editInstructions()
+    {
+        $data = [];
+        $this->saveInstructions();
+        $user = new User();
+        $loginUser = $user->getUser();
+        ########  Role checking ########
+        $is_superadmin = $user->is_superadmin(); // super admin 
+        $data['is_superadmin'] = $is_superadmin; // super admin 
+        $is_admin = $user->is_admin(); // admin 
+        $data['is_admin'] = $is_admin; // admin 
+        $is_uploader = $user->is_uploader(); //uploader
+        $data['is_uploader'] = $is_uploader; //uploader
+        $is_publisher = $user->is_publisher(); // publisher
+        $data['is_publisher'] = $is_publisher; // publisher
+        ########  Role Checking ########
+        $data['logged_user'] = $loginUser;
+        $instructionslists = new Instructions();
+        // chek if the id is available in the params 
+        $ins_id = (isset($this->data['params'][0])) ? $this->data['params'][0] : 0;
+        $current_instructions = $instructionslists->getInstructionsby($ins_id, DB_ASSOC);
+        $data['current_instructions'] = $current_instructions;
+        $this->prepare_menus($data);
+        $this->render("edit-instructions", $data);
+    }
+    private function saveInstructions()
+    {
+        $message = $message_type = "";
+        if (isset($_POST['csrf_token']) && hash_equals($_SESSION['csrf_token'], $_POST['csrf_token'])) {
+            if (isset($_POST['save_instructions'])) {
+                $ins_id = isset($_POST['ins_id']) ? $_POST['ins_id'] : 0;
+                $ins_name = $_POST['ins_name'];
+                $ins_content = $_POST['ins_content'];
+                $effect_from_date = date('Y-m-d', strtotime(Helpers::cleanData($_POST['effect_from_date'])));
+                $effect_to_date = date('Y-m-d', strtotime(Helpers::cleanData($_POST['effect_to_date'])));
+                $instructionslist_data = [
+                    "ins_name"          => $ins_name,
+                    "ins_content"       => $ins_content,
+                    "effect_from_date"  => $effect_from_date,
+                    "effect_to_date"    => $effect_to_date,
+                    'creation_date'     => date('Y-m-d H:i:s'),
+                ];
+                $instructions = new \App\Models\Instructions();
+                if ($ins_id == 0) { // insert new menu 
+                    if ($instructions->addInstructions($instructionslist_data)) {
+                        $message = "Instructions  Added successfully";
+                        $message_type = "success";
+                    } else {
+                        $message = "Error adding Instructions";
+                        $message_type = "warning";
+                    }
+                } else { // update menu
+                    if ($instructions->updateInstructions($instructionslist_data, $ins_id)) {
+                        $message = "Instructions Updated successfully";
+                        $message_type = "success";
+                    } else {
+                        $message = "Error updating Instructions";
+                        $message_type = "warning";
+                    }
+                }
+                $_SESSION['notification'] = ['message' => $message, 'message_type' => $message_type];
+                $this->route->redirect($this->route->site_url("Admin/dashboard/?action=listofinstructions"));
+            }
+        }
+    }
+    public function deleteInstructions()
+    {
+        $data = [];
+        $message = $message_type = "";
+        $ins_id = $this->data['params'][0];
+        $instructions = new Instructions();
+        if ($instructions->deleteInstructionsStatus($ins_id)) {
+            $message = "Instructions   Deleted successfully";
+            $message_type = "success";
+        } else {
+            $message = "Error deleting Instructions ";
+        }
+        $_SESSION['notification'] = ['message' => $message, 'message_type' => $message_type];
+        $this->route->redirect($this->route->site_url("Admin/dashboard/?action=instructions_archieves_by_month"));
+    }
+    public function archiveInstructions()
+    {
+        $data = [];
+        $message = $message_type = "";
+        $ins_id = $this->data['params'][0];
+        $instructions = new Instructions();
+        if ($instructions->archiveInstructionsStatus($ins_id)) {
+            $message = "Instructions   Archived successfully";
+            $message_type = "success";
+        } else {
+            $message = "Error Archiving Instructions ";
+        }
+        $_SESSION['notification'] = ['message' => $message, 'message_type' => $message_type];
+        $this->route->redirect($this->route->site_url("Admin/dashboard/?action=instructions_archieves_by_month"));
+    }
+    public function commonInstructionsArchive()
+    {
+        if (!empty(Helpers::cleanData($_POST["action"]))) {
+            $instructions = new Instructions();
+            $instructions_list_data = Helpers::cleanData($_POST['ids']);
+            // echo '<pre>';
+            // print_r($_POST);
+            // exit;
+            if (Helpers::cleanData($_POST["action"]) == 'archive') {
+                if ($instructions->archiveInstructionsStatus($instructions_list_data)) {
+                    $message = " Instructions Archived successfully";
+                    $message_type = "success";
+                }
+            } else {
+                if ($instructions->deleteInstructions($instructions_list_data)) {
+                    $message = " Instructions  Deleted successfully";
+                    $message_type = "success";
+                }
+            }
+        }
+        $_SESSION['notification'] = ['message' => $message, 'message_type' => $message_type];
+        $this->route->redirect($this->route->site_url("Admin/dashboard/?action=listofinstructions"));
+    }
+    /**
+     * Author: Stalin Thomas
+     * 
+     * created on : 26-10-2023
+     * 
+     * Module : Important instructions Master
+     * 
+     */
 }

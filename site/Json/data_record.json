@@ -64,6 +64,41 @@
             "pdf_name": "ome",
             "attachment": "93271-sscsr_dataentry_18_nov_2023.pdf",
             "status": 1
+        },
+        {
+            "nomination_child_id": 1086,
+            "nomination_id": 1112,
+            "pdf_name": "one more",
+            "attachment": "73953-sscsr_dataentry_17-11-2023_sa.pdf",
+            "status": 1
+        },
+        {
+            "nomination_child_id": 1087,
+            "nomination_id": 1113,
+            "pdf_name": "test123",
+            "attachment": "63968-sscsr_dataentry_18_nov_2023.pdf",
+            "status": 1
+        },
+        {
+            "nomination_child_id": 1088,
+            "nomination_id": 1114,
+            "pdf_name": "test321",
+            "attachment": "85597-sscsr_dataentry_18_nov_2023.pdf",
+            "status": 1
+        },
+        {
+            "nomination_child_id": 1089,
+            "nomination_id": 1115,
+            "pdf_name": "one",
+            "attachment": "80952-sscsr_dataentry_17-11-2023_sa.pdf",
+            "status": 1
+        },
+        {
+            "nomination_child_id": 1090,
+            "nomination_id": 1116,
+            "pdf_name": "one",
+            "attachment": "6117-sscsr_dataentry_17-11-2023_sa.pdf",
+            "status": 1
         }
     ],
     "nominations_latest_news": {
@@ -74,16 +109,6 @@
             "effect_from_date": "2023-11-22",
             "effect_to_date": "2023-11-30",
             "creation_date": "2023-11-22 11:13:51",
-            "p_status": "1",
-            "category_name": "CGL"
-        },
-        "1": {
-            "nomination_id": 1106,
-            "exam_name": "Test",
-            "category_id": 1,
-            "effect_from_date": "2023-11-22",
-            "effect_to_date": "2023-11-24",
-            "creation_date": "2023-11-22 07:40:03",
             "p_status": "1",
             "category_name": "CGL"
         }
@@ -129,6 +154,41 @@
             "nomination_id": 1111,
             "pdf_name": "ome",
             "attachment": "93271-sscsr_dataentry_18_nov_2023.pdf",
+            "status": 1
+        },
+        {
+            "nomination_child_id": 1086,
+            "nomination_id": 1112,
+            "pdf_name": "one more",
+            "attachment": "73953-sscsr_dataentry_17-11-2023_sa.pdf",
+            "status": 1
+        },
+        {
+            "nomination_child_id": 1087,
+            "nomination_id": 1113,
+            "pdf_name": "test123",
+            "attachment": "63968-sscsr_dataentry_18_nov_2023.pdf",
+            "status": 1
+        },
+        {
+            "nomination_child_id": 1088,
+            "nomination_id": 1114,
+            "pdf_name": "test321",
+            "attachment": "85597-sscsr_dataentry_18_nov_2023.pdf",
+            "status": 1
+        },
+        {
+            "nomination_child_id": 1089,
+            "nomination_id": 1115,
+            "pdf_name": "one",
+            "attachment": "80952-sscsr_dataentry_17-11-2023_sa.pdf",
+            "status": 1
+        },
+        {
+            "nomination_child_id": 1090,
+            "nomination_id": 1116,
+            "pdf_name": "one",
+            "attachment": "6117-sscsr_dataentry_17-11-2023_sa.pdf",
             "status": 1
         }
     ],

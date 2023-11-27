@@ -1,8 +1,11 @@
-<?php 
+<?php
 namespace App\Controllers;
 use App\Helpers\Helpers;
-$encryptionKey = bin2hex(random_bytes(32)); 
+$encryptionKey = bin2hex(random_bytes(32));
 $encryptedValue = Helpers::encryptData("2", $encryptionKey);
+$getExamDetailsUrl = $this->route->site_url("IndexController/getExamDetails");
+$userId = 2;
+$encodedUserId = base64_encode($userId);
 ?>
 <section class="section5 buttons">
 	<div class="container-fluid bgColor">
@@ -19,8 +22,7 @@ $encryptedValue = Helpers::encryptData("2", $encryptionKey);
 			<div class="col-sm-1 col-lg-1 ">
 			</div>
 			<div class="col-sm-2 col-lg-2  nicLogo">
-				<img src="exam_assets/niclogo.png"
-					alt="National Informatics Centre opens a new window" width="150"></a>
+				<img src="exam_assets/niclogo.png" alt="National Informatics Centre opens a new window" width="150"></a>
 			</div>
 			<div class="col-sm-7 col-lg-7 footer_content_div">
 				<p> This portal is designed, developed, hosted and maintained by National Informatics
@@ -69,14 +71,14 @@ $encryptedValue = Helpers::encryptData("2", $encryptionKey);
 		}
 		return true;
 	}
-	$(document).ready(function () {
+	$(document).ready(function() {
 		//Mobile Menu Design
-		jQuery(".butttons").on('click', function (e) {
+		jQuery(".butttons").on('click', function(e) {
 			e.preventDefault();
 			jQuery(".navbar-collapse").toggleClass('show');
 		});
 		// main menu click events
-		jQuery('.navbar-nav li a').on('click', function (e) {
+		jQuery('.navbar-nav li a').on('click', function(e) {
 			console.log($(this).parent().find('ul.dropdown-menu').length);
 			jQuery('.navbar-nav li ul.dropdown-menu').removeClass('show');
 			if (window.current_menu_id) {
@@ -102,7 +104,7 @@ $encryptedValue = Helpers::encryptData("2", $encryptionKey);
 			buttonImageOnly: true,
 			dateFormat: 'dd-mm-yy'
 		});
-		$(function () {
+		$(function() {
 			$("#dob").datepicker({
 				changeMonth: true,
 				changeYear: true,
@@ -111,19 +113,19 @@ $encryptedValue = Helpers::encryptData("2", $encryptionKey);
 		});
 		$("[data-toggle='tooltip']").tooltip(); // Initialize Tooltip
 		$("#sscsr_site_logo").hover(
-			function () {
+			function() {
 				var title = $(this).attr("data-title");
 				$('<div/>', {
 					text: title,
 					class: 'box'
 				}).appendTo(this);
 			},
-			function () {
+			function() {
 				$(document).find("div.box").remove();
 			}
 		);
 		$('.panel-body').hide();
-		$(document).on('click', '.panel-heading span.clickable', function (e) {
+		$(document).on('click', '.panel-heading span.clickable', function(e) {
 			var $this = $(this);
 			if (!$this.hasClass('panel-collapsed')) {
 				$this.parents('.panel').find('.panel-body').slideDown();
@@ -136,148 +138,160 @@ $encryptedValue = Helpers::encryptData("2", $encryptionKey);
 			}
 		})
 		// Know your status
-		var baseurl = '<?php echo $this->route->site_url("IndexController/getExamDetails/q/$encryptedValue"); ?>';
+		var baseurl = '<?php echo $getExamDetailsUrl; ?>';
 		$('#examname').select2();
-		$('#examname').select2({
+		$("#examname").select2({
 			language: {
-				searching: function () {
+				searching: function() {
 					return 'Loading Exam...'; // Custom loading text
 				},
 			},
 			placeholder: 'Select Exam Name',
 			ajax: {
 				url: baseurl,
+				type: "post",
 				dataType: 'json',
-				data: function (data) {
+				delay: 250,
+				data: function(params) {
 					return {
-						q: data.term // search term
+						searchTerm: params.term // search term
 					};
 				},
-				processResults: function (data) {
+				processResults: function(response) {
 					return {
-						results: data
+						results: response
 					};
 				},
 				cache: true
 			}
 		});
-		$('#examname').on('change', function () {
+		$('#examname').on('change', function() {
 			$('#username').val('');
 			$("#dob").datepicker("setDate", "");
 		});
 		// Know your status
 		// Selection Posts Start
-		var baseurl = '<?php echo $this->route->site_url("IndexController/getPhaseDetails/q/$encryptedValue"); ?>';
+		var phasename_baseurl = '<?php echo $this->route->site_url("IndexController/getPhaseDetails"); ?>';
 		$('#phasename').select2();
-		$('#phasename').select2({
+		$("#phasename").select2({
+			language: {
+				searching: function() {
+					return 'Loading Phase...'; // Custom loading text
+				},
+			},
 			placeholder: 'Select Phase Name',
 			ajax: {
-				url: baseurl,
+				url: phasename_baseurl,
+				type: "post",
 				dataType: 'json',
-				data: function (data) {
+				delay: 250,
+				data: function(params) {
 					return {
-						q: data.term // search term
+						searchTerm: params.term // search term
 					};
 				},
-				processResults: function (data) {
+				processResults: function(response) {
 					return {
-						results: data
+						results: response
 					};
 				},
 				cache: true
 			}
 		});
-		// var baseurl = '<?php //echo $this->route->site_url("IndexController/getGalleryYears/q/2"); 
-		?> ';  
-		
 		//Selection Posts End 
 		//  Admit card Exam Name AJAX
-		var baseurl = '<?php echo $this->route->site_url("IndexController/getTierBasedExamDetailsCard/q/$encryptedValue"); ?>';
+		var baseurl = '<?php echo $this->route->site_url("IndexController/getTierBasedExamDetailsCard"); ?>';
 		$('#admitcard_examname').select2();
-		$('#admitcard_examname').select2({
+		$("#admitcard_examname").select2({
 			language: {
-				searching: function () {
+				searching: function() {
 					return 'Loading Exam...'; // Custom loading text
 				},
 			},
 			placeholder: 'Select Exam Name',
 			ajax: {
 				url: baseurl,
+				type: "post",
 				dataType: 'json',
-				data: function (data) {
+				delay: 250,
+				data: function(params) {
 					return {
-						q: data.term // search term
+						searchTerm: params.term // search term
 					};
 				},
-				processResults: function (data) {
+				processResults: function(response) {
 					return {
-						results: data
+						results: response
 					};
 				},
 				cache: true
 			}
 		});
-		var baseurl2 = '<?php echo $this->route->site_url("IndexController/getTierBasedExamDetailsCardPreview/q/$encryptedValue"); ?>';
+		var baseurl2 = '<?php echo $this->route->site_url("IndexController/getTierBasedExamDetailsCardPreview"); ?>';
 		$('#admitcard_preview_examname').select2();
-		$('#admitcard_preview_examname').select2({
+		$("#admitcard_preview_examname").select2({
 			language: {
-				searching: function () {
-					return 'Loading Exam...'; // Custom loading text
-				},
-			},
-			placeholder: 'Select Exam Name',
-			ajax: {
-				url: baseurl2,
-				dataType: 'json',
-				data: function (data) {
-					return {
-						q: data.term // search term
-					};
-				},
-				processResults: function (data) {
-					return {
-						results: data
-					};
-				},
-				cache: true
-			}
-		});
-		var baseurl = '<?php echo $this->route->site_url("IndexController/getTierBasedExamDetailsCity/q/$encryptedValue"); ?>';
-		$('#city_examname').select2();
-		$('#city_examname').select2({
-			language: {
-				searching: function () {
+				searching: function() {
 					return 'Loading Exam...'; // Custom loading text
 				},
 			},
 			placeholder: 'Select Exam Name',
 			ajax: {
 				url: baseurl,
+				type: "post",
 				dataType: 'json',
-				data: function (data) {
+				delay: 250,
+				data: function(params) {
 					return {
-						q: data.term // search term
+						searchTerm: params.term // search term
 					};
 				},
-				processResults: function (data) {
+				processResults: function(response) {
 					return {
-						results: data
+						results: response
 					};
 				},
 				cache: true
 			}
 		});
-		$('#city_examname').on('change', function () {
+		var baseurl = '<?php echo $this->route->site_url("IndexController/getTierBasedExamDetailsCity"); ?>';
+		$('#city_examname').select2();
+		$("#city_examname").select2({
+			language: {
+				searching: function() {
+					return 'Loading Exam...'; // Custom loading text
+				},
+			},
+			placeholder: 'Select Exam Name',
+			ajax: {
+				url: baseurl,
+				type: "post",
+				dataType: 'json',
+				delay: 250,
+				data: function(params) {
+					return {
+						searchTerm: params.term // search term
+					};
+				},
+				processResults: function(response) {
+					return {
+						results: response
+					};
+				},
+				cache: true
+			}
+		});
+		$('#city_examname').on('change', function() {
 			$('#username').val('');
 			$("#dob").datepicker("setDate", "");
 		});
-		$('#roll_number').on("cut copy paste", function (e) {
+		$('#roll_number').on("cut copy paste", function(e) {
 			e.preventDefault();
 		});
-		$('#register_number').on("cut copy paste", function (e) {
+		$('#register_number').on("cut copy paste", function(e) {
 			e.preventDefault();
 		});
-		$("#roll_number").keyup(function () {
+		$("#roll_number").keyup(function() {
 			$('#post_preference_one').empty();
 			var roll_no = $(this).val().trim();
 			let examname = $('#admitcard_examname option:selected').val();
@@ -295,10 +309,10 @@ $encryptedValue = Helpers::encryptData("2", $encryptionKey);
 						examname: examname
 					},
 					dataType: "json",
-					success: function (response) {
+					success: function(response) {
 						//debugger;
 						var html = '';
-						$.each(response, function (i) {
+						$.each(response, function(i) {
 							html += '<option value="' + response[i] + '">' +
 								response[i] + '</option>';
 						})
@@ -309,7 +323,7 @@ $encryptedValue = Helpers::encryptData("2", $encryptionKey);
 				$("#post_preference_one").html("");
 			}
 		});
-		$('#admitcard_examname').on('change', function () {
+		$('#admitcard_examname').on('change', function() {
 			$('#roll_number').val('');
 			$('#register_number').val('');
 			$('#password').val('');
@@ -334,21 +348,28 @@ $encryptedValue = Helpers::encryptData("2", $encryptionKey);
 		});
 		//  Admit card Exam Name AJAX
 		//  Admit card Exam Name AJAX
-		var baseurl = '<?php echo $this->route->site_url("IndexController/getTierMaster/q/$encryptedValue"); ?>';
+		var baseurl = '<?php echo $this->route->site_url("IndexController/getTierMaster"); ?>';
 		$('#tier_id').select2();
-		$('#tier_id').select2({
+		$("#tier_id").select2({
+			language: {
+				searching: function() {
+					return 'Loading Tier...'; // Custom loading text
+				},
+			},
 			placeholder: 'Select Tier Name',
 			ajax: {
 				url: baseurl,
+				type: "post",
 				dataType: 'json',
-				data: function (data) {
+				delay: 250,
+				data: function(params) {
 					return {
-						q: data.term // search term
+						searchTerm: params.term // search term
 					};
 				},
-				processResults: function (data) {
+				processResults: function(response) {
 					return {
-						results: data
+						results: response
 					};
 				},
 				cache: true
@@ -369,9 +390,9 @@ $encryptedValue = Helpers::encryptData("2", $encryptionKey);
 					year: year
 				},
 				dataType: "json",
-				success: function (response) {
+				success: function(response) {
 					var html = '';
-					$.each(response, function (index, value) {
+					$.each(response, function(index, value) {
 						var imagepath = "gallery/" + value.id;
 						var event_id = value.text.split(",");
 						html += '<div class="col-md-6 col-lg-3 "> <div class="card border-0 "> <div class="card-body img-container"><img  style="cursor:pointer" id ="' + event_id[1] + '" src="' + imagepath + '" alt="Card Image" width="200" height="200" class="card-img-top  leImage">  <h6 class="eventClass">' + event_id[0] + '</h6> </div> </div> </div>';
@@ -379,7 +400,7 @@ $encryptedValue = Helpers::encryptData("2", $encryptionKey);
 					html += "</ul></li>";
 					$('#imgGallery').html(html);
 					// //light Box Pluggin
-					$(".leImage").on("click", function () {
+					$(".leImage").on("click", function() {
 						//$('#imgGallery').html('');
 						var id = this.id;
 						var baseurl = '<?php echo $this->route->site_url("IndexController/EventBasedLightBox"); ?>';
@@ -390,12 +411,12 @@ $encryptedValue = Helpers::encryptData("2", $encryptionKey);
 								id: id
 							},
 							dataType: "json",
-							success: function (response) {
+							success: function(response) {
 								$('#gallery_year').hide();
 								$('#yearId').hide();
 								var html = "";
 								html += '<button class="btn btn-primary style_btn" onclick="location.reload();" style="background:#a94442">Go Back</button><ul id="lightgallery" class="list-unstyled row">';
-								$.each(response, function (index, value) {
+								$.each(response, function(index, value) {
 									var imagepath = "gallery/" + value.id;
 									var event_id = value.text.split(",");
 									html += '<li class="col-lg-3 " data-src="' + imagepath + '" data-sub-html="<p>' + event_id[0] + '</p>"><a href=""><img class="img-responsive" style="border: 4px solid #949191;;width:200px;height:200px;margin:10px" src="' + imagepath + '"></a></li>';
@@ -450,7 +471,7 @@ $encryptedValue = Helpers::encryptData("2", $encryptionKey);
 				} // Success Function
 			}); // ajax End
 		}
-		$("#gallery_year").on('change', function (e) {
+		$("#gallery_year").on('change', function(e) {
 			let year = $(this).val();
 			photogalleryFunction(year);
 		});
@@ -465,10 +486,10 @@ $encryptedValue = Helpers::encryptData("2", $encryptionKey);
 				gallery_id: gallery_id
 			},
 			dataType: "json",
-			success: function (response) {
+			success: function(response) {
 				var html = '';
 				html += '<ul id="lightgallery" class="list-unstyled row">';
-				$.each(response, function (index, value) {
+				$.each(response, function(index, value) {
 					var imagepath = "gallery/" + value.id;
 					//html += '<li class="cbp-item web-design logo"><div class="cbp-caption"><div class="cbp-caption-defaultWrap"><img src="'+ imagepath +'" style="height:100%" alt="" class="img-responsive" /></div><div class="cbp-caption-activeWrap"><div class="cbp-l-caption-alignCenter"><div class="cbp-l-caption-body"><a href="'+ imagepath +'" class="cbp-lightbox cbp-l-caption-buttonRight" data-title="SSCSR Image-2">view larger</a></div></div></div></div></li>';
 					html += '<li class="col-xs-6 col-sm-4 col-md-3" data-src="' + imagepath + '" data-sub-html="<p>' + value.text + '</p>"><a href=""><img class="img-responsive"  style="border: 10px solid black;height:200px;margin:10px" src="' + imagepath + '"></a></li>';

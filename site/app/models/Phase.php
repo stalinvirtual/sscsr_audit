@@ -1,10 +1,7 @@
 <?php
-
 namespace App\Models;
-
 use App\System\DB\DB;
 use App\System\Route;
-
 class Phase extends DB
 {
     private $table_name = 'mstphase';
@@ -19,15 +16,25 @@ class Phase extends DB
             ->get_list();
         return $phases;
     }
-	 public function getPhasefromPhaseDetailsTbl($q){
-        $fetch_all =  $this->select('phase_id, phase_name')
-        ->from("mstphasemaster ")
-        ->where("phase_name LIKE '%".$q."%' and status = 1")
-        ->order_by('phase_id desc LIMIT 10')
-        ->get_list();
-        $lastinsertid = (object)$fetch_all ;
-        
-        
+    public function getPhasefromPhaseDetailsTbl($numberofrecords, $search)
+    {
+        if ($search == '') {
+            $fetch_all =  $this->select('phase_id, phase_name')
+                ->from("mstphasemaster ")
+                ->where(['status' => '1'])
+                ->order_by('phase_id desc')
+                ->limit($numberofrecords)
+                ->get_list();
+        } else {
+            $fetch_all =  $this->select('phase_id, phase_name')
+                ->from("mstphasemaster ")
+                ->where(['status' => '1'])
+                ->like('phase_name', $search)
+                ->order_by('phase_id desc')
+                ->limit($numberofrecords)
+                ->get_list();
+        }
+        $lastinsertid = (object)$fetch_all;
         return $lastinsertid;
     }
 }

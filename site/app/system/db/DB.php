@@ -34,11 +34,15 @@ class DB
         if (!empty($config->get("db_name"))) {
             $dsn .= 'dbname=' . $config->get("db_name") . ';';
         }
+        $user_name = 'user=' .  $config->get("db_user") . ';';
+        $password = 'password=' .  $config->get("db_password") . ';';
+        $options = 'options=' .  $config->get("options") . ';';
+        $dbConnect =  $dsn . $user_name . $password . $options;
+        // exit;
         $this->pdo = new \PDO(
-            $dsn,
-            $config->get("db_user"),
-            $config->get("db_password")
+            $dbConnect
         );
+        $this->pdo->setAttribute(\PDO::ATTR_ERRMODE, \PDO::ERRMODE_EXCEPTION);
         $this->query = "";
     }
     private function build_where($where)
@@ -58,10 +62,11 @@ class DB
         $this->where = $where;
         return  implode(" AND ", $where_array);
     }
-    public function insert_archieves($sql,$inIDS){
+    public function insert_archieves($sql, $inIDS)
+    {
         try {
             $insertNominationStmt = $this->pdo->prepare($sql);
-             $insertNominationResult = $insertNominationStmt->execute( $inIDS);
+            $insertNominationResult = $insertNominationStmt->execute($inIDS);
             return $insertNominationResult;
         } catch (\PDOException $e) {
             // Handle the exception, e.g., log the error or return a specific value indicating failure.
@@ -77,7 +82,6 @@ class DB
         // remove last , when adding str_repeat
         $values_string = substr($values_string, 0, -1);
         $this->query = "INSERT INTO {$this->table} ( $columns_string ) VALUES ( $values_string );";
-        
         $stmt = $this->pdo->prepare($this->query);
         // reset the params for future queries once the execution is done
         $this->params = [];
@@ -114,7 +118,7 @@ class DB
     public function select($columns = "*")
     {
         $this->query = "SELECT " . $columns;
-       // echo  $this->query;
+        // echo  $this->query;
         return $this;
     }
     public function from($table = "")
@@ -123,8 +127,8 @@ class DB
             exit("The table should not be empty");
         }
         $this->query .= " FROM " . $table;
-     //   echo $this->query;
-    //    exit;
+        //   echo $this->query;
+        //    exit;
         return $this;
     }
     public function join($table = "", $condition, $method)
@@ -143,7 +147,8 @@ class DB
     //     return $this;
     // }
     //Old Like 
-    public function like($column_name, $condition)  {
+    public function like($column_name, $condition)
+    {
         $this->query .= "AND " . $column_name . " LIKE ?";
         $this->params[] = '%' . $condition . '%'; // Add wildcards around the condition
         return $this;
@@ -169,21 +174,19 @@ class DB
         ini_set('display_errors', 1);
         ini_set('display_startup_errors', 1);
         error_reporting(E_ALL);
-       // print_r( $where);
-       //    exit;
+        // print_r( $where);
+        //    exit;
         $where_string = null;
         if (is_array($where)) {
             $where_string .= $this->build_where($where);
-
         } else {
             $where_string .= $where;
         }
-//echo $where_string;
-
+        //echo $where_string;
         if ($where_string != null) {
             $this->query .= " WHERE " . $where_string;
         }
-       // echo $this->query;
+        // echo $this->query;
         return $this;
     }
     public function orwhere($where = null)
@@ -204,6 +207,7 @@ class DB
         $page_no  = ((int)$page_no  == 0) ? 1 : $page_no;
         $starting_index = 1 * $rows_per_page;
         $this->query .= " LIMIT $starting_index";
+        //  echo   $this->query;
         return $this;
     }
     public function limitEmail($rows_per_page, $page_no = null)
@@ -219,7 +223,7 @@ class DB
     public function order_by($order_by)
     {
         $this->query .= " ORDER BY $order_by";
-      //  echo  $this->query;
+        //  echo  $this->query;
         return $this;
     }
     public function get_list($rows_per_page = "all", $page_no = 1, $result_type = null)
@@ -228,8 +232,8 @@ class DB
             $this->limit($rows_per_page, $page_no);
         }
         $stmt = $this->pdo->prepare($this->query);
-            //echo $this->query."<br>";
-         // exit;
+        //echo $this->query."<br>";
+        // exit;
         $stmt->execute($this->params);
         $this->params = [];
         $records =  $stmt->fetchAll($this->getPdoResultType($result_type));
@@ -248,15 +252,18 @@ class DB
     }
     public function get_one($result_type = null)
     {
-       
-        $stmt = $this->pdo->prepare($this->query);
-       // echo $this->query;
-
-        $stmt->execute($this->params);
-        $this->params = [];
-        $records =  $stmt->fetch($this->getPdoResultType($result_type));
-     
-        return $records;
+        try {
+            $stmt = $this->pdo->prepare($this->query);
+            $stmt->execute($this->params);
+            $this->params = [];
+            $records =  $stmt->fetch($this->getPdoResultType($result_type));
+            return $records;
+        }
+        catch (\PDOException $e) {
+            // Log or echo the error message
+            echo 'Error: ' . $e->getMessage();
+            return null;
+        }
     }
     private function getPdoResultType($result_type)
     {
@@ -320,7 +327,7 @@ class DB
     public function whereconditionarchieves($str)
     {
         $this->query .= " WHERE  $str";
-         // echo   $this->query;
+        // echo   $this->query;
         //  exit;
         return $this;
     }
@@ -348,7 +355,7 @@ class DB
     public function wherecondition($str)
     {
         $this->query .= " AND   $str";
-         //echo   $this->query;
+        //echo   $this->query;
         return $this;
     }
     public function where_between($where = null)
@@ -401,7 +408,7 @@ class DB
         //     return false;
         // }
         $this->params = [];
-        $this->query = "UPDATE " .$tableName . " SET ";
+        $this->query = "UPDATE " . $tableName . " SET ";
         foreach ($data as $column => $value) {
             $this->query .= "$column = ?, ";
             $this->params[] = $value;

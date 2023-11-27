@@ -119,54 +119,54 @@ class IndexController extends FrontEndController
 	{
 		$errorMsg = "";
 		//if (!isset($_SESSION)) {
-			//session_start();
+		//session_start();
 		//}
 		$_POST = filter_input_array(INPUT_POST, FILTER_DEFAULT);
 		if (isset($_POST['login'])) {
 			if (hash_equals($_SESSION['csrf_token'], $_POST['csrf_token'])) {
-			// // check captcha here
-			//if (true == $this->checkCaptcha($_POST['captcha_code'])) {
-			try {
-				if (!empty(Helpers::cleanData($_POST['uname'])) && !empty(Helpers::cleanData($_POST['pwd']))) {
-					$decyptedusername = Helpers::encrypt_with_cryptoJS_and_decrypt_with_php(Helpers::cleanData($_POST['uname']));
-					$decyptedpassword = Helpers::encrypt_with_cryptoJS_and_decrypt_with_php(Helpers::cleanData($_POST['pwd']));
-					$username = Helpers::cleanData(trim($decyptedusername));
-					$username = htmlspecialchars($username, ENT_QUOTES, 'UTF-8');
-					$password = Helpers::cleanData(trim($decyptedpassword));
-					$hashedPassword = password_hash($password, PASSWORD_BCRYPT);
-					if (password_verify($password, $hashedPassword)) { //password verify check
-						// Password is correct
-						$user = new User();
-						if ($user->authenticate($username, $password)) {
-							session_regenerate_id();
-							$route = new Route();
-							http_response_code(200); 
-							$route->redirect($route->site_url("Admin/dashboard/?action=listnominations"));
-						} else {
+				// // check captcha here
+				//if (true == $this->checkCaptcha($_POST['captcha_code'])) {
+				try {
+					if (!empty(Helpers::cleanData($_POST['uname'])) && !empty(Helpers::cleanData($_POST['pwd']))) {
+						$decyptedusername = Helpers::encrypt_with_cryptoJS_and_decrypt_with_php(Helpers::cleanData($_POST['uname']));
+						$decyptedpassword = Helpers::encrypt_with_cryptoJS_and_decrypt_with_php(Helpers::cleanData($_POST['pwd']));
+						$username = Helpers::cleanData(trim($decyptedusername));
+						$username = htmlspecialchars($username, ENT_QUOTES, 'UTF-8');
+						$password = Helpers::cleanData(trim($decyptedpassword));
+						$hashedPassword = password_hash($password, PASSWORD_BCRYPT);
+						if (password_verify($password, $hashedPassword)) { //password verify check
+							// Password is correct
+							$user = new User();
+							if ($user->authenticate($username, $password)) {
+								session_regenerate_id();
+								$route = new Route();
+								http_response_code(200);
+								$route->redirect($route->site_url("Admin/dashboard/?action=listnominations"));
+							} else {
+								http_response_code(402); // Unauthorized
+								$errorMsg = "Wrong Username or password";
+								http_response_code(402);
+							}
+						} else { //password verify check 
 							http_response_code(402); // Unauthorized
-							$errorMsg = "Wrong Username or password";
-							http_response_code(402); 
+							$errorMsg = "Wrong Password";
+							http_response_code(402);
 						}
-					} else { //password verify check 
-						http_response_code(402); // Unauthorized
-						$errorMsg = "Wrong Password";
-						http_response_code(402); 
+					} else {
+						$errorMsg = "Invalid credentials";
+						http_response_code(402);
 					}
-				} else {
-					$errorMsg = "Invalid credentials";
-					http_response_code(402); 
+				} catch (\Exception $e) {
+					header('HTTP/1.1 ' . $e->getCode() . ' Internal Server Booboo');
+					header('Content-Type: application/json');
+					echo json_encode(array('message' => $e->getMessage(), 'code' => $e->getCode()));
 				}
-			} catch (\Exception $e) {
-				header('HTTP/1.1 ' . $e->getCode() . ' Internal Server Booboo');
-				header('Content-Type: application/json');
-				echo json_encode(array('message' => $e->getMessage(), 'code' => $e->getCode()));
+				// }else{
+				// 	$errorMsg = "Invalid Captcha";
+				// 	http_response_code(402); 
+				// }
 			}
-		// }else{
-		// 	$errorMsg = "Invalid Captcha";
-		// 	http_response_code(402); 
-		// }
-	}
-	}
+		}
 		//CSRF Token else end
 		if (isset($_GET['logout']) && $_GET['logout'] == true) {
 			session_destroy();
@@ -340,6 +340,18 @@ class IndexController extends FrontEndController
 	{
 		Helpers::getAdmitCardDetails("admitcard");
 	}
+	public function validateAndSanitizeSelect2($input)
+	{
+		$input = trim($input);
+		// Sanitize the input using FILTER_SANITIZE_STRING
+		$input = filter_var($input, FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+		$input = stripslashes($input);
+		// Use htmlspecialchars to encode special characters
+		$input = htmlspecialchars($input, ENT_QUOTES, 'UTF-8');
+		$input = html_entity_decode($input);
+		// You can add more specific sanitization or validation steps here based on your requirements
+		return $input;
+	}
 	public function validateAndSanitize($input)
 	{
 		// Trim whitespace
@@ -446,271 +458,122 @@ class IndexController extends FrontEndController
 	}
 	public function getExamDetails()
 	{
-		//get matched data 
-		try {
-			$exam = new Exam();
-			$encryptionKey = bin2hex(random_bytes(32));
-			$q = isset($_GET['q']) ? Helpers::decryptData($_GET['q'], $encryptionKey) : '';
-			if (!isset($q) || empty($q)) {
-				echo "Invalid ID provided.";
-				return;
-			}
-			$sanitized_input = htmlspecialchars($q, ENT_QUOTES, 'UTF-8');
-
-
-			$exam_details = $exam->getExamfromExamDetailsTbl($sanitized_input);
-		} catch (\Exception $ex) {
-			echo "Error: " . $ex->getMessage();  // Change $sql to $ex->getMessage()
-			return;
-		}
-		$searchData = [];
+		$limitrecords = 100;
+		$numberofrecords = (int) $limitrecords;
+		$search = $this->validateAndSanitizeSelect2($_POST['searchTerm'] ?? '');
+		$exam = new Exam();
+		$exam_details = $exam->getExamfromExamDetailsTbl($numberofrecords, $search);
+		$response = [];
+		// Read Data
 		foreach ($exam_details as $insdata) {
 			$examname = $insdata->exam_name . ',' . $insdata->table_exam_year . '(' . $insdata->table_type . ') ';
-			$searchData[] =
-				array(
-					'id' => $insdata->table_name,
-					'text' => $examname
-				);
+			$response[] = array(
+				'id' => $insdata->table_name,
+				'text' => $examname
+			);
 		}
-		echo json_encode($searchData);
+		echo json_encode($response);
+		exit();
 	}
 	/************************
 	 ***  Admit card Exam Name Ajax
 	 */
 	public function getTierBasedExamDetailsCity()
 	{
-		//get matched data 
-		try {
-			$exam = new Exam();
-			$encryptionKey = bin2hex(random_bytes(32));
-			$q = isset($_GET['q']) ? Helpers::decryptData($_GET['q'], $encryptionKey) : '';
-			if (!isset($q) || empty($q)) {
-				echo "Invalid ID provided.";
-				return;
-			}
-			$sanitized_input = htmlspecialchars($q, ENT_QUOTES, 'UTF-8');
-			$exam_details = $exam->getTierBasedTblCity($sanitized_input);
-		} catch (\Exception $ex) {
-			echo "Error: " . $ex->getMessage();  // Change $sql to $ex->getMessage()
-			return;
-		}
-		$searchData = [];
+		$limitrecords = 100;
+		$numberofrecords = (int) $limitrecords;
+		$search = $this->validateAndSanitizeSelect2($_POST['searchTerm'] ?? '');
+		$exam = new Exam();
+		$exam_details = $exam->getTierBasedTblCity($numberofrecords, $search);
+		$response = [];
+		// Read Data
 		foreach ($exam_details as $insdata) {
-			//$textData = $insdata->exam_name." (".$insdata->table_exam_short_name.")"." (".$insdata->table_exam_year.")";
-			//$textData = $insdata->exam_name." (".$insdata->table_exam_short_name.")"." (".$insdata->table_exam_year.")";
 			$examname = $insdata->exam_name . ',' . $insdata->table_exam_year . '(' . $insdata->table_type . ') (' . $insdata->tier_name . ')';
-			//'',.r.'('.$insdata->tier_name.') ';
-			$searchData[] =
-				array(
-					'id' => $insdata->tableid,
-					'text' => $examname
-				);
+			$response[] = array(
+				'id' =>  $insdata->tableid,
+				'text' => $examname
+			);
 		}
-		echo json_encode($searchData);
+		echo json_encode($response);
+		exit();
 	}
 	public function getTierBasedExamDetailsCardPreview()
 	{
-		//get matched data 
-		try {
-			$exam = new Exam();
-			$encryptionKey = bin2hex(random_bytes(32));
-			$q = isset($_GET['q']) ? Helpers::decryptData($_GET['q'], $encryptionKey) : '';
-			if (!isset($q) || empty($q)) {
-				echo "Invalid ID provided.";
-				return;
-			}
-			$sanitized_input = htmlspecialchars($q, ENT_QUOTES, 'UTF-8');
-			$exam_details = $exam->getTierBasedTblCardPreview($sanitized_input);
-		} catch (\Exception $ex) {
-			echo "Error: " . $ex->getMessage();  // Change $sql to $ex->getMessage()
-			return;
-		}
-		$searchData = [];
+		$limitrecords = 100;
+		$numberofrecords = (int) $limitrecords;
+		$search = $this->validateAndSanitizeSelect2($_POST['searchTerm'] ?? '');
+		$exam = new Exam();
+		$exam_details = $exam->getTierBasedTblCardPreview($numberofrecords, $search);
+		$response = [];
+		// Read Data
 		foreach ($exam_details as $insdata) {
-			
 			$examname = $insdata->exam_name . ',' . $insdata->table_exam_year . '(' . $insdata->table_type . ') (' . $insdata->tier_name . ')';
-		
-			$searchData[] =
-				array(
-					'id' => $insdata->tableid,
-					'text' => $examname
-				);
+			$response[] = array(
+				'id'   => $insdata->tableid,
+				'text' => $examname,
+			);
 		}
-		echo json_encode($searchData);
+		echo json_encode($response);
+		exit();
 	}
 	public function getTierBasedExamDetailsCard()
 	{
-		//get matched data 
-		try {
-			$exam = new Exam();
-			$encryptionKey = bin2hex(random_bytes(32));
-			$q = isset($_GET['q']) ? Helpers::decryptData($_GET['q'], $encryptionKey) : '';
-			if (!isset($q) || empty($q)) {
-				echo "Invalid ID provided.";
-				return;
-			}
-			$sanitized_input = htmlspecialchars($q, ENT_QUOTES, 'UTF-8');
-			$exam_details = $exam->getTierBasedTblCard($sanitized_input);
-		} catch (\Exception $ex) {
-			echo "Error: " . $ex->getMessage();  // Change $sql to $ex->getMessage()
-			return;
-		}
-		$searchData = [];
+		$limitrecords = 100;
+		$numberofrecords = (int) $limitrecords;
+		$search = $this->validateAndSanitizeSelect2($_POST['searchTerm'] ?? '');
+		$exam = new Exam();
+		$exam_details = $exam->getTierBasedTblCard($numberofrecords, $search);
+		$response = [];
+		// Read Data
 		foreach ($exam_details as $insdata) {
-			//$textData = $insdata->exam_name." (".$insdata->table_exam_short_name.")"." (".$insdata->table_exam_year.")";
-			//$textData = $insdata->exam_name." (".$insdata->table_exam_short_name.")"." (".$insdata->table_exam_year.")";
-			$examname = $insdata->exam_name . ',' . $insdata->table_exam_year . '(' . $insdata->table_type . ') (' . $insdata->tier_name . ')';
-			//'',.r.'('.$insdata->tier_name.') ';
-			$searchData[] =
-				array(
-					'id' => $insdata->tableid,
-					'text' => $examname
-				);
+			$examname = $examname = $insdata->exam_name . ',' . $insdata->table_exam_year . '(' . $insdata->table_type . ') (' . $insdata->tier_name . ')';
+			$response[] = array(
+				'id' => $insdata->tableid,
+				'text' => $examname
+			);
 		}
-		echo json_encode($searchData);
-	}
-	public function getTierBasedExamDetailsPreview()
-	{
-		//get matched data 
-		try {
-			$exam = new Exam();
-			$q = isset($_GET['q']) ? $_GET['q'] : '';
-			if (!isset($q) || empty($q)) {
-				echo "Invalid ID provided.";
-				return;
-			}
-			$sanitized_input = htmlspecialchars($q, ENT_QUOTES, 'UTF-8');
-			$exam_details = $exam->getTierBasedTblPreview($sanitized_input);
-		} catch (\Exception $ex) {
-			echo "Error: " . $ex->getMessage();  // Change $sql to $ex->getMessage()
-			return;
-		}
-		$searchData = [];
-		foreach ($exam_details as $insdata) {
-		
-			$examname = $insdata->exam_name . ',' . $insdata->table_exam_year . '(' . $insdata->table_type . ') (' . $insdata->tier_name . ')';
-			
-			$searchData[] =
-				array(
-					'id' => $insdata->tableid,
-					'text' => $examname
-				);
-		}
-		echo json_encode($searchData);
+		echo json_encode($response);
+		exit();
 	}
 	/************************
 	 ***  getTierMaster
 	 */
 	public function getTierMaster()
 	{
-		//get matched data 
-		try {
-			$exam = new Exam();
-			$encryptionKey = bin2hex(random_bytes(32));
-			$q = isset($_GET['q']) ? Helpers::decryptData($_GET['q'], $encryptionKey) : '';
-			if (!isset($q) || empty($q)) {
-				echo "Invalid ID provided.";
-				return;
-			}
-			$sanitized_input = htmlspecialchars($q, ENT_QUOTES, 'UTF-8');
-			$exam_details = $exam->getTierBasedMaster($sanitized_input);
-		} catch (\Exception $ex) {
-			echo "Error: " . $ex->getMessage();  // Change $sql to $ex->getMessage()
-			return;
-		}
-		$searchData = [];
+		$limitrecords = 100;
+		$numberofrecords = (int) $limitrecords;
+		$search = $this->validateAndSanitizeSelect2($_POST['searchTerm'] ?? '');
+		$exam = new Exam();
+		$exam_details = $exam->getTierBasedMaster($numberofrecords, $search);
+		$response = [];
+		// Read Data
 		foreach ($exam_details as $insdata) {
 			$textData = $insdata->tier_name;
-			$searchData[] =
-				array(
-					'id' => $insdata->tier_id,
-					'text' => $textData
-				);
+			$response[] = array(
+				'id' => $insdata->tier_id,
+				'text' => $textData
+			);
 		}
-		echo json_encode($searchData);
+		echo json_encode($response);
+		exit();
 	}
 	public function getPhaseDetails()
 	{
-		//get matched data 
-		try {
-			$phase = new Phase();
-			$encryptionKey = bin2hex(random_bytes(32));
-			$q = isset($_GET['q']) ? Helpers::decryptData($_GET['q'], $encryptionKey) : '';
-			if (!isset($q) || empty($q)) {
-				echo "Invalid ID provided.";
-				return;
-			}
-			$sanitized_input = htmlspecialchars($q, ENT_QUOTES, 'UTF-8');
-			$phase_details = $phase->getPhasefromPhaseDetailsTbl($sanitized_input);
-		} catch (\Exception $ex) {
-			echo "Error: " . $ex->getMessage();  // Change $sql to $ex->getMessage()
-			return;
-		}
-		$searchData = [];
+		$limitrecords = 100;
+		$numberofrecords = (int) $limitrecords;
+		$search = $this->validateAndSanitizeSelect2($_POST['searchTerm'] ?? '');
+		$phase = new Phase();
+		$phase_details = $phase->getPhasefromPhaseDetailsTbl($numberofrecords, $search);
+		$response = [];
+		// Read Data
 		foreach ($phase_details as $insdata) {
-			$searchData[] =
-				array(
-					'id' => $insdata->phase_id,
-					'text' => $insdata->phase_name
-				);
+			$response[] = array(
+				'id' => $insdata->phase_id,
+				'text' => $insdata->phase_name
+			);
 		}
-		echo json_encode($searchData);
-	}
-	//get gallery distinct years
-	public function getGalleryYears()
-	{
-		//get matched data 
-		try {
-			$Gallery = new Gallery();
-			$q = isset($_GET['q']) ? $_GET['q'] : '';
-			if (!isset($q) || empty($q)) {
-				echo "Invalid ID provided.";
-				return;
-			}
-			$sanitized_input = htmlspecialchars($q, ENT_QUOTES, 'UTF-8');
-			$gallery_event_years = $Gallery->getGalleryDistinctedYears($sanitized_input);
-		} catch (\Exception $ex) {
-			echo "Error: " . $ex->getMessage();  // Change $sql to $ex->getMessage()
-			return;
-		}
-		$searchData = [];
-		foreach ($gallery_event_years as $insdata) {
-			$searchData[] =
-				array(
-					'id' => $insdata->year,
-					'text' => $insdata->year
-				);
-		}
-		echo json_encode($searchData);
-	}
-	//get year based gallery events 
-	public function getYearBasedEvents()
-	{
-		//get matched data 
-		try {
-			$Gallery = new Gallery();
-			if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-				$year = $this->validateAndSanitize($_POST['year']);
-				if (!isset($year) || empty($year)) {
-					echo "Invalid year provided.";
-					return;
-				}
-			}
-			$gallery_event_by_years = $Gallery->getGalleryEventsByYears($year);
-		} catch (\Exception $ex) {
-			echo "Error: " . $ex->getMessage();  // Change $sql to $ex->getMessage()
-			return;
-		}
-		$searchData = [];
-		foreach ($gallery_event_by_years as $insdata) {
-			$searchData[] =
-				array(
-					'id' => $insdata->gallery_id,
-					'text' => $insdata->event_name
-				);
-		}
-		//print_r($gallery_event_by_years);
-		echo json_encode($searchData);
+		echo json_encode($response);
+		exit();
 	}
 	public function EventBasedLightBox()
 	{
@@ -719,18 +582,12 @@ class IndexController extends FrontEndController
 			if (!isset($id_value) || empty($id_value)) {
 				echo "Invalid ID provided.";
 				return;
-			}
-			else{
+			} else {
 				if (!is_numeric($id_value) || intval($id_value) != $id_value) {
-
 					echo "Invalid ID format. Only integers are allowed.";
-
-				}
-				else{
-
-
-					 // Check if the ID has exactly 9 digits
-					 if (strlen($id_value) !== 9) {
+				} else {
+					// Check if the ID has exactly 9 digits
+					if (strlen($id_value) !== 9) {
 						echo "Invalid ID length. Must be exactly 9 digits.";
 					} else {
 						$id = $id_value;
@@ -739,7 +596,6 @@ class IndexController extends FrontEndController
 							$Gallery = new Gallery();
 							$fetchRecordsObject = $Gallery->EventBasedLightBox($id);
 							$eventbasedRecords = (array) $fetchRecordsObject;
-							
 						} catch (\Exception $ex) {
 							echo "Error: " . $ex->getMessage();  // Change $sql to $ex->getMessage()
 							return;
@@ -754,13 +610,9 @@ class IndexController extends FrontEndController
 						}
 						echo json_encode($searchData);
 					}
-
-					
-
 				}
 			}
 		}
-		
 	}
 	// //getGalleryidBasedImages
 	public function GalleryidBasedImagesWithLightBox()
@@ -808,7 +660,6 @@ class IndexController extends FrontEndController
 					echo "Invalid q provided.";
 					return;
 				}
-				
 			}
 			$gallery_id_based_images = $Gallery->getGalleryidBasedImagesModel($q);
 		} catch (\Exception $ex) {
@@ -1142,6 +993,5 @@ class IndexController extends FrontEndController
 		$json_response = json_encode($response);
 		header('Content-Type: application/json');
 		echo $json_response;
-		//Helpers::gethelperadmitcardCount($data);
 	}
 }
