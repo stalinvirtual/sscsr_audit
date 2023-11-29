@@ -99,6 +99,13 @@
             "pdf_name": "one",
             "attachment": "6117-sscsr_dataentry_17-11-2023_sa.pdf",
             "status": 1
+        },
+        {
+            "nomination_child_id": 1091,
+            "nomination_id": 1117,
+            "pdf_name": "one",
+            "attachment": "31792-sscsr_dataentry_18_nov_2023.pdf",
+            "status": 1
         }
     ],
     "nominations_latest_news": {
@@ -189,6 +196,13 @@
             "nomination_id": 1116,
             "pdf_name": "one",
             "attachment": "6117-sscsr_dataentry_17-11-2023_sa.pdf",
+            "status": 1
+        },
+        {
+            "nomination_child_id": 1091,
+            "nomination_id": 1117,
+            "pdf_name": "one",
+            "attachment": "31792-sscsr_dataentry_18_nov_2023.pdf",
             "status": 1
         }
     ],

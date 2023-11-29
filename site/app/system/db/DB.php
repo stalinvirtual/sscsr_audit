@@ -232,6 +232,7 @@ class DB
             $this->limit($rows_per_page, $page_no);
         }
         $stmt = $this->pdo->prepare($this->query);
+      //  $this->last_query = $this->interpolateQuery($this->query, $this->params);
         //echo $this->query."<br>";
         // exit;
         $stmt->execute($this->params);
@@ -433,4 +434,46 @@ class DB
         }
     }
     //New functions From New File on 03 oct 2023 by stalin
+
+    public function execute($fetch_type = DB_OBJECT)
+    {
+        try {
+            $stmt = $this->pdo->prepare($this->query);
+            $stmt->execute($this->params);
+            $this->params = [];
+            $this->last_query = $this->interpolateQuery($this->query, $this->params);
+            return $stmt->fetchAll($this->getPdoResultType($fetch_type));
+        } catch (\PDOException $e) {
+            // Handle the exception, e.g., log the error or return a specific value indicating failure.
+            return false;
+        }
+    }
+
+    private function interpolateQuery($query, $params)
+    {
+        $keys = array();
+        $values = $params;
+
+        foreach ($params as $key => $value) {
+            if (is_string($key)) {
+                $keys[] = '/:' . $key . '/';
+            } else {
+                $keys[] = '/[?]/';
+            }
+
+            if (is_string($value)) {
+                $values[$key] = "'" . $value . "'";
+            }
+
+            if (is_array($value)) {
+                $values[$key] = implode(',', $value);
+            }
+
+            if (is_null($value)) {
+                $values[$key] = 'NULL';
+            }
+        }
+
+        return preg_replace($keys, $values, $query, 1, $count);
+    }
 }

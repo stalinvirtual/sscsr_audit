@@ -30,7 +30,7 @@ use App\Models\Selectionpostschild as Selectionpostschild;
 // ini_set('display_errors', 1);
 // ini_set('display_startup_errors', 1);
 // error_reporting(E_ALL);
-error_reporting(0);
+error_reporting(-1);
 class IndexController extends FrontEndController
 {
 	public function __construct($param_data = array())
@@ -55,10 +55,15 @@ class IndexController extends FrontEndController
 		// login
 		$data = $this->login();
 		$data['nominations'] = Helpers::getNomination();
+
+
+
+
+
 		$data['nominationchildlist'] = Helpers::getNominationChildList();
 		//Nomination List For Latest News
 		$data['nominations_latest_news'] = Helpers::getNominationLatestNews();
-		// echo '<pr>';
+		// echo '<pre>';
 		// print_r($data['nominations_latest_news']);
 		// exit;
 		$data['nominationchildlist_latest_news'] = Helpers::getNominationChildListNews();
@@ -341,17 +346,30 @@ class IndexController extends FrontEndController
 		Helpers::getAdmitCardDetails("admitcard");
 	}
 	public function validateAndSanitizeSelect2($input)
-	{
-		$input = trim($input);
-		// Sanitize the input using FILTER_SANITIZE_STRING
-		$input = filter_var($input, FILTER_SANITIZE_FULL_SPECIAL_CHARS);
-		$input = stripslashes($input);
-		// Use htmlspecialchars to encode special characters
-		$input = htmlspecialchars($input, ENT_QUOTES, 'UTF-8');
-		$input = html_entity_decode($input);
-		// You can add more specific sanitization or validation steps here based on your requirements
-		return $input;
-	}
+{
+    // Trim leading and trailing whitespaces
+    $input = trim($input);
+
+    // Sanitize the input using FILTER_SANITIZE_STRING
+    $input = filter_var($input, FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+
+    // Remove backslashes
+    $input = stripslashes($input);
+
+    // Use htmlspecialchars to encode special characters
+    $input = htmlspecialchars($input, ENT_QUOTES, 'UTF-8');
+
+    // You can add more specific sanitization or validation steps here based on your requirements
+
+    // Example: Check if the length is within an acceptable range
+    $minLength = 1;
+    $maxLength = 255; // Adjust as needed
+    if (strlen($input) < $minLength || strlen($input) > $maxLength) {
+        // Handle validation error, e.g., return an error message or throw an exception
+    }
+
+    return $input;
+}
 	public function validateAndSanitize($input)
 	{
 		// Trim whitespace
@@ -458,6 +476,17 @@ class IndexController extends FrontEndController
 	}
 	public function getExamDetails()
 	{
+		if(!isset($_SERVER['HTTP_REFERER']) ){
+			$url = $_SERVER['REQUEST_SCHEME'] . "://" . $_SERVER['HTTP_HOST'] .  $_SERVER['REQUEST_URI'];
+			$parsedUrl = parse_url($url);
+			if (isset($parsedUrl['scheme'], $parsedUrl['host'], $parsedUrl['path'])) {
+				$pUrl =  explode('/', $parsedUrl['path']);
+				$base =  $pUrl['1'] . '/' . $pUrl['2'] . '/';
+				$baseUrl = $parsedUrl['scheme'] . '://' . $parsedUrl['host'] . "/" . $base;
+				header("Location: $baseUrl");
+				exit;
+			}
+		 }
 		$limitrecords = 100;
 		$numberofrecords = (int) $limitrecords;
 		$search = $this->validateAndSanitizeSelect2($_POST['searchTerm'] ?? '');
@@ -480,6 +509,17 @@ class IndexController extends FrontEndController
 	 */
 	public function getTierBasedExamDetailsCity()
 	{
+		if(!isset($_SERVER['HTTP_REFERER']) ){
+			$url = $_SERVER['REQUEST_SCHEME'] . "://" . $_SERVER['HTTP_HOST'] .  $_SERVER['REQUEST_URI'];
+			$parsedUrl = parse_url($url);
+			if (isset($parsedUrl['scheme'], $parsedUrl['host'], $parsedUrl['path'])) {
+				$pUrl =  explode('/', $parsedUrl['path']);
+				$base =  $pUrl['1'] . '/' . $pUrl['2'] . '/';
+				$baseUrl = $parsedUrl['scheme'] . '://' . $parsedUrl['host'] . "/" . $base;
+				header("Location: $baseUrl");
+				exit;
+			}
+		 }
 		$limitrecords = 100;
 		$numberofrecords = (int) $limitrecords;
 		$search = $this->validateAndSanitizeSelect2($_POST['searchTerm'] ?? '');
@@ -499,6 +539,17 @@ class IndexController extends FrontEndController
 	}
 	public function getTierBasedExamDetailsCardPreview()
 	{
+		if(!isset($_SERVER['HTTP_REFERER']) ){
+			$url = $_SERVER['REQUEST_SCHEME'] . "://" . $_SERVER['HTTP_HOST'] .  $_SERVER['REQUEST_URI'];
+			$parsedUrl = parse_url($url);
+			if (isset($parsedUrl['scheme'], $parsedUrl['host'], $parsedUrl['path'])) {
+				$pUrl =  explode('/', $parsedUrl['path']);
+				$base =  $pUrl['1'] . '/' . $pUrl['2'] . '/';
+				$baseUrl = $parsedUrl['scheme'] . '://' . $parsedUrl['host'] . "/" . $base;
+				header("Location: $baseUrl");
+				exit;
+			}
+		 }
 		$limitrecords = 100;
 		$numberofrecords = (int) $limitrecords;
 		$search = $this->validateAndSanitizeSelect2($_POST['searchTerm'] ?? '');
@@ -518,6 +569,17 @@ class IndexController extends FrontEndController
 	}
 	public function getTierBasedExamDetailsCard()
 	{
+		if(!isset($_SERVER['HTTP_REFERER']) ){
+			$url = $_SERVER['REQUEST_SCHEME'] . "://" . $_SERVER['HTTP_HOST'] .  $_SERVER['REQUEST_URI'];
+			$parsedUrl = parse_url($url);
+			if (isset($parsedUrl['scheme'], $parsedUrl['host'], $parsedUrl['path'])) {
+				$pUrl =  explode('/', $parsedUrl['path']);
+				$base =  $pUrl['1'] . '/' . $pUrl['2'] . '/';
+				$baseUrl = $parsedUrl['scheme'] . '://' . $parsedUrl['host'] . "/" . $base;
+				header("Location: $baseUrl");
+				exit;
+			}
+		 }
 		$limitrecords = 100;
 		$numberofrecords = (int) $limitrecords;
 		$search = $this->validateAndSanitizeSelect2($_POST['searchTerm'] ?? '');
@@ -540,6 +602,17 @@ class IndexController extends FrontEndController
 	 */
 	public function getTierMaster()
 	{
+		if(!isset($_SERVER['HTTP_REFERER']) ){
+			$url = $_SERVER['REQUEST_SCHEME'] . "://" . $_SERVER['HTTP_HOST'] .  $_SERVER['REQUEST_URI'];
+			$parsedUrl = parse_url($url);
+			if (isset($parsedUrl['scheme'], $parsedUrl['host'], $parsedUrl['path'])) {
+				$pUrl =  explode('/', $parsedUrl['path']);
+				$base =  $pUrl['1'] . '/' . $pUrl['2'] . '/';
+				$baseUrl = $parsedUrl['scheme'] . '://' . $parsedUrl['host'] . "/" . $base;
+				header("Location: $baseUrl");
+				exit;
+			}
+		 }
 		$limitrecords = 100;
 		$numberofrecords = (int) $limitrecords;
 		$search = $this->validateAndSanitizeSelect2($_POST['searchTerm'] ?? '');
@@ -559,6 +632,17 @@ class IndexController extends FrontEndController
 	}
 	public function getPhaseDetails()
 	{
+		if(!isset($_SERVER['HTTP_REFERER']) ){
+			$url = $_SERVER['REQUEST_SCHEME'] . "://" . $_SERVER['HTTP_HOST'] .  $_SERVER['REQUEST_URI'];
+			$parsedUrl = parse_url($url);
+			if (isset($parsedUrl['scheme'], $parsedUrl['host'], $parsedUrl['path'])) {
+				$pUrl =  explode('/', $parsedUrl['path']);
+				$base =  $pUrl['1'] . '/' . $pUrl['2'] . '/';
+				$baseUrl = $parsedUrl['scheme'] . '://' . $parsedUrl['host'] . "/" . $base;
+				header("Location: $baseUrl");
+				exit;
+			}
+		 }
 		$limitrecords = 100;
 		$numberofrecords = (int) $limitrecords;
 		$search = $this->validateAndSanitizeSelect2($_POST['searchTerm'] ?? '');
@@ -617,6 +701,8 @@ class IndexController extends FrontEndController
 	// //getGalleryidBasedImages
 	public function GalleryidBasedImagesWithLightBox()
 	{
+		$year = ''; // Initialize the variable outside the conditional
+	
 		if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 			$year = $this->validateAndSanitize($_POST['year']);
 			if (!isset($year) || empty($year)) {
@@ -624,26 +710,29 @@ class IndexController extends FrontEndController
 				return;
 			}
 		}
+	
 		try {
 			$Gallery = new Gallery();
 			$fetchRecordsObject = $Gallery->photoGalleryGroup($year);
 			$fetchRecords = (array) $fetchRecordsObject;
 		} catch (\Exception $ex) {
-			echo "Error: " . $ex->getMessage();  // Change $sql to $ex->getMessage()
+			echo "Error: " . $ex->getMessage();
 			return;
 		}
+	
 		$searchData = array();
 		foreach ($fetchRecords as $insdata) {
 			$fetchRecordsObject = $Gallery->photoGalleryGroupforOneRecord($insdata->event_id);
 			$oneRecord = (array) $fetchRecordsObject;
-			$searchData[] =
-				array(
-					'id' => $oneRecord['image_path'],
-					'text' => $insdata->event_name . "," . $insdata->event_id
-				);
+			$searchData[] = array(
+				'id' => $oneRecord['image_path'],
+				'text' => $insdata->event_name . "," . $insdata->event_id
+			);
 		}
+	
 		echo json_encode($searchData);
 	}
+	
 	public function GalleryidBasedImages()
 	{
 		//get matched data 

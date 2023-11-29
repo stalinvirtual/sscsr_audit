@@ -5557,7 +5557,7 @@
   // It also indexes by height, and is used to convert between height
   // and line object, and to find the total height of the document.
   //
-  // See also http://marijnhaverbeke.nl/blog/codemirror-line-tree.html
+  // See also 
 
   function LeafChunk(lines) {
     this.lines = lines;

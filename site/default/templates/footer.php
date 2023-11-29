@@ -1,6 +1,7 @@
 <?php
 namespace App\Controllers;
 use App\Helpers\Helpers;
+
 $encryptionKey = bin2hex(random_bytes(32));
 $encryptedValue = Helpers::encryptData("2", $encryptionKey);
 $getExamDetailsUrl = $this->route->site_url("IndexController/getExamDetails");
@@ -139,7 +140,7 @@ $encodedUserId = base64_encode($userId);
 		})
 		// Know your status
 		var baseurl = '<?php echo $getExamDetailsUrl; ?>';
-		$('#examname').select2();
+		
 		$("#examname").select2({
 			language: {
 				searching: function() {
@@ -172,7 +173,7 @@ $encodedUserId = base64_encode($userId);
 		// Know your status
 		// Selection Posts Start
 		var phasename_baseurl = '<?php echo $this->route->site_url("IndexController/getPhaseDetails"); ?>';
-		$('#phasename').select2();
+	
 		$("#phasename").select2({
 			language: {
 				searching: function() {
@@ -201,7 +202,7 @@ $encodedUserId = base64_encode($userId);
 		//Selection Posts End 
 		//  Admit card Exam Name AJAX
 		var baseurl = '<?php echo $this->route->site_url("IndexController/getTierBasedExamDetailsCard"); ?>';
-		$('#admitcard_examname').select2();
+		//$('#admitcard_examname').select2();
 		$("#admitcard_examname").select2({
 			language: {
 				searching: function() {
@@ -228,7 +229,7 @@ $encodedUserId = base64_encode($userId);
 			}
 		});
 		var baseurl2 = '<?php echo $this->route->site_url("IndexController/getTierBasedExamDetailsCardPreview"); ?>';
-		$('#admitcard_preview_examname').select2();
+	///	$('#admitcard_preview_examname').select2();
 		$("#admitcard_preview_examname").select2({
 			language: {
 				searching: function() {
@@ -255,7 +256,7 @@ $encodedUserId = base64_encode($userId);
 			}
 		});
 		var baseurl = '<?php echo $this->route->site_url("IndexController/getTierBasedExamDetailsCity"); ?>';
-		$('#city_examname').select2();
+		//$('#city_examname').select2();
 		$("#city_examname").select2({
 			language: {
 				searching: function() {

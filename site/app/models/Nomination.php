@@ -94,6 +94,8 @@ class Nomination extends DB
            // ->fetchtwo('fetch first 2 rows only')
             ->get_list();
         $lastinsertid = (object)$fetch_all;
+        #echo $this->last_query;
+        #exit;
         return $lastinsertid;
     }
     // Publish and Unpublished
