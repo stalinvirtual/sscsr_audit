@@ -1,7 +1,9 @@
 <?php
 namespace App\Models;
+
 use App\System\DB\DB;
 use App\System\Route;
+
 class Nomination extends DB
 {
     private $table_name = 'mstnominationtbl';
@@ -26,7 +28,7 @@ class Nomination extends DB
     }
     public function getEmptyNomination($type = null)
     {
-        $empty_menu  = [
+        $empty_menu = [
             'nomination_id' => 0,
             'exam_name' => '',
             'category_id' => '',
@@ -44,35 +46,37 @@ class Nomination extends DB
     }
     public function updateNomination($data = array(), $id = 0)
     {
+
         return $this->update($data, ['nomination_id' => $id]);
+
     }
     public function lastInsertedId($parent_id = 0)
     {
-        $fetch_row  = $this->select('max(nomination_id)')
+        $fetch_row = $this->select('max(nomination_id)')
             ->from("mstnominationtbl")
             ->get_one(DB_ASSOC);
-        $lastinsertid = (array)$fetch_row;
+        $lastinsertid = (array) $fetch_row;
         return $lastinsertid;
     }
     public function getNominationsList($parent_id = 0)
     {
-        $fetch_all =  $this->select('P.*,category.category_name')
+        $fetch_all = $this->select('P.*,category.category_name')
             ->from("mstnominationtbl P ")
             ->join("mstcategory category ", "P.category_id = category.category_id ", "JOIN")
             ->order_by('P.creation_date desc')
             ->get_list();
-        $lastinsertid = (object)$fetch_all;
+        $lastinsertid = (object) $fetch_all;
         return $lastinsertid;
     }
     public function getHomeNominationsList($parent_id = 0)
     {
-        $fetch_all =  $this->select('P.*,category.category_name')
+        $fetch_all = $this->select('P.*,category.category_name')
             ->from("mstnominationtbl P ")
             ->join("mstcategory category ", "P.category_id = category.category_id ", "JOIN")
             ->where(['p_status' => '1'])
             ->order_by('P.effect_from_date desc')
             ->get_list();
-        $lastinsertid = (object)$fetch_all;
+        $lastinsertid = (object) $fetch_all;
         return $lastinsertid;
     }
     /******
@@ -84,18 +88,19 @@ class Nomination extends DB
      */
     public function getHomeNominationsListLatestNews($parent_id = 0)
     {
-        $fetch_all =  $this->select('P.*,category.category_name')
+        $fetch_all = $this->select('P.*,category.category_name')
             ->from("mstnominationtbl P ")
             ->join("mstcategory category ", "P.category_id = category.category_id ", "JOIN")
             ->where(['P.p_status' => '1'])
             ->where_between('CURRENT_DATE BETWEEN P.effect_from_date AND P.effect_to_date')
             // ->wherecondition("P.effort_from_date > current_date - interval '2 days'")
             ->order_by('P.creation_date desc')
-           // ->fetchtwo('fetch first 2 rows only')
+            // ->fetchtwo('fetch first 2 rows only')
             ->get_list();
-        $lastinsertid = (object)$fetch_all;
+        
         #echo $this->last_query;
         #exit;
+        $lastinsertid = (object) $fetch_all;
         return $lastinsertid;
     }
     // Publish and Unpublished
@@ -107,21 +112,21 @@ class Nomination extends DB
     {
         $delId = explode(",", $nomination_id);
         foreach ($delId as $val) {
-            $delete_row =  $this->delete($val);
+            $delete_row = $this->delete($val);
         }
         return $delete_row;
     }
     public function getNominationsArchievesList()
     {
-        $fetch_all =  $this->select('P.*,category.category_name')
+        $fetch_all = $this->select('P.*,category.category_name')
             ->from("mstnominationtbl P ")
             ->join("mstcategory category ", "P.category_id = category.category_id ", "JOIN")
             ->order_by('P.nomination_id desc')
             ->get_list();
-        $lastinsertid = (object)$fetch_all;
+        $lastinsertid = (object) $fetch_all;
         return $lastinsertid;
     }
-    public function getNominationDetails($year, $month, $effect_from_date, $effect_to_date, $searchQuery)
+    public function getNominationDetails($year, $month, $effect_from_date, $effect_to_date, $searchQuery,$row,$rowperpage)
     {
         if ($month == 'All') {
             if ($searchQuery == " ") {
@@ -133,7 +138,64 @@ TEXT;
                 to_char("effect_to_date", 'YYYY')='$year' and  $searchQuery
 TEXT;
             }
-            $getlist =  $this->select('P.*,category.category_name')
+            $getlist = $this->select('P.*,category.category_name')
+                ->from("mstnominationtbl P ")
+                ->join("mstcategory category ", "P.category_id = category.category_id ", "JOIN")
+                ->whereconditionarchieves($str)
+                ->order_by('P.creation_date desc')
+                ->limitPagination($rowperpage,$row)
+                ->get_list();
+        } else {
+            if ($searchQuery == " ") {
+                $str = <<<TEXT
+                to_char("effect_to_date", 'MM')='$month' and 
+                to_char("effect_to_date", 'YYYY')='$year' and
+                effect_from_date >='$effect_from_date' and
+                effect_to_date <= '$effect_to_date' 
+TEXT;
+            } else {
+                $str = <<<TEXT
+                to_char("effect_to_date", 'MM')='$month' and 
+                to_char("effect_to_date", 'YYYY')='$year' and
+                effect_from_date >='$effect_from_date' and
+                effect_to_date <= '$effect_to_date'  $searchQuery
+TEXT;
+            }
+            $getlist = $this->select('P.*,category.category_name')
+                ->from("mstnominationtbl P ")
+                ->join("mstcategory category ", "P.category_id = category.category_id ", "JOIN")
+                ->whereconditionarchieves($str)
+                ->order_by('P.creation_date desc')
+                ->limitPagination($rowperpage,$row)
+                ->get_list();
+        }
+        //                         $query = <<<TEXT
+        //                 select * from mstnominationtbl  where 
+        //                 to_char("effect_to_date", 'MM')='$month' and 
+        //                             to_char("effect_to_date", 'YYYY')='$year' and
+        //                             effect_from_date >='$effect_from_date' and
+        //                             effect_to_date <= '$effect_to_date'
+        // TEXT;
+        // echo  $query;
+        // echo '<pre>';
+        // print_R( $getlist);
+        //exit;
+
+        return $getlist;
+    }
+    public function getNominationDetailsAll($year, $month, $effect_from_date, $effect_to_date, $searchQuery)
+    {
+        if ($month == 'All') {
+            if ($searchQuery == " ") {
+                $str = <<<TEXT
+                to_char("effect_to_date", 'YYYY')='$year' 
+TEXT;
+            } else {
+                $str = <<<TEXT
+                to_char("effect_to_date", 'YYYY')='$year' and  $searchQuery
+TEXT;
+            }
+            $getlist = $this->select('P.*,category.category_name')
                 ->from("mstnominationtbl P ")
                 ->join("mstcategory category ", "P.category_id = category.category_id ", "JOIN")
                 ->whereconditionarchieves($str)
@@ -147,8 +209,7 @@ TEXT;
                 effect_from_date >='$effect_from_date' and
                 effect_to_date <= '$effect_to_date' 
 TEXT;
-            }
-            else{
+            } else {
                 $str = <<<TEXT
                 to_char("effect_to_date", 'MM')='$month' and 
                 to_char("effect_to_date", 'YYYY')='$year' and
@@ -156,7 +217,7 @@ TEXT;
                 effect_to_date <= '$effect_to_date'  $searchQuery
 TEXT;
             }
-            $getlist =  $this->select('P.*,category.category_name')
+            $getlist = $this->select('P.*,category.category_name')
                 ->from("mstnominationtbl P ")
                 ->join("mstcategory category ", "P.category_id = category.category_id ", "JOIN")
                 ->whereconditionarchieves($str)
@@ -174,19 +235,20 @@ TEXT;
         // echo '<pre>';
         // print_R( $getlist);
         //exit;
-        return  $getlist;
+
+        return $getlist;
     }
     public function archiveNominationStatus($nomination_id = 0)
     {
         if (is_array($nomination_id)) {
             $nomination_id = implode(",", $nomination_id);
         }
-       $inIDS = explode(",", $nomination_id);
-       $qMarks = str_repeat('?,', count($inIDS) - 1) . '?';
+        $inIDS = explode(",", $nomination_id);
+        $qMarks = str_repeat('?,', count($inIDS) - 1) . '?';
         $sql = "INSERT INTO archives.mstnominationarchivestbl (nomination_id, exam_name,category_id,effect_from_date, effect_to_date, p_status, date_archived ) 
         SELECT nomination_id, exam_name, category_id,effect_from_date, effect_to_date, '0', NOW()
        FROM public.mstnominationtbl WHERE nomination_id IN ($qMarks)";
-       
+
         $delete_row = $this->insert_archieves($sql, $inIDS);
 
 
@@ -195,8 +257,8 @@ TEXT;
          nomination_id, pdf_name, attachment, status)
          SELECT nomination_id, pdf_name, attachment, '0'
        FROM public.mstnominationchildtbl WHERE nomination_id IN ($qMarks)";
-        $childtable_insert =  $this->insert_archieves($sql1,$inIDS);
-        
+        $childtable_insert = $this->insert_archieves($sql1, $inIDS);
+
         $delId = explode(",", $nomination_id);
         foreach ($delId as $val) {
             $this->delete($val);
@@ -205,7 +267,7 @@ TEXT;
     }
     public function totalRecordsWithOutFiltering()
     {
-        $fetch_all =  $this->select('count(*) as allcount')
+        $fetch_all = $this->select('count(*) as allcount')
             ->from("mstnominationtbl P ")
             ->join("mstcategory category ", "P.category_id = category.category_id ", "JOIN")
             ->get_one();
@@ -219,12 +281,12 @@ TEXT;
         HTML;
         //  echo   $finalquery;
         // exit;
-        $fetch_all =  $this->select('*')
+        $fetch_all = $this->select('*')
             ->from("mstnominationtbl P ")
             ->join("mstcategory category ", "P.category_id = category.category_id ", "JOIN")
             ->whereconditiondatatable($finalquery)
             ->get_one();
-       // echo "select * as allcount from  mstnominationtbl where '1' $searchQuery";
+        // echo "select * as allcount from  mstnominationtbl where '1' $searchQuery";
         //echo '<pre>';
         //print_r($fetch_all );
         $count = $fetch_all;
@@ -236,15 +298,14 @@ TEXT;
             $finalquery = <<<HTML
       '1'
 HTML;
-        }
-        else{
+        } else {
             $finalquery = <<<HTML
             '1' and $searchQuery
  HTML;
         }
         //  echo   $finalquery;
         // exit;
-        $fetch_all =  $this->select('count(*) as allcount')
+        $fetch_all = $this->select('count(*) as allcount')
             ->from("mstnominationtbl P ")
             ->join("mstcategory category ", "P.category_id = category.category_id ", "JOIN")
             ->whereconditiondatatable($finalquery)
@@ -257,7 +318,7 @@ HTML;
     }
     public function checkNominationId($id)
     {
-        $fetch_all =  $this->select('count(*) as checkid')
+        $fetch_all = $this->select('count(*) as checkid')
             ->from("mstnominationtbl P ")
             //->join("mstcategory category ", "P.category_id = category.category_id ", "JOIN")
             ->where(['nomination_id' => $id])

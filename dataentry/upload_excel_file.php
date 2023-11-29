@@ -39,7 +39,7 @@ $csrf_token = $_SESSION['csrf_token']; ?>
 							</div>
 							<div class="form-group">        
 								<label for="exam_year" class="col-sm-2 control-label">Select Year<font style="color:red";>*</font> </label> 
-								<div class="col-sm-6">
+								<div class="col-sm-2">
 									<input type="text" min="<?php echo date('Y')-5 ;?>" max="<?php echo date('Y')+5 ;?>" step="1"  name="exam_year" id="exam_year" maxlength="4"  oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);" type = "number"  class="form-control" value="<?php echo date('Y');?>" />															  
 								</div> 
 								<div id="year_exists" class=" col-sm-4" >	
@@ -113,7 +113,7 @@ $csrf_token = $_SESSION['csrf_token']; ?>
 								<span id="uploading_header_info"></span>
 								<div id="container" style='width:160px; margin: 0 auto'>
 									<div id="loader" style="display: none;">
-										<img src="images/settings1.gif" alt="Loading...">
+										<img src="images/settings.gif" alt="Loading...">
 									</div>
 								</div>
 								<br>

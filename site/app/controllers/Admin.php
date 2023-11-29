@@ -2890,7 +2890,8 @@ HTML;
             ## Read value
             $draw = Helpers::cleanData($_POST['draw']);
             $row = Helpers::cleanData($_POST['start']);
-            $rowperpage = Helpers::cleanData($_POST['length']); // Rows display per page
+           $rowperpage = Helpers::cleanData($_POST['length']); // Rows display per page
+           
             $columnIndex = Helpers::cleanData($_POST['order'][0]['column']); // Column index
             $columnName = Helpers::cleanData($_POST['columns'][$columnIndex]['data']); // Column name
             $columnSortOrder = Helpers::cleanData($_POST['order'][0]['dir']); // asc or desc
@@ -2915,7 +2916,12 @@ HTML;
             ## Total number of records with filtering
             $totalRecordsWithFiltering = $model->totalRecordsWithFiltering($searchQuery);
             $totalRecordwithFilter = $totalRecordsWithFiltering->allcount;
-            $fetchRecordsObject = $model->getNominationDetails($year, $month, $effect_from_date, $effect_to_date, $searchQuery);
+            if($rowperpage==-1){
+                $fetchRecordsObject = $model->getNominationDetailsAll($year, $month, $effect_from_date, $effect_to_date, $searchQuery);
+            }else{
+                $fetchRecordsObject = $model->getNominationDetails($year, $month, $effect_from_date, $effect_to_date, $searchQuery,$row,$rowperpage);
+            }
+           
             $fetchRecords = (array) $fetchRecordsObject;
             $nominationchildlist = Helpers::getNominationChildListforAdmin();
             $edit_nomination_link = $this->links['edit_nomination_link'];

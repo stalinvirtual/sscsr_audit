@@ -2,7 +2,6 @@
     .form-control {
         width: 90% !important;
     }
-
     .ui-datepicker-trigger {
         margin: -25px 2px 3px 245px;
     }
@@ -18,9 +17,11 @@
                         <div class="col-sm-3">
                             <label for="inputEmail3" class="col-sm-6 col-form-label">Year : </label>
                             <select name="nomination_year" class="form-control" id="nomination_year">
-                                <?php foreach ($searchyears as $key => $searchyear) :
-                                ?>
-                                    <option value="<?php echo $searchyear->search_year; ?>"><?php echo $searchyear->search_year; ?></option>
+                                <?php foreach ($searchyears as $key => $searchyear):
+                                    ?>
+                                    <option value="<?php echo $searchyear->search_year; ?>">
+                                        <?php echo $searchyear->search_year; ?>
+                                    </option>
                                 <?php endforeach; ?>
                             </select>
                         </div>
@@ -46,19 +47,23 @@
                         <!-- Form Group Row Start-->
                         <div class="col-sm-3">
                             <label for="inputEmail3" class="col-sm-6 col-form-label">From Date : </label>
-                            <input class="form-control" type="text" name="effect_from_date" id="effect_from_date" value="" readonly>
+                            <input class="form-control" type="text" name="effect_from_date" id="effect_from_date"
+                                value="" readonly>
                         </div>
                         <div class="col-sm-3">
                             <label for="inputEmail3" class="col-sm-6 col-form-label">To Date :</label>
-                            <input class="form-control" type="text" name="effect_to_date" id="effect_to_date" value="" readonly>
+                            <input class="form-control" type="text" name="effect_to_date" id="effect_to_date" value=""
+                                readonly>
                         </div>
                     </div><!-- Form Group Row End-->
                     <div class="form-group row">
                         <!-- Form Group Row Start-->
                         <label for="inputEmail3" class="col-sm-2 col-form-label"></label>
                         <div class="col-sm-10">
-                            <button type="button" id="nomination_form_submit_btn" class="btn btn-success form_submit_btn">Submit</button>
-                            <button type="button" id="nomination_form_reset_btn" class="btn btn-secondary form_reset_btn">Reset</button>
+                            <button type="button" id="nomination_form_submit_btn"
+                                class="btn btn-success form_submit_btn">Submit</button>
+                            <button type="button" id="nomination_form_reset_btn"
+                                class="btn btn-secondary form_reset_btn">Reset</button>
                         </div>
                     </div><!-- Form Group Row End-->
                 </div>
@@ -77,10 +82,14 @@
                 } else { ?>
                     <form id="frm-example" action="<?php echo $common_nomination_archive; ?>" method="POST">
                         <div class="card-header">
-                            <h3 class="card-title"><a href="<?php echo $create_nomination_link; ?>" class="btn btn-primary pull-right"><span class="glyphicon glyphicon-plus-sign"></span> Add Nomination </a></h3>
-                            <h3 class="card-title" style="margin-right: 10px;"><button class="btn btn-primary action-btn" data-action="delete" type="button">Delete</button>
+                            <h3 class="card-title"><a href="<?php echo $create_nomination_link; ?>"
+                                    class="btn btn-primary pull-right"><span class="glyphicon glyphicon-plus-sign"></span>
+                                    Add Nomination </a></h3>
+                            <h3 class="card-title" style="margin-right: 10px;"><button class="btn btn-primary action-btn"
+                                    data-action="delete" type="button">Delete</button>
                             </h3>
-                            <h3 class="card-title" style="margin-right: 10px;"><button class="btn btn-primary action-btn" data-action="archive" type="button">Archives</button>
+                            <h3 class="card-title" style="margin-right: 10px;"><button class="btn btn-primary action-btn"
+                                    data-action="archive" type="button">Archives</button>
                             </h3>
                             <input type="hidden" name="action" id="action" />
                             <input type="hidden" name="ids" id="ids" />
@@ -101,10 +110,11 @@
                                     <th style="width: 11%">Action</th>
                                 </tr>
                             </thead>
+                         
                         </table>
                     </div>
                     <!-- /.card-body -->
-                    </form>
+                </form>
             </div>
             <!-- /.card -->
         </div>
@@ -116,10 +126,10 @@
 <script src="<?php echo $this->theme_url; ?>/plugins/jquery/jquery.min.js"></script>
 <script type="text/javascript" src="<?php echo $this->theme_url; ?>/dist/js/dataTables.checkboxes.min.js"></script>
 <script>
-    $(document).ready(function() {
+    $(document).ready(function () {
         $("#nomination_from_and_to_date_container").hide();
         let baseurl = '<?php echo $this->route->site_url("Admin/ajaxResponseForDataTableLoad"); ?>';
-        $("#nomination_arc_form").on('click', function(event) {
+        $("#nomination_arc_form").on('click', function (event) {
             //debugger;
             event.preventDefault();
             $('#nominationTable').dataTable().fnDestroy();
@@ -133,34 +143,36 @@
                 'processing': true,
                 'serverSide': true,
                 'serverMethod': 'post',
+                'pageLength': 5,
+                "lengthMenu": [[5, 25, 50, -1], [5, 25, 50, "All"]],
                 'ajax': {
                     'url': baseurl,
                     data: formData,
                 },
                 'columns': [{
-                        data: 'nomination_id'
-                    },
-                    {
-                        data: 'exam_name'
-                    },
-                    {
-                        data: 'category_name'
-                    },
-                    {
-                        data: 'pdf_name'
-                    },
-                    {
-                        data: 'effect_from_date'
-                    },
-                    {
-                        data: 'effect_to_date'
-                    },
-                    {
-                        data: 'p_status'
-                    },
-                    {
-                        data: 'action'
-                    },
+                    data: 'nomination_id'
+                },
+                {
+                    data: 'exam_name'
+                },
+                {
+                    data: 'category_name'
+                },
+                {
+                    data: 'pdf_name'
+                },
+                {
+                    data: 'effect_from_date'
+                },
+                {
+                    data: 'effect_to_date'
+                },
+                {
+                    data: 'p_status'
+                },
+                {
+                    data: 'action'
+                }
                 ],
                 'columnDefs': [{
                     'targets': 0,
@@ -172,13 +184,13 @@
                     'style': 'multi'
                 },
             });
-            userDataTable.on('draw.dt', function() {
+            userDataTable.on('draw.dt', function () {
                 // Update the background color after each draw
                 $("button.unpublishbtn").css("margin-left", "10px");
                 $("button.unpublishbtn").closest("td").css("display", "flex");
             });
         });
-        $('#nomination_form_reset_btn').click(function(e) {
+        $('#nomination_form_reset_btn').click(function (e) {
             e.preventDefault();
             $('input[type=text]').val('');
             $('#nomination_month').val('All')
@@ -186,7 +198,7 @@
         });
         jQuery("#nomination_arc_form").trigger('click');
         // Check Box
-        $('#nominationTable').on('change', 'input[type="checkbox"]', function() {
+        $('#nominationTable').on('change', 'input[type="checkbox"]', function () {
             let selectedCheckboxCount = $("#nominationTable input[type=\"checkbox\"]:checked").length;
             if (selectedCheckboxCount > 0) {
                 console.log($(".deletebtn"))
@@ -198,7 +210,7 @@
             }
         });
         // Handle form submission event
-        $(".action-btn").on('click', function(e) {
+        $(".action-btn").on('click', function (e) {
             e.preventDefault;
             //debugger;
             $("#action").val($(this).data('action'));
@@ -229,7 +241,7 @@
                     }
                 }).then((value) => {
                     if (value === "yes") { //yes start
-                        $.each(rows_selected, function(index, rowId) {
+                        $.each(rows_selected, function (index, rowId) {
                             // Create a hidden element
                             rowIds += `${rowId},`;
                             // $(form).append(
@@ -249,7 +261,7 @@
             }
         });
         // Delete record
-        $('#nominationTable').on('click', '.deletebtn', function(e) {
+        $('#nominationTable').on('click', '.deletebtn', function (e) {
             e.preventDefault()
             var id = $(this).data('id');
             swal({
@@ -275,7 +287,7 @@
                             request: 4,
                             id: id
                         },
-                        success: function(response) {
+                        success: function (response) {
                             if (response == 1) {
                                 swal({
                                     title: "Record has been deleted successfully"
@@ -293,7 +305,7 @@
             });
         });
         // Archive record
-        $('#nominationTable').on('click', '.archivebtn', function(e) {
+        $('#nominationTable').on('click', '.archivebtn', function (e) {
             e.preventDefault()
             var id = $(this).data('id');
             swal({
@@ -319,7 +331,7 @@
                             request: 5,
                             id: id
                         },
-                        success: function(response) {
+                        success: function (response) {
                             if (response == 1) {
                                 swal({
                                     title: "Record has been archived successfully"
@@ -336,7 +348,7 @@
             });
         });
         // Publish record
-        $('#nominationTable').on('click', '.publishbtn', function(e) {
+        $('#nominationTable').on('click', '.publishbtn', function (e) {
             e.preventDefault()
             var id = $(this).data('id');
             swal({
@@ -362,7 +374,7 @@
                             request: 6,
                             id: id
                         },
-                        success: function(response) {
+                        success: function (response) {
                             if (response == 1) {
                                 swal({
                                     title: "Record has been published successfully"
@@ -380,7 +392,7 @@
             });
         });
         // un Publish record
-        $('#nominationTable').on('click', '.unpublishbtn', function(e) {
+        $('#nominationTable').on('click', '.unpublishbtn', function (e) {
             e.preventDefault()
             var id = $(this).data('id');
             swal({
@@ -406,10 +418,10 @@
                             request: 7,
                             id: id
                         },
-                        success: function(response) {
+                        success: function (response) {
                             if (response == 1) {
                                 swal({
-                                    title: "Record has been published successfully"
+                                    title: "Record has been unpublished successfully"
                                 });
                                 // Reload DataTable
                                 $('#nominationTable').DataTable().ajax.reload();
@@ -431,7 +443,7 @@
             buttonImageOnly: true,
             dateFormat: 'dd-mm-yy',
         });
-        $(function() {
+        $(function () {
             $("#effect_from_date").datepicker({
                 changeMonth: true,
                 changeYear: true,
@@ -444,7 +456,7 @@
             });
         });
         //year Onchange
-        $("#nomination_year").on('change', function(e) {
+        $("#nomination_year").on('change', function (e) {
             let year = $(this).val();
             let monthoutput = $("#nomination_month").val();
             // let monthvalue = month == 'All' ?'01':month;
@@ -461,7 +473,7 @@
             }
         });
         //Nomination Month onchange
-        $("#nomination_month").on('change', function(e) {
+        $("#nomination_month").on('change', function (e) {
             let month = $(this).val();
             debugger;
             let year = $("#nomination_year").val();

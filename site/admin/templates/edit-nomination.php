@@ -304,30 +304,8 @@ $_SESSION['csrf_token'] = $csrfToken; ?>
             html += '<td><button type="button" name="remove" class="btn btn-danger btn-sm remove"><i class="fa fa-minus" aria-hidden="true"></i></button></td></tr>';
             $('#item_table').append(html);
 
-            $("input[name='pdf_name[]']").last().rules("add", {
-                required: true,
-                messages: {
-                    required: "Please enter a PDF name"
-                }
-            });
-            $("input[name='pdf_file[]']").last().rules("add", {
-                required: true,
-                // accept: "application/pdf",
-                maxfilesize: 5242880,
-                messages: {
-                    required: "Please select a PDF file",
-                    //accept: "Only PDF files are allowed",
-                    maxfilesize: "File size must be less than 5 MB"
-                }
-            });
+         
 
-            jQuery.validator.addMethod("maxfilesize", function (value, element, param) {
-                //debugger;
-                if (element.files.length > 0) {
-                    return element.files[0].size <= param;
-                }
-                return true; // No file selected, so it's valid
-            }, "File size must be less than 5 MB");
             // dynamicCount ++;
             $('.pdfnomination').on('change', function () {
                 myfile = $(this).val();

@@ -4759,3 +4759,6 @@ nav ul li.active>a{
 .fa-flag{
   cursor: pointer;
 }
+.errormsg{
+  width: 50%;
+}

@@ -535,7 +535,7 @@
                         success: function(response) {
 
                             if (response == 1) {
-                                swal({title:"Record has been published successfully"});
+                                swal({title:"Record has been unpublished successfully"});
                               
 
                                 // Reload DataTable

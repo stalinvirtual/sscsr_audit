@@ -45,6 +45,7 @@ $candidateCorner = $route->site_url("IndexController/candidateCorner");
 //$sitemap = $route->site_url("IndexController/sitemap");
 #$base_url = "http://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
 $_SESSION['token'] = bin2hex(openssl_random_pseudo_bytes(16));
+error_reporting(0);
 ?>
 <html>
 <head>

@@ -36,8 +36,8 @@ class DB
         }
         $user_name = 'user=' .  $config->get("db_user") . ';';
         $password = 'password=' .  $config->get("db_password") . ';';
-        $options = 'options=' .  $config->get("options") . ';';
-        $dbConnect =  $dsn . $user_name . $password . $options;
+       
+        $dbConnect =  $dsn . $user_name . $password ;
         // exit;
         $this->pdo = new \PDO(
             $dbConnect
@@ -215,6 +215,11 @@ class DB
         $this->query .= " LIMIT $rows_per_page OFFSET $page_no";
         return $this;
     }
+    public function limitPagination($rows_per_page, $page_no = null)
+    {
+        $this->query .= " LIMIT $rows_per_page OFFSET $page_no";
+        return $this;
+    }
     public function group_by($group_by)
     {
         $this->query .= " group by $group_by";
@@ -293,6 +298,7 @@ class DB
     }
     public function update($data, $where = null)
     {
+       
         $this->params = [];
         $this->query = "UPDATE " . $this->table . " SET ";
         foreach ($data as $column => $value) {

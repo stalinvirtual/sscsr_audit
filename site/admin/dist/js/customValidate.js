@@ -176,7 +176,14 @@ $(document).ready(function () {
     }
      });
 /***   Debarred List Page Validation    ***/
+/***   Nomination  Validation    ***/
 $(document).ready(function () {
+  jQuery.validator.addMethod("maxfilesize", function(value, element, param) {
+    if (element.files.length > 0) {
+    return element.files[0].size <= param;
+    }
+    return true; // No file selected, so it's valid
+}, "File size must be less than 5 MB");
 $('#nomination_form').validate({ // initialize the plugin
   rules: {
     exam_name: {
@@ -186,15 +193,24 @@ $('#nomination_form').validate({ // initialize the plugin
     },
     effect_from_date: "required",
     effect_to_date: {
-      required: true,
-      greaterNominationlist: "#effect_from_date"
+      required: true
+     
     }, 
     'pdf_name[]': {
       required: true
   },
   'pdf_file[]': {
-      required: true,
-      extension: 'pdf'
+    required: {
+      depends: function(element) {
+          if ($('#pdf_id').val() == '') {
+              return true;
+          } else {
+              return false;
+          }
+      }
+  },
+   
+      maxfilesize: 5242880,
   }
   },
   // Specify validation error messages
@@ -207,15 +223,16 @@ $('#nomination_form').validate({ // initialize the plugin
     effect_from_date: "Please Enter  From Date",
     effect_to_date:
     {
-      required: "Please Enter To Date",
-      greaterNominationlist: "Must be greater than From date"
+      required: "Please Enter To Date"
+     
     },
     'pdf_name[]': {
       required: "Please enter a PDF name"
   },
   'pdf_file[]': {
       required: "Please select a PDF file",
-      extension: "Please upload a valid PDF file"
+     
+      maxfilesize: "File size must be less than 5 MB"
   }
   },
   errorPlacement: function(error, element) {
@@ -230,28 +247,24 @@ error.insertAfter(element.next("img.ui-datepicker-trigger"));
 error.insertAfter(element);
 }
 },
-  submitHandler: function (form) {
-    form.submit();
-  }
+submitHandler: function (form) {
+  form.submit();
+}
 });
-jQuery.validator.addMethod("greaterNominationlist", function (value, element, params) {
-  var startDate = document.getElementById("effect_from_date").value;
-    //Convert DD-MM-YYYY to YYYY-MM-DD format using Javascript
-  var startDate = startDate.split("-").reverse().join("-");
-  var endDate = document.getElementById("effect_to_date").value;
-   //Convert DD-MM-YYYY to YYYY-MM-DD format using Javascript
-  var endDate = endDate.split("-").reverse().join("-");
-  var startDateParseData = Date.parse(startDate) ;
-  var endDateParseData = Date.parse(endDate) ;
-return this.optional(element) || endDateParseData >= startDateParseData;
-}, 'Must be greater than start date.');
-$("#nomination_form").on("submit", function(){
-});
+
 $.validator.addMethod("restrictedChars", function (value, element) {
   // Define the restricted characters
   var restrictedChars = /[@#$%^*<>;:=_?~,{}\\]/;
   return !restrictedChars.test(value);
 }, "Special characters are not allowed.");
+jQuery.validator.addMethod("maxfilesize", function (value, element, param) {
+  //debugger;
+  if (element.files.length > 0) {
+      return element.files[0].size <= param;
+  }
+  return true; // No file selected, so it's valid
+}, "File size must be less than 5 MB");
+
 }); 
 /***  Notice Validation    ***/
 $(document).ready(function () {

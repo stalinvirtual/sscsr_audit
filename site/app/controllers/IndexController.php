@@ -373,7 +373,7 @@ class IndexController extends FrontEndController
 	public function validateAndSanitize($input)
 	{
 		// Trim whitespace
-		$input = trim($input);
+		$input = trim($input ?? '');
 		// Remove backslashes
 		$input = stripslashes($input);
 		// Use htmlspecialchars to encode special characters
@@ -925,17 +925,17 @@ class IndexController extends FrontEndController
 					$exam_type = $examname[2];
 					$tier_id = $examname[3];
 				}
-				$roll_no_new = $this->validateAndSanitize($_POST['roll_number']);
-				$roll_no = isset($roll_no_new) ? $roll_no_new : null;
-				$post_preference_new = $this->validateAndSanitize($_POST['post_preference_one']);
-				$post_preference = isset($post_preference_new) ? $post_preference_new : null;
+				//$roll_no_new = $this->validateAndSanitize($_POST['roll_number']);
+				//$roll_no = isset($roll_no_new) ? $roll_no_new : null;
+				//$post_preference_new = $this->validateAndSanitize($_POST['post_preference_one']);
+				//$post_preference = isset($post_preference_new) ? $post_preference_new : null;
 				$data_array = array(
 					"table_name" => $exam_value,
 					"register_number" => $register_number,
 					"dob" => $dob,
 					"tier_id" => $tier_id,
-					"roll_no" => $roll_no,
-					"post_preference" => $post_preference
+					// "roll_no" => $roll_no,
+					// "post_preference" => $post_preference
 				);
 				$admitcard = new Admitcard();
 				if ($admitcard->getAdmitcardforTierPreview($data_array)) {
