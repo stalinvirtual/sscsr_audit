@@ -64,15 +64,18 @@ class DB
     }
     public function insert_archieves($sql, $inIDS)
     {
+       
         try {
+         
             $insertNominationStmt = $this->pdo->prepare($sql);
             $insertNominationResult = $insertNominationStmt->execute($inIDS);
-            return $insertNominationResult;
+           return $insertNominationResult;
         } catch (\PDOException $e) {
             // Handle the exception, e.g., log the error or return a specific value indicating failure.
             return false;
         }
     }
+    
     public function insert($data)
     {
         $columns        = array_keys($data);
@@ -349,11 +352,15 @@ class DB
             $this->params[] = $id;
         }
         if ($where_str != null) {
+            
             $this->query  = "DELETE FROM {$this->table} $where_str;";
             $stmt =  $this->pdo->prepare($this->query);
+           
             $params = $this->params;
             $this->params = [];
+           
             return $stmt->execute($params);
+
         } else {
             return false;
         }

@@ -171,7 +171,55 @@ HTML;
        $count = $fetch_all;
        return $count;
    }
-   public function getTenderDetails($year, $month, $effect_from_date, $effect_to_date, $searchQuery)
+   public function getTenderDetails($year, $month, $effect_from_date, $effect_to_date, $searchQuery,$row,$rowperpage)
+   {
+       if ($month == 'All') {
+ 
+           if ($searchQuery == " ") {
+               $str = <<<TEXT
+               to_char("effect_to_date", 'YYYY')='$year'
+TEXT;
+           } else {
+               $str = <<<TEXT
+               to_char("effect_to_date", 'YYYY')='$year' and  $searchQuery
+TEXT;
+           }
+ 
+           $getlist =  $this->select('*')
+               ->from("tendertbl")
+               ->whereconditionarchieves($str)
+               ->order_by('creation_date desc')
+               ->limitPagination($rowperpage, $row)
+               ->get_list();
+       } else {
+ 
+           if ($searchQuery == " ") {
+               $str = <<<TEXT
+               to_char("effect_to_date", 'MM')='$month' and
+               to_char("effect_to_date", 'YYYY')='$year' and
+               effect_from_date >='$effect_from_date' and
+               effect_to_date <= '$effect_to_date'
+TEXT;
+           }
+           else{
+               $str = <<<TEXT
+               to_char("effect_to_date", 'MM')='$month' and
+               to_char("effect_to_date", 'YYYY')='$year' and
+               effect_from_date >='$effect_from_date' and
+               effect_to_date <= '$effect_to_date'  $searchQuery
+TEXT;
+ 
+           }
+           $getlist =  $this->select('*')
+               ->from("tendertbl")
+               ->whereconditionarchieves($str)
+               ->order_by('creation_date desc')
+               ->limitPagination($rowperpage, $row)
+               ->get_list();
+       }
+       return  $getlist;
+   }
+   public function getTenderDetailsAll($year, $month, $effect_from_date, $effect_to_date, $searchQuery)
    {
        if ($month == 'All') {
  
@@ -217,7 +265,6 @@ TEXT;
        }
        return  $getlist;
    }
-
    public function checkTenderId($id)
    {
        $fetch_all =  $this->select('count(*) as checkid')

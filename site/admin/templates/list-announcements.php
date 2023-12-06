@@ -195,6 +195,8 @@ $("#announcement_arc_form").on('click', function(event) {
     'processing': true,
     'serverSide': true,
     'serverMethod': 'post',
+    'pageLength': 5,
+    "lengthMenu": [[5, 25, 50, -1], [5, 25, 50, "All"]],
     'ajax': {
         'url': baseurl,
         data: formData,

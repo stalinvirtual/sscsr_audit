@@ -253,9 +253,9 @@ TEXT;
 
 
 
-        $sql1 = "INSERT INTO archives.mstnominationarchiveschildtbl(
+        $sql1 = "INSERT INTO archives.mstnominationarchiveschildtbl(nomination_child_id,
          nomination_id, pdf_name, attachment, status)
-         SELECT nomination_id, pdf_name, attachment, '0'
+         SELECT nomination_child_id,nomination_id, pdf_name, attachment, '0'
        FROM public.mstnominationchildtbl WHERE nomination_id IN ($qMarks)";
         $childtable_insert = $this->insert_archieves($sql1, $inIDS);
 

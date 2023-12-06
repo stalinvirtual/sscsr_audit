@@ -2,8 +2,8 @@
 		<div class="container-fluid" id="main">
 				<div class="row">
 				<div class="col-lg-1"></div>
-					<div class="col-lg-10 col-sm-2">
-						<label>select the Phase:
+					<div class="col-lg-4 col-sm-2">
+						<label>Select the Phase:
 						</label>
 					
 						<select name="phasename" id="phasename" required="true" class="form-control">
@@ -80,7 +80,7 @@
                                                         $uploadPath = 'selectionposts' . '/' . $childlist->attachment;
                                                         $file_location = $this->route->get_base_url() . "/" . $uploadPath; ?>
 
-                                                       <u> <a class="pdfanchorclass" href="<?= $file_location ?>" rel = "noopener noreferrer" target="_blank"><i class="fa fa-file-pdf-o" aria-hidden="true"></i> <?= $childlist->pdf_name ?></a><br>(<?= filesize_formatted($uploadPath)?>)<u><br>
+                                                       <u> <a class="pdfanchorclass" href="<?= $file_location ?>" ><i class="fa fa-file-pdf-o" aria-hidden="true"></i> <?= $childlist->pdf_name ?></a><br>(<?= filesize_formatted($uploadPath)?>)<u><br>
                                                     <?php }
 
 
@@ -110,6 +110,15 @@
 		</div>
 		
 		</section>
+		<style>
+			.select2-container--default .select2-selection--single .select2-selection__rendered {
+    color: #444;
+    line-height: 8px;
+}
+.select2-container {
+    width: 62% !important;
+}
+			</style>
 		<!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 		<script src="assets/datatable/js/modernizr.js"></script>
 	<script src="assets/datatable/js/jquery.cookie.js"></script>

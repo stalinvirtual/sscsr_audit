@@ -276,7 +276,7 @@ $(document).ready(function () {
 }, "File size must be less than 5 MB");
   $('#notice_form').validate({ // initialize the plugin
     rules: {
-      pdf_name: {
+      notice_name: {
         required: true,
         maxlength: 256,
         restrictedChars: true // Use the custom validation rule 
@@ -284,17 +284,28 @@ $(document).ready(function () {
       effect_from_date: "required",
       effect_to_date: {
         required: true,
-        //greaterNotice: "#effect_from_date"
+        
       }, 
-      attachment: {
-        required: true,
+      'pdf_name[]': {
+        required: true
+    },
+    'pdf_file[]': {
+      required: {
+        depends: function(element) {
+            if ($('#pdf_id').val() == '') {
+                return true;
+            } else {
+                return false;
+            }
+        }
+    },
+     
         maxfilesize: 5242880,
-        //greaterNotice: "#effect_from_date"
-      },
+    }
     },
     // Specify validation error messages
      messages: {
-      pdf_name: {
+      notice_name: {
         required: "Please Enter Notice  Name",
         maxlength: "Your Exam Name must be maximum 256 characters long",
         restrictedChars: "Special characters are not allowed."
@@ -303,13 +314,16 @@ $(document).ready(function () {
       effect_to_date:
       {
         required: "Please Enter To Date",
-        greaterNotice: "Must be greater than From date"
+       
       },
-      attachment: {
+      'pdf_name[]': {
+        required: "Please enter a PDF name"
+    },
+    'pdf_file[]': {
         required: "Please select a PDF file",
-        //accept: "Only PDF files are allowed",
+       
         maxfilesize: "File size must be less than 5 MB"
-        }
+    }
     }, 
     errorPlacement: function(error, element) {
       if (element.attr("name") === "effect_from_date") {
@@ -329,18 +343,7 @@ $(document).ready(function () {
       form.submit();
     }
   });
-  jQuery.validator.addMethod("greaterNotice", function (value, element, params) {
-    //debugger;
-      var startDate = document.getElementById("effect_from_date").value;
-      var startDate = startDate.split("-").reverse().join("-");
-      var endDate = document.getElementById("effect_to_date").value;
-      var endDate = endDate.split("-").reverse().join("-");
-      var startDateParseData = Date.parse(startDate) ;
-      var endDateParseData = Date.parse(endDate) ;
-    return this.optional(element) || endDateParseData >= startDateParseData;
-  }, 'Must be greater than start date.');
-  $("#notice_form").on("submit", function(){
-  });
+
   $.validator.addMethod("restrictedChars", function (value, element) {
     // Define the restricted characters
     var restrictedChars = /[@#$%^*<>;:=_?~,{}\\]/;
@@ -763,15 +766,22 @@ $(document).ready(function () {
         required :true
       },
       effect_to_date: {
-        required: true,
-        greaterSelectionPost: "#effort_from_date"
+        required: true
       }, 
       'pdf_name[]': {
         required: true
     },
     'pdf_file[]': {
-        required: true,
-        extension: 'pdf'
+      required: {
+        depends: function(element) {
+            if ($('#pdf_id').val() == '') {
+                return true;
+            } else {
+                return false;
+            }
+        }
+    },
+        maxfilesize: 5242880
     }
     },
     // Specify validation error messages
@@ -786,15 +796,15 @@ $(document).ready(function () {
       } ,
       effect_to_date:
       {
-        required: "Please Enter To Date",
-        greaterSelectionPost: "Must be greater than From date"
+        required: "Please Enter To Date"
       },
       'pdf_name[]': {
         required: "Please enter a PDF name"
     },
     'pdf_file[]': {
         required: "Please select a PDF file",
-        extension: "Please upload a valid PDF file"
+        maxfilesize: "File size must be less than 5 MB"
+       
     }
     }, errorPlacement: function(error, element) {
       if (element.attr("name") === "effect_from_date") {
@@ -814,22 +824,19 @@ $(document).ready(function () {
       form.submit();
     }
   });
-  jQuery.validator.addMethod("greaterSelectionPost", function (value, element, params) {
-    var startDate = document.getElementById("effort_from_date").value;
-    var startDate = startDate.split("-").reverse().join("-");
-    var endDate = document.getElementById("effect_to_date").value;
-    var endDate = endDate.split("-").reverse().join("-");
-    var startDateParseData = Date.parse(startDate) ;
-    var endDateParseData = Date.parse(endDate) ;
-  return this.optional(element) || endDateParseData >= startDateParseData;
-}, 'Must be greater than start date.');
-  $("#selection_post_form").on("submit", function(){
-  });
+ 
   $.validator.addMethod("restrictedChars", function (value, element) {
     // Define the restricted characters
     var restrictedChars = /[@#$%^*<>;:=_?~,{}\\]/;
     return !restrictedChars.test(value);
   }, "Special characters are not allowed.");
+  jQuery.validator.addMethod("maxfilesize", function(value, element, param) {
+
+    if (element.files.length > 0) {
+    return element.files[0].size <= param;
+    }
+    return true; // No file selected, so it's valid
+}, "File size must be less than 5 MB");
   }); 
 /***************** Selection Post field validation below ****************/	
 // $('#exam_name').on("cut copy paste",function(e) {

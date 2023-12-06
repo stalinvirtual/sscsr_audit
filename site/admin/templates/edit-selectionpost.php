@@ -160,8 +160,9 @@ margin: -27px 2px 3px 286px;
                                                             </td>
                                                             <td><input type="file" name="pdf_file[]" class="form-control item_quantity pdfselectionpost" accept="application/pdf" value="<?php echo $childlist->attachment; ?>" />
                                                                 <input type="text" name="pdf_files[]" class="form-control item_quantity" value="<?php echo $childlist->attachment; ?>" />
-                                                                <!-- <p><?php //echo $childlist->attachment; 
-                                                                        ?></p> -->
+                                                                <input type="hidden" name="old_pdf_files[]"
+                                                                    class="form-control item_quantity"
+                                                                    value="<?php echo $childlist->attachment; ?>" />
                                                             </td>
                                                             <td><button type="button" name="remove" class="btn btn-danger btn-sm remove"><i class="fa fa-minus" aria-hidden="true"></i></button></td>
                                                             <br>
@@ -255,21 +256,7 @@ $("#effect_from_date").on("change", function() {
   });
     $(document).ready(function() {
         var myfile = "";
-        // $('#save-namination').click(function(e) {
-        //     e.preventDefault();
-        //     //$('.pdfclassupload').trigger('click');
-        //     var exam_name = $('.exam_name').val();
-        //     if (exam_name == "") {
-        //         swal('Please Enter Exam Name');
-        //         return false;
-        //     }
-        //     if (exam_name.length <= 256) {} else {
-        //         swal('Please Enter Below 256 Characters');
-        //         return false;
-        //     }
-        //     // return true;
-        //     $("#nomination_form").submit();
-        // });
+    
 			$('.pdfselectionpost').on( 'change', function() {
 			   myfile= $( this ).val();
 			   var ext = myfile.split('.').pop();
@@ -288,29 +275,8 @@ $("#effect_from_date").on("change", function() {
             html += '<td><input type="file" name="pdf_file[]" class="form-control item_quantity  pdfselectionpost" accept="application/pdf" /></td>';
             html += '<td><button type="button" name="remove" class="btn btn-danger btn-sm remove"><i class="fa fa-minus"></i></button></td></tr>';
             $('#item_table').append(html);
-             $("input[name='pdf_name[]']").last().rules("add", {
-                required: true,
-                messages: {
-                    required: "Please enter a PDF name"
-                }
-            });
-            $("input[name='pdf_file[]']").last().rules("add", {
-                required: true,
-               // accept: "application/pdf",
-                maxfilesize: 5242880,
-                messages: {
-                    required: "Please select a PDF file",
-                    //accept: "Only PDF files are allowed",
-                    maxfilesize: "File size must be less than 5 MB"
-                    }
-            });
-            jQuery.validator.addMethod("maxfilesize", function(value, element, param) {
-                debugger;
-                if (element.files.length > 0) {
-                return element.files[0].size <= param;
-                }
-                return true; // No file selected, so it's valid
-            }, "File size must be less than 5 MB");
+             
+         
 			$('.pdfselectionpost').on( 'change', function() {
 			   myfile= $( this ).val();
 			   var ext = myfile.split('.').pop();

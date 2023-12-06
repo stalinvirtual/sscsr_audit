@@ -154,10 +154,10 @@
                                     <th>Notice Name</th>
                                     <th style="width: 2%"> Category Name </th>
                                     <th> Pdf File</th>
-                                    <th style="width: 10%">From Date</th>
-                                    <th style="width: 10%">To Date</th>
+                                    <th style="width: 9%">From Date</th>
+                                    <th style="width: 9%">To Date</th>
                                     <th style="width: 1%">Status</th>
-                                    <th style="width: 12%">Action</th>
+                                    <th style="width: 15%">Action</th>
 
                                 </tr>
                             </thead>
@@ -201,6 +201,8 @@
             'processing': true,
             'serverSide': true,
             'serverMethod': 'post',
+            'pageLength': 5,
+            "lengthMenu": [[5, 25, 50, -1], [5, 25, 50, "All"]],
             'ajax': {
                 'url': baseurl,
                 data: formData,
@@ -242,6 +244,11 @@
                 'style': 'multi'
             },
         });
+        userDataTable.on('draw.dt', function () {
+                // Update the background color after each draw
+                $("button.unpublishbtn").css("margin-left", "10px");
+                $("button.unpublishbtn").closest("td").css("display", "flex");
+            });
 
         });
 

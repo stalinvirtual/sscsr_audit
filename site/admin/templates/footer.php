@@ -922,7 +922,9 @@
                              success: function(response) {
                                  if (response.message == 1) {
                                      //alert("Welcome")
-                                     window.location.href = redirecturl;
+                                   window.location.href = redirecturl;
+                                   var alerts = document.getElementsByClassName("alert-success");
+                                  alert.innerHTML="Published Successfully";
                                  }
                              }
                          });

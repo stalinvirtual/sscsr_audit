@@ -258,36 +258,39 @@ $_SESSION['csrf_token'] = $csrfToken;
             }
         });
         var myfile = "";
+      
+        $('.pdfnomination').on('change', function () {
+            myfile = $(this).val();
+            var ext = myfile.split('.').pop();
+            if (ext == "pdf") {
+                return true;
+            } else {
+                swal("Accept Only PDF Files", "", "warning");
+                $('.pdfnomination').val('');
+                return;
+            }
+        });
         $(document).on('click', '.add', function () {
             var html = '';
             html += '<tr>';
             html += '<td><input type="text" name="pdf_name[]" class="form-control item_name" /></td>';
-            html += '<td><input type="file" name="pdf_file[]" class="form-control item_quantity pdfclassupload" accept="application/pdf" /></td>';
-            html += '<td><button type="button" name="remove" class="btn btn-danger btn-sm remove"><span class="glyphicon glyphicon-minus"></span></button></td></tr>';
+            html += '<td><input type="file" name="pdf_file[]" class="form-control item_quantity pdfclassupload pdfnomination" accept="application/pdf" /></td>';
+            html += '<td><button type="button" name="remove" class="btn btn-danger btn-sm remove"><i class="fa fa-minus" aria-hidden="true"></i></button></td></tr>';
             $('#item_table').append(html);
-            $("input[name='pdf_name[]']").last().rules("add", {
-                required: true,
-                messages: {
-                    required: "Please enter a PDF name"
+
+            $('.pdfnomination').on('change', function () {
+                myfile = $(this).val();
+                var ext = myfile.split('.').pop();
+                if (ext == "pdf") {
+                    return true;
+                } else {
+                    swal("Accept Only PDF Files", "", "warning");
+                    $('.pdfnomination').val('');
+                    return;
                 }
             });
-            $("input[name='pdf_file[]']").last().rules("add", {
-                required: true,
-                // accept: "application/pdf",
-                maxfilesize: 5242880,
-                messages: {
-                    required: "Please select a PDF file",
-                    //accept: "Only PDF files are allowed",
-                    maxfilesize: "File size must be less than 5 MB"
-                }
-            });
-            jQuery.validator.addMethod("maxfilesize", function (value, element, param) {
-                //debugger;
-                if (element.files.length > 0) {
-                    return element.files[0].size <= param;
-                }
-                return true; // No file selected, so it's valid
-            }, "File size must be less than 5 MB");
+           
+           
         });
         $(document).on('click', '.remove', function () {
             //debugger;

@@ -864,10 +864,10 @@ class Admin extends BackEndController
                 //print_r($ret);
                 echo '<option value="">Select Menu </option>';
                 foreach ($ret as $val) { ?>
-                    <option value="<?php echo $val->menu_parent_id; ?>" <?php if ($val->menu_parent_id == $menu_id) {
-                                                                            echo $message;
-                                                                        } ?>><?php echo $val->parent_name; ?></option>
-                    <?php }
+                                        <option value="<?php echo $val->menu_parent_id; ?>" <?php if ($val->menu_parent_id == $menu_id) {
+                                               echo $message;
+                                           } ?>><?php echo $val->parent_name; ?></option>
+                                    <?php }
             }
         }
     }
@@ -1038,26 +1038,25 @@ class Admin extends BackEndController
                         'creation_date' => date('Y-m-d H:i:s'),
                         'p_status' => '0',
                     ];
-                    // echo '<pre>';
-                    // print_r($nomination_data);
-                    // exit;
                     if ($nomination->updateNomination($nomination_data, $nomination_id)) {
                         foreach ($_FILES['pdf_file']['name'] as $i => $name) {
-                            if ($_FILES['pdf_file']['size'][$i] != 0) {
+                            if ($_FILES['pdf_file']['size'][$i] != 0 || $_POST['pdf_name'][$i] != '') {
                                 $item_name = Helpers::cleanData($_POST['pdf_name'][$i]);
+                                $old_item_name = Helpers::cleanData($_POST['old_pdf_files'][$i]);
                                 $child_id = isset($_POST['nomination_child_id'][$i]) ? $_POST['nomination_child_id'][$i] : 0;
                                 $tmp_name = $_FILES['pdf_file']['tmp_name'][$i];
                                 $error = $_FILES['pdf_file']['error'][$i];
                                 $size = $_FILES['pdf_file']['size'][$i];
                                 $type = $_FILES['pdf_file']['type'][$i];
                                 $folder = './nominations/';
-                                $file = rand(1000, 100000) . "-" . $_FILES['pdf_file']['name'][$i];
+                                if ($_FILES['pdf_file']['name'][$i] == '') {
+                                    $file = $old_item_name;
+                                } else {
+                                    $file = rand(1000, 100000) . "-" . $_FILES['pdf_file']['name'][$i];
+                                }
                                 $new_file_name = strtolower($file);
                                 $final_file = str_replace(' ', '-', $new_file_name);
-                                if (move_uploaded_file($tmp_name, $folder . $final_file)) { // echo "File is valid, and was successfully uploaded.\n";
-                                } else {
-                                    echo "File size greater than 300kb!\n\n";
-                                }
+                                move_uploaded_file($tmp_name, $folder . $final_file);
                                 $nominationchild = new \App\Models\Nominationchild();
                                 $nomination_child_data = [
                                     'nomination_id' => $nomination_id,
@@ -1212,6 +1211,7 @@ class Admin extends BackEndController
                     ];
                     
                     if ($selectionpost->updateSelectionpost($selectionpost_data, $selectionpost_id)) {
+<<<<<<< Updated upstream
                         // Loop through each row
                         foreach ($_POST['pdf_name'] as $i => $pdf_name) {
                             $child_id = isset($_POST['selectionpost_child_id'][$i]) ? $_POST['selectionpost_child_id'][$i] : 0;
@@ -1221,6 +1221,13 @@ class Admin extends BackEndController
                     
                             if ($update_file) {
                                 // File upload logic
+=======
+                        foreach ($_FILES['pdf_file']['name'] as $i => $name) {
+                            if ($_FILES['pdf_file']['size'][$i] != 0 ) {
+                                $item_name = Helpers::cleanData($_POST['pdf_name'][$i]);
+                               
+                                $child_id = isset($_POST['selectionpost_child_id'][$i]) ? $_POST['selectionpost_child_id'][$i] : 0;
+>>>>>>> Stashed changes
                                 $tmp_name = $_FILES['pdf_file']['tmp_name'][$i];
                                 $error = $_FILES['pdf_file']['error'][$i];
                                 $size = $_FILES['pdf_file']['size'][$i];
@@ -1229,9 +1236,13 @@ class Admin extends BackEndController
                                 $file = rand(1000, 100000) . "-" . $_FILES['pdf_file']['name'][$i];
                                 $new_file_name = strtolower($file);
                                 $final_file = str_replace(' ', '-', $new_file_name);
+<<<<<<< Updated upstream
                                 
                                 if (move_uploaded_file($tmp_name, $folder . $final_file)) {
                                     // File was uploaded successfully
+=======
+                                if (move_uploaded_file($tmp_name, $folder . $final_file)) {  // echo "File is valid, and was successfully uploaded.\n";
+>>>>>>> Stashed changes
                                 } else {
                                     echo "File size greater than 300kb!\n\n";
                                 }
@@ -1384,7 +1395,7 @@ class Admin extends BackEndController
                     $final_file = Helpers::cleanData($_POST['pdflink']);
                 }
                 $effect_from_date = date('Y-m-d', strtotime(Helpers::cleanData($_POST['effect_from_date'])));
-                $effect_to_date =  date('Y-m-d', strtotime(Helpers::cleanData($_POST['effect_to_date'])));
+                $effect_to_date = date('Y-m-d', strtotime(Helpers::cleanData($_POST['effect_to_date'])));
                 $dlist_data = [
                     'pdf_name' => Helpers::cleanData($_POST['pdf_name']),
                     'attachment' => $final_file,
@@ -2213,7 +2224,10 @@ class Admin extends BackEndController
         ];
         if ($pm_model->updatePhaseMasterState($pm_data, $phasemaster_id)) {
             $message = 1;
+            $message_title = "Phase Master Published successfully";
+            $message_type = "success";
             header('Content-Type: application/json');
+            $_SESSION['notification'] = ['message' => $message_title, 'message_type' => $message_type];
             echo json_encode(array("message" => $message));
         }
     }
@@ -2227,7 +2241,10 @@ class Admin extends BackEndController
         ];
         if ($pm_model->updatePhaseMasterState($pm_data, $phasemaster_id)) {
             $message = 1;
+            $message_title = "Phase Master UnPublished successfully";
+            $message_type = "success";
             header('Content-Type: application/json');
+            $_SESSION['notification'] = ['message' => $message_title, 'message_type' => $message_type];
             echo json_encode(array("message" => $message));
         }
     }
@@ -2350,14 +2367,14 @@ class Admin extends BackEndController
                 $is_publisher = $user->is_publisher(); // publisher
                 $data['is_publisher'] = $is_publisher;
                 if (count($arrayValue) > 0) {
-                    foreach ($arrayValue as $row) :
+                    foreach ($arrayValue as $row):
                         $delete_nomination_link_str = str_replace("{id}", $row['nomination_id'], $dlink);
                         $edit_nomination_link_str = str_replace("{id}", $row['nomination_id'], $elink);
                         $archive_nomination_link_str = str_replace("{id}", $row['nomination_id'], $alink);
                         $nominationchildclass = new Nominationchild();
                         $nominationchildlist = $nominationchildclass->getNominationchild();
                         $output = "";
-                        foreach ($nominationchildlist as $key => $childlist) :
+                        foreach ($nominationchildlist as $key => $childlist):
                             $selected = "";
                             if ($row['nomination_id'] == $childlist->nomination_id) {
                                 $selected = "selected=\"selected\"";
@@ -2367,41 +2384,41 @@ class Admin extends BackEndController
             <a href='$file_location' rel = "noopener noreferrer"  target="_blank"> $childlist->pdf_name</a>,<br>
 HTML;
                             }
-                    ?>
-                        <?php endforeach; ?>
-                        <?php $flagValue = Helpers::flagoutput($row['p_status']);
-                        $rolebasedValue = Helpers::roleBased();
-                        if ($rolebasedValue['is_superadmin'] == 1) {
-                            $primaryid = $row['nomination_id'];
-                            $publishbaseurl = $this->route->site_url("Admin/ajaxresponseforPublish");
-                            $archivesbaseurl = $this->route->site_url("Admin/ajaxresponseforArchives");
-                            $redirecturl = $this->route->site_url("Admin/dashboard/?action=listnominations&&status=0");
-                            $status = $row['p_status'];
-                            $actionoutputValue = Helpers::iconOperation($edit_nomination_link_str, $delete_nomination_link_str, $archive_nomination_link_str, $primaryid, $idname, $publishbaseurl, $archivesbaseurl, $redirecturl, $status, "Nomination");
-                        } else if ($rolebasedValue['is_admin'] == 1) {
-                            $primaryid = $row['nomination_id'];
-                            $publishbaseurl = $this->route->site_url("Admin/ajaxresponseforPublish");
-                            $archivesbaseurl = $this->route->site_url("Admin/ajaxresponseforArchives");
-                            $redirecturl = $this->route->site_url("Admin/dashboard/?action=listnominations&&status=0");
-                            $status = $row['p_status'];
-                            $actionoutputValue = Helpers::iconOperation($edit_nomination_link_str, $delete_nomination_link_str, $archive_nomination_link_str, $primaryid, $idname, $publishbaseurl, $archivesbaseurl, $redirecturl, $status, "Nomination");
-                        } elseif ($rolebasedValue['is_uploader'] == 1) {
-                            $primaryid = $row['nomination_id'];
-                            $publishbaseurl = $this->route->site_url("Admin/ajaxresponseforPublish");
-                            $archivesbaseurl = $this->route->site_url("Admin/ajaxresponseforArchives");
-                            $redirecturl = $this->route->site_url("Admin/dashboard/?action=listnominations&&status=0");
-                            $status = $row['p_status'];
-                            $actionoutputValue = Helpers::iconOperation($edit_nomination_link_str, $delete_nomination_link_str, $archive_nomination_link_str, $primaryid, $idname, $publishbaseurl, $archivesbaseurl, $redirecturl, $status, "Nomination");
-                        } else {
-                            // if (@$_GET['status'] == 0 && $row['p_status'] != 1) {
-                            //     echo '<i class="fa fa-eye nomination-publish-button" style="color:#007bff"></i>';
-                            // }
-                        }
-                        // echo  $output;
-                        // $outputarray =explode(" ",$output);
-                        // $outputarray = array($output);
-                        // print_r( $outputarray);
-                        @$array['data'][] = array($primaryid, $row['exam_name'], $row['category_name'], $output, $row['effect_from_date'], $row['effect_to_date'], $flagValue, $actionoutputValue);
+                            ?>
+                                                <?php endforeach; ?>
+                                                <?php $flagValue = Helpers::flagoutput($row['p_status']);
+                                                $rolebasedValue = Helpers::roleBased();
+                                                if ($rolebasedValue['is_superadmin'] == 1) {
+                                                    $primaryid = $row['nomination_id'];
+                                                    $publishbaseurl = $this->route->site_url("Admin/ajaxresponseforPublish");
+                                                    $archivesbaseurl = $this->route->site_url("Admin/ajaxresponseforArchives");
+                                                    $redirecturl = $this->route->site_url("Admin/dashboard/?action=listnominations&&status=0");
+                                                    $status = $row['p_status'];
+                                                    $actionoutputValue = Helpers::iconOperation($edit_nomination_link_str, $delete_nomination_link_str, $archive_nomination_link_str, $primaryid, $idname, $publishbaseurl, $archivesbaseurl, $redirecturl, $status, "Nomination");
+                                                } else if ($rolebasedValue['is_admin'] == 1) {
+                                                    $primaryid = $row['nomination_id'];
+                                                    $publishbaseurl = $this->route->site_url("Admin/ajaxresponseforPublish");
+                                                    $archivesbaseurl = $this->route->site_url("Admin/ajaxresponseforArchives");
+                                                    $redirecturl = $this->route->site_url("Admin/dashboard/?action=listnominations&&status=0");
+                                                    $status = $row['p_status'];
+                                                    $actionoutputValue = Helpers::iconOperation($edit_nomination_link_str, $delete_nomination_link_str, $archive_nomination_link_str, $primaryid, $idname, $publishbaseurl, $archivesbaseurl, $redirecturl, $status, "Nomination");
+                                                } elseif ($rolebasedValue['is_uploader'] == 1) {
+                                                    $primaryid = $row['nomination_id'];
+                                                    $publishbaseurl = $this->route->site_url("Admin/ajaxresponseforPublish");
+                                                    $archivesbaseurl = $this->route->site_url("Admin/ajaxresponseforArchives");
+                                                    $redirecturl = $this->route->site_url("Admin/dashboard/?action=listnominations&&status=0");
+                                                    $status = $row['p_status'];
+                                                    $actionoutputValue = Helpers::iconOperation($edit_nomination_link_str, $delete_nomination_link_str, $archive_nomination_link_str, $primaryid, $idname, $publishbaseurl, $archivesbaseurl, $redirecturl, $status, "Nomination");
+                                                } else {
+                                                    // if (@$_GET['status'] == 0 && $row['p_status'] != 1) {
+                                                    //     echo '<i class="fa fa-eye nomination-publish-button" style="color:#007bff"></i>';
+                                                    // }
+                                                }
+                                                // echo  $output;
+                                                // $outputarray =explode(" ",$output);
+                                                // $outputarray = array($output);
+                                                // print_r( $outputarray);
+                                                @$array['data'][] = array($primaryid, $row['exam_name'], $row['category_name'], $output, $row['effect_from_date'], $row['effect_to_date'], $flagValue, $actionoutputValue);
                     endforeach;
                     //echo '<pre>';
                     //print_r($array);
@@ -2428,7 +2445,7 @@ HTML;
                         $output = "";
                         $output .= '<a href=" ' . $file_location . '" rel = "noopener noreferrer" target="_blank">' . $row["attachment"] . ' </a>';
                         ?>
-<?php
+                        <?php
                         $flagValue = Helpers::flagoutput($row['p_status']);
                         $rolebasedValue = Helpers::roleBased();
                         if ($rolebasedValue['is_admin'] == 1) {
@@ -2909,8 +2926,7 @@ HTML;
             ## Read value
             $draw = Helpers::cleanData($_POST['draw']);
             $row = Helpers::cleanData($_POST['start']);
-           $rowperpage = Helpers::cleanData($_POST['length']); // Rows display per page
-           
+            $rowperpage = Helpers::cleanData($_POST['length']); // Rows display per page
             $columnIndex = Helpers::cleanData($_POST['order'][0]['column']); // Column index
             $columnName = Helpers::cleanData($_POST['columns'][$columnIndex]['data']); // Column name
             $columnSortOrder = Helpers::cleanData($_POST['order'][0]['dir']); // asc or desc
@@ -2935,12 +2951,11 @@ HTML;
             ## Total number of records with filtering
             $totalRecordsWithFiltering = $model->totalRecordsWithFiltering($searchQuery);
             $totalRecordwithFilter = $totalRecordsWithFiltering->allcount;
-            if($rowperpage==-1){
+            if ($rowperpage == -1) {
                 $fetchRecordsObject = $model->getNominationDetailsAll($year, $month, $effect_from_date, $effect_to_date, $searchQuery);
-            }else{
-                $fetchRecordsObject = $model->getNominationDetails($year, $month, $effect_from_date, $effect_to_date, $searchQuery,$row,$rowperpage);
+            } else {
+                $fetchRecordsObject = $model->getNominationDetails($year, $month, $effect_from_date, $effect_to_date, $searchQuery, $row, $rowperpage);
             }
-           
             $fetchRecords = (array) $fetchRecordsObject;
             $nominationchildlist = Helpers::getNominationChildListforAdmin();
             $edit_nomination_link = $this->links['edit_nomination_link'];
@@ -2991,7 +3006,7 @@ HTML;
                     // $action = "<p style='color:green'>Published</p>";
                     $unpublishButton = "<button  title='Un Publish' style='height:24px' class='btn btn-sm btn-danger unpublishbtn iconWidth' data-id='" . $rowval->nomination_id . "'><i class='fa  fa-eye'></i></button>";
                     $green_text = "<p style='color:green'>Published</p>";
-                    $action =  $green_text . $unpublishButton;
+                    $action = $green_text . $unpublishButton;
                 }
                 $pdfPath = "";
                 $pdfLinks = []; // Initialize an array to store the PDF links
@@ -3168,7 +3183,11 @@ HTML;
             ## Total number of records with filtering
             $totalRecordsWithFiltering = $model->totalRecordsWithFiltering($searchQuery);
             $totalRecordwithFilter = $totalRecordsWithFiltering->allcount;
-            $fetchRecordsObject = $model->getSelectionPostDetails($year, $month, $effect_from_date, $effect_to_date, $searchQuery);
+            if ($rowperpage == -1) {
+                $fetchRecordsObject = $model->getSelectionPostDetailsAll($year, $month, $effect_from_date, $effect_to_date, $searchQuery);
+            }else{
+                $fetchRecordsObject = $model->getSelectionPostDetails($year, $month, $effect_from_date, $effect_to_date, $searchQuery,$row,$rowperpage);
+            }
             $fetchRecords = (array) $fetchRecordsObject;
             // echo '<pre>';
             // print_r( $fetchRecords );
@@ -3216,7 +3235,7 @@ HTML;
                 } else {
                     $unpublishButton = "<button  title='Un Publish' style='height:24px' class='btn btn-sm btn-danger sp_unpublishbtn iconWidth' data-id='" . $rowval->selection_post_id . "'><i class='fa  fa-eye'></i></button>";
                     $green_text = "<p style='color:green'>Published</p>";
-                    $action =  $green_text . $unpublishButton;
+                    $action = $green_text . $unpublishButton;
                 }
                 $pdfPath = "";
                 $pdfLinks = []; // Initialize an array to store the PDF links
@@ -3400,7 +3419,12 @@ HTML;
             ## Total number of records with filtering
             $totalRecordsWithFiltering = $model->totalRecordsWithFiltering($searchQuery);
             $totalRecordwithFilter = $totalRecordsWithFiltering->allcount;
-            $fetchRecordsObject = $model->getTenderDetails($year, $month, $effect_from_date, $effect_to_date, $searchQuery);
+            if ($rowperpage == -1) {
+                $fetchRecordsObject = $model->getTenderDetailsAll($year, $month, $effect_from_date, $effect_to_date, $searchQuery);
+            }else{
+                $fetchRecordsObject = $model->getTenderDetails($year, $month, $effect_from_date, $effect_to_date, $searchQuery,$row,$rowperpage);
+            }
+           
             $fetchRecords = (array) $fetchRecordsObject;
             $edit_tender_link = $this->links['edit_tender_link'];
             $data = array();
@@ -3449,7 +3473,7 @@ HTML;
                 } else {
                     $unpublishButton = "<button  title='Un Publish' style='height:24px' class='btn btn-sm btn-danger tender_unpublishbtn iconWidth' data-id='" . $rowval->tender_id . "'><i class='fa  fa-eye'></i></button>";
                     $green_text = "<p style='color:green'>Published</p>";
-                    $action =  $green_text . $unpublishButton;
+                    $action = $green_text . $unpublishButton;
                     // $action = "<p style='color:green'>Published</p>";
                 }
                 $pdfPath = "";
@@ -3621,13 +3645,19 @@ TEXT;
             $year = trim(Helpers::cleanData($_POST['year']));
             $month = trim(Helpers::cleanData($_POST['month']));
             $effect_from_date = date('Y-m-d', strtotime(Helpers::cleanData($_POST['effect_from_date'])));
-            $effect_to_date = date('Y-m-d', strtotime(Helpers::cleanData($_POST['effect_to_date'])));;
+            $effect_to_date = date('Y-m-d', strtotime(Helpers::cleanData($_POST['effect_to_date'])));
+            ;
             $totalRecordsWithoutFiltering = $model->totalRecordsWithOutFiltering();
             $totalRecords = $totalRecordsWithoutFiltering->allcount;
             ## Total number of records with filtering
             $totalRecordsWithFiltering = $model->totalRecordsWithFiltering($searchQuery);
             $totalRecordwithFilter = $totalRecordsWithFiltering->allcount;
-            $fetchRecordsObject = $model->getMstNoticeDetails($year, $month, $effect_from_date, $effect_to_date, $searchQuery);
+            if ($rowperpage == -1) {
+                $fetchRecordsObject = $model->getMstNoticeDetailsAll($year, $month, $effect_from_date, $effect_to_date, $searchQuery);
+            }else{
+                $fetchRecordsObject = $model->getMstNoticeDetails($year, $month, $effect_from_date, $effect_to_date, $searchQuery,$row,$rowperpage);
+            }
+           
             // echo '<pre>';
             // print_r( $fetchRecordsObject);
             // exit;
@@ -3683,7 +3713,7 @@ TEXT;
                 } else {
                     $unpublishButton = "<button  title='Un Publish' style='height:30px;margin-left:10px' class='btn btn-sm btn-danger notice_unpublishbtn iconWidth' data-id='" . $rowval->notice_id . "'><i class='fa  fa-eye'></i></button>";
                     $green_text = "<p style='color:green;margin-top:8px'>Published</p></div>";
-                    $action = "<div class='flex-container'>" . $green_text . $unpublishButton . "</div>";
+                    $action =  $green_text . $unpublishButton ;
                 }
                 $pdfPath = "";
                 $pdfLinks = []; // Initialize an array to store the PDF links
@@ -3831,7 +3861,8 @@ TEXT;
             $year = trim(Helpers::cleanData($_POST['year']));
             $month = trim(Helpers::cleanData($_POST['month']));
             $effect_from_date = date('Y-m-d', strtotime(Helpers::cleanData($_POST['effect_from_date'])));
-            $effect_to_date = date('Y-m-d', strtotime(Helpers::cleanData($_POST['effect_to_date'])));;
+            $effect_to_date = date('Y-m-d', strtotime(Helpers::cleanData($_POST['effect_to_date'])));
+            ;
             $totalRecordsWithoutFiltering = $model->totalRecordsWithOutFiltering();
             $totalRecords = $totalRecordsWithoutFiltering->allcount;
             ## Total number of records with filtering
@@ -4326,13 +4357,19 @@ TEXT;
             $year = trim(Helpers::cleanData($_POST['year']));
             $month = trim(Helpers::cleanData($_POST['month']));
             $effect_from_date = date('Y-m-d', strtotime(Helpers::cleanData($_POST['effect_from_date'])));
-            $effect_to_date = date('Y-m-d', strtotime(Helpers::cleanData($_POST['effect_to_date'])));;
+            $effect_to_date = date('Y-m-d', strtotime(Helpers::cleanData($_POST['effect_to_date'])));
+            ;
             $totalRecordsWithoutFiltering = $model->totalRecordsWithOutFiltering();
             $totalRecords = $totalRecordsWithoutFiltering->allcount;
             ## Total number of records with filtering
             $totalRecordsWithFiltering = $model->totalRecordsWithFiltering($searchQuery);
             $totalRecordwithFilter = $totalRecordsWithFiltering->allcount;
-            $fetchRecordsObject = $model->getAnnouncementDetails($year, $month, $effect_from_date, $effect_to_date, $searchQuery);
+            if($rowperpage == -1){
+                $fetchRecordsObject = $model->getAnnouncementDetailsAll($year, $month, $effect_from_date, $effect_to_date, $searchQuery);
+            }else{
+                $fetchRecordsObject = $model->getAnnouncementDetails($year, $month, $effect_from_date, $effect_to_date, $searchQuery,$row,$rowperpage);
+ 
+            }
             $fetchRecords = (array) $fetchRecordsObject;
             $edit_announcement_link = $this->links['edit_announcement_link'];
             $data = array();
@@ -4608,13 +4645,20 @@ TEXT;
             $year = trim(Helpers::cleanData($_POST['year']));
             $month = trim(Helpers::cleanData($_POST['month']));
             $effect_from_date = date('Y-m-d', strtotime(Helpers::cleanData($_POST['effect_from_date'])));
-            $effect_to_date = date('Y-m-d', strtotime(Helpers::cleanData($_POST['effect_to_date'])));;
+            $effect_to_date = date('Y-m-d', strtotime(Helpers::cleanData($_POST['effect_to_date'])));
+            ;
             $totalRecordsWithoutFiltering = $model->totalRecordsWithOutFiltering();
             $totalRecords = $totalRecordsWithoutFiltering->allcount;
             ## Total number of records with filtering
             $totalRecordsWithFiltering = $model->totalRecordsWithFiltering($searchQuery);
             $totalRecordwithFilter = $totalRecordsWithFiltering->allcount;
-            $fetchRecordsObject = $model->getDlistDetails($year, $month, $effect_from_date, $effect_to_date, $searchQuery);
+            if($rowperpage == -1){
+                $fetchRecordsObject = $model->getDlistDetailsAll($year, $month, $effect_from_date, $effect_to_date, $searchQuery);
+
+            }else{
+                $fetchRecordsObject = $model->getDlistDetails($year, $month, $effect_from_date, $effect_to_date, $searchQuery,$row,$rowperpage);
+
+            }
             $fetchRecords = (array) $fetchRecordsObject;
             $edit_debarred_lists_link = $this->links['edit_debarred_lists_link'];
             $data = array();
@@ -4664,7 +4708,7 @@ TEXT;
                     // $action = "<p style='color:green'>Published</p>";
                     $unpublishButton = "<button  title='Unpublish' style='height:24px' class='btn btn-sm btn-danger dl_unpublishbtn iconWidth' data-id='" . $rowval->debarred_lists_id . "'><i class='fa  fa-eye'></i></button>";
                     $green_text = "<p style='color:green'>Published</p>";
-                    $action =  $green_text . $unpublishButton;
+                    $action = $green_text . $unpublishButton;
                 }
                 $pdfPath = "";
                 $selected = "";
@@ -4929,7 +4973,8 @@ TEXT;
             $year = trim(Helpers::cleanData($_POST['year']));
             $month = trim(Helpers::cleanData($_POST['month']));
             $effect_from_date = date('Y-m-d', strtotime(Helpers::cleanData($_POST['effect_from_date'])));
-            $effect_to_date = date('Y-m-d', strtotime(Helpers::cleanData($_POST['effect_to_date'])));;
+            $effect_to_date = date('Y-m-d', strtotime(Helpers::cleanData($_POST['effect_to_date'])));
+            ;
             $totalRecordsWithoutFiltering = $model->totalRecordsWithOutFiltering();
             $totalRecords = $totalRecordsWithoutFiltering->allcount;
             ## Total number of records with filtering
@@ -5097,11 +5142,11 @@ TEXT;
                 $effect_from_date = date('Y-m-d', strtotime(Helpers::cleanData($_POST['effect_from_date'])));
                 $effect_to_date = date('Y-m-d', strtotime(Helpers::cleanData($_POST['effect_to_date'])));
                 $instructionslist_data = [
-                    "ins_name"          => $ins_name,
-                    "ins_content"       => $ins_content,
-                    "effect_from_date"  => $effect_from_date,
-                    "effect_to_date"    => $effect_to_date,
-                    'creation_date'     => date('Y-m-d H:i:s'),
+                    "ins_name" => $ins_name,
+                    "ins_content" => $ins_content,
+                    "effect_from_date" => $effect_from_date,
+                    "effect_to_date" => $effect_to_date,
+                    'creation_date' => date('Y-m-d H:i:s'),
                 ];
                 $instructions = new \App\Models\Instructions();
                 if ($ins_id == 0) { // insert new menu 

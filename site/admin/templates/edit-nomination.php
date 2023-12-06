@@ -171,6 +171,9 @@ $_SESSION['csrf_token'] = $csrfToken; ?>
                                                                 <input type="text" name="pdf_files[]"
                                                                     class="form-control item_quantity"
                                                                     value="<?php echo $childlist->attachment; ?>" />
+                                                                    <input type="hidden" name="old_pdf_files[]"
+                                                                    class="form-control item_quantity"
+                                                                    value="<?php echo $childlist->attachment; ?>" />
                                                                 <!-- <p><?php //echo $childlist->attachment; 
                                                                             ?></p> -->
                                                             </td>
