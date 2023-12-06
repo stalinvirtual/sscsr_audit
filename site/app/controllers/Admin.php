@@ -1211,7 +1211,6 @@ class Admin extends BackEndController
                     ];
                     
                     if ($selectionpost->updateSelectionpost($selectionpost_data, $selectionpost_id)) {
-<<<<<<< Updated upstream
                         // Loop through each row
                         foreach ($_POST['pdf_name'] as $i => $pdf_name) {
                             $child_id = isset($_POST['selectionpost_child_id'][$i]) ? $_POST['selectionpost_child_id'][$i] : 0;
@@ -1221,13 +1220,6 @@ class Admin extends BackEndController
                     
                             if ($update_file) {
                                 // File upload logic
-=======
-                        foreach ($_FILES['pdf_file']['name'] as $i => $name) {
-                            if ($_FILES['pdf_file']['size'][$i] != 0 ) {
-                                $item_name = Helpers::cleanData($_POST['pdf_name'][$i]);
-                               
-                                $child_id = isset($_POST['selectionpost_child_id'][$i]) ? $_POST['selectionpost_child_id'][$i] : 0;
->>>>>>> Stashed changes
                                 $tmp_name = $_FILES['pdf_file']['tmp_name'][$i];
                                 $error = $_FILES['pdf_file']['error'][$i];
                                 $size = $_FILES['pdf_file']['size'][$i];
@@ -1236,13 +1228,9 @@ class Admin extends BackEndController
                                 $file = rand(1000, 100000) . "-" . $_FILES['pdf_file']['name'][$i];
                                 $new_file_name = strtolower($file);
                                 $final_file = str_replace(' ', '-', $new_file_name);
-<<<<<<< Updated upstream
                                 
                                 if (move_uploaded_file($tmp_name, $folder . $final_file)) {
                                     // File was uploaded successfully
-=======
-                                if (move_uploaded_file($tmp_name, $folder . $final_file)) {  // echo "File is valid, and was successfully uploaded.\n";
->>>>>>> Stashed changes
                                 } else {
                                     echo "File size greater than 300kb!\n\n";
                                 }
