@@ -132,9 +132,9 @@ class IndexController extends FrontEndController
 				// // check captcha here
 				//if (true == $this->checkCaptcha($_POST['captcha_code'])) {
 				try {
-					if (!empty(Helpers::cleanData($_POST['uname'])) && !empty(Helpers::cleanData($_POST['pwd']))) {
+					if (!empty(Helpers::cleanData($_POST['uname'])) && !empty(Helpers::cleanData($_POST['currentword']))) {
 						$decyptedusername = Helpers::encrypt_with_cryptoJS_and_decrypt_with_php(Helpers::cleanData($_POST['uname']));
-						$decyptedpassword = Helpers::encrypt_with_cryptoJS_and_decrypt_with_php(Helpers::cleanData($_POST['pwd']));
+						$decyptedpassword = Helpers::encrypt_with_cryptoJS_and_decrypt_with_php(Helpers::cleanData($_POST['currentword']));
 						$username = Helpers::cleanData(trim($decyptedusername));
 						$username = htmlspecialchars($username, ENT_QUOTES, 'UTF-8');
 						$password = Helpers::cleanData(trim($decyptedpassword));

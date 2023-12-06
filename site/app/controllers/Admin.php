@@ -1197,8 +1197,10 @@ class Admin extends BackEndController
                         $message = "Error adding selectionpost";
                         $message_type = "warning";
                     }
-                } else { // update menu
+                } else { // update menu   //Update by stalin    
                     $selectionpost = new \App\Models\Selectionpost();
+
+                    // Update Selectionpost details
                     $selectionpost_data = [
                         'exam_name' => $examname,
                         'category_id' => Helpers::cleanData($_POST['category_id']),
@@ -1208,11 +1210,17 @@ class Admin extends BackEndController
                         'creation_date' => date('Y-m-d H:i:s'),
                         'p_status' => '0',
                     ];
+                    
                     if ($selectionpost->updateSelectionpost($selectionpost_data, $selectionpost_id)) {
-                        foreach ($_FILES['pdf_file']['name'] as $i => $name) {
-                            if ($_FILES['pdf_file']['size'][$i] != 0) {
-                                $item_name = Helpers::cleanData($_POST['pdf_name'][$i]);
-                                $child_id = isset($_POST['selectionpost_child_id'][$i]) ? $_POST['selectionpost_child_id'][$i] : 0;
+                        // Loop through each row
+                        foreach ($_POST['pdf_name'] as $i => $pdf_name) {
+                            $child_id = isset($_POST['selectionpost_child_id'][$i]) ? $_POST['selectionpost_child_id'][$i] : 0;
+                            
+                            // Check if PDF file needs to be updated
+                            $update_file = isset($_FILES['pdf_file']['size'][$i]) && $_FILES['pdf_file']['size'][$i] != 0;
+                    
+                            if ($update_file) {
+                                // File upload logic
                                 $tmp_name = $_FILES['pdf_file']['tmp_name'][$i];
                                 $error = $_FILES['pdf_file']['error'][$i];
                                 $size = $_FILES['pdf_file']['size'][$i];
@@ -1221,30 +1229,41 @@ class Admin extends BackEndController
                                 $file = rand(1000, 100000) . "-" . $_FILES['pdf_file']['name'][$i];
                                 $new_file_name = strtolower($file);
                                 $final_file = str_replace(' ', '-', $new_file_name);
-                                if (move_uploaded_file($tmp_name, $folder . $final_file)) { // echo "File is valid, and was successfully uploaded.\n";
+                                
+                                if (move_uploaded_file($tmp_name, $folder . $final_file)) {
+                                    // File was uploaded successfully
                                 } else {
                                     echo "File size greater than 300kb!\n\n";
                                 }
-                                $selectionpostchild = new \App\Models\Selectionpostschild();
-                                $selectionpost_child_data = [
-                                    'selection_post_id' => $selectionpost_id,
-                                    'pdf_name' => $item_name,
-                                    'attachment' => $final_file,
-                                    'status' => 1
-                                ];
-                                if ($child_id == 0) {
-                                    $selectionpostchild->addSelectionpostchild($selectionpost_child_data);
-                                } else {
-                                    $selectionpostchild->updateSelectionpostchild($selectionpost_child_data, $child_id);
-                                }
-                            } //Validation
+                            }
+                    
+                            // Update PDF name
+                            $selectionpostchild = new \App\Models\Selectionpostschild();
+                            $selectionpost_child_data = [
+                                'selection_post_id' => $selectionpost_id,
+                                'pdf_name' => Helpers::cleanData($pdf_name),
+                                'status' => 1
+                            ];
+                    
+                            if ($update_file) {
+                                // Update attachment only if the file was updated
+                                $selectionpost_child_data['attachment'] = $final_file;
+                            }
+                    
+                            if ($child_id == 0) {
+                                $selectionpostchild->addSelectionpostchild($selectionpost_child_data);
+                            } else {
+                                $selectionpostchild->updateSelectionpostchild($selectionpost_child_data, $child_id);
+                            }
                         }
+                    
                         $message = "Selectionpost Updated successfully";
                         $message_type = "success";
                     } else {
                         $message = "Error updating selectionpost";
                         $message_type = "warning";
                     }
+                    //Update by stalin                    
                 }
                 $_SESSION['notification'] = ['message' => $message, 'message_type' => $message_type];
                 $this->route->redirect($this->route->site_url("Admin/dashboard/?action=listselectionposts"));

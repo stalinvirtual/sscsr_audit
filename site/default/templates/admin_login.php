@@ -50,7 +50,7 @@ $_SESSION['csrf_token'] = $csrfToken;
 								<input type="text" class="form-control" placeholder="Username " name="uname" id="username"  oncopy="return false" onpaste="return false"  />
 								<br>
 								<label for="exampleInputEmail1">Password</label>
-								<input type="password" class="form-control" placeholder="Password " name="pwd"  id="password" oncopy="return false" onpaste="return false"/>
+								<input type="password" class="form-control" placeholder="Password " name="currentword"  id="password" oncopy="return false" onpaste="return false"/>
 								<br>
 
 
@@ -124,7 +124,7 @@ $_SESSION['csrf_token'] = $csrfToken;
 					lettersOnly: true
 
 				},
-				pwd: {
+				currentword: {
 					required: true,
 					minlength: 8, // Minimum length of 8 characters
                     //strongPassword: true // Custom rule for strong password
@@ -138,7 +138,7 @@ $_SESSION['csrf_token'] = $csrfToken;
 					maxlength: "Username must be maximum 15 characters long",
 					lettersOnly: "Username must contain only letters"
 				},
-				pwd: {
+				currentword: {
 					required: "Please enter your password",
 					minlength: "Password must be at least 8 characters long.",
                    // strongPassword: "Password must contain at least one uppercase letter, one lowercase letter, one digit, and one special character."

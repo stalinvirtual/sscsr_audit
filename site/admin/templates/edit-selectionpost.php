@@ -156,7 +156,7 @@ margin: -27px 2px 3px 286px;
                                                         $file_location = $this->route->get_base_url() . "/" . $uploadPath; ?>
                                                         <tr>
                                                             <td><input type="text" name="pdf_name[]" class="form-control item_name " id="pdfname" value="<?php echo $childlist->pdf_name; ?>" />
-                                                                <input type="hidden" id="pdf_id" name="nomination_child_id[]" class="form-control item_name" value="<?php echo $childlist->selection_post_child_id; ?>" />
+                                                                <input type="hidden" id="pdf_id" name="selectionpost_child_id[]" class="form-control item_name" value="<?php echo $childlist->selection_post_child_id; ?>" />
                                                             </td>
                                                             <td><input type="file" name="pdf_file[]" class="form-control item_quantity pdfselectionpost" accept="application/pdf" value="<?php echo $childlist->attachment; ?>" />
                                                                 <input type="text" name="pdf_files[]" class="form-control item_quantity" value="<?php echo $childlist->attachment; ?>" />

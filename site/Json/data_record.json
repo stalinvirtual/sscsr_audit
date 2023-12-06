@@ -106,20 +106,16 @@
             "pdf_name": "one",
             "attachment": "31792-sscsr_dataentry_18_nov_2023.pdf",
             "status": 1
+        },
+        {
+            "nomination_child_id": 1092,
+            "nomination_id": 1118,
+            "pdf_name": "Do it",
+            "attachment": "59011-sscsr_dataentry_17-11-2023_sa.pdf",
+            "status": 1
         }
     ],
-    "nominations_latest_news": {
-        "0": {
-            "nomination_id": 1107,
-            "exam_name": "rstdyt",
-            "category_id": 1,
-            "effect_from_date": "2023-11-22",
-            "effect_to_date": "2023-11-30",
-            "creation_date": "2023-11-22 11:13:51",
-            "p_status": "1",
-            "category_name": "CGL"
-        }
-    },
+    "nominations_latest_news": {},
     "nominationchildlist_latest_news": [
         {
             "nomination_child_id": 1080,
@@ -203,6 +199,13 @@
             "nomination_id": 1117,
             "pdf_name": "one",
             "attachment": "31792-sscsr_dataentry_18_nov_2023.pdf",
+            "status": 1
+        },
+        {
+            "nomination_child_id": 1092,
+            "nomination_id": 1118,
+            "pdf_name": "Do it",
+            "attachment": "59011-sscsr_dataentry_17-11-2023_sa.pdf",
             "status": 1
         }
     ],
