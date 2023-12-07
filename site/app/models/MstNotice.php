@@ -305,4 +305,32 @@ TEXT;
      * 
      * 
      */
+
+     public function getMstNoticelistforhome()
+     {
+         $fetch_all =  $this->select('P.*,category.category_name')
+         ->from("mstnoticetbl P ")
+         ->join("mstcategory category ","P.category_id = category.category_id ","JOIN")
+         ->where(['p_status' => 1])
+         ->order_by('P.effect_from_date desc')
+         ->get_list();
+         return  $fetch_all;
+     }
+
+     public function getHomeNoticesarchiveList($parent_id = 0)
+     {
+         $fetch_all =  $this->select('P.*,category.category_name')
+             ->from("archives.mstnoticearchivestbl P ")
+             ->join("mstcategory category ", "P.category_id = category.category_id ", "JOIN")
+            // ->where(['p_status' => '1'])
+             ->order_by('P.date_archived desc')
+             ->get_list();
+           
+         $lastinsertid = (object)$fetch_all;
+         return $lastinsertid;
+     }
+
+   
+
+    
 }

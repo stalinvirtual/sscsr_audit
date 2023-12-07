@@ -407,7 +407,7 @@
                         success: function(response) {
                             if (response == 1) {
                                 swal({
-                                    title: "Record has been published successfully"
+                                    title: "Record has been Unpublished successfully"
                                 });
                                 // Reload DataTable
                                 $('#dlisttbl').DataTable().ajax.reload();

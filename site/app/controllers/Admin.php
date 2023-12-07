@@ -1262,7 +1262,7 @@ class Admin extends BackEndController
                         $message = "Error updating selectionpost";
                         $message_type = "warning";
                     }
-                    //Update by stalin                    
+                    //Update by stalin
                 }
                 $_SESSION['notification'] = ['message' => $message, 'message_type' => $message_type];
                 $this->route->redirect($this->route->site_url("Admin/dashboard/?action=listselectionposts"));
@@ -1974,10 +1974,14 @@ class Admin extends BackEndController
                         'creation_date' => date('Y-m-d H:i:s'),
                         'p_status' => '0',
                     ];
+                    // echo '<pre>';
+                    // print_r($_POST);
+                    // exit;
                     if ($notice->updateMstNotice($notice_data, $notice_id)) {
                         foreach ($_FILES['pdf_file']['name'] as $i => $name) {
-                            if ($_FILES['pdf_file']['size'][$i] != 0) {
+                            if ($_FILES['pdf_file']['size'][$i] != 0 || $_POST['pdf_name'][$i] != '') {
                                 $item_name = Helpers::cleanData($_POST['pdf_name'][$i]);
+                                $old_item_name = Helpers::cleanData($_POST['old_pdf_files'][$i]);
                                 $item_name = htmlspecialchars($item_name);
                                 $child_id = isset($_POST['notice_child_id'][$i]) ? $_POST['notice_child_id'][$i] : 0;
                                 $tmp_name = $_FILES['pdf_file']['tmp_name'][$i];
@@ -1985,7 +1989,11 @@ class Admin extends BackEndController
                                 $size = $_FILES['pdf_file']['size'][$i];
                                 $type = $_FILES['pdf_file']['type'][$i];
                                 $folder = './notices/';
-                                $file = rand(1000, 100000) . "-" . $_FILES['pdf_file']['name'][$i];
+                                if ($_FILES['pdf_file']['name'][$i] == '') {
+                                    $file = $old_item_name;
+                                } else {
+                                    $file = rand(1000, 100000) . "-" . $_FILES['pdf_file']['name'][$i];
+                                }
                                 $new_file_name = strtolower($file);
                                 $final_file = str_replace(' ', '-', $new_file_name);
                                 if (move_uploaded_file($tmp_name, $folder . $final_file)) { // echo "File is valid, and was successfully uploaded.\n";
@@ -2639,8 +2647,9 @@ HTML;
                     'creation_date' => $creation_date,
                     'status' => '0'
                 ];
+       
                 $event = new \App\Models\EventCategory();
-                if ($event_id == 0) { // insert new menu 
+                if ($event_id == '') { // insert new menu 
                     if ($event->addEventCategory($event_category_data)) {
                         $message = "Event Category Added successfully";
                         $message_type = "success";
@@ -4404,7 +4413,10 @@ TEXT;
                      * 
                      */
                 } else {
-                    $action = "<p style='color:green'>Published</p>";
+                    //$action = "<p style='color:green'>Published</p>";
+                    $unpublishButton = "<button  title='Un Publish' style='height:24px' class='btn btn-sm btn-danger unpublishbtn iconWidth' data-id='" . $rowval->announcement_id . "'><i class='fa  fa-eye'></i></button>";
+                    $green_text = "<p style='color:green'>Published</p>";
+                    $action = $green_text . $unpublishButton;
                 }
                 $data[] = array(
                     "announcement_id" => $rowval->announcement_id,
@@ -4482,6 +4494,28 @@ TEXT;
                 exit;
             }
         }
+
+          // Un Publish Nomination
+          if ($request == 7) {
+            $id = Helpers::cleanData($_POST['id']);
+            $announcement_data = [
+                'p_status' => '0',
+            ];
+            // Check id
+            ## Fetch records
+            $model = new Announcements();
+            $checkId = $model->checkAnnouncementId($id);
+            $checkIdCount = $checkId->checkid;
+            if ($checkIdCount > 0) {
+                $publishQuery = $model->updateAnnouncementState($announcement_data, $id);
+                echo 1;
+                exit;
+            } else {
+                echo 0;
+                exit;
+            }
+        }
+
     }
     public function editAnnouncements()
     {

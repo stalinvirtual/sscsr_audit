@@ -38,36 +38,51 @@
 
                   </tr>
                 </thead>
-                <tbody>
+				<tbody>
                   <?php
-				  
-					
-				  
-				  
-                  foreach ($noticesarchiveslist as $sn => $notice) :
+                  foreach ($noticesarchiveslist as $sn => $noticesarchives) :
 
-                    //$preview_url  = ($nomination->menu_type == 3) ? $nomination->menu_link : $this->route->site_url($nomination->menu_link);
-                    // $view_nomination_link_str = str_replace("{id}", $nomination->id, $view_nomination_link);
+                
                   ?>
                     <tr>
                     
-                     <td><?= date("d-m-Y", strtotime($notice->date_archived)); ?></td>
-                      <td><?= $notice->category_name ?></td>
-                      <td><?= $notice->pdf_name ?></td>
-					   
-					  <td>
-					 <?php  $uploadPath = 'notices' . '/' . $notice->attachment;
+                     <td><?= date("d-m-Y", strtotime($noticesarchives->date_archived)); ?></td>
+                      <td><?= $noticesarchives->notice_name ?></td>
+                      <td><?= $noticesarchives->category_name ?></td>
+					  
+					
+                      <td>
+                        <?php
+
+
+                        foreach ($noticearchivechildlist as $key => $childlist) :
+                          $selected = "";
+                          if ($noticesarchives->notice_id == $childlist->notice_id) {
+                            $selected = "selected=\"selected\"";
+                            $uploadPath = 'notices' . '/' . @$childlist->attachment;
                             $file_location = $this->route->get_base_url() . "/" . $uploadPath; ?>
 
-                            <u><a class="pdfanchorclass" href="<?= $file_location ?>" rel = "noopener noreferrer" target="_blank"><i class="fa fa-file-pdf-o" aria-hidden="true"></i> <?= $notice->pdf_name ?></a><br>(<?= filesize_formatted($uploadPath)?>)</u>
-					  </td>
-					   
+                            <u><a class="pdfanchorclass" href="<?= $file_location ?>" ><i class="fa fa-file-pdf-o" aria-hidden="true"></i> <?= $childlist->pdf_name ?>  </a> (<?= filesize_formatted($uploadPath)?>)</u><br>
+                          <?php }
+
+
+                          ?>
+
+                        <?php endforeach; ?>
+
+
+
+
+                      </td>
+					  
+
 
                     </tr>
                   <?php endforeach; ?>
                   <?php //} 
                   ?>
                 </tbody>
+				
 
               </table>
 						</div>

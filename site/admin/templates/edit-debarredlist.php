@@ -126,6 +126,9 @@ margin: -27px 2px 3px 286px;
     <link href="<?php echo $this->theme_url; ?>/dist/css/jquery-ui.css" rel="stylesheet">
     <script src="<?php echo $this->theme_url; ?>/dist/js/jquery-ui.js"></script>
 <script>
+     $("#save_dlist").click(function () {
+        $("#effect_to_date").datepicker("option", "disabled", false);
+    });
 $.datepicker.setDefaults({
 	showOn: "button",
 	buttonImage: "<?php echo $this->theme_url; ?>/dist/img/datepicker.png",
@@ -147,10 +150,24 @@ $("#effect_from_date").datepicker({
     changeYear: true, 
     yearRange: '2020:2025',
     minDate: 0,
+    disabled: true
    
  }
 );
 });
+$("#effect_from_date").on("change", function () {
+        var fromDateValue = $("#effect_from_date").datepicker("getDate");
+        if (fromDateValue) {
+            // If a date is selected in the "From Date" datepicker, enable the "To Date" datepicker
+            $("#effect_to_date").datepicker("option", "disabled", false);
+            // Set the minimum date for the "To Date" datepicker to the selected date in "From Date"
+            $("#effect_to_date").datepicker("option", "minDate", fromDateValue);
+        } else {
+            // If no date is selected in "From Date," disable and reset the "To Date" datepicker
+            $("#effect_to_date").datepicker("option", "disabled", true);
+            $("#effect_to_date").datepicker("setDate", null);
+        }
+    });
     $(document).ready(function() {
 		$('#resume').on( 'change', function() {
    myfile= $( this ).val();

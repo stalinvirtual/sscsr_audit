@@ -247,6 +247,20 @@ class Helpers
 		$nominationchildlist = $nominationchildclass->getNominationArchieveschild();
 		return $nominationchildlist;
 	}
+
+	
+	static function getNoticeArchives()
+	{
+		$nomination = new MstNotice();
+		$nominations = $nomination->getHomeNoticesarchiveList();
+		return $nominations;
+	}
+	static function getNoticeChildListArchives()
+	{
+		$nominationchildclass = new MstNoticeChild();
+		$nominationchildlist = $nominationchildclass->getNoticeArchieveschild();
+		return $nominationchildlist;
+	}
 	/****
 	 * 
 	 * Nomination Archives
@@ -331,12 +345,20 @@ class Helpers
 	 * 
 	 * 
 	 */
-	static function getNotice()
+	static function getMstNotice()
 	{
-		$notice = new Notice();
-		$notices = $notice->getNotice();
+		$notice = new MstNotice();
+		$notices = $notice->getMstNoticelistforhome();
 		return $notices;
 	}
+
+	static function getNoticeChildList()
+	{
+		$notice = new MstNoticeChild();
+		$noticechildlist = $notice->getNoticechildforhome();
+		return $noticechildlist;
+	}
+	
 	/****
 	 * 
 	 * Notice For Latest News
