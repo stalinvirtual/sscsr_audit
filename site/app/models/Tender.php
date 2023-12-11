@@ -281,8 +281,8 @@ TEXT;
        }
        $inIDS = explode(",", $tender_id);
        $qMarks = str_repeat('?,', count($inIDS) - 1) . '?';
-       $sql = "INSERT INTO archives.tenderarchivestbl (tender_id, pdf_name,effect_from_date, effect_to_date, p_status, date_archived ) 
-       SELECT tender_id, pdf_name,effect_from_date, effect_to_date, '0', NOW()
+       $sql = "INSERT INTO archives.tenderarchivestbl (tender_id, pdf_name,attachment,effect_from_date, effect_to_date, p_status, date_archived ) 
+       SELECT tender_id, pdf_name,attachment,effect_from_date, effect_to_date, '0', NOW()
       FROM public.tendertbl WHERE tender_id IN ($qMarks )";
        $delete_row = $this->insert_archieves($sql, $inIDS);
        

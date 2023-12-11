@@ -77,36 +77,54 @@ function filesize_formatted($path){
 
                   </tr>
                 </thead>
-                <tbody>
+				<tbody>
                   <?php
-				  
-					
-				  
-				  
+				 
                   foreach ($notices as $sn => $notice) :
 
-                    //$preview_url  = ($nomination->menu_type == 3) ? $nomination->menu_link : $this->route->site_url($nomination->menu_link);
-                    // $view_nomination_link_str = str_replace("{id}", $nomination->id, $view_nomination_link);
+                    
                   ?>
                     <tr>
                     
                      <td><?= date("d-m-Y", strtotime($notice->effect_from_date)); ?></td>
                       <td><?= $notice->category_name ?></td>
-                      <td><?= $notice->pdf_name ?></td>
-					   
-					  <td>
-					 <?php  $uploadPath = 'notices' . '/' . $notice->attachment;
+                      <td><?= $notice->notice_name ?></td>
+					  
+					
+                      <td>
+                        <?php
+
+
+                        foreach ($noticeschildlist as $key => $childlist) :
+                          $selected = "";
+                          if ($notice->notice_id == $childlist->notice_id) {
+                            $selected = "selected=\"selected\"";
+                            $uploadPath = 'notices' . '/' . $childlist->attachment;
                             $file_location = $this->route->get_base_url() . "/" . $uploadPath; ?>
 
-                            <u><a class="pdfanchorclass" href="<?= $file_location ?>" rel = "noopener noreferrer" target="_blank"><i class="fa fa-file-pdf-o" aria-hidden="true"></i> <?= $notice->pdf_name ?></a><br>(<?= filesize_formatted($uploadPath)?>)</u>
-					  </td>
-					   
+                            <u><a class="pdfanchorclass" href="<?= $file_location ?>" ><i class="fa fa-file-pdf-o" aria-hidden="true"></i> <?= $childlist->pdf_name ?>  </a> (<?= filesize_formatted($uploadPath)?>)</u><br>
+                          <?php }
+
+
+                          ?>
+
+                        <?php endforeach; ?>
+
+
+
+
+                      </td>
+					  
+
 
                     </tr>
                   <?php endforeach; ?>
                   <?php //} 
                   ?>
                 </tbody>
+				
+				
+				
 
               </table>
 						</div>

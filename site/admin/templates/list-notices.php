@@ -246,8 +246,8 @@
         });
         userDataTable.on('draw.dt', function () {
                 // Update the background color after each draw
-                $("button.unpublishbtn").css("margin-left", "10px");
-                $("button.unpublishbtn").closest("td").css("display", "flex");
+                $("button.notice_unpublishbtn").css("margin-left", "10px");
+                $("button.notice_unpublishbtn").closest("td").css("display", "flex");
             });
 
         });
@@ -389,7 +389,7 @@
 
                                 // Reload DataTable
                                 $('#noticeTable').DataTable().ajax.reload();
-                                $('.alert-success').html('');
+                                $('.alert-success').hide();
                             } else {
                                 swal("Invalid ID.");
                             }
@@ -542,7 +542,7 @@
                         success: function(response) {
 
                             if (response == 1) {
-                                swal({title:"Record has been unpublished successfully"});
+                                swal({title:"Record has been Unpublished successfully"});
                               
 
                                 // Reload DataTable
@@ -646,7 +646,7 @@
 
         });
    
-        var test =  $(".notice_unpublishbtn").closest('td').find('.flex-container').css("display", "flex");
+        // var test =  $(".notice_unpublishbtn").closest('td').find('.flex-container').css("display", "flex");
     });
 </script>
 <style>

@@ -380,7 +380,7 @@
 
                                 // Reload DataTable
                                 $('#tenderTable').DataTable().ajax.reload();
-                                $('.alert-success').html('');
+                                $('.alert-success').hide();
                             } else {
                                 swal("Invalid ID.");
                             }

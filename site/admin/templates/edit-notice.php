@@ -174,6 +174,9 @@ $_SESSION['csrf_token'] = $csrfToken;
                                                                 <input type="text" name="pdf_files[]"
                                                                     class="form-control item_quantity"
                                                                     value="<?php echo $childlist->attachment; ?>" />
+                                                                    <input type="hidden" name="old_pdf_files[]"
+                                                                    class="form-control item_quantity"
+                                                                    value="<?php echo $childlist->attachment; ?>" />
                                                                 <!-- <p><?php //echo $childlist->attachment; 
                                                                             ?></p> -->
                                                             </td>
@@ -222,6 +225,9 @@ $_SESSION['csrf_token'] = $csrfToken;
 <link href="<?php echo $this->theme_url; ?>/dist/css/jquery-ui.css" rel="stylesheet">
 <script src="<?php echo $this->theme_url; ?>/dist/js/jquery-ui.js"></script>
 <script>
+     $("#save_notice").click(function () {
+        $("#effect_to_date").datepicker("option", "disabled", false);
+    });
     $.datepicker.setDefaults({
         showOn: "button",
         buttonImage: "<?php echo $this->theme_url; ?>/dist/img/datepicker.png",
@@ -241,9 +247,24 @@ $_SESSION['csrf_token'] = $csrfToken;
             changeMonth: true,
             changeYear: true,
             yearRange: '2020:2025',
-            minDate: 0
+            minDate: 0,
+            disabled: true
         }
         );
+    });
+
+    $("#effect_from_date").on("change", function () {
+        var fromDateValue = $("#effect_from_date").datepicker("getDate");
+        if (fromDateValue) {
+            // If a date is selected in the "From Date" datepicker, enable the "To Date" datepicker
+            $("#effect_to_date").datepicker("option", "disabled", false);
+            // Set the minimum date for the "To Date" datepicker to the selected date in "From Date"
+            $("#effect_to_date").datepicker("option", "minDate", fromDateValue);
+        } else {
+            // If no date is selected in "From Date," disable and reset the "To Date" datepicker
+            $("#effect_to_date").datepicker("option", "disabled", true);
+            $("#effect_to_date").datepicker("setDate", null);
+        }
     });
     $(document).ready(function () {
         $('#resume').on('change', function () {

@@ -233,6 +233,12 @@ $("#announcement_arc_form").on('click', function(event) {
     },
 });
 
+userDataTable.on('draw.dt', function () {
+                // Update the background color after each draw
+                $("button.unpublishbtn").css("margin-left", "10px");
+                $("button.unpublishbtn").closest("td").css("display", "flex");
+            });
+
 });
 
 $('#announcement_form_reset_btn').click(function(e) {
@@ -492,7 +498,50 @@ $('#announcement_form_reset_btn').click(function(e) {
 
 
         });
-
+ // un Publish record
+ $('#announcementTable').on('click', '.unpublishbtn', function (e) {
+            e.preventDefault()
+            var id = $(this).data('id');
+            swal({
+                title: "Do you want to Unpublish?",
+                buttons: {
+                    yes: {
+                        text: "Ok",
+                        value: "yes"
+                    },
+                    No: {
+                        text: "Cancel",
+                        value: "No",
+                        buttonColor: "#000000",
+                    }
+                }
+            }).then((value) => {
+                if (value === "yes") { //yes start
+                    // AJAX request
+                    $.ajax({
+                        url: baseurl,
+                        type: 'post',
+                        data: {
+                            request: 7,
+                            id: id
+                        },
+                        success: function (response) {
+                            if (response == 1) {
+                                swal({
+                                    title: "Record has been unpublished successfully"
+                                });
+                                // Reload DataTable
+                                $('#announcementTable').DataTable().ajax.reload();
+                                $('.alert-success').hide();
+                            } else {
+                                swal("Invalid ID.");
+                            }
+                        }
+                    });
+                } // yes End
+                return false;
+            });
+        });
 
  //DatePicker
 

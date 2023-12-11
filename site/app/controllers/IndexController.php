@@ -106,7 +106,7 @@ class IndexController extends FrontEndController
 		 * 
 		 */
 		$data['announcements_latest_news'] = Helpers::getAnnouncementsLatestNews();
-		$data['notices'] = Helpers::getNotice();
+		//$data['notices'] = Helpers::getNotice();
 		// Important links and Gallery
 		$data['ilinkforFirstFourRow'] = Helpers::getImporantLinksFirstFourRow();
 		$data['ilinkforAfterFirstFourRow'] = Helpers::getImporantLinksAfterFourRow();
@@ -574,7 +574,10 @@ class IndexController extends FrontEndController
 	}
 	public function notice()
 	{
-		$data['notices'] = Helpers::getNotice();
+		$data['notices'] = Helpers::getMstNotice();
+		
+		$data['noticeschildlist'] = Helpers::getNoticeChildList();
+		
 		$data['categorylist'] = Helpers::getCategory();
 		$data['ilinkforFirstFourRow'] = Helpers::getImporantLinksFirstFourRow();
 		$data['ilinkforAfterFirstFourRow'] = Helpers::getImporantLinksAfterFourRow();
@@ -1152,8 +1155,12 @@ class IndexController extends FrontEndController
 		$data['nominationchildlist'] = Helpers::getNominationChildListArchives();
 		$data['selectionpostsarchieves'] = Helpers::getSelectionPostsArchievesListforAdmin();
 		$data['selectionpostsarchieveschildlist'] = Helpers::getSelectionPostsArchievesChildListforAdmin();
-		$data['noticesarchiveslist'] = Helpers::getNoticeListArchivesforAdmin();
+		//$data['noticesarchiveslist'] = Helpers::getNoticeListArchivesforAdmin();
+		$data['noticesarchiveslist'] = Helpers::getNoticeArchives();
+		$data['noticearchivechildlist'] = Helpers::getNoticeChildListArchives();
+	
 		$data['tenderarchiveslist'] = Helpers::getTenderListArchivesforAdmin();
+	
 		$data['categorylist'] = Helpers::getCategory();
 		$data['categorylistsp'] = Helpers::getCategorySelectionPostsList();
 		$data['ilinkforFirstFourRow'] = Helpers::getImporantLinksFirstFourRow();
@@ -1198,7 +1205,7 @@ class IndexController extends FrontEndController
 		$data['ilinkforFirstFourRow'] = Helpers::getImporantLinksFirstFourRow();
 		$data['ilinkforAfterFirstFourRow'] = Helpers::getImporantLinksAfterFourRow();
 		$data['gallery_id_based_images'] = Helpers::getGalleryidBasedImages();
-		$data['notices'] = Helpers::getNotice();
+		// $data['notices'] = Helpers::getNotice();
 		$this->render("view_all", $data);
 	}
 	public function getadmitcardCount()

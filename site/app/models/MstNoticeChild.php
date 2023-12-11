@@ -53,4 +53,22 @@ class MstNoticeChild extends DB
     {
         return $this->update($data, ['notice_child_id' => $id]);
     }
+
+    public function getNoticechildforhome($parent_id = 0)
+	{
+		$noticechildlist = $this->select()
+			->from($this->table_name)
+			//->where(['status' => 1])
+			->get_list();
+		return $noticechildlist;
+	}
+
+    public function getNoticeArchieveschild($parent_id = 0)
+    {
+        $nominationchildtbllist = $this->select()
+            ->from('archives.mstnoticearchiveschildtbl')
+            //->where(['status' => 1])
+            ->get_list();
+        return $nominationchildtbllist;
+    }
 }
