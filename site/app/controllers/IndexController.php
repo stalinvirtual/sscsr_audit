@@ -1,8 +1,12 @@
 <?php
+
 namespace App\Controllers;
+
 use App\System\Route;
 use App\Helpers\Helpers;
+
 use App\Helpers\PdfHelper;
+use App\Helpers\securityService as securityService;
 use App\Models\Exam as Exam;
 use App\Models\Menu as Menu;
 use App\Models\Users as User;
@@ -120,69 +124,205 @@ class IndexController extends FrontEndController
 		$data['gallery_id_based_images'] = Helpers::getGalleryidBasedImages();
 		$this->render("admin_login", $data);
 	}
+
+	public function killChars_pass($strWords)
+	{
+		$strWords = htmlentities(trim(stripslashes(strip_tags(pg_escape_string($strWords)))));
+		$badChars = array("alert", ";", "--", "alter", "alter routine", "create", "create routine", "create table", "create temporary tables", "create view", "delete", "drop", "event", "execute", "index", "insert", "lock tables", "references", "select", "show view", "trigger", "update", "xp_", "union", "|", ";", "%", "'", '"', "\'", '\"', "<>", "()", "+");
+		$newChars = $strWords;
+		for ($i = 0; $i < count($badChars); $i++) {
+			$newChars = str_replace($badChars[$i], "", $newChars);
+		}
+		str_replace("'", "", str_replace('"', '', strip_tags($newChars)));
+		return $newChars;
+	}
+	public function killChars($strWords)
+	{
+		$strWords = htmlentities(trim(stripslashes(strip_tags(pg_escape_string($strWords)))));
+		$badChars = array("alert", ";", "--", "alter", "alter routine", "create", "create routine", "create table", "create temporary tables", "create view", "delete", "drop", "event", "execute", "index", "insert", "lock tables", "references", "select", "show view", "trigger", "update", "xp_", "union", "|", "&", ";", "$", "%", "'", '"', "\'", '\"', "<>", "+");
+		$newChars = $strWords;
+		for ($i = 0; $i < count($badChars); $i++) {
+			$newChars = str_replace($badChars[$i], "", $newChars);
+		}
+		str_replace("'", "", str_replace('"', '', strip_tags($newChars)));
+		return $newChars;
+
+		// return $strWords;
+	}
+
 	public function login()
 	{
-		$errorMsg = "";
-		//if (!isset($_SESSION)) {
-		//session_start();
-		//}
-		$_POST = filter_input_array(INPUT_POST, FILTER_DEFAULT);
-		if (isset($_POST['login'])) {
-			if (hash_equals($_SESSION['csrf_token'], $_POST['csrf_token'])) {
-				// // check captcha here
-				//if (true == $this->checkCaptcha($_POST['captcha_code'])) {
-				try {
-					if (!empty(Helpers::cleanData($_POST['uname'])) && !empty(Helpers::cleanData($_POST['currentword']))) {
-						$decyptedusername = Helpers::encrypt_with_cryptoJS_and_decrypt_with_php(Helpers::cleanData($_POST['uname']));
-						$decyptedpassword = Helpers::encrypt_with_cryptoJS_and_decrypt_with_php(Helpers::cleanData($_POST['currentword']));
-						$username = Helpers::cleanData(trim($decyptedusername));
-						$username = htmlspecialchars($username, ENT_QUOTES, 'UTF-8');
-						$password = Helpers::cleanData(trim($decyptedpassword));
-						$hashedPassword = password_hash($password, PASSWORD_BCRYPT);
-						if (password_verify($password, $hashedPassword)) { //password verify check
-							// Password is correct
-							$user = new User();
-							if ($user->authenticate($username, $password)) {
-								session_regenerate_id();
-								$route = new Route();
-								http_response_code(200);
-								$route->redirect($route->site_url("Admin/dashboard/?action=listnominations"));
-							} else {
-								http_response_code(402); // Unauthorized
-								$errorMsg = "Wrong Username or password";
-								http_response_code(402);
-							}
-						} else { //password verify check 
-							http_response_code(402); // Unauthorized
-							$errorMsg = "Wrong Password";
-							http_response_code(402);
+
+		$antiCSRF = new securityService();
+		$csrfResponse = $antiCSRF->validate();
+		$usr_name = '';
+		try {
+
+			if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+
+				//exit;
+				if (!empty($csrfResponse)) {
+					$_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
+
+
+					$usr_name = $this->killChars($_POST['uname']);
+					$data = [
+						'usr_name' => $usr_name,
+						'usr_pass' => $this->killChars_pass($_POST['currentword']),
+						//'Captcha_text' => trim($_POST['Captcha_text'])
+					];
+
+
+
+					$user = new User();
+
+
+
+
+
+					$loggedInUser = $user->authenticate($data['usr_name'], $data['usr_pass']);
+					if ($loggedInUser) {
+						//   if ($data['Captcha_text'] == $_SESSION['captcha']) {
+						//   } else {
+						// 	throw new \Exception('Captcha Not Found !!!', '402');
+						//   }
+
+						session_regenerate_id();
+						$_SESSION['session_check'] = session_id();
+						
+
+						//$data['acc_session'] = $_SESSION['session_check'];
+						$login_status = $user->loginStatus($usr_name);
+						// 
+						if (($login_status)) {
+							//$this->createUserSession($loggedInUser);
+
+							
+
+							//unset($user['hashedPassword']);
+					      // $_SESSION['user'] = $user;
+							// $route = new Route();
+							// //http_response_code(200);
+							// 	$t = $route->redirect($route->site_url("Admin/dashboard/?action=listnominations"));
+
+							// echo json_encode(array('message' =>$t));
+
+							//$route = new Route();
+
+							//$route->redirect($route->site_url("Admin/dashboard/?action=listnominations"));
+							throw new \Exception('Login Success', '200');
+						} else {
+							throw new \Exception('Already Login', '402');
 						}
 					} else {
-						$errorMsg = "Invalid credentials";
-						http_response_code(402);
+						throw new \Exception('Invalid Credentials', '403');
 					}
-				} catch (\Exception $e) {
-					header('HTTP/1.1 ' . $e->getCode() . ' Internal Server Booboo');
-					header('Content-Type: application/json');
-					echo json_encode(array('message' => $e->getMessage(), 'code' => $e->getCode()));
+				} else {
+					throw new \Exception('Security Alert: Unable to process your request', '402');
 				}
-				// }else{
-				// 	$errorMsg = "Invalid Captcha";
-				// 	http_response_code(402); 
-				// }
+			} else {
+				// throw new \Exception('Security Alert: Unable to process your request', '402');
 			}
+		} catch (\Exception $e) {
+			 //var_export( $e );
+			 //exit;
+			$protocol = (isset($_SERVER['SERVER_PROTOCOL']) ? $_SERVER['SERVER_PROTOCOL'] : 'HTTP/1.1');
+			header($protocol . ' ' . $e->getCode() . ' ' . $e->getMessage());
+			header('Content-Type: application/json');
+			echo json_encode(array('message' => $e->getMessage(), 'code' => $e->getCode()));
 		}
-		//CSRF Token else end
-		if (isset($_GET['logout']) && $_GET['logout'] == true) {
-			session_destroy();
-			$route = new Route();
-			$route->redirect($route->get_app_url());
-		}
-		if (isset($_GET['lmsg']) && $_GET['lmsg'] == true) {
-			$errorMsg = "Login required to access dashboard";
-		}
-		return ['errorMsg' => $errorMsg];
 	}
+
+	public function createUserSession($user)
+	{
+		unset($user['hashedPassword']);
+		$_SESSION['user'] = $user;
+	}
+	// public function login()
+	// {
+	// 	$errorMsg = "";
+	// 	//if (!isset($_SESSION)) {
+	// 	//session_start();
+	// 	//}
+	// 	$_POST = filter_input_array(INPUT_POST, FILTER_DEFAULT);
+
+
+
+
+
+
+
+
+
+	// 	if (isset($_POST['login'])) {
+	// 		if (hash_equals($_SESSION['csrf_token'], $_POST['csrf_token'])) {
+	// 			// // check captcha here
+	// 			//if (true == $this->checkCaptcha($_POST['captcha_code'])) {
+	// 			try {
+
+	// 				echo '<pre>';
+	// 				print_r($_POST);
+	// 			//	exit;
+
+
+
+
+
+	// 				if (!empty(Helpers::cleanData($_POST['uname'])) && !empty(Helpers::cleanData($_POST['currentword']))) {
+	// 					echo $decyptedusername = Helpers::encrypt_with_cryptoJS_and_decrypt_with_php(Helpers::cleanData($_POST['uname']))."<br>";
+
+
+	// 					echo $decyptedpassword = Helpers::encrypt_with_cryptoJS_and_decrypt_with_php(Helpers::cleanData($_POST['currentword']));
+
+	// 					exit;
+	// 					$username = Helpers::cleanData(trim($decyptedusername));
+	// 					$username = htmlspecialchars($username, ENT_QUOTES, 'UTF-8');
+	// 					$password = Helpers::cleanData(trim($decyptedpassword));
+	// 					$hashedPassword = password_hash($password, PASSWORD_BCRYPT);
+	// 					if (password_verify($password, $hashedPassword)) { //password verify check
+	// 						// Password is correct
+	// 						$user = new User();
+	// 						if ($user->authenticate($username, $password)) {
+	// 							session_regenerate_id();
+	// 							$route = new Route();
+	// 							http_response_code(200);
+	// 							$route->redirect($route->site_url("Admin/dashboard/?action=listnominations"));
+	// 						} else {
+	// 							http_response_code(402); // Unauthorized
+	// 							$errorMsg = "Wrong Username or password";
+	// 							http_response_code(402);
+	// 						}
+	// 					} else { //password verify check 
+	// 						http_response_code(402); // Unauthorized
+	// 						$errorMsg = "Wrong Password";
+	// 						http_response_code(402);
+	// 					}
+	// 				} else {
+	// 					$errorMsg = "Invalid credentials";
+	// 					http_response_code(402);
+	// 				}
+	// 			} catch (\Exception $e) {
+	// 				header('HTTP/1.1 ' . $e->getCode() . ' Internal Server Booboo');
+	// 				header('Content-Type: application/json');
+	// 				echo json_encode(array('message' => $e->getMessage(), 'code' => $e->getCode()));
+	// 			}
+	// 			// }else{
+	// 			// 	$errorMsg = "Invalid Captcha";
+	// 			// 	http_response_code(402); 
+	// 			// }
+	// 		}
+	// 	}
+	// 	//CSRF Token else end
+	// 	if (isset($_GET['logout']) && $_GET['logout'] == true) {
+	// 		session_destroy();
+	// 		$route = new Route();
+	// 		$route->redirect($route->get_app_url());
+	// 	}
+	// 	if (isset($_GET['lmsg']) && $_GET['lmsg'] == true) {
+	// 		$errorMsg = "Login required to access dashboard";
+	// 	}
+	// 	return ['errorMsg' => $errorMsg];
+	// }
 	public function admitcard($data = array())
 	{
 		$data = Helpers::getAdmitCardDetails();
@@ -346,30 +486,30 @@ class IndexController extends FrontEndController
 		Helpers::getAdmitCardDetails("admitcard");
 	}
 	public function validateAndSanitizeSelect2($input)
-{
-    // Trim leading and trailing whitespaces
-    $input = trim($input);
+	{
+		// Trim leading and trailing whitespaces
+		$input = trim($input);
 
-    // Sanitize the input using FILTER_SANITIZE_STRING
-    $input = filter_var($input, FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+		// Sanitize the input using FILTER_SANITIZE_STRING
+		$input = filter_var($input, FILTER_SANITIZE_FULL_SPECIAL_CHARS);
 
-    // Remove backslashes
-    $input = stripslashes($input);
+		// Remove backslashes
+		$input = stripslashes($input);
 
-    // Use htmlspecialchars to encode special characters
-    $input = htmlspecialchars($input, ENT_QUOTES, 'UTF-8');
+		// Use htmlspecialchars to encode special characters
+		$input = htmlspecialchars($input, ENT_QUOTES, 'UTF-8');
 
-    // You can add more specific sanitization or validation steps here based on your requirements
+		// You can add more specific sanitization or validation steps here based on your requirements
 
-    // Example: Check if the length is within an acceptable range
-    $minLength = 1;
-    $maxLength = 255; // Adjust as needed
-    if (strlen($input) < $minLength || strlen($input) > $maxLength) {
-        // Handle validation error, e.g., return an error message or throw an exception
-    }
+		// Example: Check if the length is within an acceptable range
+		$minLength = 1;
+		$maxLength = 255; // Adjust as needed
+		if (strlen($input) < $minLength || strlen($input) > $maxLength) {
+			// Handle validation error, e.g., return an error message or throw an exception
+		}
 
-    return $input;
-}
+		return $input;
+	}
 	public function validateAndSanitize($input)
 	{
 		// Trim whitespace
@@ -476,7 +616,7 @@ class IndexController extends FrontEndController
 	}
 	public function getExamDetails()
 	{
-		if(!isset($_SERVER['HTTP_REFERER']) ){
+		if (!isset($_SERVER['HTTP_REFERER'])) {
 			$url = $_SERVER['REQUEST_SCHEME'] . "://" . $_SERVER['HTTP_HOST'] .  $_SERVER['REQUEST_URI'];
 			$parsedUrl = parse_url($url);
 			if (isset($parsedUrl['scheme'], $parsedUrl['host'], $parsedUrl['path'])) {
@@ -486,7 +626,7 @@ class IndexController extends FrontEndController
 				header("Location: $baseUrl");
 				exit;
 			}
-		 }
+		}
 		$limitrecords = 100;
 		$numberofrecords = (int) $limitrecords;
 		$search = $this->validateAndSanitizeSelect2($_POST['searchTerm'] ?? '');
@@ -509,7 +649,7 @@ class IndexController extends FrontEndController
 	 */
 	public function getTierBasedExamDetailsCity()
 	{
-		if(!isset($_SERVER['HTTP_REFERER']) ){
+		if (!isset($_SERVER['HTTP_REFERER'])) {
 			$url = $_SERVER['REQUEST_SCHEME'] . "://" . $_SERVER['HTTP_HOST'] .  $_SERVER['REQUEST_URI'];
 			$parsedUrl = parse_url($url);
 			if (isset($parsedUrl['scheme'], $parsedUrl['host'], $parsedUrl['path'])) {
@@ -519,7 +659,7 @@ class IndexController extends FrontEndController
 				header("Location: $baseUrl");
 				exit;
 			}
-		 }
+		}
 		$limitrecords = 100;
 		$numberofrecords = (int) $limitrecords;
 		$search = $this->validateAndSanitizeSelect2($_POST['searchTerm'] ?? '');
@@ -539,7 +679,7 @@ class IndexController extends FrontEndController
 	}
 	public function getTierBasedExamDetailsCardPreview()
 	{
-		if(!isset($_SERVER['HTTP_REFERER']) ){
+		if (!isset($_SERVER['HTTP_REFERER'])) {
 			$url = $_SERVER['REQUEST_SCHEME'] . "://" . $_SERVER['HTTP_HOST'] .  $_SERVER['REQUEST_URI'];
 			$parsedUrl = parse_url($url);
 			if (isset($parsedUrl['scheme'], $parsedUrl['host'], $parsedUrl['path'])) {
@@ -549,7 +689,7 @@ class IndexController extends FrontEndController
 				header("Location: $baseUrl");
 				exit;
 			}
-		 }
+		}
 		$limitrecords = 100;
 		$numberofrecords = (int) $limitrecords;
 		$search = $this->validateAndSanitizeSelect2($_POST['searchTerm'] ?? '');
@@ -569,7 +709,7 @@ class IndexController extends FrontEndController
 	}
 	public function getTierBasedExamDetailsCard()
 	{
-		if(!isset($_SERVER['HTTP_REFERER']) ){
+		if (!isset($_SERVER['HTTP_REFERER'])) {
 			$url = $_SERVER['REQUEST_SCHEME'] . "://" . $_SERVER['HTTP_HOST'] .  $_SERVER['REQUEST_URI'];
 			$parsedUrl = parse_url($url);
 			if (isset($parsedUrl['scheme'], $parsedUrl['host'], $parsedUrl['path'])) {
@@ -579,7 +719,7 @@ class IndexController extends FrontEndController
 				header("Location: $baseUrl");
 				exit;
 			}
-		 }
+		}
 		$limitrecords = 100;
 		$numberofrecords = (int) $limitrecords;
 		$search = $this->validateAndSanitizeSelect2($_POST['searchTerm'] ?? '');
@@ -602,7 +742,7 @@ class IndexController extends FrontEndController
 	 */
 	public function getTierMaster()
 	{
-		if(!isset($_SERVER['HTTP_REFERER']) ){
+		if (!isset($_SERVER['HTTP_REFERER'])) {
 			$url = $_SERVER['REQUEST_SCHEME'] . "://" . $_SERVER['HTTP_HOST'] .  $_SERVER['REQUEST_URI'];
 			$parsedUrl = parse_url($url);
 			if (isset($parsedUrl['scheme'], $parsedUrl['host'], $parsedUrl['path'])) {
@@ -612,7 +752,7 @@ class IndexController extends FrontEndController
 				header("Location: $baseUrl");
 				exit;
 			}
-		 }
+		}
 		$limitrecords = 100;
 		$numberofrecords = (int) $limitrecords;
 		$search = $this->validateAndSanitizeSelect2($_POST['searchTerm'] ?? '');
@@ -632,7 +772,7 @@ class IndexController extends FrontEndController
 	}
 	public function getPhaseDetails()
 	{
-		if(!isset($_SERVER['HTTP_REFERER']) ){
+		if (!isset($_SERVER['HTTP_REFERER'])) {
 			$url = $_SERVER['REQUEST_SCHEME'] . "://" . $_SERVER['HTTP_HOST'] .  $_SERVER['REQUEST_URI'];
 			$parsedUrl = parse_url($url);
 			if (isset($parsedUrl['scheme'], $parsedUrl['host'], $parsedUrl['path'])) {
@@ -642,7 +782,7 @@ class IndexController extends FrontEndController
 				header("Location: $baseUrl");
 				exit;
 			}
-		 }
+		}
 		$limitrecords = 100;
 		$numberofrecords = (int) $limitrecords;
 		$search = $this->validateAndSanitizeSelect2($_POST['searchTerm'] ?? '');
@@ -702,7 +842,7 @@ class IndexController extends FrontEndController
 	public function GalleryidBasedImagesWithLightBox()
 	{
 		$year = ''; // Initialize the variable outside the conditional
-	
+
 		if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 			$year = $this->validateAndSanitize($_POST['year']);
 			if (!isset($year) || empty($year)) {
@@ -710,7 +850,7 @@ class IndexController extends FrontEndController
 				return;
 			}
 		}
-	
+
 		try {
 			$Gallery = new Gallery();
 			$fetchRecordsObject = $Gallery->photoGalleryGroup($year);
@@ -719,7 +859,7 @@ class IndexController extends FrontEndController
 			echo "Error: " . $ex->getMessage();
 			return;
 		}
-	
+
 		$searchData = array();
 		foreach ($fetchRecords as $insdata) {
 			$fetchRecordsObject = $Gallery->photoGalleryGroupforOneRecord($insdata->event_id);
@@ -729,10 +869,10 @@ class IndexController extends FrontEndController
 				'text' => $insdata->event_name . "," . $insdata->event_id
 			);
 		}
-	
+
 		echo json_encode($searchData);
 	}
-	
+
 	public function GalleryidBasedImages()
 	{
 		//get matched data 

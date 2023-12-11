@@ -3,6 +3,7 @@
 namespace App\Controllers;
 
 use App\System\Route;
+use App\Helpers\securityService as securityService;
 
 echo $this->get_header();
 if (!isset($_SESSION)) {
@@ -50,7 +51,7 @@ $_SESSION['csrf_token'] = $csrfToken;
 								<input type="text" class="form-control" placeholder="Username " name="uname" id="username"  oncopy="return false" onpaste="return false"  />
 								<br>
 								<label for="exampleInputEmail1">Password</label>
-								<input type="password" class="form-control" placeholder="Password " name="currentword"  id="password" oncopy="return false" onpaste="return false"/>
+								<input type="password" class="form-control" placeholder="Password " name="currentword"  id="user_pass" oncopy="return false" onpaste="return false"/>
 								<br>
 
 
@@ -64,9 +65,12 @@ $_SESSION['csrf_token'] = $csrfToken;
 							  <br> -->
 							   <!-- Captcha End -->
 							<!-- onClick="return Validate();" -->
-							<input type="hidden" name="csrf_token" value="<?php echo $csrfToken; ?>">
+							<!-- <input type="hidden" name="csrf_token" value="<?php //echo $csrfToken; ?>"> -->
+							<?php $antiCSRF = new securityService();
+								$antiCSRF->insertHiddenToken();
+							?>
 								<br>
-								<button class="btn btn-lg btn-sscsrthemecolor btn-block" type="submit" name="login" >Login</button>
+								<button class="btn btn-lg btn-sscsrthemecolor btn-block" type="submit" name="login" id='submit'>Login</button>
 								<p class="pt-1 text-danger text-center" id="err_msg"></p>  
 							</form>
 						</div>
@@ -83,6 +87,9 @@ $_SESSION['csrf_token'] = $csrfToken;
 	<?php
 	$route = new Route();
 	$loadcaptcha = $route->site_url("Api/loadcaptcha");
+	$loginUrl = $route->site_url("IndexController/login");
+	$redirectPath = $route->site_url("Admin/dashboard/?action=listnominations");
+	
 	?>
 </section>
 
@@ -110,7 +117,31 @@ $_SESSION['csrf_token'] = $csrfToken;
 <!-- <script src="js/jquery.min.js"></script>  -->
 <script src="js/jquery.min.js"></script> 
 <script src="js/jquery.validate.min.js" crossorigin="anonymous"></script>
+<script src="assets/datatable/common/sha512.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+
 <script>
+
+$('#submit').click(function() {
+        var strSalt = 'sscsr';
+        var strEncPwd = new String(encryptPwd($("#usr_pass").val(), strSalt));
+        // alert(strEncPwd);
+        $("#usr_pass").val(strEncPwd);   
+        // var p1 = document.getElementById('usr_pass');
+        // p1.id = pass;
+    })
+
+    function encryptPwd(strPwd, strSalt) {
+        var strNewSalt = new String(strSalt);
+        if (strPwd == "" || strSalt == "") {
+            return null;
+        }
+        var strEncPwd;
+        var strPwdHash = SHA512(strPwd);
+        var strMerged = strNewSalt + strPwdHash;
+        var strMerged1 = SHA512(strMerged);
+        return strMerged1;
+    }
 	function refreshCaptcha() {
 		var url = '<?php echo $loadcaptcha; ?>';
 		$('#captcha_code').attr('src', url);
@@ -145,33 +176,135 @@ $_SESSION['csrf_token'] = $csrfToken;
 				},
 
 			},
-			submitHandler: function(form) {
-				var username = $('#username').val();
-				var password = $('#password').val();
-				if (username == '' || username == undefined) {
-					$('#err_msg').text('Enter Username');
-					return false;
-				} else if (password == '' || password == undefined) {
-					$('#err_msg').text('Enter Password');
-					return false;
-				} else {
-					var key = CryptoJS.enc.Hex.parse("0123456789abcdef0123456789abcdef");
-					var iv = CryptoJS.enc.Hex.parse("abcdef9876543210abcdef9876543210");
-					var pass = document.getElementById('password').value;
-					var hash = CryptoJS.AES.encrypt(pass, key, {
-						iv: iv
-					});
-					document.getElementById('password').value = hash;
+			submitHandler: function(form) { //submit handler start
 
-					var user_nm = document.getElementById('username').value;
-					var user_hash = CryptoJS.AES.encrypt(user_nm, key, {
-						iv: iv
+
+				//using salt
+				
+				$.ajax({
+                type: 'post',
+                url: '<?php echo $loginUrl;?>',
+                data: $('#dept_login').serialize(),
+                dataType: 'json',
+                error: function(jqXHR, textStatus, errorThrown) {
+                    var responseText = jQuery.parseJSON(jqXHR.responseText);
+                    if (jqXHR.status == '402') {
+                        $('#error-message').text(responseText.message);
+                        $('#username').val('');
+                        $('#usr_pass').val('');
+                       
+                        refresh();
+                        $('#message').css('display', '');
+
+                    } else if (jqXHR.status == '403') {
+						$('#username').val('');
+                        $('#user_pass').val('');
+						Swal.fire({
+						icon: 'error',
+						title: 'Oops...',
+						text: 'Invalid Credentials!',
 					});
-					document.getElementById('username').value = user_hash;
-					$("#username").attr('type', 'password');
-					return true;
-				}
-			}
+											
+                    } else {
+                        setTimeout(function() { // wait for 5 secs(2)
+                            // location.reload(); // then reload the page.(3)
+                            logout();
+                        }, 1500);
+                    }
+                },
+                success: function(response) {
+
+					if(response.code == 200){
+						//debugger;
+						var redirectUrl = '<?php echo $redirectPath;?>';
+
+
+
+						console.log(redirectUrl);
+						debugger;
+						window.location.href = redirectUrl;
+
+					}
+
+					
+
+					
+					//debugger;
+                  //  $('#error-message').text('success');
+                    //window.location.href = redirectUrl;
+                },
+            });
+
+
+				//using salt
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+				//alert("Have anice day")
+				// var username = $('#username').val();
+				// var password = $('#user_pass').val();
+				// if (username == '' || username == undefined) {
+				// 	$('#err_msg').text('Enter Username');
+				// 	return false;
+				// } else if (password == '' || password == undefined) {
+				// 	$('#err_msg').text('Enter Password');
+				// 	return false;
+				// } else {
+				// 	// var key = CryptoJS.enc.Hex.parse("0123456789abcdef0123456789abcdef");
+				// 	// var iv = CryptoJS.enc.Hex.parse("abcdef9876543210abcdef9876543210");
+
+				// 	var key = CryptoJS.enc.Utf8.parse("0123456789abcdef@#0123456789abcdef");
+				// 	var iv = CryptoJS.enc.Utf8.parse("abcdef45")
+
+
+				// 	var pass = document.getElementById('user_pass').value;
+				// 	var hash = CryptoJS.AES.encrypt(pass, key, {
+				// 		iv: iv
+				// 	});
+				// 	document.getElementById('user_pass').value = hash;
+
+				// 	var user_nm = document.getElementById('username').value;
+				// 	var user_hash = CryptoJS.AES.encrypt(user_nm, key, {
+				// 		iv: iv
+				// 	});
+				// 	document.getElementById('username').value = user_hash;
+
+				// 	var uname = document.getElementById('username').value;
+				// 	var upass = document.getElementById('user_pass').value;
+
+
+				// 	$("#username").attr('type', 'password');
+				// 	return true;
+				// }
+			}//submit handler start
 		});
 		// Custom rule for letters only
 		$.validator.addMethod("lettersOnly", function(value, element) {

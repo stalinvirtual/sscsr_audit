@@ -2,11 +2,14 @@
 namespace App\Controllers; 
 use App\Helpers\Helpers;
 
-Helpers::urlSecurityAudit();
+//Helpers::urlSecurityAudit();
 
 
 
 echo $this->get_header();
+
+//echo '<pre>';
+//print_r($_SESSION);
 
 
 

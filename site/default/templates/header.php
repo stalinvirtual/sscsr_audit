@@ -82,6 +82,7 @@ error_reporting(0);
 	<script src="assets/datatable/js/enc.js"></script>
 	<script src="assets/datatable/js/md5.js"></script>
 	<script src="assets/datatable/js/md5.min.js"></script>
+	
 	<style>
 		#wrapper {
 			min-height: 80%;
