@@ -74,7 +74,9 @@
 													<?php 
 													if (@$_GET['status'] == 0 && $importantlinkscreationlist->status != 1){
 														echo '<i class="fa fa-eye il-publish-button" style="color:#007bff"></i>';
-													}
+													} else{
+                                                        echo '<i class="fa fa-eye il-unpublish-button" style="color:red;cursor:pointer" title="Unpublished"></i>';
+                                                    }
 													
 													
 												 }

@@ -469,7 +469,9 @@ class IndexController extends FrontEndController
 	{
 		$events = new Gallery();
 		$yearBasedEvents = $events->getHomePhotoGalleryList();
+		
 		$data['yearBasedEvents'] = $yearBasedEvents;
+		
 		$distinctyears = $events->DistinctedYears();
 		$data['distinctyears'] = $distinctyears;
 		$this->render("gallery", $data);
@@ -806,6 +808,7 @@ class IndexController extends FrontEndController
 	{
 		if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 			$id_value = $this->validateAndSanitize($_POST['id']);
+			
 			if (!isset($id_value) || empty($id_value)) {
 				echo "Invalid ID provided.";
 				return;
@@ -814,7 +817,7 @@ class IndexController extends FrontEndController
 					echo "Invalid ID format. Only integers are allowed.";
 				} else {
 					// Check if the ID has exactly 9 digits
-					if (strlen($id_value) !== 9) {
+					if (strlen($id_value) == 9) {
 						echo "Invalid ID length. Must be exactly 9 digits.";
 					} else {
 						$id = $id_value;

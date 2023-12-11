@@ -88,7 +88,9 @@
 													<?php 
 													if (@$_GET['status'] == 0 && $categorylist->status != 1){
 														echo '<i class="fa fa-eye category-publish-button" style="color:#007bff"></i>';
-													}
+													}else{
+                                                        echo '<i class="fa fa-eye category-unpublish-button" style="color:red;cursor:pointer" title="Unpublished"></i>';
+                                                    }
 													
 													
 												 }

@@ -44,6 +44,6 @@ class GalleryChild extends DB
     }
     public function updateState($data = array(), $id = 0)
     {
-        return $this->update($data, ['nomination_child_id' => $id]);
+        return $this->update($data, ['image_id' => $id]);
     }
 }

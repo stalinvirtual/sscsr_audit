@@ -435,7 +435,7 @@ error_reporting(0);
                                 }
                                 $path = "gallery/" . $t[$i]->image_path;
                                 echo '<section class="card">
-								<a href="IndexController/gallerypage" rel = "noopener noreferrer" target="_blank" >
+								<a href="IndexController/gallerypage" >
 													<figure>
 													<img src="' . $path . '" alt="" />
 													<figcaption>Image-1 <small>Description</small></figcaption>

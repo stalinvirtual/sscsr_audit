@@ -140,6 +140,12 @@
                 'style': 'multi'
             },
         });
+
+        userDataTable.on('draw.dt', function () {
+                // Update the background color after each draw
+                $("button.unpublishbtn").css("margin-left", "10px");
+                $("button.unpublishbtn").closest("td").css("display", "flex");
+            });
         });
         $('#gallery_form_reset_btn').click(function(e) {
              e.preventDefault();
@@ -212,7 +218,7 @@
         $('#galleryTable').on('click', '.deletebtn', function(e) {
             e.preventDefault()
             var id = $(this).data('id');
-            swal("Do You Want to Delete ?", {
+            swal({title:"Do You Want to Delete ?",
                 buttons: {
                     yes: {
                         text: "Ok",
@@ -236,10 +242,10 @@
                         },
                         success: function(response) {
                             if (response == 1) {
-                                swal("Record deleted.");
+                                swal({title:"Record deleted."});
                                 // Reload DataTable
                                 $('#galleryTable').DataTable().ajax.reload();
-                                $('.alert-success').html('');
+                                $('.alert-success').hide();
                             } else {
                                 swal("Invalid ID.");
                             }
@@ -253,7 +259,7 @@
         $('#galleryTable').on('click', '.archivebtn', function(e) {
             e.preventDefault()
             var id = $(this).data('id');
-            swal("Do You Want to Archive ?", {
+            swal( {title:"Do You Want to Archive ?",
                 buttons: {
                     yes: {
                         text: "Ok",
@@ -277,7 +283,7 @@
                         },
                         success: function(response) {
                             if (response == 1) {
-                                swal("Record Archived.");
+                                swal({title:"Record Archived."});
                                 // Reload DataTable
                                 $('#galleryTable').DataTable().ajax.reload();
                             } else {
@@ -317,7 +323,53 @@
                         },
                         success: function(response) {
                             if (response == 1) {
-                                swal("Record Published .");
+                                swal({title:"Record Published."});
+                                // Reload DataTable
+                                $('#galleryTable').DataTable().ajax.reload();
+                                $('.alert-success').hide();
+                            } else {
+                                swal("Invalid ID.");
+                            }
+                        }
+                    });
+                } // yes End
+                return false;
+            });
+        });
+
+
+        // un Publish record
+ $('#galleryTable').on('click', '.unpublishbtn', function (e) {
+            e.preventDefault()
+            var id = $(this).data('id');
+            swal({
+                title: "Do you want to Unpublish?",
+                buttons: {
+                    yes: {
+                        text: "Ok",
+                        value: "yes"
+                    },
+                    No: {
+                        text: "Cancel",
+                        value: "No",
+                        buttonColor: "#000000",
+                    }
+                }
+            }).then((value) => {
+                if (value === "yes") { //yes start
+                    // AJAX request
+                    $.ajax({
+                        url: baseurl,
+                        type: 'post',
+                        data: {
+                            request: 7,
+                            id: id
+                        },
+                        success: function (response) {
+                            if (response == 1) {
+                                swal({
+                                    title: "Record has been unpublished successfully"
+                                });
                                 // Reload DataTable
                                 $('#galleryTable').DataTable().ajax.reload();
                                 $('.alert-success').hide();

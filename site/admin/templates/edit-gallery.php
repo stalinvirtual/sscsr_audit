@@ -366,7 +366,7 @@ margin: -27px 2px 3px 286px;
             var image_id = $(this).closest('tr').find('#image_id').val();
             if (image_id != "") {
                 var gallery_id = $('.gallery_id').val();
-                var baseurl = '<?php echo $this->route->site_url("Admin/ajaxresponseforselectionpostsforremovingfileupload"); ?>';
+                var baseurl = '<?php echo $this->route->site_url("Admin/ajaxresponseforgalleryforremovingfileupload"); ?>';
                 jQuery.ajax({
                     url: baseurl,
                     data: {

@@ -76,6 +76,21 @@ class DB
         }
     }
     
+    public function insert_archieves_gallery($sql, $inIDS)
+    {
+       
+        try {
+         
+            $insertNominationStmt = $this->pdo->prepare($sql);
+            $params=[$inIDS];
+            $insertNominationResult = $insertNominationStmt->execute($params);
+           return $insertNominationResult;
+        } catch (\PDOException $e) {
+            // Handle the exception, e.g., log the error or return a specific value indicating failure.
+            return false;
+        }
+    }
+    
     public function insert($data)
     {
         $columns        = array_keys($data);

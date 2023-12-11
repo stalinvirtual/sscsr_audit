@@ -1300,6 +1300,41 @@ class Admin extends BackEndController
         }
         //$this->route->redirect($this->route->site_url("admin/dashboard"));
     }
+
+    public function ajaxresponsefornoticeforremovingfileupload()
+    {
+        $pdf_id = Helpers::cleanData($_POST['pdf_id']);
+        $notice_id = Helpers::cleanData($_POST['notice_id']);
+        // echo $cid;
+        $noticechild = new \App\Models\MstNoticeChild();
+        $menu_data = [
+            'status' => 0,
+        ];
+        if ($noticechild->updateState($menu_data, $pdf_id)) {
+            $message = 1;
+            header('Content-Type: application/json');
+            echo json_encode(array("message" => $message));
+        }
+        //$this->route->redirect($this->route->site_url("admin/dashboard"));
+    }
+
+    public function ajaxresponseforgalleryforremovingfileupload()
+    {
+        $gallery_id = Helpers::cleanData($_POST['gallery_id']);
+        $image_id = Helpers::cleanData($_POST['image_id']);
+        // echo $cid;
+        $gallerychild = new \App\Models\GalleryChild();
+       
+        $menu_data = [
+            'status' => 0,
+        ];
+        if ($gallerychild->updateState($menu_data, $image_id)) {
+            $message = 1;
+            header('Content-Type: application/json');
+            echo json_encode(array("message" => $message));
+        }
+        //$this->route->redirect($this->route->site_url("admin/dashboard"));
+    }
     ######### Author:Stalin ####
     ######### Date : 13 july-2021 ###
     ######## Selection Posts #######
@@ -1309,6 +1344,7 @@ class Admin extends BackEndController
         $nomination_id = Helpers::cleanData($_POST['nomination_id']);
         // echo $cid;
         $nominationchild = new \App\Models\Nominationchild();
+     
         $menu_data = [
             'status' => 0,
         ];
@@ -2159,7 +2195,27 @@ class Admin extends BackEndController
         ];
         if ($faq_model->updateFaqState($faq_data, $faq_id)) {
             $message = 1;
+            $message_title = "FAQ Published successfully";
+            $message_type = "success";
             header('Content-Type: application/json');
+            $_SESSION['notification'] = ['message' => $message_title, 'message_type' => $message_type];
+            echo json_encode(array("message" => $message));
+        }
+    }
+    public function ajaxresponseforFaqunpublish()
+    {
+        $faq_id = Helpers::cleanData($_POST['faq_id']);
+        // echo $cid;
+        $faq_model = new Faq();
+        $faq_data = [
+            'p_status' => '0',
+        ];
+        if ($faq_model->updateFaqState($faq_data, $faq_id)) {
+            $message = 1;
+            $message_title = "FAQ UnPublished successfully";
+            $message_type = "success";
+            header('Content-Type: application/json');
+            $_SESSION['notification'] = ['message' => $message_title, 'message_type' => $message_type];
             echo json_encode(array("message" => $message));
         }
     }
@@ -2189,7 +2245,27 @@ class Admin extends BackEndController
         ];
         if ($il_model->updateImportantLinksState($il_data, $importantlink_id)) {
             $message = 1;
+            $message_title = "Important Link Published successfully";
+            $message_type = "success";
             header('Content-Type: application/json');
+            $_SESSION['notification'] = ['message' => $message_title, 'message_type' => $message_type];
+            echo json_encode(array("message" => $message));
+        }
+    }
+    public function ajaxresponseforImportantLinksunpublish()
+    {
+        $importantlink_id = Helpers::cleanData($_POST['importantlink_id']);
+        // echo $cid;
+        $il_model = new ImportantLinks();
+        $il_data = [
+            'status' => '0',
+        ];
+        if ($il_model->updateImportantLinksState($il_data, $importantlink_id)) {
+            $message = 1;
+            $message_title = "Important Link UnPublished successfully";
+            $message_type = "success";
+            header('Content-Type: application/json');
+            $_SESSION['notification'] = ['message' => $message_title, 'message_type' => $message_type];
             echo json_encode(array("message" => $message));
         }
     }
@@ -2205,7 +2281,27 @@ class Admin extends BackEndController
         ];
         if ($ec_model->updateEventCategoryState($ec_data, $ec_id)) {
             $message = 1;
+            $message_title = "Event Category Published successfully";
+            $message_type = "success";
             header('Content-Type: application/json');
+            $_SESSION['notification'] = ['message' => $message_title, 'message_type' => $message_type];
+            echo json_encode(array("message" => $message));
+        }
+    }
+    public function ajaxresponseforEventCategoryunpublish()
+    {
+        $ec_id = Helpers::cleanData($_POST['ec_id']);
+        // echo $cid;
+        $ec_model = new EventCategory();
+        $ec_data = [
+            'status' => '0',
+        ];
+        if ($ec_model->updateEventCategoryState($ec_data, $ec_id)) {
+            $message = 1;
+            $message_title = "Event Category UnPublished successfully";
+            $message_type = "success";
+            header('Content-Type: application/json');
+            $_SESSION['notification'] = ['message' => $message_title, 'message_type' => $message_type];
             echo json_encode(array("message" => $message));
         }
     }
@@ -2229,7 +2325,7 @@ class Admin extends BackEndController
     }
     public function ajaxresponseforphaseunpublish()
     {
-        $phasemaster_id = htmlspecialchars($_POST['pageid']);
+        $phasemaster_id = htmlspecialchars($_POST['phaseid']);
         // echo $cid;
         $pm_model = new PhaseMaster();
         $pm_data = [
@@ -2565,7 +2661,28 @@ HTML;
         ];
         if ($category_model->updateCategoryState($category_data, $cat_id)) {
             $message = 1;
+            $message_title = "Category  has been Published successfully";
+            $message_type = "success";
             header('Content-Type: application/json');
+            $_SESSION['notification'] = ['message' => $message_title, 'message_type' => $message_type];
+            echo json_encode(array("message" => $message));
+        }
+    }
+
+    public function ajaxresponseforCategoryUnpublish()
+    {
+        $cat_id = Helpers::cleanData($_POST['cat_id']);
+        // echo $cid;
+        $category_model = new Category();
+        $category_data = [
+            'status' => '0',
+        ];
+        if ($category_model->updateCategoryState($category_data, $cat_id)) {
+            $message = 1;
+            $message_title = "Category  has been UnPublished successfully";
+            $message_type = "success";
+            header('Content-Type: application/json');
+            $_SESSION['notification'] = ['message' => $message_title, 'message_type' => $message_type];
             echo json_encode(array("message" => $message));
         }
     }
@@ -2828,6 +2945,7 @@ HTML;
                     'event_id' => Helpers::cleanData($_POST['event_id']),
                     // 'effect_from_date' => date('Y-m-d', strtotime(Helpers::cleanData($_POST['effect_from_date']))),
                     //'effect_to_date' => date('Y-m-d', strtotime(Helpers::cleanData($_POST['effect_to_date']))),
+                    'p_status' => '0',
                 ];
                 if ($gallery_id == 0) {
                     // insert new menu 
@@ -2851,7 +2969,7 @@ HTML;
                             $gallery_child_data = [
                                 'gallery_id' => $lastinsertedid,
                                 'image_path' => $final_file,
-                                'status' => 1
+                                'status' => '0'
                             ];
                             $gallery_model_child->addGalleryChild($gallery_child_data);
                         }
@@ -2871,7 +2989,7 @@ HTML;
                     ];
                     if ($gallery_model->updateGallery($gallery_data, $gallery_id)) {
                         foreach ($_FILES['image_file']['name'] as $i => $name) {
-                            if ($_FILES['image_file']['size'][$i] != 0) {
+                            if ($_FILES['image_file']['size'][$i] != 0 ) {
                                 $child_id = isset($_POST['image_id'][$i]) ? $_POST['image_id'][$i] : 0;
                                 $tmp_name = $_FILES['image_file']['tmp_name'][$i];
                                 $error = $_FILES['image_file']['error'][$i];
@@ -4081,7 +4199,7 @@ TEXT;
      </a>";
                 // Delete Button
                 $deleteButton = "<button title='Delete' class='btn btn-sm btn-danger iconWidth deletebtn' style='height:30px'  data-id='" . $rowval->gallery_id . "'><i class='fa fa-trash'></i></button>";
-                $archivesButton = "<button  title='Archive' style='height:30px' class='btn btn-sm btn-primary archivebtn' data-id='" . $rowval->gallery_id . "'><i class='fa  fa-archive'></i></button>";
+                // $archivesButton = "<button  title='Archive' style='height:30px' class='btn btn-sm btn-primary archivebtn' data-id='" . $rowval->gallery_id . "'><i class='fa  fa-archive'></i></button>";
                 if ($rowval->p_status != 1) {
                     /****
                      * Role Checking
@@ -4101,13 +4219,13 @@ TEXT;
                         "publisher" => $user->is_publisher() ? $user->is_publisher() : "",
                     );
                     if ($array['uploader'] == 1) {
-                        $action = $updateButton . " " . $deleteButton . " " . $archivesButton;
+                        $action = $updateButton . " " . $deleteButton;
                     } else if ($array['publisher'] == 1) {
                         $publishButton = "<button  title='Publish' style='height:30px' class='btn btn-sm btn-success publishbtn iconWidth' data-id='" . $rowval->gallery_id . "'><i class='fa  fa-eye'></i></button>";
                         $action = $publishButton;
                     } else if ($array['admin'] == 1) {
                         $publishButton = "<button  title='Publish' style='height:30px' class='btn btn-sm btn-success publishbtn iconWidth' data-id='" . $rowval->gallery_id . "'><i class='fa  fa-eye'></i></button>";
-                        $action = $updateButton . " " . $deleteButton . " " . $archivesButton . " " . $publishButton;
+                        $action = $updateButton . " " . $deleteButton . " " . $publishButton;
                     } else {
                     }
                     /****
@@ -4116,7 +4234,10 @@ TEXT;
                      * 
                      */
                 } else {
-                    $action = "<p style='color:green'>Published</p>";
+                   // $action = "<p style='color:green'>Published</p>";
+                    $unpublishButton = "<button  title='Un Publish' style='height:24px' class='btn btn-sm btn-danger unpublishbtn iconWidth' data-id='" . $rowval->gallery_id . "'><i class='fa  fa-eye'></i></button>";
+                    $green_text = "<p style='color:green'>Published</p>";
+                    $action = $green_text . $unpublishButton;
                 }
                 $pdfPath = "";
                 foreach ($gallerychildlist as $key => $childlist) {
@@ -4209,6 +4330,26 @@ TEXT;
                 exit;
             }
         }
+          // Un Publish Nomination
+          if ($request == 7) {
+            $id = Helpers::cleanData($_POST['id']);
+            $gallery_data = [
+                'p_status' => '0',
+            ];
+            // Check id
+            ## Fetch records
+            $model = new Gallery();
+            $checkId = $model->checkGalleryId($id);
+            $checkIdCount = $checkId->checkid;
+            if ($checkIdCount > 0) {
+                $publishQuery = $model->updateGalleryState($gallery_data, $id);
+                echo 1;
+                exit;
+            } else {
+                echo 0;
+                exit;
+            }
+        }
     }
     public function commonGalleryArchive()
     {
@@ -4217,6 +4358,7 @@ TEXT;
             $notice_list_data = Helpers::cleanData($_POST['ids']);
             if (Helpers::cleanData($_POST["action"]) == 'archive') {
                 if ($notice->archiveGalleryStatus($notice_list_data)) {
+                    
                     $message = " Gallery  Archived successfully";
                     $message_type = "success";
                 }
@@ -4955,7 +5097,27 @@ TEXT;
         ];
         if ($searchyear->updateSearchYearState($searchyear_data, $searchyear_id)) {
             $message = 1;
+            $message_title = "Search Year Published successfully";
+            $message_type = "success";
             header('Content-Type: application/json');
+            $_SESSION['notification'] = ['message' => $message_title, 'message_type' => $message_type];
+            echo json_encode(array("message" => $message));
+        }
+    }
+    public function ajaxresponseforsearchyearunpublish()
+    {
+        $searchyear_id = htmlspecialchars($_POST['searchyear_id']);
+        // echo $cid;
+        $searchyear = new SearchYear();
+        $searchyear_data = [
+            'status' => '0',
+        ];
+        if ($searchyear->updateSearchYearState($searchyear_data, $searchyear_id)) {
+            $message = 1;
+            $message_title = "Search Year UnPublished Successfully";
+            $message_type = "success";
+            header('Content-Type: application/json');
+            $_SESSION['notification'] = ['message' => $message_title, 'message_type' => $message_type];
             echo json_encode(array("message" => $message));
         }
     }
@@ -5049,7 +5211,10 @@ TEXT;
                      * 
                      */
                 } else {
-                    $action = "<p style='color:green'>Published</p>";
+                    //$action = "<p style='color:green'>Published</p>";
+                    $unpublishButton = "<button  title='Un Publish' style='height:24px' class='btn btn-sm btn-danger unpublishbtn iconWidth' data-id='" . $rowval->ins_id . "'><i class='fa  fa-eye'></i></button>";
+                    $green_text = "<p style='color:green'>Published</p>";
+                    $action = $green_text . $unpublishButton;
                 }
                 $data[] = array(
                     "ins_id" => $rowval->ins_id,
@@ -5112,6 +5277,26 @@ TEXT;
             $id = Helpers::cleanData($_POST['id']);
             $ins_data = [
                 'p_status' => '1',
+            ];
+            // Check id
+            ## Fetch records
+            $model = new Instructions();
+            $checkId = $model->checkInstructionsId($id);
+            $checkIdCount = $checkId->checkid;
+            if ($checkIdCount > 0) {
+                $publishQuery = $model->updateInstructionsState($ins_data, $id);
+                echo 1;
+                exit;
+            } else {
+                echo 0;
+                exit;
+            }
+        }
+        // UnPublish Instructions
+        if ($request == 7) {
+            $id = Helpers::cleanData($_POST['id']);
+            $ins_data = [
+                'p_status' => '0',
             ];
             // Check id
             ## Fetch records

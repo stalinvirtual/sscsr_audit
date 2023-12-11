@@ -78,7 +78,9 @@
                                                    <?php
                                                    if (@$_GET['status'] == 0 && $faqlist->p_status != 1){
                                                        echo '<i class="fa fa-eye faq-publish-button" style="color:#007bff"></i>';
-                                                   }
+                                                   } else{
+                                                    echo '<i class="fa fa-eye faq-unpublish-button" style="color:red;cursor:pointer" title="Unpublished"></i>';
+                                                }
                                                   
                                                   
                                                 }

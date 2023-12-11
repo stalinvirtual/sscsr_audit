@@ -114,7 +114,7 @@
 															<i class="fa fa-edit"></i>
 														</a>
 														<?php 
-														if($menu->menu_parent_id != 0){?>
+														if(@$_GET['status'] == 0){?>
 <a href="<?php echo $delete_menu_link_str; ?>" onClick='return confirm("Are you sure you want to delete? This operation will delete the children menu if any? and this cannot be undo")' class="iconSize" name="delete">
 <i class="fa fa-trash"></i>
 </a>

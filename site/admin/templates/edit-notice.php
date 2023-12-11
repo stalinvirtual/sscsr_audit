@@ -196,7 +196,7 @@ $_SESSION['csrf_token'] = $csrfToken;
                                     </div>
                                 </div>
                                 <input type="hidden" value="<?php echo $current_notice['notice_id']; ?>" name="id"
-                                    class="sp_id">
+                                    class="notice_id">
                             </div>
                             <!-- /.card-body -->
                             <div class="card-footer">
@@ -318,12 +318,12 @@ $_SESSION['csrf_token'] = $csrfToken;
             var pdfname = $(this).closest('tr').find('#pdfname').val();
             var pdf_id = $(this).closest('tr').find('#pdf_id').val();
             if (pdfname != "") {
-                var sp_id = $('.sp_id').val();
-                var baseurl = '<?php echo $this->route->site_url("Admin/ajaxresponseforselectionpostsforremovingfileupload"); ?>';
+                var notice_id = $('.notice_id').val();
+                var baseurl = '<?php echo $this->route->site_url("Admin/ajaxresponsefornoticeforremovingfileupload"); ?>';
                 jQuery.ajax({
                     url: baseurl,
                     data: {
-                        sp_id: sp_id,
+                        notice_id: notice_id,
                         pdf_id: pdf_id
                     },
                     type: 'post',

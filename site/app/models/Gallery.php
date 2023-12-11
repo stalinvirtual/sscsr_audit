@@ -94,6 +94,8 @@ class Gallery extends DB
             ->join(" mstgallerychildtbl gc ", "g.gallery_id = gc.gallery_id ", "JOIN")
             ->join(" msteventcategory ec ", "g.event_id = ec.event_id ", "JOIN")
             //  ->order_by("g.effect_from_date desc")
+           ->where(['gc.status'=>1 , 'g.p_status' => '1','ec.status' =>1])
+          
             ->get_list();
         $lastinsertid = $sql;
         $lastinsertid = (object) $lastinsertid;
@@ -129,6 +131,7 @@ class Gallery extends DB
     {
         $nominationchildtbllist = $this->select('*')
             ->from('mstgallerychildtbl')
+            ->where(['status' => '1'])
             ->get_list();
         return $nominationchildtbllist;
     }
@@ -279,18 +282,22 @@ TEXT;
     }
     public function archiveGalleryStatus($gallery_id = 0)
     {
+    
+
         if (is_array($gallery_id)) {
             $gallery_id = implode(",", $gallery_id);
         }
         $sql = "INSERT INTO archives.mstgalleryarchivestbl (gallery_id, event_id,year, p_status, date_archived ) 
        SELECT gallery_id, event_id, year,  '0', NOW()
       FROM public.mstgallerytbl WHERE gallery_id IN (:id)";
-        $delete_row = $this->insert_archieves($sql, $gallery_id);
+        
+        $delete_row = $this->insert_archieves_gallery($sql, $gallery_id);
         $sql1 = "INSERT INTO archives.mstgalleryarchiveschildtbl(
         gallery_id, image_path,  status)
         SELECT gallery_id, image_path,  '0'
       FROM public.mstgallerychildtbl WHERE gallery_id IN (:id)";
-        $childtable_insert = $this->insert_archieves($sql1, $gallery_id);
+     
+        $childtable_insert = $this->insert_archieves_gallery($sql1, $gallery_id);
         $delId = explode(",", $gallery_id);
         foreach ($delId as $val) {
             $this->delete($val);
@@ -307,6 +314,7 @@ TEXT;
                 ->join("mstgallerychildtbl gc ", "g.gallery_id = gc.gallery_id ", "JOIN")
                 ->join("msteventcategory ec ", "g.event_id = ec.event_id ", "JOIN")
                 ->group_by("g.event_id,ec.event_name,g.year ")
+                ->where(['gc.status'=> 1 , 'g.p_status' => '1','ec.status' => 1])
                 ->get_list();
             // echo $this->last_query;
         } else {
@@ -318,7 +326,7 @@ TEXT;
                 ->from("mstgallerytbl g ")
                 ->join("mstgallerychildtbl gc ", "g.gallery_id = gc.gallery_id ", "JOIN")
                 ->join("msteventcategory ec ", "g.event_id = ec.event_id ", "JOIN")
-                ->where(['g.year' => $year])
+                ->where(['g.year' => $year,'gc.status'=> 1 , 'g.p_status' => '1','ec.status' => 1])
                 ->group_by("g.event_id,ec.event_name,g.year ")
                 ->get_list();
         }
@@ -365,7 +373,7 @@ TEXT;
             ->from("mstgallerytbl g ")
             ->join("mstgallerychildtbl gc ", "g.gallery_id = gc.gallery_id ", "JOIN")
             ->join("msteventcategory ec ", "g.event_id = ec.event_id ", "JOIN")
-            ->where(['g.event_id' => $id])
+            ->where(['g.event_id' => $id, 'gc.status'=> 1])
             ->order_by("g.gallery_id desc ")
             ->get_list();
         // echo $this->last_query;

@@ -71,6 +71,8 @@
                                         <?php
                                         if (@$_GET['status'] == 0 && $searchyear->status != 1) {
                                             echo '<i class="fa fa-eye sy-publish-button" style="color:#007bff"></i>';
+                                        }else{
+                                            echo '<i class="fa fa-eye sy-unpublish-button" style="color:red;cursor:pointer" title="Unpublished"></i>';
                                         }
                                         } elseif ($is_uploader == 1) { ?>
                                         <a href="<?php echo $edit_search_year_link_str; ?>" name="menu_update"

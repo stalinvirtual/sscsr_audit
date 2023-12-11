@@ -423,7 +423,7 @@
              'click',
              function() {
                  //
-                 var pageid = $(this).closest('td').find('#phasemaster_id').val();
+                 var phaseid = $(this).closest('td').find('#phasemaster_id').val();
                  var baseurl = '<?php echo $this->route->site_url("Admin/ajaxresponseforphaseunpublish"); ?>';
                  var redirecturl = '<?php echo $this->route->site_url("Admin/dashboard/?action=listofphasemaster&&status=0"); ?>';
                  swal({
@@ -444,7 +444,7 @@
                          jQuery.ajax({
                              url: baseurl,
                              data: {
-                                 pageid: pageid
+                                phaseid: phaseid
                              },
                              type: 'post',
                              dataType: 'json',
@@ -757,7 +757,49 @@
                  });
              }
          );
-         //tender publish button
+         // Unpublish Important links
+         jQuery('.il-unpublish-button').on(
+             'click',
+             function() {
+                 //
+                 var importantlink_id = $(this).closest('td').find('#importantlink_id').val();
+                 var baseurl = '<?php echo $this->route->site_url("Admin/ajaxresponseforImportantLinksunpublish"); ?>';
+                 var redirecturl = '<?php echo $this->route->site_url("Admin/dashboard/?action=listofimportantlinks&&status=0"); ?>';
+                 swal({
+                     title: "Do you want to Unpublish Important Link ?",
+                     buttons: {
+                         yes: {
+                             text: "Ok",
+                             value: "yes"
+                         },
+                         No: {
+                             text: "Cancel",
+                             value: "No",
+                             buttonColor: "#000000",
+                         }
+                     }
+                 }).then((value) => {
+                     if (value === "yes") {
+                         jQuery.ajax({
+                             url: baseurl,
+                             data: {
+                                importantlink_id: importantlink_id
+                             },
+                             type: 'post',
+                             dataType: 'json',
+                             success: function(response) {
+                                 if (response.message == 1) {
+                                     //alert("Welcome")
+                                     window.location.href = redirecturl;
+                                 }
+                             }
+                         });
+                     }
+                     return false;
+                 });
+             }
+         );
+         // Unpublish Important links
          //Faq publish button
          jQuery('.faq-publish-button').on(
              'click',
@@ -800,6 +842,49 @@
              }
          );
          //Faq publish button
+          // Unpublish faq
+          jQuery('.faq-unpublish-button').on(
+             'click',
+             function() {
+                 //
+                 var faq_id = $(this).closest('td').find('#faq_id').val();
+                 var baseurl = '<?php echo $this->route->site_url("Admin/ajaxresponseforFaqunpublish"); ?>';
+                 var redirecturl = '<?php echo $this->route->site_url("Admin/dashboard/?action=listoffaq&&status=0"); ?>';
+                 swal({
+                     title: "Do you want to Unpublish FAQ ?",
+                     buttons: {
+                         yes: {
+                             text: "Ok",
+                             value: "yes"
+                         },
+                         No: {
+                             text: "Cancel",
+                             value: "No",
+                             buttonColor: "#000000",
+                         }
+                     }
+                 }).then((value) => {
+                     if (value === "yes") {
+                         jQuery.ajax({
+                             url: baseurl,
+                             data: {
+                                faq_id: faq_id
+                             },
+                             type: 'post',
+                             dataType: 'json',
+                             success: function(response) {
+                                 if (response.message == 1) {
+                                     //alert("Welcome")
+                                     window.location.href = redirecturl;
+                                 }
+                             }
+                         });
+                     }
+                     return false;
+                 });
+             }
+         );
+         // Unpublish faq
          /* 
 		        $('.pdfnomination').on('change', function() {
 			var myfile = $(this).closest('td').find('.pdfnomination').val();
@@ -889,6 +974,51 @@
                  });
              }
          );
+
+
+          // Unpublish Event Category
+          jQuery('.ec-unpublish-button').on(
+             'click',
+             function() {
+                 //
+                 var ec_id = $(this).closest('td').find('#eventcategory_id').val();
+                 var baseurl = '<?php echo $this->route->site_url("Admin/ajaxresponseforEventCategoryunpublish"); ?>';
+                 var redirecturl = '<?php echo $this->route->site_url("Admin/dashboard/?action=listofeventcategories"); ?>';
+                 swal({
+                     title: "Do you want to Unpublish Event category?",
+                     buttons: {
+                         yes: {
+                             text: "Ok",
+                             value: "yes"
+                         },
+                         No: {
+                             text: "Cancel",
+                             value: "No",
+                             buttonColor: "#000000",
+                         }
+                     }
+                 }).then((value) => {
+                     if (value === "yes") {
+                         jQuery.ajax({
+                             url: baseurl,
+                             data: {
+                                ec_id: ec_id
+                             },
+                             type: 'post',
+                             dataType: 'json',
+                             success: function(response) {
+                                 if (response.message == 1) {
+                                     //alert("Welcome")
+                                     window.location.href = redirecturl;
+                                 }
+                             }
+                         });
+                     }
+                     return false;
+                 });
+             }
+         );
+         // Unpublish Event Category
          //Event Category End
          //phase mastr
          jQuery('.pm-publish-button').on(
@@ -975,12 +1105,51 @@
                  });
              }
          );
+         jQuery('.sy-unpublish-button').on(
+             'click',
+             function() {
+                 //
+                 var searchyear_id = $(this).closest('td').find('#searchyear_id').val();
+                 var baseurl = '<?php echo $this->route->site_url("Admin/ajaxresponseforsearchyearunpublish"); ?>';
+                 var redirecturl = '<?php echo $this->route->site_url("Admin/dashboard/?action=listofsearchyear"); ?>';
+                 swal({
+                     title: "Do you want to Unpublish Search Year ?",
+                     buttons: {
+                         yes: {
+                             text: "Ok",
+                             value: "yes"
+                         },
+                         No: {
+                             text: "Cancel",
+                             value: "No",
+                             buttonColor: "#000000",
+                         }
+                     }
+                 }).then((value) => {
+                     if (value === "yes") {
+                         jQuery.ajax({
+                             url: baseurl,
+                             data: {
+                                searchyear_id: searchyear_id
+                             },
+                             type: 'post',
+                             dataType: 'json',
+                             success: function(response) {
+                                 if (response.message == 1) {
+                                     //alert("Welcome")
+                                     window.location.href = redirecturl;
+                                 }
+                             }
+                         });
+                     }
+                     return false;
+                 });
+             }
+         );
+         // Unpublish search year
          //searchyear
          // Category publish button	
-         // jQuery('.category-publish-button').on(
-         //              'click',
-         //              function() {
-         // Tender Data Table  Start 
+         
          $('#adminCategory').on('click', '.category-publish-button', function(event) {
              event.preventDefault();
              var cat_id = $(this).closest('td').find('#category_id').val();
@@ -1019,6 +1188,50 @@
                  return false;
              });
          });
+
+
+         jQuery('.category-unpublish-button').on(
+             'click',
+             function() {
+                 //
+                 var cat_id = $(this).closest('td').find('#category_id').val();
+                 var baseurl = '<?php echo $this->route->site_url("Admin/ajaxresponseforCategoryUnpublish"); ?>';
+                 var redirecturl = '<?php echo $this->route->site_url("Admin/dashboard/?action=listofcategory"); ?>';
+                 swal({
+                     title: "Do you want to Unpublish Category ?",
+                     buttons: {
+                         yes: {
+                             text: "Ok",
+                             value: "yes"
+                         },
+                         No: {
+                             text: "Cancel",
+                             value: "No",
+                             buttonColor: "#000000",
+                         }
+                     }
+                 }).then((value) => {
+                     if (value === "yes") {
+                         jQuery.ajax({
+                             url: baseurl,
+                             data: {
+                                cat_id: cat_id
+                             },
+                             type: 'post',
+                             dataType: 'json',
+                             success: function(response) {
+                                 if (response.message == 1) {
+                                     //alert("Welcome")
+                                     window.location.href = redirecturl;
+                                 }
+                             }
+                         });
+                     }
+                     return false;
+                 });
+             }
+         );
+         // Unpublish Category
          //Tender Data Table  End
          /*  Check Username Availability with jQuery and AJAX  Start*/
          $("#txt_username").keyup(function() {
