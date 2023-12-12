@@ -105,10 +105,8 @@
 														
 													<?php }else{ 
 
-														if($menu->id=="1"){
-
-														}
-														else{?>
+														if(@$_GET['status'] == 0){
+?>
 
 															<a href="<?php echo $edit_menu_link_str; ?>" name="menu_update" class="iconSize">
 															<i class="fa fa-edit"></i>
@@ -133,6 +131,8 @@
 													<?php 
 													if (@$_GET['status'] == 0){
 														echo '<i class="fa fa-eye publish-button" style="color:#007bff"></i>';
+													}else{
+														echo '<i class="fa fa-eye m-unpublish-button" style="color:red"></i>';
 													}
 													
 													

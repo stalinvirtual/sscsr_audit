@@ -296,9 +296,52 @@
              function() {
                  var menuid = $(this).closest('td').find('#menuid').val();
                  var baseurl = '<?php echo $this->route->site_url("Admin/ajaxresponse"); ?>';
-                 var redirecturl = '<?php echo $this->route->site_url("Admin/dashboard/?action=listmenus&&status=0"); ?>';
+                 var redirecturl = '<?php echo $this->route->site_url("Admin/dashboard/?action=listmenus&&status=1"); ?>';
                  swal({
                      title: "Do You Want To Publish ?",
+                     buttons: {
+                         yes: {
+                             text: "Ok",
+                             value: "yes"
+                         },
+                         No: {
+                             text: "Cancel",
+                             value: "No",
+                             buttonColor: "#000000",
+                         }
+                     }
+                 }).then((value) => {
+                     if (value === "yes") {
+                         jQuery.ajax({
+                             url: baseurl,
+                             data: {
+                                 menuid: menuid
+                             },
+                             type: 'post',
+                             dataType: 'json',
+                             success: function(response) {
+                                 if (response.message == 1) {
+                                     //alert("Welcome")
+                                     window.location.href = redirecturl;
+                                 }
+                             }
+                         });
+                     }
+                     return false;
+                 });
+             }
+         );
+
+
+
+         jQuery('.m-unpublish-button').on(
+             'click',
+             function() {
+                 var menuid = $(this).closest('td').find('#menuid').val();
+                 var baseurl = '<?php echo $this->route->site_url("Admin/ajaxresponsemenuunpublish"); ?>';
+                 var redirecturl = '<?php echo $this->route->site_url("Admin/dashboard/?action=listmenus&&status=0"); ?>';
+                 swal({
+                     title: "Do You Want To UnPublish ?",
                      buttons: {
                          yes: {
                              text: "Ok",
@@ -339,7 +382,7 @@
                  //
                  var pageid = $(this).closest('td').find('#pageid').val();
                  var baseurl = '<?php echo $this->route->site_url("Admin/ajaxresponseforpage"); ?>';
-                 var redirecturl = '<?php echo $this->route->site_url("Admin/dashboard/?action=listpages&&status=0"); ?>';
+                 var redirecturl = '<?php echo $this->route->site_url("Admin/dashboard/?action=listpages&&status=1"); ?>';
                  swal({
                      title: "Do You Want To Publish ?",
                      buttons: {
@@ -384,7 +427,7 @@
                  var baseurl = '<?php echo $this->route->site_url("Admin/ajaxresponseforpageunpublish"); ?>';
                  var redirecturl = '<?php echo $this->route->site_url("Admin/dashboard/?action=listpages&&status=0"); ?>';
                  swal({
-                     title: "Do You Want To UnPublish For Delete Page ?",
+                     title: "Do You Want To UnPublish ?",
                      buttons: {
                          yes: {
                              text: "Ok",

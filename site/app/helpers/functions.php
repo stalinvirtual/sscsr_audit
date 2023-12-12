@@ -1,9 +1,9 @@
 <?php
 
 //  $base_url =  "http://" . $_SERVER['SERVER_NAME'];
-$base_url = "http://" . $_SERVER['SERVER_NAME'];
+$base_url = "http://10.163.2.181:8080";
+//$base_url = "http://" . $_SERVER['SERVER_NAME'];
 $GLOBALS['site_url'] = $base_url;
-//$base_url = "http://10.163.2.181:81";
 $GLOBALS['local_path'] = $base_url . "/sscsr_audit/dataentry/ftp/";
 $GLOBALS['local_path'] = $base_url . "/sscsr_audit/dataentry/ftp/";
 $GLOBALS['pdf_header_image_server_path'] = $base_url . "/sscsr_audit/site/exam_assets/";

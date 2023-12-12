@@ -907,7 +907,27 @@ class Admin extends BackEndController
         ];
         if ($menu->updateState($menu_data, $menuid)) {
             $message = 1;
+            $message_title = "Menu Published successfully";
+            $message_type = "success";
             header('Content-Type: application/json');
+            $_SESSION['notification'] = ['message' => $message_title, 'message_type' => $message_type];
+            echo json_encode(array("message" => $message));
+        }
+    }
+
+    public function ajaxresponsemenuunpublish()
+    {
+        $menuid = Helpers::cleanData($_POST['menuid']);
+        $menu = new Menu();
+        $menu_data = [
+            'status' => 0,
+        ];
+        if ($menu->updateState($menu_data, $menuid)) {
+            $message = 1;
+            $message_title = "Menu UnPublished successfully";
+            $message_type = "success";
+            header('Content-Type: application/json');
+            $_SESSION['notification'] = ['message' => $message_title, 'message_type' => $message_type];
             echo json_encode(array("message" => $message));
         }
     }
@@ -2088,7 +2108,10 @@ class Admin extends BackEndController
         ];
         if ($page->updatePageState($page_data, $pageid)) {
             $message = 1;
+            $message_title = "Page Published successfully";
+            $message_type = "success";
             header('Content-Type: application/json');
+            $_SESSION['notification'] = ['message' => $message_title, 'message_type' => $message_type];
             echo json_encode(array("message" => $message));
         }
     }
@@ -2102,7 +2125,10 @@ class Admin extends BackEndController
         ];
         if ($page->updatePageState($page_data, $pageid)) {
             $message = 1;
+            $message_title = "Page UnPublished successfully";
+            $message_type = "success";
             header('Content-Type: application/json');
+            $_SESSION['notification'] = ['message' => $message_title, 'message_type' => $message_type];
             echo json_encode(array("message" => $message));
         }
     }

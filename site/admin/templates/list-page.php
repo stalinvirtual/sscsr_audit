@@ -51,11 +51,12 @@
 													}
 												 }									   
 												else if($is_admin==1){?>
-													<a href="<?php echo $edit_page_link_str; ?>" name="menu_update" class="iconSize">
+													
+													<?php if (@$_GET['status'] == 0){ ?>
+														<a href="<?php echo $edit_page_link_str; ?>" name="menu_update" class="iconSize">
 														<i class="fa fa-edit"></i>
 													</a>
 
-													<?php if (@$_GET['status'] == 0){ ?>
 													 <a href="<?php echo $delete_page_link_str; ?>" onClick="return confirm('Are you sure you want to delete?');" class="iconSize" name="delete">
 														<i class="fa fa-trash"></i>
 													</a> 

@@ -127,7 +127,7 @@ class IndexController extends FrontEndController
 
 	public function killChars_pass($strWords)
 	{
-		$strWords = htmlentities(trim(stripslashes(strip_tags(pg_escape_string($strWords)))));
+		$strWords = htmlentities(trim(stripslashes(strip_tags($strWords))));
 		$badChars = array("alert", ";", "--", "alter", "alter routine", "create", "create routine", "create table", "create temporary tables", "create view", "delete", "drop", "event", "execute", "index", "insert", "lock tables", "references", "select", "show view", "trigger", "update", "xp_", "union", "|", ";", "%", "'", '"', "\'", '\"', "<>", "()", "+");
 		$newChars = $strWords;
 		for ($i = 0; $i < count($badChars); $i++) {
@@ -138,7 +138,7 @@ class IndexController extends FrontEndController
 	}
 	public function killChars($strWords)
 	{
-		$strWords = htmlentities(trim(stripslashes(strip_tags(pg_escape_string($strWords)))));
+		$strWords = htmlentities(trim(stripslashes(strip_tags($strWords))));
 		$badChars = array("alert", ";", "--", "alter", "alter routine", "create", "create routine", "create table", "create temporary tables", "create view", "delete", "drop", "event", "execute", "index", "insert", "lock tables", "references", "select", "show view", "trigger", "update", "xp_", "union", "|", "&", ";", "$", "%", "'", '"', "\'", '\"', "<>", "+");
 		$newChars = $strWords;
 		for ($i = 0; $i < count($badChars); $i++) {
@@ -162,7 +162,7 @@ class IndexController extends FrontEndController
 
 				//exit;
 				if (!empty($csrfResponse)) {
-					$_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
+					$_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_FULL_SPECIAL_CHARS);
 
 
 					$usr_name = $this->killChars($_POST['uname']);

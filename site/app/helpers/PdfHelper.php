@@ -24,7 +24,7 @@ class PdfHelper extends Dompdf
 
 
       // echo '<pre>';
-      // print_r($data['admitcardresults']);
+      // print_r($data);
       // exit;
 
 
