@@ -288,40 +288,71 @@ $_SESSION['csrf_token'] = $csrfToken; ?>
         //     $("#nomination_form").submit();
         // });
         $('.pdfnomination').on('change', function () {
-            myfile = $(this).val();
-            var ext = myfile.split('.').pop();
-            if (ext == "pdf") {
-                return true;
-            } else {
-                swal("Accept Only PDF Files", "", "warning");
-                $('.pdfnomination').val('');
-                return;
-            }
-        });
-        $(document).on('click', '.add', function () {
-            let dynamicCount = 1;
-            var html = '';
-            html += '<tr>';
-            html += '<td><input type="text" name="pdf_name[]" class="form-control item_name pdf_name" id="pdf_name"   value="" /></td>';
-            html += '<td><input type="file" name="pdf_file[]"   class="form-control item_quantity pdfnomination" accept="application/pdf"   /></td>';
-            html += '<td><button type="button" name="remove" class="btn btn-danger btn-sm remove"><i class="fa fa-minus" aria-hidden="true"></i></button></td></tr>';
-            $('#item_table').append(html);
+        debugger;
+        var fileInput = this;
+        var myfile = fileInput.files[0];
 
-         
+        if (myfile) {
+            var reader = new FileReader();
+            reader.onloadend = function (e) {
+                var arr = (new Uint8Array(e.target.result)).subarray(0, 4);
+                var header = "";
+                for (var i = 0; i < arr.length; i++) {
+                    header += arr[i].toString(16);
+                }
 
-            // dynamicCount ++;
-            $('.pdfnomination').on('change', function () {
-                myfile = $(this).val();
-                var ext = myfile.split('.').pop();
-                if (ext == "pdf") {
+                // Check the PDF file header
+                if (header.toUpperCase() === "25504446") {
+                    // PDF file header matches
                     return true;
                 } else {
-                    swal("Accept Only PDF Files", "", "warning");
-                    $('.pdfnomination').val('');
-                    return;
+                    swal("Invalid PDF File", "", "warning");
+                    fileInput.value = ''; // Clear the file input
+                    return false;
                 }
-            });
-        });
+            };
+            reader.readAsArrayBuffer(myfile);
+        }
+    });
+        $(document).on('click', '.add', function () {
+    let dynamicCount = 1;
+    var html = '';
+    html += '<tr>';
+    html += '<td><input type="text" name="pdf_name[]" class="form-control item_name pdf_name" id="pdf_name"   value="" /></td>';
+    html += '<td><input type="file" name="pdf_file[]" class="form-control item_quantity pdfnomination" accept="application/pdf"   /></td>';
+    html += '<td><button type="button" name="remove" class="btn btn-danger btn-sm remove"><i class="fa fa-minus" aria-hidden="true"></i></button></td></tr>';
+    $('#item_table').append(html);
+
+    // dynamicCount ++;
+    $('.pdfnomination').on('change', function () {
+        debugger;
+        var fileInput = this;
+        var myfile = fileInput.files[0];
+
+        if (myfile) {
+            var reader = new FileReader();
+            reader.onloadend = function (e) {
+                var arr = (new Uint8Array(e.target.result)).subarray(0, 4);
+                var header = "";
+                for (var i = 0; i < arr.length; i++) {
+                    header += arr[i].toString(16);
+                }
+
+                // Check the PDF file header
+                if (header.toUpperCase() === "25504446") {
+                    // PDF file header matches
+                    return true;
+                } else {
+                    swal("Invalid PDF File", "", "warning");
+                    fileInput.value = ''; // Clear the file input
+                    return false;
+                }
+            };
+            reader.readAsArrayBuffer(myfile);
+        }
+    });
+});
+
         $(document).on('click', '.remove', function () {
             //debugger;
             var pdfname = $(this).closest('tr').find('#pdfname').val();

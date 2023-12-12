@@ -1022,6 +1022,13 @@ class Admin extends BackEndController
                             foreach ($_FILES['pdf_file']['name'] as $i => $name) {
                                 $item_name = Helpers::cleanData($_POST['pdf_name'][$i]);
                                 $tmp_name = $_FILES['pdf_file']['tmp_name'][$i];
+
+                                $mimeType = mime_content_type($tmp_name);
+                                if ($mimeType !== 'application/pdf') {
+                                    $this->deleteNomination($lastinsertedid);
+                                } 
+
+
                                 $error = $_FILES['pdf_file']['error'][$i];
                                 $size = $_FILES['pdf_file']['size'][$i];
                                 $type = $_FILES['pdf_file']['type'][$i];
@@ -1059,12 +1066,41 @@ class Admin extends BackEndController
                         'p_status' => '0',
                     ];
                     if ($nomination->updateNomination($nomination_data, $nomination_id)) {
+
+
+                        // echo '<pre>';
+                        // print_r($_FILES);
+                        // exit;
+
+
+
+
+
+
+
+
+
+
+
                         foreach ($_FILES['pdf_file']['name'] as $i => $name) {
                             if ($_FILES['pdf_file']['size'][$i] != 0 || $_POST['pdf_name'][$i] != '') {
                                 $item_name = Helpers::cleanData($_POST['pdf_name'][$i]);
                                 $old_item_name = Helpers::cleanData($_POST['old_pdf_files'][$i]);
                                 $child_id = isset($_POST['nomination_child_id'][$i]) ? $_POST['nomination_child_id'][$i] : 0;
                                 $tmp_name = $_FILES['pdf_file']['tmp_name'][$i];
+                               // $tmp_name = $_FILES['pdf_file']['tmp_name'][$i];
+                              //  $mimeType = mime_content_type($tmp_name);
+                        
+                                // if ($mimeType !== 'application/pdf') {
+                                //     $message = "File is not a PDF";
+                                //     $message_type = "warning";
+                        
+                                //     // Set the error message in the session or handle it appropriately
+                                //     $_SESSION['notification'] = ['message' => $message, 'message_type' => $message_type];
+                        
+                                //     // Redirect or take necessary actions
+                                //     $this->route->redirect($this->route->site_url("Admin/dashboard/?action=listnominations"));
+                                // }
                                 $error = $_FILES['pdf_file']['error'][$i];
                                 $size = $_FILES['pdf_file']['size'][$i];
                                 $type = $_FILES['pdf_file']['type'][$i];
@@ -1103,15 +1139,15 @@ class Admin extends BackEndController
             }
         }
     }
-    public function deleteNomination()
+    public function deleteNomination($page_id)
     {
         $data = [];
         $message = $message_type = "";
-        $page_id = $this->data['params'][0];
+       // $page_id = $this->data['params'][0];
         $nomination = new Nomination();
         if ($nomination->deleteNomination($page_id)) {
-            $message = "Nomination  Deleted successfully";
-            $message_type = "success";
+            $message = "File is not PDF";
+            $message_type = "warning";
         } else {
             $message = "Error deleting Nomination ";
         }

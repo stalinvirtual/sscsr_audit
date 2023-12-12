@@ -1,5 +1,4 @@
 {
-    "errorMsg": "",
     "nominations": {
         "0": {
             "nomination_id": 1107,
@@ -240,10 +239,10 @@
             "status": 1
         },
         {
-            "selection_post_child_id": 70,
-            "selection_post_id": 55,
-            "pdf_name": "hhhh",
-            "attachment": "10068-document.pdf",
+            "selection_post_child_id": 77,
+            "selection_post_id": 58,
+            "pdf_name": "Je 12",
+            "attachment": "77601-stalin-thomas_oct-2023-payslip.pdf",
             "status": 1
         }
     ],
@@ -266,41 +265,6 @@
     ],
     "tenders_latest_news": [],
     "announcements_latest_news": [],
-    "notices": [
-        {
-            "notice_id": 33,
-            "pdf_name": "Important Notice about Helpdesk Facility for grievances of Applicants",
-            "attachment": "11678-important_notice_29082023-about-tollfree-phone-number.pdf",
-            "effect_from_date": "2023-09-05",
-            "effect_to_date": "2023-12-05",
-            "p_status": "1",
-            "category_id": 8,
-            "creation_date": "2023-09-05 09:01:32",
-            "category_name": "OTHERS"
-        },
-        {
-            "notice_id": 36,
-            "pdf_name": "Corrigendum Notice - Constables (Executive) in Delhi Police Examination 2023",
-            "attachment": "7755-constables-executive-examination-2023-corrigendum-dt1092023.pdf",
-            "effect_from_date": "2023-09-05",
-            "effect_to_date": "2023-09-30",
-            "p_status": "1",
-            "category_id": 6,
-            "creation_date": "2023-09-05 09:16:05",
-            "category_name": "CONSTABLE"
-        },
-        {
-            "notice_id": 35,
-            "pdf_name": "Notice of Constable (Executive) in Delhi Police Examination 2023 ",
-            "attachment": "75696-constables-executive-examination-2023-noticedt01092023.pdf",
-            "effect_from_date": "2023-09-05",
-            "effect_to_date": "2023-09-30",
-            "p_status": "1",
-            "category_id": 6,
-            "creation_date": "2023-09-05 09:14:56",
-            "category_name": "CONSTABLE"
-        }
-    ],
     "ilinkforFirstFourRow": [
         {
             "id": 118,
