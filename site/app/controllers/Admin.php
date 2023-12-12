@@ -1023,10 +1023,10 @@ class Admin extends BackEndController
                                 $item_name = Helpers::cleanData($_POST['pdf_name'][$i]);
                                 $tmp_name = $_FILES['pdf_file']['tmp_name'][$i];
 
-                                $mimeType = mime_content_type($tmp_name);
-                                if ($mimeType !== 'application/pdf') {
-                                    $this->deleteNomination($lastinsertedid);
-                                } 
+                                // $mimeType = mime_content_type($tmp_name);
+                                // if ($mimeType !== 'application/pdf') {
+                                //     $this->deleteNomination($lastinsertedid);
+                                // } 
 
 
                                 $error = $_FILES['pdf_file']['error'][$i];

@@ -288,7 +288,7 @@ $_SESSION['csrf_token'] = $csrfToken; ?>
         //     $("#nomination_form").submit();
         // });
         $('.pdfnomination').on('change', function () {
-        debugger;
+       // debugger;
         var fileInput = this;
         var myfile = fileInput.files[0];
 
@@ -325,7 +325,7 @@ $_SESSION['csrf_token'] = $csrfToken; ?>
 
     // dynamicCount ++;
     $('.pdfnomination').on('change', function () {
-        debugger;
+        //debugger;
         var fileInput = this;
         var myfile = fileInput.files[0];
 
