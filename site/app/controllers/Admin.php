@@ -1,7 +1,5 @@
 <?php
-
 namespace App\Controllers;
-
 use App\System\Route;
 use App\Helpers\Helpers;
 use App\Models\Candidate;
@@ -39,7 +37,6 @@ use App\Models\Instructions as Instructions;
 use App\Models\MstNotice as MstNotice;
 use App\Models\MstNoticeChild as MstNoticeChild;
 use App\Models\Exam as Exam;
-
 ini_set('display_errors', '1');
 ini_set('display_startup_errors', '1');
 error_reporting(E_ALL);
@@ -867,10 +864,10 @@ class Admin extends BackEndController
                 //print_r($ret);
                 echo '<option value="">Select Menu </option>';
                 foreach ($ret as $val) { ?>
-                    <option value="<?php echo $val->menu_parent_id; ?>" <?php if ($val->menu_parent_id == $menu_id) {
-                                                                            echo $message;
-                                                                        } ?>><?php echo $val->parent_name; ?></option>
-                    <?php }
+                                        <option value="<?php echo $val->menu_parent_id; ?>" <?php if ($val->menu_parent_id == $menu_id) {
+                                               echo $message;
+                                           } ?>><?php echo $val->parent_name; ?></option>
+                                    <?php }
             }
         }
     }
@@ -1250,6 +1247,10 @@ class Admin extends BackEndController
                         foreach ($_FILES['pdf_file']['name'] as $i => $name) {
                             $item_name = Helpers::cleanData($_POST['pdf_name'][$i]);
                             $tmp_name = $_FILES['pdf_file']['tmp_name'][$i];
+                            $mimeType = mime_content_type($tmp_name);
+                            if ($mimeType !== 'application/pdf') {
+                                $this->deleteSelectionpost($lastinsertedid);
+                            }
                             $error = $_FILES['pdf_file']['error'][$i];
                             $size = $_FILES['pdf_file']['size'][$i];
                             $type = $_FILES['pdf_file']['type'][$i];
@@ -1266,7 +1267,8 @@ class Admin extends BackEndController
                                 'selection_post_id' => $lastinsertedid,
                                 'pdf_name' => $item_name,
                                 'attachment' => $final_file,
-                                'status' => 1
+                                'status' => 1,
+                                'mimetype' => $mimeType
                             ];
                             $selectionpostchild->addSelectionpostchild($selectionpost_child_data);
                         }
@@ -1294,9 +1296,64 @@ class Admin extends BackEndController
                             $child_id = isset($_POST['selectionpost_child_id'][$i]) ? $_POST['selectionpost_child_id'][$i] : 0;
                             // Check if PDF file needs to be updated
                             $update_file = isset($_FILES['pdf_file']['size'][$i]) && $_FILES['pdf_file']['size'][$i] != 0;
+							
                             if ($update_file) {
                                 // File upload logic
+								 $old_item_name = Helpers::cleanData($_POST['old_pdf_files'][$i]);
                                 $tmp_name = $_FILES['pdf_file']['tmp_name'][$i];
+								$selectionpostchild = new \App\Models\Selectionpostschild();
+                                $mimeTypefromdb = $selectionpostchild->getMimeTypeByFileNamesp($old_item_name);
+								 if ($_FILES['pdf_file']['error'][$i] == UPLOAD_ERR_OK) {
+                                    // File has been uploaded successfully
+                                    $tmp_name = $_FILES['pdf_file']['tmp_name'][$i];
+                                    $mimeType = mime_content_type($tmp_name);
+                                    // Check MIME type of the file from the database
+                                    if ($mimeTypefromdb !== 'application/pdf') {
+                                        $this->deleteSelectionpost($selectionpost_id);
+                                    }
+                                    // Check MIME type of the uploaded file
+                                    if ($mimeType !== 'application/pdf') {
+                                        $message = "Uploaded file is not a PDF.";
+                                        $message_type = "warning";
+                                        $_SESSION['notification'] = ['message' => $message, 'message_type' => $message_type];
+                                        $this->route->redirect($this->route->site_url("Admin/dashboard/?action=listselectionposts"));
+                                        exit;
+                                        // Handle accordingly
+                                    } else {
+                                        // Rest of your code to process the uploaded file
+                                    }
+                                } else {
+                                    // Handle the upload error
+                                    switch ($_FILES['pdf_file']['error'][$i]) {
+                                        case UPLOAD_ERR_INI_SIZE:
+                                            echo 'The uploaded file exceeds the upload_max_filesize directive in php.ini.';
+                                            break;
+                                        case UPLOAD_ERR_FORM_SIZE:
+                                            echo 'The uploaded file exceeds the MAX_FILE_SIZE directive that was specified in the HTML form.';
+                                            break;
+                                        case UPLOAD_ERR_PARTIAL:
+                                            echo 'The uploaded file was only partially uploaded.';
+                                            break;
+                                        case UPLOAD_ERR_NO_FILE:
+                                            // No file was uploaded. Check MIME type of the file from the database.
+                                            if ($mimeTypefromdb !== 'application/pdf') {
+                                                $this->deleteSelectionpost($selectionpost_id);
+                                            }
+                                            break;
+                                        case UPLOAD_ERR_NO_TMP_DIR:
+                                            echo 'Missing a temporary folder. Introduced in PHP 5.0.3.';
+                                            break;
+                                        case UPLOAD_ERR_CANT_WRITE:
+                                            echo 'Failed to write file to disk. Introduced in PHP 5.1.0.';
+                                            break;
+                                        case UPLOAD_ERR_EXTENSION:
+                                            echo 'A PHP extension stopped the file upload.';
+                                            break;
+                                        default:
+                                            echo 'Unknown upload error.';
+                                            break;
+                                    }
+                                }
                                 $error = $_FILES['pdf_file']['error'][$i];
                                 $size = $_FILES['pdf_file']['size'][$i];
                                 $type = $_FILES['pdf_file']['type'][$i];
@@ -1327,6 +1384,7 @@ class Admin extends BackEndController
                                 $selectionpostchild->updateSelectionpostchild($selectionpost_child_data, $child_id);
                             }
                         }
+						
                         $message = "Selectionpost Updated successfully";
                         $message_type = "success";
                     } else {
@@ -1340,15 +1398,15 @@ class Admin extends BackEndController
             }
         }
     }
-    public function deleteSelectionpost()
+    public function deleteSelectionpost($sp_id)
     {
         $data = [];
         $message = $message_type = "";
-        $sp_id = $this->data['params'][0];
+        //$sp_id = $this->data['params'][0];
         $sp = new Selectionpost();
         if ($sp->deleteSelectionPost($sp_id)) {
-            $message = "Selection Post Deleted successfully";
-            $message_type = "success";
+            $message = "File is not PDF";
+            $message_type = "warning";
         } else {
             $message = "Error deleting Selection Post ";
         }
@@ -1380,7 +1438,7 @@ class Admin extends BackEndController
         $menu_data = [
             'status' => 0,
         ];
-        if ($noticechild->updateState($menu_data, $pdf_id)) {
+        if ($noticechild->deleteNoticechild($pdf_id)) {
             $message = 1;
             header('Content-Type: application/json');
             echo json_encode(array("message" => $message));
@@ -1466,6 +1524,7 @@ class Admin extends BackEndController
                     //pdf upload function
                     $file = rand(1000, 100000) . "-" . $_FILES['attachment']['name'];
                     $file_loc = $_FILES['attachment']['tmp_name'];
+                    $mimeType = mime_content_type($file_loc);
                     $file_size = $_FILES['attachment']['size'];
                     $file_type = $_FILES['attachment']['type'];
                     $folder = './debarredlists/';
@@ -1492,13 +1551,15 @@ class Admin extends BackEndController
                     'attachment' => $final_file,
                     'effect_from_date' => $effect_from_date,
                     'effect_to_date' => $effect_to_date,
-                    'p_status' => '0'
+                    'p_status' => '0',
+                    'mimetype' => $mimeType
                 ];
                 /* echo "<pre>";
             print_r($menu_data);
             exit; */
                 $dlist = new \App\Models\Debarredlists();
                 if ($dlist_id == 0) { // insert new menu 
+                    if ($mimeType == 'application/pdf') {
                     if ($dlist->addDlist($dlist_data)) {
                         $message = "Debarred List  Added successfully";
                         $message_type = "success";
@@ -1506,7 +1567,12 @@ class Admin extends BackEndController
                         $message = "Error adding Debarred List";
                         $message_type = "warning";
                     }
-                } else { // update menu
+                }else{
+                    $message = "File is not PDF";
+                    $message_type = "warning";
+                }
+                } else {
+                    if ($mimeType == 'application/pdf') { // update menu
                     if ($dlist->updateDlist($dlist_data, $dlist_id)) {
                         $message = "Debarred List Updated successfully";
                         $message_type = "success";
@@ -1514,6 +1580,11 @@ class Admin extends BackEndController
                         $message = "Error updating Debarred List";
                         $message_type = "warning";
                     }
+                }
+                else{
+                    $message = "File is not PDF";
+                    $message_type = "warning";
+                }
                 }
                 $_SESSION['notification'] = ['message' => $message, 'message_type' => $message_type];
                 $this->route->redirect($this->route->site_url("Admin/dashboard/?action=listdebarredlists"));
@@ -1575,6 +1646,7 @@ class Admin extends BackEndController
                     //pdf upload function
                     $file = rand(1000, 100000) . "-" . $_FILES['attachment']['name'];
                     $file_loc = $_FILES['attachment']['tmp_name'];
+                    $mimeType = mime_content_type($file_loc);
                     $file_size = $_FILES['attachment']['size'];
                     $file_type = $_FILES['attachment']['type'];
                     $folder = './tender/';
@@ -1602,26 +1674,39 @@ class Admin extends BackEndController
                     'effect_from_date' => $effect_from_date,
                     'effect_to_date' => $effect_to_date,
                     'p_status' => '0',
-                    'creation_date' => date('Y-m-d H:i:s')
+                    'creation_date' => date('Y-m-d H:i:s'),
+                    'mimetype' => $mimeType
                 ];
                 /* echo "<pre>";
             print_r($menu_data);
             exit; */
                 $tender = new \App\Models\Tender();
-                if ($tenderid == 0) { // insert new menu 
-                    if ($tender->addTender($tenderlist_data)) {
+                if ($tenderid == 0) {
+                    if ($mimeType == 'application/pdf') { // insert new menu 
+                        if ($tender->addTender($tenderlist_data)) {
+                            $message = "Tender  Added successfully";
+                            $message_type = "success";
+                        } else {
+                            $message = "Error adding Tender";
+                            $message_type = "warning";
+                        }
                         $message = "Tender  Added successfully";
                         $message_type = "success";
                     } else {
-                        $message = "Error adding Tender";
+                        $message = "File is not PDF";
                         $message_type = "warning";
                     }
                 } else { // update menu
-                    if ($tender->updateTender($tenderlist_data, $tenderid)) {
-                        $message = "Tender Updated successfully";
-                        $message_type = "success";
+                    if ($mimeType == 'application/pdf') {
+                        if ($tender->updateTender($tenderlist_data, $tenderid)) {
+                            $message = "Tender Updated successfully";
+                            $message_type = "success";
+                        } else {
+                            $message = "Error updating Tender";
+                            $message_type = "warning";
+                        }
                     } else {
-                        $message = "Error updating Tender";
+                        $message = "File is not PDF";
                         $message_type = "warning";
                     }
                 }
@@ -1630,20 +1715,20 @@ class Admin extends BackEndController
             }
         }
     }
-    public function deleteTender()
+    public function deleteTender($tender_id)
     {
         $data = [];
         $message = $message_type = "";
-        $tender_id = $this->data['params'][0];
+        //$tender_id = $this->data['params'][0];
         $tender = new Tender();
         if ($tender->deleteTenderStatus($tender_id)) {
-            $message = "Tender   Deleted successfully";
-            $message_type = "success";
+            $message = "File is not PDF";
+            $message_type = "warning";
         } else {
             $message = "Error deleting Tender ";
         }
         $_SESSION['notification'] = ['message' => $message, 'message_type' => $message_type];
-        $this->route->redirect($this->route->site_url("Admin/dashboard/?action=tender_archieves_by_month"));
+        $this->route->redirect($this->route->site_url("Admin/dashboard/?action=listoftenders"));
     }
     public function copyTender()
     {
@@ -2041,6 +2126,10 @@ class Admin extends BackEndController
                                 $item_name = Helpers::cleanData($_POST['pdf_name'][$i]);
                                 $item_name = htmlspecialchars($item_name);
                                 $tmp_name = $_FILES['pdf_file']['tmp_name'][$i];
+                                $mimeType = mime_content_type($tmp_name);
+                                if ($mimeType !== 'application/pdf') {
+                                    $this->deleteNotice($lastinsertedid);
+                                }
                                 $error = $_FILES['pdf_file']['error'][$i];
                                 $size = $_FILES['pdf_file']['size'][$i];
                                 $type = $_FILES['pdf_file']['type'][$i];
@@ -2057,7 +2146,8 @@ class Admin extends BackEndController
                                     'notice_id' => $lastinsertedid,
                                     'pdf_name' => $item_name,
                                     'attachment' => $final_file,
-                                    'status' => 0
+                                    'status' => 0,
+                                    'mimetype' => $mimeType
                                 ];
                                 $noticechild->addMstNoticeChild($notice_child_data);
                             }
@@ -2085,9 +2175,61 @@ class Admin extends BackEndController
                             if ($_FILES['pdf_file']['size'][$i] != 0 || $_POST['pdf_name'][$i] != '') {
                                 $item_name = Helpers::cleanData($_POST['pdf_name'][$i]);
                                 $old_item_name = Helpers::cleanData($_POST['old_pdf_files'][$i]);
-                                $item_name = htmlspecialchars($item_name);
                                 $child_id = isset($_POST['notice_child_id'][$i]) ? $_POST['notice_child_id'][$i] : 0;
                                 $tmp_name = $_FILES['pdf_file']['tmp_name'][$i];
+                                $noticechild = new \App\Models\MstNoticeChild();
+                                $mimeTypefromdb = $noticechild->getMimeTypeByFileNamenotice($old_item_name);
+                                if ($_FILES['pdf_file']['error'][$i] == UPLOAD_ERR_OK) {
+                                    // File has been uploaded successfully
+                                    $tmp_name = $_FILES['pdf_file']['tmp_name'][$i];
+                                    $mimeType = mime_content_type($tmp_name);
+                                    // Check MIME type of the file from the database
+                                    if ($mimeTypefromdb !== 'application/pdf') {
+                                        $this->deleteNotice($notice_id);
+                                    }
+                                    // Check MIME type of the uploaded file
+                                    if ($mimeType !== 'application/pdf') {
+                                        $message = "Uploaded file is not a PDF.";
+                                        $message_type = "warning";
+                                        $_SESSION['notification'] = ['message' => $message, 'message_type' => $message_type];
+                                        $this->route->redirect($this->route->site_url("Admin/dashboard/?action=listofnotices"));
+                                        exit;
+                                        // Handle accordingly
+                                    } else {
+                                        // Rest of your code to process the uploaded file
+                                    }
+                                } else {
+                                    // Handle the upload error
+                                    switch ($_FILES['pdf_file']['error'][$i]) {
+                                        case UPLOAD_ERR_INI_SIZE:
+                                            echo 'The uploaded file exceeds the upload_max_filesize directive in php.ini.';
+                                            break;
+                                        case UPLOAD_ERR_FORM_SIZE:
+                                            echo 'The uploaded file exceeds the MAX_FILE_SIZE directive that was specified in the HTML form.';
+                                            break;
+                                        case UPLOAD_ERR_PARTIAL:
+                                            echo 'The uploaded file was only partially uploaded.';
+                                            break;
+                                        case UPLOAD_ERR_NO_FILE:
+                                            // No file was uploaded. Check MIME type of the file from the database.
+                                            if ($mimeTypefromdb !== 'application/pdf') {
+                                                $this->deleteNotice($notice_id);
+                                            }
+                                            break;
+                                        case UPLOAD_ERR_NO_TMP_DIR:
+                                            echo 'Missing a temporary folder. Introduced in PHP 5.0.3.';
+                                            break;
+                                        case UPLOAD_ERR_CANT_WRITE:
+                                            echo 'Failed to write file to disk. Introduced in PHP 5.1.0.';
+                                            break;
+                                        case UPLOAD_ERR_EXTENSION:
+                                            echo 'A PHP extension stopped the file upload.';
+                                            break;
+                                        default:
+                                            echo 'Unknown upload error.';
+                                            break;
+                                    }
+                                }
                                 $error = $_FILES['pdf_file']['error'][$i];
                                 $size = $_FILES['pdf_file']['size'][$i];
                                 $type = $_FILES['pdf_file']['type'][$i];
@@ -2099,10 +2241,7 @@ class Admin extends BackEndController
                                 }
                                 $new_file_name = strtolower($file);
                                 $final_file = str_replace(' ', '-', $new_file_name);
-                                if (move_uploaded_file($tmp_name, $folder . $final_file)) { // echo "File is valid, and was successfully uploaded.\n";
-                                } else {
-                                    echo "File size greater than 300kb!\n\n";
-                                }
+                                move_uploaded_file($tmp_name, $folder . $final_file);
                                 $noticechild = new \App\Models\MstNoticeChild();
                                 $notice_child_data = [
                                     'notice_id' => $notice_id,
@@ -2129,15 +2268,15 @@ class Admin extends BackEndController
             }
         }
     }
-    public function deleteNotice()
+    public function deleteNotice($notice_id)
     {
         $data = [];
         $message = $message_type = "";
-        $notice_id = $this->data['params'][0];
-        $notice = new Notice();
+        // $notice_id = $this->data['params'][0];
+        $notice = new MstNotice();
         if ($notice->deleteNoticeStatus($notice_id)) {
-            $message = "Notice  Deleted successfully";
-            $message_type = "success";
+            $message = "File is not PDF";
+            $message_type = "warning";
         } else {
             $message = "Error deleting Notice ";
         }
@@ -2532,14 +2671,14 @@ class Admin extends BackEndController
                 $is_publisher = $user->is_publisher(); // publisher
                 $data['is_publisher'] = $is_publisher;
                 if (count($arrayValue) > 0) {
-                    foreach ($arrayValue as $row) :
+                    foreach ($arrayValue as $row):
                         $delete_nomination_link_str = str_replace("{id}", $row['nomination_id'], $dlink);
                         $edit_nomination_link_str = str_replace("{id}", $row['nomination_id'], $elink);
                         $archive_nomination_link_str = str_replace("{id}", $row['nomination_id'], $alink);
                         $nominationchildclass = new Nominationchild();
                         $nominationchildlist = $nominationchildclass->getNominationchild();
                         $output = "";
-                        foreach ($nominationchildlist as $key => $childlist) :
+                        foreach ($nominationchildlist as $key => $childlist):
                             $selected = "";
                             if ($row['nomination_id'] == $childlist->nomination_id) {
                                 $selected = "selected=\"selected\"";
@@ -2549,41 +2688,41 @@ class Admin extends BackEndController
             <a href='$file_location' rel = "noopener noreferrer"  target="_blank"> $childlist->pdf_name</a>,<br>
 HTML;
                             }
-                    ?>
-                        <?php endforeach; ?>
-                        <?php $flagValue = Helpers::flagoutput($row['p_status']);
-                        $rolebasedValue = Helpers::roleBased();
-                        if ($rolebasedValue['is_superadmin'] == 1) {
-                            $primaryid = $row['nomination_id'];
-                            $publishbaseurl = $this->route->site_url("Admin/ajaxresponseforPublish");
-                            $archivesbaseurl = $this->route->site_url("Admin/ajaxresponseforArchives");
-                            $redirecturl = $this->route->site_url("Admin/dashboard/?action=listnominations&&status=0");
-                            $status = $row['p_status'];
-                            $actionoutputValue = Helpers::iconOperation($edit_nomination_link_str, $delete_nomination_link_str, $archive_nomination_link_str, $primaryid, $idname, $publishbaseurl, $archivesbaseurl, $redirecturl, $status, "Nomination");
-                        } else if ($rolebasedValue['is_admin'] == 1) {
-                            $primaryid = $row['nomination_id'];
-                            $publishbaseurl = $this->route->site_url("Admin/ajaxresponseforPublish");
-                            $archivesbaseurl = $this->route->site_url("Admin/ajaxresponseforArchives");
-                            $redirecturl = $this->route->site_url("Admin/dashboard/?action=listnominations&&status=0");
-                            $status = $row['p_status'];
-                            $actionoutputValue = Helpers::iconOperation($edit_nomination_link_str, $delete_nomination_link_str, $archive_nomination_link_str, $primaryid, $idname, $publishbaseurl, $archivesbaseurl, $redirecturl, $status, "Nomination");
-                        } elseif ($rolebasedValue['is_uploader'] == 1) {
-                            $primaryid = $row['nomination_id'];
-                            $publishbaseurl = $this->route->site_url("Admin/ajaxresponseforPublish");
-                            $archivesbaseurl = $this->route->site_url("Admin/ajaxresponseforArchives");
-                            $redirecturl = $this->route->site_url("Admin/dashboard/?action=listnominations&&status=0");
-                            $status = $row['p_status'];
-                            $actionoutputValue = Helpers::iconOperation($edit_nomination_link_str, $delete_nomination_link_str, $archive_nomination_link_str, $primaryid, $idname, $publishbaseurl, $archivesbaseurl, $redirecturl, $status, "Nomination");
-                        } else {
-                            // if (@$_GET['status'] == 0 && $row['p_status'] != 1) {
-                            //     echo '<i class="fa fa-eye nomination-publish-button" style="color:#007bff"></i>';
-                            // }
-                        }
-                        // echo  $output;
-                        // $outputarray =explode(" ",$output);
-                        // $outputarray = array($output);
-                        // print_r( $outputarray);
-                        @$array['data'][] = array($primaryid, $row['exam_name'], $row['category_name'], $output, $row['effect_from_date'], $row['effect_to_date'], $flagValue, $actionoutputValue);
+                            ?>
+                                                <?php endforeach; ?>
+                                                <?php $flagValue = Helpers::flagoutput($row['p_status']);
+                                                $rolebasedValue = Helpers::roleBased();
+                                                if ($rolebasedValue['is_superadmin'] == 1) {
+                                                    $primaryid = $row['nomination_id'];
+                                                    $publishbaseurl = $this->route->site_url("Admin/ajaxresponseforPublish");
+                                                    $archivesbaseurl = $this->route->site_url("Admin/ajaxresponseforArchives");
+                                                    $redirecturl = $this->route->site_url("Admin/dashboard/?action=listnominations&&status=0");
+                                                    $status = $row['p_status'];
+                                                    $actionoutputValue = Helpers::iconOperation($edit_nomination_link_str, $delete_nomination_link_str, $archive_nomination_link_str, $primaryid, $idname, $publishbaseurl, $archivesbaseurl, $redirecturl, $status, "Nomination");
+                                                } else if ($rolebasedValue['is_admin'] == 1) {
+                                                    $primaryid = $row['nomination_id'];
+                                                    $publishbaseurl = $this->route->site_url("Admin/ajaxresponseforPublish");
+                                                    $archivesbaseurl = $this->route->site_url("Admin/ajaxresponseforArchives");
+                                                    $redirecturl = $this->route->site_url("Admin/dashboard/?action=listnominations&&status=0");
+                                                    $status = $row['p_status'];
+                                                    $actionoutputValue = Helpers::iconOperation($edit_nomination_link_str, $delete_nomination_link_str, $archive_nomination_link_str, $primaryid, $idname, $publishbaseurl, $archivesbaseurl, $redirecturl, $status, "Nomination");
+                                                } elseif ($rolebasedValue['is_uploader'] == 1) {
+                                                    $primaryid = $row['nomination_id'];
+                                                    $publishbaseurl = $this->route->site_url("Admin/ajaxresponseforPublish");
+                                                    $archivesbaseurl = $this->route->site_url("Admin/ajaxresponseforArchives");
+                                                    $redirecturl = $this->route->site_url("Admin/dashboard/?action=listnominations&&status=0");
+                                                    $status = $row['p_status'];
+                                                    $actionoutputValue = Helpers::iconOperation($edit_nomination_link_str, $delete_nomination_link_str, $archive_nomination_link_str, $primaryid, $idname, $publishbaseurl, $archivesbaseurl, $redirecturl, $status, "Nomination");
+                                                } else {
+                                                    // if (@$_GET['status'] == 0 && $row['p_status'] != 1) {
+                                                    //     echo '<i class="fa fa-eye nomination-publish-button" style="color:#007bff"></i>';
+                                                    // }
+                                                }
+                                                // echo  $output;
+                                                // $outputarray =explode(" ",$output);
+                                                // $outputarray = array($output);
+                                                // print_r( $outputarray);
+                                                @$array['data'][] = array($primaryid, $row['exam_name'], $row['category_name'], $output, $row['effect_from_date'], $row['effect_to_date'], $flagValue, $actionoutputValue);
                     endforeach;
                     //echo '<pre>';
                     //print_r($array);
@@ -2610,7 +2749,7 @@ HTML;
                         $output = "";
                         $output .= '<a href=" ' . $file_location . '" rel = "noopener noreferrer" target="_blank">' . $row["attachment"] . ' </a>';
                         ?>
-<?php
+                        <?php
                         $flagValue = Helpers::flagoutput($row['p_status']);
                         $rolebasedValue = Helpers::roleBased();
                         if ($rolebasedValue['is_admin'] == 1) {
@@ -3830,7 +3969,8 @@ TEXT;
             $year = trim(Helpers::cleanData($_POST['year']));
             $month = trim(Helpers::cleanData($_POST['month']));
             $effect_from_date = date('Y-m-d', strtotime(Helpers::cleanData($_POST['effect_from_date'])));
-            $effect_to_date = date('Y-m-d', strtotime(Helpers::cleanData($_POST['effect_to_date'])));;
+            $effect_to_date = date('Y-m-d', strtotime(Helpers::cleanData($_POST['effect_to_date'])));
+            ;
             $totalRecordsWithoutFiltering = $model->totalRecordsWithOutFiltering();
             $totalRecords = $totalRecordsWithoutFiltering->allcount;
             ## Total number of records with filtering
@@ -3896,7 +4036,7 @@ TEXT;
                 } else {
                     $unpublishButton = "<button  title='Un Publish' style='height:30px;margin-left:10px' class='btn btn-sm btn-danger notice_unpublishbtn iconWidth' data-id='" . $rowval->notice_id . "'><i class='fa  fa-eye'></i></button>";
                     $green_text = "<p style='color:green;margin-top:8px'>Published</p></div>";
-                    $action =  $green_text . $unpublishButton;
+                    $action = $green_text . $unpublishButton;
                 }
                 $pdfPath = "";
                 $pdfLinks = []; // Initialize an array to store the PDF links
@@ -4014,182 +4154,7 @@ TEXT;
             }
         }
     }
-    public function ajaxResponseForNoticeDataTableLoad1()
-    {
-        $request = 1;
-        if (isset($_POST['request'])) {
-            $request = Helpers::cleanData($_POST['request']);
-        }
-        if ($request == 1) {
-            ## Read value
-            $draw = Helpers::cleanData($_POST['draw']);
-            $row = Helpers::cleanData($_POST['start']);
-            $rowperpage = Helpers::cleanData($_POST['length']); // Rows display per page
-            $columnIndex = Helpers::cleanData($_POST['order'][0]['column']); // Column index
-            $columnName = Helpers::cleanData($_POST['columns'][$columnIndex]['data']); // Column name
-            $columnSortOrder = Helpers::cleanData($_POST['order'][0]['dir']); // asc or desc
-            $searchValue = Helpers::cleanData($_POST['search']['value']); // Search value
-            ## Search 
-            $searchQuery = " ";
-            if ($searchValue != '') {
-                $searchQuery = "   notice_name ilike '%" . $searchValue . "%' or 
-              c.category_name ilike '%" . $searchValue . "%' or                  
-              TO_CHAR(effect_from_date, 'yyyy-mm-dd') like'%" . $searchValue . "%'  or
-              TO_CHAR(effect_to_date, 'yyyy-mm-dd') like'%" . $searchValue . "%' 
-               ";
-            }
-            //echo $searchQuery;
-            ## Total number of records without filtering
-            $model = new MstNotice();
-            $year = trim(Helpers::cleanData($_POST['year']));
-            $month = trim(Helpers::cleanData($_POST['month']));
-            $effect_from_date = date('Y-m-d', strtotime(Helpers::cleanData($_POST['effect_from_date'])));
-            $effect_to_date = date('Y-m-d', strtotime(Helpers::cleanData($_POST['effect_to_date'])));;
-            $totalRecordsWithoutFiltering = $model->totalRecordsWithOutFiltering();
-            $totalRecords = $totalRecordsWithoutFiltering->allcount;
-            ## Total number of records with filtering
-            $totalRecordsWithFiltering = $model->totalRecordsWithFiltering($searchQuery);
-            $totalRecordwithFilter = $totalRecordsWithFiltering->allcount;
-            $fetchRecordsObject = $model->getMstNoticeDetails($year, $month, $effect_from_date, $effect_to_date, $searchQuery);
-            $fetchRecords = (array) $fetchRecordsObject;
-            $edit_notice_link = $this->links['edit_notice_link'];
-            $data = array();
-            foreach ($fetchRecords as $rowval) {
-                $edit_notice_link_str = str_replace("{id}", $rowval->notice_id, $edit_notice_link);
-                $baseurl = $this->route->site_url($edit_notice_link_str);
-                $updateButton = "<a href= '" . $baseurl . "' name='menu_update' class='iconSize'> 
-       <button type='button' title='Edit' class='btn btn-secondary iconWidth updateUser'><i class='fas fa-edit'></i></button>
-       </a>";
-                // Delete Button
-                $deleteButton = "<button title='Delete' class='btn btn-sm btn-danger iconWidth deletebtn' style='height:30px'  data-id='" . $rowval->notice_id . "'><i class='fa fa-trash'></i></button>";
-                // $archivesButton = "<button  title='Archive' style='height:30px' class='btn btn-sm btn-primary archivebtn' data-id='" . $rowval->notice_id . "'><i class='fa  fa-archive'></i></button>";
-                if ($rowval->p_status != 1) {
-                    /****
-                     * Role Checking
-                     * 
-                     * 
-                     */
-                    $user = new User();
-                    $loginUser = $user->getUser();
-                    $is_superadmin = $user->is_superadmin();
-                    $is_admin = $user->is_admin();
-                    $is_uploader = $user->is_uploader();
-                    $is_publisher = $user->is_publisher();
-                    $array = array(
-                        "super_admin" => $user->is_superadmin() ? $user->is_superadmin() : "",
-                        "admin" => $user->is_admin() ? $user->is_admin() : "",
-                        "uploader" => $user->is_uploader() ? $user->is_uploader() : "",
-                        "publisher" => $user->is_publisher() ? $user->is_publisher() : "",
-                    );
-                    if ($array['uploader'] == 1) {
-                        $action = $updateButton . " " . $deleteButton . " ";
-                    } else if ($array['publisher'] == 1) {
-                        $publishButton = "<button  title='Publish' style='height:30px' class='btn btn-sm btn-success publishbtn iconWidth' data-id='" . $rowval->notice_id . "'><i class='fa  fa-eye'></i></button>";
-                        $action = $publishButton;
-                    } else if ($array['admin'] == 1) {
-                        $publishButton = "<button  title='Publish' style='height:30px' class='btn btn-sm btn-success publishbtn iconWidth' data-id='" . $rowval->notice_id . "'><i class='fa  fa-eye'></i></button>";
-                        $action = $updateButton . " " . $deleteButton . " " . $publishButton;
-                    } else {
-                    }
-                    /****
-                     * Role Checking
-                     * 
-                     * 
-                     */
-                } else {
-                    $action = "<p style='color:green'>Published</p>";
-                }
-                $pdfPath = "";
-                $selected = "";
-                $selected = "selected=\"selected\"";
-                $uploadPath = 'notice' . '/' . $rowval->attachment;
-                $file_location = $this->route->get_base_url() . "/" . $uploadPath;
-                $pdfPath .= <<<TEXT
-              <a href="$file_location " rel = "noopener noreferrer" target="_blank">$rowval->pdf_name </a><br>
-TEXT;
-                $flag = "";
-                if ($rowval->p_status == 1) {
-                    $flag .= '<i class="fa fa-flag" aria-hidden="true"  style="color:green"></i>';
-                } else {
-                    $flag .= '<i class="fa fa-flag" aria-hidden="true" style="color:red"></i>';
-                }
-                $data[] = array(
-                    "notice_id" => $rowval->notice_id,
-                    "pdf_name" => $rowval->pdf_name,
-                    "attachment" => $pdfPath,
-                    "category_name" => $rowval->category_name,
-                    "effect_from_date" => $rowval->effect_from_date,
-                    "effect_to_date" => $rowval->effect_to_date,
-                    "p_status" => $flag,
-                    "action" => $action,
-                );
-            }
-            ## Response
-            $response = array(
-                "draw" => intval($draw),
-                "iTotalRecords" => $totalRecords,
-                "iTotalDisplayRecords" => $totalRecordwithFilter,
-                "aaData" => $data
-            );
-            echo json_encode($response);
-            exit;
-        } //request 1
-        // Delete Notice
-        if ($request == 4) {
-            $id = Helpers::cleanData($_POST['id']);
-            // Check id
-            ## Fetch records
-            $model = new MstNotice();
-            $checkId = $model->checkMstNoticeId($id);
-            $checkIdCount = $checkId->checkid;
-            if ($checkIdCount > 0) {
-                $deleteQuery = $model->deleteMstNotice($id);
-                echo 1;
-                exit;
-            } else {
-                echo 0;
-                exit;
-            }
-        }
-        // Archive Notice
-        if ($request == 5) {
-            $id = Helpers::cleanData($_POST['id']);
-            // Check id
-            ## Fetch records
-            $model = new MstNotice();
-            $checkId = $model->checkMstNoticeId($id);
-            $checkIdCount = $checkId->checkid;
-            if ($checkIdCount > 0) {
-                $archiveQuery = $model->archiveMstNoticeStatus($id);
-                echo 1;
-                exit;
-            } else {
-                echo 0;
-                exit;
-            }
-        }
-        // Publish Notice
-        if ($request == 6) {
-            $id = Helpers::cleanData($_POST['id']);
-            $notice_data = [
-                'p_status' => '1',
-            ];
-            // Check id
-            ## Fetch records
-            $model = new MstNotice();
-            $checkId = $model->checkMstNoticeId($id);
-            echo $checkIdCount = $checkId->checkid;
-            exit;
-            if ($checkIdCount > 0) {
-                $publishQuery = $model->updateMstNoticeState($notice_data, $id);
-                echo 1;
-                exit;
-            } else {
-                echo 0;
-                exit;
-            }
-        }
-    }
+    
     public function commonNoticeArchive()
     {
         if (!empty(Helpers::cleanData($_POST["action"]))) {
@@ -4562,7 +4527,8 @@ TEXT;
             $year = trim(Helpers::cleanData($_POST['year']));
             $month = trim(Helpers::cleanData($_POST['month']));
             $effect_from_date = date('Y-m-d', strtotime(Helpers::cleanData($_POST['effect_from_date'])));
-            $effect_to_date = date('Y-m-d', strtotime(Helpers::cleanData($_POST['effect_to_date'])));;
+            $effect_to_date = date('Y-m-d', strtotime(Helpers::cleanData($_POST['effect_to_date'])));
+            ;
             $totalRecordsWithoutFiltering = $model->totalRecordsWithOutFiltering();
             $totalRecords = $totalRecordsWithoutFiltering->allcount;
             ## Total number of records with filtering
@@ -4871,7 +4837,8 @@ TEXT;
             $year = trim(Helpers::cleanData($_POST['year']));
             $month = trim(Helpers::cleanData($_POST['month']));
             $effect_from_date = date('Y-m-d', strtotime(Helpers::cleanData($_POST['effect_from_date'])));
-            $effect_to_date = date('Y-m-d', strtotime(Helpers::cleanData($_POST['effect_to_date'])));;
+            $effect_to_date = date('Y-m-d', strtotime(Helpers::cleanData($_POST['effect_to_date'])));
+            ;
             $totalRecordsWithoutFiltering = $model->totalRecordsWithOutFiltering();
             $totalRecords = $totalRecordsWithoutFiltering->allcount;
             ## Total number of records with filtering
@@ -5216,7 +5183,8 @@ TEXT;
             $year = trim(Helpers::cleanData($_POST['year']));
             $month = trim(Helpers::cleanData($_POST['month']));
             $effect_from_date = date('Y-m-d', strtotime(Helpers::cleanData($_POST['effect_from_date'])));
-            $effect_to_date = date('Y-m-d', strtotime(Helpers::cleanData($_POST['effect_to_date'])));;
+            $effect_to_date = date('Y-m-d', strtotime(Helpers::cleanData($_POST['effect_to_date'])));
+            ;
             $totalRecordsWithoutFiltering = $model->totalRecordsWithOutFiltering();
             $totalRecords = $totalRecordsWithoutFiltering->allcount;
             ## Total number of records with filtering

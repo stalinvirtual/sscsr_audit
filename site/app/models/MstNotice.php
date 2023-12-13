@@ -329,6 +329,12 @@ TEXT;
          $lastinsertid = (object)$fetch_all;
          return $lastinsertid;
      }
+     public function deleteNoticeStatus($page_id = 0)
+     {
+       
+         $delete_row = $this->delete($page_id);
+        return $delete_row;
+     }
 
    
 

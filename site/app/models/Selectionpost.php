@@ -140,6 +140,7 @@ class Selectionpost extends DB
      */
     public function deleteSelectionPost($sp_id = 0)
     {
+       
         $delId = explode(",", $sp_id);
         foreach ($delId as $val) {
             $delete_row = $this->delete($val);

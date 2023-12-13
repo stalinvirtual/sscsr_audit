@@ -16,7 +16,7 @@ class MstNoticeChild extends DB
     {
         $result = $this->select()
             ->from($this->table_name)
-            ->where(['status' => 1])
+            //->where(['status' => 1])
             ->get_list();
         return $result;
     }
@@ -53,7 +53,18 @@ class MstNoticeChild extends DB
     {
         return $this->update($data, ['notice_child_id' => $id]);
     }
-
+    // public function deleteNoticechild($id = 0)
+    // {
+    //     return $this->delete( ['notice_child_id' => $id]);
+    // }
+    public function deleteNoticechild($id = 0)
+    {
+        $delId = explode(",", $id);
+        foreach ($delId as $val) {
+            $delete_row =  $this->delete($val);
+        }
+        return $delete_row;
+    }
     public function getNoticechildforhome($parent_id = 0)
 	{
 		$noticechildlist = $this->select()
@@ -70,5 +81,25 @@ class MstNoticeChild extends DB
             //->where(['status' => 1])
             ->get_list();
         return $nominationchildtbllist;
+    }
+    public function getMimeTypeByFileNamenotice($fileName)
+    {
+        //SELECT mime_type FROM your_table_name WHERE file_name = :file_name
+        $result =  $this->select('mimetype')
+        ->from("public.mstnoticechildtbl")
+        ->where(['mimetype' => 'application/pdf'])
+        ->get_list();
+        $result = (array)$result;
+        // echo '<pre>';
+        // print_r( $result );
+        // exit;
+
+        // Check if there is a result
+        if ($result && !empty($result[0]->mimetype)) {
+            return $result[0]->mimetype;
+        } else {
+            // Return a default value or handle accordingly
+            return null;
+        }
     }
 }

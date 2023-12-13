@@ -53,4 +53,24 @@ class Selectionpostschild extends DB
     {
         return $this->update($data, ['selection_post_child_id' => $id]);
     }
+    public function getMimeTypeByFileNamesp($fileName)
+    {
+        //SELECT mime_type FROM your_table_name WHERE file_name = :file_name
+        $result =  $this->select('mimetype')
+        ->from("public.mstselectionpostchildtbl")
+        ->where(['mimetype' => 'application/pdf'])
+        ->get_list();
+        $result = (array)$result;
+        // echo '<pre>';
+        // print_r( $result );
+        // exit;
+
+        // Check if there is a result
+        if ($result && !empty($result[0]->mimetype)) {
+            return $result[0]->mimetype;
+        } else {
+            // Return a default value or handle accordingly
+            return null;
+        }
+    }
 }

@@ -103,8 +103,9 @@ class Tender extends DB
     }
 
     
-    public function deleteTenderStatus($tender_id = 0)
+    public function deleteTenderStatus($tender_id)
     {
+      
         $delete_row = $this->delete($tender_id);
        return $delete_row;
     }
