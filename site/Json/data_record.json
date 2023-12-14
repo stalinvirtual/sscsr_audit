@@ -1,101 +1,10 @@
 {
     "nominations": {},
-    "nominationchildlist": [
-        {
-            "nomination_child_id": 1164,
-            "nomination_id": 1178,
-            "pdf_name": "sp_pdf",
-            "attachment": "1730-exam-detailsp.pdf",
-            "status": 1,
-            "mimetype": null
-        },
-        {
-            "nomination_child_id": 1168,
-            "nomination_id": 1180,
-            "pdf_name": "test sp",
-            "attachment": "78891-document-(1).pdf",
-            "status": 1,
-            "mimetype": null
-        },
-        {
-            "nomination_child_id": 1169,
-            "nomination_id": 1180,
-            "pdf_name": "Tst 2",
-            "attachment": "66044-10000000168-sp-g-2.pdf",
-            "status": 1,
-            "mimetype": null
-        },
-        {
-            "nomination_child_id": 1172,
-            "nomination_id": 1182,
-            "pdf_name": "sp_pdf",
-            "attachment": "12864-71000846505.pdf",
-            "status": 1,
-            "mimetype": "application\/pdf"
-        },
-        {
-            "nomination_child_id": 1173,
-            "nomination_id": 1182,
-            "pdf_name": "sdddddds",
-            "attachment": "51208-71000846505.pdf",
-            "status": 1,
-            "mimetype": "application\/pdf"
-        }
-    ],
+    "nominationchildlist": [],
     "nominations_latest_news": {},
-    "nominationchildlist_latest_news": [
-        {
-            "nomination_child_id": 1164,
-            "nomination_id": 1178,
-            "pdf_name": "sp_pdf",
-            "attachment": "1730-exam-detailsp.pdf",
-            "status": 1,
-            "mimetype": null
-        },
-        {
-            "nomination_child_id": 1168,
-            "nomination_id": 1180,
-            "pdf_name": "test sp",
-            "attachment": "78891-document-(1).pdf",
-            "status": 1,
-            "mimetype": null
-        },
-        {
-            "nomination_child_id": 1169,
-            "nomination_id": 1180,
-            "pdf_name": "Tst 2",
-            "attachment": "66044-10000000168-sp-g-2.pdf",
-            "status": 1,
-            "mimetype": null
-        },
-        {
-            "nomination_child_id": 1172,
-            "nomination_id": 1182,
-            "pdf_name": "sp_pdf",
-            "attachment": "12864-71000846505.pdf",
-            "status": 1,
-            "mimetype": "application\/pdf"
-        },
-        {
-            "nomination_child_id": 1173,
-            "nomination_id": 1182,
-            "pdf_name": "sdddddds",
-            "attachment": "51208-71000846505.pdf",
-            "status": 1,
-            "mimetype": "application\/pdf"
-        }
-    ],
+    "nominationchildlist_latest_news": [],
     "selectionposts_latest_news": {},
-    "selectpostschildlist_latest_news": [
-        {
-            "selection_post_child_id": 157,
-            "selection_post_id": 114,
-            "pdf_name": "jjhjh",
-            "attachment": "97669-71000846505.pdf",
-            "status": 1,
-            "mimetype": "application\/pdf"
-        }
-    ],
+    "selectpostschildlist_latest_news": [],
     "notice_latest_news": [],
     "noticechildlist_latest_news": [],
     "tenders_latest_news": [],
