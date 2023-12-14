@@ -94,7 +94,7 @@ class Gallery extends DB
             ->join(" mstgallerychildtbl gc ", "g.gallery_id = gc.gallery_id ", "JOIN")
             ->join(" msteventcategory ec ", "g.event_id = ec.event_id ", "JOIN")
             //  ->order_by("g.effect_from_date desc")
-           ->where(['gc.status'=>1 , 'g.p_status' => '1','ec.status' =>1])
+          ->where(['g.p_status' => '1','ec.status' =>1])
           
             ->get_list();
         $lastinsertid = $sql;
@@ -131,7 +131,7 @@ class Gallery extends DB
     {
         $nominationchildtbllist = $this->select('*')
             ->from('mstgallerychildtbl')
-            ->where(['status' => '1'])
+            //->where(['status' => '1'])
             ->get_list();
         return $nominationchildtbllist;
     }
@@ -313,8 +313,8 @@ TEXT;
                 ->from("mstgallerytbl g ")
                 ->join("mstgallerychildtbl gc ", "g.gallery_id = gc.gallery_id ", "JOIN")
                 ->join("msteventcategory ec ", "g.event_id = ec.event_id ", "JOIN")
+                ->where(['g.p_status' => '1','ec.status' => 1,'gc.status'=>1])
                 ->group_by("g.event_id,ec.event_name,g.year ")
-                ->where(['gc.status'=> 1 , 'g.p_status' => '1','ec.status' => 1])
                 ->get_list();
             // echo $this->last_query;
         } else {
@@ -326,7 +326,7 @@ TEXT;
                 ->from("mstgallerytbl g ")
                 ->join("mstgallerychildtbl gc ", "g.gallery_id = gc.gallery_id ", "JOIN")
                 ->join("msteventcategory ec ", "g.event_id = ec.event_id ", "JOIN")
-                ->where(['g.year' => $year,'gc.status'=> 1 , 'g.p_status' => '1','ec.status' => 1])
+                ->where(['g.year' => $year,'g.p_status' => '1','ec.status' => 1,'gc.status'=>1])
                 ->group_by("g.event_id,ec.event_name,g.year ")
                 ->get_list();
         }
@@ -373,7 +373,7 @@ TEXT;
             ->from("mstgallerytbl g ")
             ->join("mstgallerychildtbl gc ", "g.gallery_id = gc.gallery_id ", "JOIN")
             ->join("msteventcategory ec ", "g.event_id = ec.event_id ", "JOIN")
-            ->where(['g.event_id' => $id, 'gc.status'=> 1])
+            ->where(['g.event_id' => $id,'gc.status' =>1,'g.p_status'=>'1'])
             ->order_by("g.gallery_id desc ")
             ->get_list();
         // echo $this->last_query;
@@ -385,7 +385,7 @@ TEXT;
             ->from("mstgallerytbl g ")
             ->join("mstgallerychildtbl gc ", "g.gallery_id = gc.gallery_id ", "JOIN")
             ->join("msteventcategory ec ", "g.event_id = ec.event_id ", "JOIN")
-            ->where(['g.event_id' => $evenid])
+            ->where(['g.event_id' => $evenid,'gc.status'=>1])
             ->order_by("g.gallery_id desc ")
             ->limitpostgres('1')
             ->get_one();

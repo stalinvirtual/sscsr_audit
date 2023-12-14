@@ -1451,10 +1451,8 @@ class Admin extends BackEndController
         $image_id = Helpers::cleanData($_POST['image_id']);
         // echo $cid;
         $gallerychild = new \App\Models\GalleryChild();
-        $menu_data = [
-            'status' => 0,
-        ];
-        if ($gallerychild->updateState($menu_data, $image_id)) {
+       
+        if ($gallerychild->deleteimage($image_id)) {
             $message = 1;
             header('Content-Type: application/json');
             echo json_encode(array("message" => $message));
@@ -4348,6 +4346,9 @@ TEXT;
             $gallery_data = [
                 'p_status' => '1',
             ];
+            $gallerychild_data = [
+                'status' => '1',
+            ];
             // Check id
             ## Fetch records
             $model = new Gallery();
@@ -4355,6 +4356,8 @@ TEXT;
             $checkIdCount = $checkId->checkid;
             if ($checkIdCount > 0) {
                 $publishQuery = $model->updateGalleryState($gallery_data, $id);
+                $modelchild = new GalleryChild();
+                $publish = $modelchild->updateGalleryChildState($gallerychild_data, $id);
                 echo 1;
                 exit;
             } else {

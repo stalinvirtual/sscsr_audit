@@ -46,4 +46,21 @@ class GalleryChild extends DB
     {
         return $this->update($data, ['image_id' => $id]);
     }
+   
+    // public function  deleteimage($id)
+    // {
+    //     return $this->delete(['image_id' => $id]);
+    // }
+    public function deleteimage($id = 0)
+    {
+        $delId = explode(",", $id);
+        foreach ($delId as $val) {
+            $delete_row =  $this->delete($val);
+        }
+        return $delete_row;
+    }
+    public function updateGalleryChildState($data = array(), $id = 0)
+    {
+        return $this->update($data, ['gallery_id' => $id]);
+    }
 }
