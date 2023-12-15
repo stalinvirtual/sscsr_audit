@@ -35,11 +35,10 @@ $base_url =  "http://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
 										  echo '<div class="alert alert-danger errormsg">';
 										  echo $errorMsg;
 										  echo '</div>';
-										  //unset($errorMsg);
+										  
 										}
 
 										$route = new Route();
-										//$loadcaptcha = $route->site_url("Api/loadcaptcha");
 										?>
 							<form class="form-signin" action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']); ?>" method="post" style="max-width:585px !important;" rel = "noopener noreferrer" target="_blank">       
 							  <h2 class="form-signin-heading">Know Your Roll Number</h2>

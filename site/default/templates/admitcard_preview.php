@@ -88,7 +88,6 @@ $base_url = "http://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
 									
 									$csrfToken = bin2hex(random_bytes(32));
 									$_SESSION['csrf_token'] = $csrfToken;
-									//$loadcaptcha = $route->site_url("Api/loadcaptcha");
 									?>
 									<div style="text-align:center;margin-bottom:20px ">( cgle 2019 / 91000299330 /
 										29-07-1995 ) </div>

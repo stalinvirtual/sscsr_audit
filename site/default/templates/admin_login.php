@@ -39,7 +39,7 @@ $_SESSION['csrf_token'] = $csrfToken;
 								//unset($errorMsg);
 							}
 							$route = new Route();
-							$loadcaptcha = $route->site_url("Api/loadcaptcha");
+							//$loadcaptcha = $route->site_url("Api/loadcaptcha");
 							$token = $_SESSION['token'];
 							?>
 							<form class="form-signin" id="dept_login"
@@ -85,7 +85,7 @@ $_SESSION['csrf_token'] = $csrfToken;
 	<!-- Captcha loging -->
 	<?php
 	$route = new Route();
-	$loadcaptcha = $route->site_url("Api/loadcaptcha");
+	//$loadcaptcha = $route->site_url("Api/loadcaptcha");
 	$loginUrl = $route->site_url("IndexController/login");
 	$redirectPath = $route->site_url("Admin/dashboard/?action=listnominations");
 	?>

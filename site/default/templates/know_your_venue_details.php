@@ -36,10 +36,9 @@ $_SESSION['csrf_token'] = $csrfToken;
 										  echo '<div class="alert alert-danger errormsg">';
 										  echo $errorMsg;
 										  echo '</div>';
-										  //unset($errorMsg);
+										  
 										}
 										$route = new Route();
-										//$loadcaptcha = $route->site_url("Api/loadcaptcha");
 										?>
 							<form class="form-signin" action="<?php echo htmlentities($_SERVER['PHP_SELF']); ?>" id="know_your_venue_details_form" method="post" style="max-width:585px !important;" rel = "noopener noreferrer" target="_blank">       
 							  <h2 class="form-signin-heading">Know your Date and City of Exam </h2>

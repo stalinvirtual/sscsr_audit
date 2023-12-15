@@ -4,7 +4,6 @@ namespace App\Controllers;
 
 use App\System\Route;
 use App\Helpers\Helpers;
-
 use App\Helpers\PdfHelper;
 use App\Helpers\securityService as securityService;
 use App\Models\Exam as Exam;
@@ -59,11 +58,6 @@ class IndexController extends FrontEndController
 		// login
 		$data = $this->login();
 		$data['nominations'] = Helpers::getNomination();
-
-
-
-
-
 		$data['nominationchildlist'] = Helpers::getNominationChildList();
 		//Nomination List For Latest News
 		$data['nominations_latest_news'] = Helpers::getNominationLatestNews();
@@ -124,7 +118,6 @@ class IndexController extends FrontEndController
 		$data['gallery_id_based_images'] = Helpers::getGalleryidBasedImages();
 		$this->render("admin_login", $data);
 	}
-
 	public function killChars_pass($strWords)
 	{
 		$strWords = htmlentities(trim(stripslashes(strip_tags($strWords))));
@@ -146,69 +139,45 @@ class IndexController extends FrontEndController
 		}
 		str_replace("'", "", str_replace('"', '', strip_tags($newChars)));
 		return $newChars;
-
 		// return $strWords;
 	}
-
 	public function login()
 	{
-
 		$antiCSRF = new securityService();
 		$csrfResponse = $antiCSRF->validate();
 		$usr_name = '';
 		try {
-
 			if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-
 				//exit;
 				if (!empty($csrfResponse)) {
 					$_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_FULL_SPECIAL_CHARS);
-
-
 					$usr_name = $this->killChars($_POST['uname']);
 					$data = [
 						'usr_name' => $usr_name,
 						'usr_pass' => $this->killChars_pass($_POST['currentword']),
 						//'Captcha_text' => trim($_POST['Captcha_text'])
 					];
-
-
-
 					$user = new User();
-
-
-
-
-
 					$loggedInUser = $user->authenticate($data['usr_name'], $data['usr_pass']);
 					if ($loggedInUser) {
 						//   if ($data['Captcha_text'] == $_SESSION['captcha']) {
 						//   } else {
 						// 	throw new \Exception('Captcha Not Found !!!', '402');
 						//   }
-
 						session_regenerate_id();
 						$_SESSION['session_check'] = session_id();
-						
-
 						//$data['acc_session'] = $_SESSION['session_check'];
 						$login_status = $user->loginStatus($usr_name);
 						// 
 						if (($login_status)) {
 							//$this->createUserSession($loggedInUser);
-
-							
-
 							//unset($user['hashedPassword']);
-					      // $_SESSION['user'] = $user;
+							// $_SESSION['user'] = $user;
 							// $route = new Route();
 							// //http_response_code(200);
 							// 	$t = $route->redirect($route->site_url("Admin/dashboard/?action=listnominations"));
-
 							// echo json_encode(array('message' =>$t));
-
 							//$route = new Route();
-
 							//$route->redirect($route->site_url("Admin/dashboard/?action=listnominations"));
 							throw new \Exception('Login Success', '200');
 						} else {
@@ -224,15 +193,14 @@ class IndexController extends FrontEndController
 				// throw new \Exception('Security Alert: Unable to process your request', '402');
 			}
 		} catch (\Exception $e) {
-			 //var_export( $e );
-			 //exit;
+			//var_export( $e );
+			//exit;
 			$protocol = (isset($_SERVER['SERVER_PROTOCOL']) ? $_SERVER['SERVER_PROTOCOL'] : 'HTTP/1.1');
 			header($protocol . ' ' . $e->getCode() . ' ' . $e->getMessage());
 			header('Content-Type: application/json');
 			echo json_encode(array('message' => $e->getMessage(), 'code' => $e->getCode()));
 		}
 	}
-
 	public function createUserSession($user)
 	{
 		unset($user['hashedPassword']);
@@ -245,35 +213,17 @@ class IndexController extends FrontEndController
 	// 	//session_start();
 	// 	//}
 	// 	$_POST = filter_input_array(INPUT_POST, FILTER_DEFAULT);
-
-
-
-
-
-
-
-
-
 	// 	if (isset($_POST['login'])) {
 	// 		if (hash_equals($_SESSION['csrf_token'], $_POST['csrf_token'])) {
 	// 			// // check captcha here
 	// 			//if (true == $this->checkCaptcha($_POST['captcha_code'])) {
 	// 			try {
-
 	// 				echo '<pre>';
 	// 				print_r($_POST);
 	// 			//	exit;
-
-
-
-
-
 	// 				if (!empty(Helpers::cleanData($_POST['uname'])) && !empty(Helpers::cleanData($_POST['currentword']))) {
 	// 					echo $decyptedusername = Helpers::encrypt_with_cryptoJS_and_decrypt_with_php(Helpers::cleanData($_POST['uname']))."<br>";
-
-
 	// 					echo $decyptedpassword = Helpers::encrypt_with_cryptoJS_and_decrypt_with_php(Helpers::cleanData($_POST['currentword']));
-
 	// 					exit;
 	// 					$username = Helpers::cleanData(trim($decyptedusername));
 	// 					$username = htmlspecialchars($username, ENT_QUOTES, 'UTF-8');
@@ -469,9 +419,7 @@ class IndexController extends FrontEndController
 	{
 		$events = new Gallery();
 		$yearBasedEvents = $events->getHomePhotoGalleryList();
-		
 		$data['yearBasedEvents'] = $yearBasedEvents;
-		
 		$distinctyears = $events->DistinctedYears();
 		$data['distinctyears'] = $distinctyears;
 		$this->render("gallery", $data);
@@ -491,25 +439,19 @@ class IndexController extends FrontEndController
 	{
 		// Trim leading and trailing whitespaces
 		$input = trim($input);
-
 		// Sanitize the input using FILTER_SANITIZE_STRING
 		$input = filter_var($input, FILTER_SANITIZE_FULL_SPECIAL_CHARS);
-
 		// Remove backslashes
 		$input = stripslashes($input);
-
 		// Use htmlspecialchars to encode special characters
 		$input = htmlspecialchars($input, ENT_QUOTES, 'UTF-8');
-
 		// You can add more specific sanitization or validation steps here based on your requirements
-
 		// Example: Check if the length is within an acceptable range
 		$minLength = 1;
 		$maxLength = 255; // Adjust as needed
 		if (strlen($input) < $minLength || strlen($input) > $maxLength) {
 			// Handle validation error, e.g., return an error message or throw an exception
 		}
-
 		return $input;
 	}
 	public function validateAndSanitize($input)
@@ -577,9 +519,7 @@ class IndexController extends FrontEndController
 	public function notice()
 	{
 		$data['notices'] = Helpers::getMstNotice();
-		
 		$data['noticeschildlist'] = Helpers::getNoticeChildList();
-		
 		$data['categorylist'] = Helpers::getCategory();
 		$data['ilinkforFirstFourRow'] = Helpers::getImporantLinksFirstFourRow();
 		$data['ilinkforAfterFirstFourRow'] = Helpers::getImporantLinksAfterFourRow();
@@ -808,7 +748,6 @@ class IndexController extends FrontEndController
 	{
 		if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 			$id_value = $this->validateAndSanitize($_POST['id']);
-			
 			if (!isset($id_value) || empty($id_value)) {
 				echo "Invalid ID provided.";
 				return;
@@ -848,7 +787,6 @@ class IndexController extends FrontEndController
 	public function GalleryidBasedImagesWithLightBox()
 	{
 		$year = ''; // Initialize the variable outside the conditional
-
 		if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 			$year = $this->validateAndSanitize($_POST['year']);
 			if (!isset($year) || empty($year)) {
@@ -856,7 +794,6 @@ class IndexController extends FrontEndController
 				return;
 			}
 		}
-
 		try {
 			$Gallery = new Gallery();
 			$fetchRecordsObject = $Gallery->photoGalleryGroup($year);
@@ -865,7 +802,6 @@ class IndexController extends FrontEndController
 			echo "Error: " . $ex->getMessage();
 			return;
 		}
-
 		$searchData = array();
 		foreach ($fetchRecords as $insdata) {
 			$fetchRecordsObject = $Gallery->photoGalleryGroupforOneRecord($insdata->event_id);
@@ -875,10 +811,8 @@ class IndexController extends FrontEndController
 				'text' => $insdata->event_name . "," . $insdata->event_id
 			);
 		}
-
 		echo json_encode($searchData);
 	}
-
 	public function GalleryidBasedImages()
 	{
 		//get matched data 
@@ -1161,9 +1095,7 @@ class IndexController extends FrontEndController
 		//$data['noticesarchiveslist'] = Helpers::getNoticeListArchivesforAdmin();
 		$data['noticesarchiveslist'] = Helpers::getNoticeArchives();
 		$data['noticearchivechildlist'] = Helpers::getNoticeChildListArchives();
-	
 		$data['tenderarchiveslist'] = Helpers::getTenderListArchivesforAdmin();
-	
 		$data['categorylist'] = Helpers::getCategory();
 		$data['categorylistsp'] = Helpers::getCategorySelectionPostsList();
 		$data['ilinkforFirstFourRow'] = Helpers::getImporantLinksFirstFourRow();
@@ -1177,10 +1109,21 @@ class IndexController extends FrontEndController
 		if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 			$roll_no = $this->validateAndSanitize($_POST['roll_no']);
 			$examname = $this->validateAndSanitize($_POST['examname']);
+		} else {
+			// Handle the case where the request method is not POST
+			// You might want to return an error or do something else
+			return;
 		}
 		$examnameArray = explode('_', $examname);
-		$table_name = $examnameArray[0] . '_' . $examnameArray[1] . '_' . $examnameArray[2] . '_' . $examnameArray[3] . '_' . $examnameArray[4];
-		$type = $examnameArray[4];
+		if (isset($examnameArray[4])) {
+			$table_name = $examnameArray[0] . '_' . $examnameArray[1] . '_' . $examnameArray[2] . '_' . $examnameArray[3] . '_' . $examnameArray[4];
+			$type = $examnameArray[4];
+			// Rest of your code...
+		} else {
+			// Handle the case where the array key doesn't exist
+			// You might want to return an error or do something else
+			return;
+		}
 		if ($roll_no != "" && $type == 'dv') {
 			$modelClass = new Admitcard();
 			$colmasterdetails = $modelClass->getPostPreference($table_name, $roll_no);

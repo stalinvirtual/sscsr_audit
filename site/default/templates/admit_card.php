@@ -52,7 +52,6 @@ error_reporting(0);
 								//unset($errorMsg);
 							}
 							$route = new Route();
-							//$loadcaptcha = $route->site_url("Api/loadcaptcha");
 							?>
 							<!-- Modal-->
 							<div class="modal" id="instructionModal">
