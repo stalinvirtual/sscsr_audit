@@ -1437,7 +1437,7 @@ class Imagick implements Iterator, Countable {
 	public function getGravity () {}
 
 	/**
-	 * (PECL imagick 2.2.1)<br/>
+	 * (PECL )<br/>
 	 * Gets channel range
 	 * @link https://php.net/manual/en/imagick.getimagechannelrange.php
 	 * @param int $channel <p>
