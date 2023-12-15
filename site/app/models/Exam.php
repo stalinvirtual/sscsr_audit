@@ -147,8 +147,8 @@ class Exam extends DB
                 ->join("sscsr_db_table_master dbm ", "em.exam_short_name = dbm.table_exam_short_name and dbm.status='0'", "JOIN")
                 ->join("sscsr_db_table_tier_master dtm", "dbm.table_name = dtm.table_name", "JOIN")
                 ->join("tier_master tm", "cast(dtm.tier_id as char(255)) =  cast(tm.tier_id as char(255))", "JOIN")
-                ->limit($numberofrecords)
                 ->order_by("dbm.table_id desc")
+                ->limit($numberofrecords)
                 ->get_list();
         } else {
             $sql  = $this->select("DISTINCT em.exam_name, dbm.table_exam_year, dbm.table_type, dbm.table_name,dbm.table_exam_short_name,dtm.tier_id as tier_id,tm.tier_name as tier_name,dtm.id as tableid,dbm.table_id")
@@ -157,8 +157,8 @@ class Exam extends DB
                 ->join("sscsr_db_table_tier_master dtm", "dbm.table_name = dtm.table_name", "JOIN")
                 ->join("tier_master tm", "cast(dtm.tier_id as char(255)) =  cast(tm.tier_id as char(255))", "JOIN")
                 ->wherelike('dbm.table_exam_short_name', $search)
-                ->limit($numberofrecords)
                 ->order_by("dbm.table_id desc")
+                ->limit($numberofrecords)
                 ->get_list();
         }
         $lastinsertid = $sql;
