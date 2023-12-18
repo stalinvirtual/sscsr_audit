@@ -166,8 +166,8 @@ $_SESSION['csrf_token'] = $csrfToken;
                         <?php echo $renderedMenuOptions; ?>
                       </select>
                     <?php  } else if (@$is_admin == 1) {
-                    //  echo '<pre>';
-                   //   print_r($current_menu);
+                      //echo '<pre>';
+                     // print_r($current_menu);
                       ?>
                       <select name="menu_parent_id" class="form-control" id="menu_parent_id">
                         <?php
@@ -265,6 +265,7 @@ $( "#menu_parent_id" ).append( menus );
 }
 
 $(document).ready(function () {
+  $('#menu_parent_id option[value="1"]').prop('disabled', true);
 var myfile = "";
      
         $('.pdfmenu').on('change', function () {
