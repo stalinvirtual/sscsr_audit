@@ -25,19 +25,18 @@ class DB
     public function __construct($table_name = '', $primary_key_column = 'id')
     {
         // get table name and primary key column from construct
-        $this->table        = $table_name;
-        $this->primary_key  = $primary_key_column;
-        $config             = new Config();
-        $dsn                = $config->get('db_driver') . ':';
-        $dsn               .= 'host=' .  $config->get("db_host") . ';';
-        $dsn               .= 'port=' . $config->get("db_port") . ';';
+        $this->table = $table_name;
+        $this->primary_key = $primary_key_column;
+        $config = new Config();
+        $dsn = $config->get('db_driver') . ':';
+        $dsn .= 'host=' . $config->get("db_host") . ';';
+        $dsn .= 'port=' . $config->get("db_port") . ';';
         if (!empty($config->get("db_name"))) {
             $dsn .= 'dbname=' . $config->get("db_name") . ';';
         }
-        $user_name = 'user=' .  $config->get("db_user") . ';';
-        $password = 'password=' .  $config->get("db_password") . ';';
-       
-        $dbConnect =  $dsn . $user_name . $password ;
+        $user_name = 'user=' . $config->get("db_user") . ';';
+        $password = 'password=' . $config->get("db_password") . ';';
+        $dbConnect = $dsn . $user_name . $password;
         // exit;
         $this->pdo = new \PDO(
             $dbConnect
@@ -47,10 +46,10 @@ class DB
     }
     private function build_where($where)
     {
-        $where_array        = [];
+        $where_array = [];
         // check where condains key value pair or array of conditions
-        $key_count          = count(array_keys($where));
-        $value_count        = count(array_values($where));
+        $key_count = count(array_keys($where));
+        $value_count = count(array_values($where));
         if ($key_count == $value_count) {
             foreach ($where as $column => $condition) {
                 $where_array[] = "$column = ?";
@@ -60,41 +59,35 @@ class DB
             $where_array = $where;
         }
         $this->where = $where;
-        return  implode(" AND ", $where_array);
+        return implode(" AND ", $where_array);
     }
     public function insert_archieves($sql, $inIDS)
     {
-       
         try {
-         
             $insertNominationStmt = $this->pdo->prepare($sql);
             $insertNominationResult = $insertNominationStmt->execute($inIDS);
-           return $insertNominationResult;
+            return $insertNominationResult;
         } catch (\PDOException $e) {
             // Handle the exception, e.g., log the error or return a specific value indicating failure.
             return false;
         }
     }
-    
     public function insert_archieves_gallery($sql, $inIDS)
     {
-       
         try {
-         
             $insertNominationStmt = $this->pdo->prepare($sql);
-            $params=[$inIDS];
+            $params = [$inIDS];
             $insertNominationResult = $insertNominationStmt->execute($params);
-           return $insertNominationResult;
+            return $insertNominationResult;
         } catch (\PDOException $e) {
             // Handle the exception, e.g., log the error or return a specific value indicating failure.
             return false;
         }
     }
-    
     public function insert($data)
     {
-        $columns        = array_keys($data);
-        $values         = array_values($data);
+        $columns = array_keys($data);
+        $values = array_values($data);
         $columns_string = implode(", ", $columns);
         $values_string = str_repeat("?,", count($values));
         // remove last , when adding str_repeat
@@ -121,7 +114,7 @@ class DB
         return $char . $column . $char;
     }
     //@todo: remove
-    private function  safe_str($value)
+    private function safe_str($value)
     {
         return "'" . $value . "'";
     }
@@ -167,8 +160,11 @@ class DB
     //Old Like 
     public function like($column_name, $condition)
     {
-        $this->query .= "AND " . $column_name . " LIKE ?";
-        $this->params[] = '%' . $condition . '%'; // Add wildcards around the condition
+        $this->query .= " AND " . $column_name . " ILIKE " . "'%?%'";
+        $this->params[] = $condition; // Add wildcards around the condition
+
+
+
         return $this;
     }
     public function wherelike($str, $condition)
@@ -222,7 +218,7 @@ class DB
     }
     public function limit($rows_per_page, $page_no = null)
     {
-        $page_no  = ((int)$page_no  == 0) ? 1 : $page_no;
+        $page_no = ((int) $page_no == 0) ? 1 : $page_no;
         $starting_index = 1 * $rows_per_page;
         $this->query .= " LIMIT $starting_index";
         //  echo   $this->query;
@@ -255,12 +251,12 @@ class DB
             $this->limit($rows_per_page, $page_no);
         }
         $stmt = $this->pdo->prepare($this->query);
-      //  $this->last_query = $this->interpolateQuery($this->query, $this->params);
+        //  $this->last_query = $this->interpolateQuery($this->query, $this->params);
         //echo $this->query."<br>";
         // exit;
         $stmt->execute($this->params);
         $this->params = [];
-        $records =  $stmt->fetchAll($this->getPdoResultType($result_type));
+        $records = $stmt->fetchAll($this->getPdoResultType($result_type));
         return $records;
     }
     public function get_limited_list($rows_per_page = "11", $page_no = 1, $result_type = null)
@@ -271,7 +267,7 @@ class DB
         $stmt = $this->pdo->prepare($this->query);
         $stmt->execute($this->params);
         $this->params = [];
-        $records =  $stmt->fetchAll($this->getPdoResultType($result_type));
+        $records = $stmt->fetchAll($this->getPdoResultType($result_type));
         return $records;
     }
     public function get_one($result_type = null)
@@ -280,10 +276,9 @@ class DB
             $stmt = $this->pdo->prepare($this->query);
             $stmt->execute($this->params);
             $this->params = [];
-            $records =  $stmt->fetch($this->getPdoResultType($result_type));
+            $records = $stmt->fetch($this->getPdoResultType($result_type));
             return $records;
-        }
-        catch (\PDOException $e) {
+        } catch (\PDOException $e) {
             // Log or echo the error message
             echo 'Error: ' . $e->getMessage();
             return null;
@@ -293,30 +288,29 @@ class DB
     {
         switch ($result_type) {
             case DB_OBJECT: {
-                    $fetchMode  = \PDO::FETCH_OBJ;
+                    $fetchMode = \PDO::FETCH_OBJ;
                     break;
                 }
             case DB_ARRAY: {
-                    $fetchMode  = \PDO::FETCH_BOTH;
+                    $fetchMode = \PDO::FETCH_BOTH;
                     break;
                 }
             case DB_ASSOC: {
-                    $fetchMode  = \PDO::FETCH_ASSOC;
+                    $fetchMode = \PDO::FETCH_ASSOC;
                     break;
                 }
             case DB_ROW: {
-                    $fetchMode  = \PDO::FETCH_NUM;
+                    $fetchMode = \PDO::FETCH_NUM;
                     break;
                 }
             default: {
-                    $fetchMode  = \PDO::FETCH_OBJ;
+                    $fetchMode = \PDO::FETCH_OBJ;
                 }
         }
         return $fetchMode;
     }
     public function update($data, $where = null)
     {
-       
         $this->params = [];
         $this->query = "UPDATE " . $this->table . " SET ";
         foreach ($data as $column => $value) {
@@ -325,16 +319,16 @@ class DB
         }
         $this->query = substr($this->query, 0, -2);
         $where_str = null;
-        if ($where ==  null) {
+        if ($where == null) {
             $where_str = $this->where;
         } else if (is_array($where)) {
             $where_str = " WHERE " . $this->build_where($where);
         } else {
-            $where_str =  " WHERE " . $where;
+            $where_str = " WHERE " . $where;
         }
         if ($where_str != null) {
-            $this->query  .= $where_str;
-            $stmt =  $this->pdo->prepare($this->query);
+            $this->query .= $where_str;
+            $stmt = $this->pdo->prepare($this->query);
             $params = $this->params;
             $this->params = [];
             return $stmt->execute($params);
@@ -363,19 +357,15 @@ class DB
         if ($id == 0 || $id == null) {
             $where_str = $this->where;
         } else {
-            $where_str =  "WHERE {$this->primary_key} = ?";
+            $where_str = "WHERE {$this->primary_key} = ?";
             $this->params[] = $id;
         }
         if ($where_str != null) {
-            
-            $this->query  = "DELETE FROM {$this->table} $where_str;";
-            $stmt =  $this->pdo->prepare($this->query);
-           
+            $this->query = "DELETE FROM {$this->table} $where_str;";
+            $stmt = $this->pdo->prepare($this->query);
             $params = $this->params;
             $this->params = [];
-           
             return $stmt->execute($params);
-
         } else {
             return false;
         }
@@ -444,16 +434,16 @@ class DB
         }
         $this->query = substr($this->query, 0, -2);
         $where_str = null;
-        if ($where ==  null) {
+        if ($where == null) {
             $where_str = $this->where;
         } else if (is_array($where)) {
             $where_str = " WHERE " . $this->build_where($where);
         } else {
-            $where_str =  " WHERE " . $where;
+            $where_str = " WHERE " . $where;
         }
         if ($where_str != null) {
-            $this->query  .= $where_str;
-            $stmt =  $this->pdo->prepare($this->query);
+            $this->query .= $where_str;
+            $stmt = $this->pdo->prepare($this->query);
             $params = $this->params;
             $this->params = [];
             return $stmt->execute($params);
@@ -462,7 +452,6 @@ class DB
         }
     }
     //New functions From New File on 03 oct 2023 by stalin
-
     public function execute($fetch_type = DB_OBJECT)
     {
         try {
@@ -476,32 +465,26 @@ class DB
             return false;
         }
     }
-
     private function interpolateQuery($query, $params)
     {
         $keys = array();
         $values = $params;
-
         foreach ($params as $key => $value) {
             if (is_string($key)) {
                 $keys[] = '/:' . $key . '/';
             } else {
                 $keys[] = '/[?]/';
             }
-
             if (is_string($value)) {
                 $values[$key] = "'" . $value . "'";
             }
-
             if (is_array($value)) {
                 $values[$key] = implode(',', $value);
             }
-
             if (is_null($value)) {
                 $values[$key] = 'NULL';
             }
         }
-
         return preg_replace($keys, $values, $query, 1, $count);
     }
 }

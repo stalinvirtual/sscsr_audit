@@ -123,18 +123,20 @@ class Exam extends DB
                 ->limit($numberofrecords)
                 ->get_list();
         } else {
+            // echo $search;
             $sql  = $this->select("DISTINCT em.exam_name, dbm.table_exam_year, dbm.table_type, dbm.table_name,dbm.table_exam_short_name,dtm.tier_id as tier_id,tm.tier_name as tier_name,dtm.id as tableid,dtm.created_on,dbm.table_id")
                 ->from("exam_master em ")
                 ->join("sscsr_db_table_master dbm ", "em.exam_short_name = dbm.table_exam_short_name and dbm.status='0'", "JOIN")
                 ->join("sscsr_db_table_tier_master dtm", "dbm.table_name = dtm.table_name", "JOIN")
                 ->join("tier_master tm", "cast(dtm.tier_id as char(255)) =  cast(tm.tier_id as char(255))", "JOIN")
                 ->where(['dtm.status' => '1', 'dtm.stop_status' => '1'])
-                ->like('dbm.table_exam_short_name', $search)
+                ->like('em.exam_name', $search)
                 ->order_by("dbm.table_id desc")
                 ->limit($numberofrecords)
                 ->get_list();
         }
-        //echo $this->last_query;
+        // echo $this->last_query;
+        // exit;
         $lastinsertid = $sql;
         $lastinsertid = (object)$lastinsertid;
         return $lastinsertid;
