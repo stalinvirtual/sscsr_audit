@@ -11,6 +11,9 @@ $("#menu_form").validate({
     menu_link: {
       required: true
     },
+    menu_page_id:{
+      required: true
+    },
     attachment:{required:true},
     menu_name: {
       required: true,
@@ -25,10 +28,13 @@ $("#menu_form").validate({
       required: "Please select an option."
     },
     menu_type: {
-      required: "Please select an option."
+      required: "Please select Menu type."
     },
     menu_link: {
       required: "Please enter a link."
+    }, 
+    menu_page_id:{
+      required: "Please Select a Page."
     },
     attachment: "Please provide a Attachment.",
     menu_name: {

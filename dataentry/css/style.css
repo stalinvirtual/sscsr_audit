@@ -343,7 +343,7 @@ body a:hover{
 			left: -1px;
 			display: table-cell;
 			vertical-align: middle;
-			width: 190px;
+      width: 210px;
 			/* visibility: hidden; */
 			padding: .7em 0;
 		}
@@ -4742,10 +4742,16 @@ li.menu_header {
 }
 /*-- //responsive --*/
 .menu-icon{
-  width: 65%;
-      /* width: 20%;
-    margin-left: 25px; */
+  width: 20%;
+  margin-left:3px;
+  border-radius: 50px;
+    border: 4px solid #a94442;
 }
+.menu-icon:hover{
+  width: 20%;
+  margin-left:3px;
+  border-radius: 0px;
+    }
 
 nav ul li{
   /* padding-left: 10px; */

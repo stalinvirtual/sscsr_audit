@@ -181,24 +181,27 @@
 			</li> -->
 			<li>
 				<a href="add_exam.php">
-					<img class="menu-icon" src="images/icons/add_exam.png"></i>
+				
 					<span class="nav-text">
+					<img class="menu-icon" src="images/icons/add_exam.png"></i>
 						Add Exam
 					</span>
 				</a>
 			</li>
 			<li>
 				<a href="create_table.php">
-					<img class="menu-icon" src="images/icons/create_table.png"></i>
+					
 					<span class="nav-text">
+					<img class="menu-icon" src="images/icons/create_table.png"></i>
 						Create Table
 					</span>
 				</a>
 			</li>
 			<li>
 				<a href="upload_excel_file.php">
-					<img class="menu-icon" src="images/icons/excel_upload.png"></i>
+					
 					<span class="nav-text">
+					<img class="menu-icon" src="images/icons/excel_upload.png"></i>
 						Excel Upload
 					</span>
 				</a>
@@ -213,40 +216,45 @@
 			</li>  -->
 			<li>
 				<a href="kyas_status_master.php">
-					<img class="menu-icon" src="images/icons/application_status.png"></i>
+					
 					<span class="nav-text">
+					<img class="menu-icon" src="images/icons/application_status.png">
 						Publish App. Status
 					</span>
 				</a>
 			</li>
 			<li>
 				<a href="know_your_city_master.php">
-					<img class="menu-icon" src="images/icons/application_status.png"></i>
+					
 					<span class="nav-text">
+					<img class="menu-icon" src="images/icons/application_status.png">
 						Publish City. Status
 					</span>
 				</a>
 			</li>
 			<li>
 				<a href="admitcard_preview.php">
-					<img class="menu-icon" src="images/icons/admitcard_preview.png"></i>
+					
 					<span class="nav-text">
+					<img class="menu-icon" src="images/icons/admitcard_preview.png"></i>
 						Admit Card Preview
 					</span>
 				</a>
 			</li>
 			<li>
 				<a href="exam_tier_master.php">
-					<img class="menu-icon" src="images/icons/publish_admitcard.png"></i>
+					
 					<span class="nav-text">
+					<img class="menu-icon" src="images/icons/publish_admitcard.png"></i>
 						Publish Admit Card
 					</span>
 				</a>
 			</li>
 			<li>
 				<a href="upload_admitcard_important_instructions.php">
-					<img class="menu-icon" src="images/icons/add_instruction.png"></i>
+					
 					<span class="nav-text">
+					<img class="menu-icon" src="images/icons/add_instruction.png"></i>
 						Add Instruction
 					</span>
 				</a>
@@ -254,25 +262,37 @@
 			<li>
 				<a href="admit_card_download_datatable.php">
 					<!-- <a href="list_download_admitcard.php"> -->
-					<img class="menu-icon" src="images/icons/application_status.png"></i>
+					
 					<span class="nav-text">
+					<img class="menu-icon" src="images/icons/application_status.png"></i>
 						Admit card downloaded data
 					</span>
 				</a>
 			</li>
 			<li>
 				<a href="admitcard_mail.php">
-					<img class="menu-icon" src="images/icons/send_mail.png"></i>
+
 					<span class="nav-text">
+					<img class="menu-icon" src="images/icons/send_mail.png"></i>
 						Send Mail
 					</span>
 				</a>
 			</li>
 			<li>
 				<a href="logout.php">
-					<img class="menu-icon" src="images/icons/logout.png"></i>
+					
 					<span class="nav-text">
+					<img class="menu-icon" src="images/icons/logout.png"></i>
 						Logout
+					</span>
+				</a>
+			</li>
+			<li>
+				<a href="reset.php">
+					
+					<span class="nav-text">
+					<img class="menu-icon" src="images/icons/reset.png"></i>
+						Reset Password
 					</span>
 				</a>
 			</li>

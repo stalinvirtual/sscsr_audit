@@ -71,6 +71,7 @@ $_SESSION['csrf_token'] = $csrfToken;
                   <label for="inputEmail3" class="col-sm-4 col-form-label"> Is Footer Menu<span style='color:red'>*</span></label>
                   <div class="col-sm-8">
                     <select name="is_footer_menu" class="form-control" onchange="getval(this);">
+                    <option value="">Select the option </option>
                       <?php
                       foreach (['false' => 'No','true' =>  'Yes'] as $key => $value) :
                         //foreach ([1 => 'Page', 'Internal', 'External', 'Pdf'] as $key => $value) :
@@ -88,8 +89,9 @@ $_SESSION['csrf_token'] = $csrfToken;
                   <label for="inputEmail3" class="col-sm-4 col-form-label"> Menu Type<span style='color:red'>*</span></label>
                   <div class="col-sm-8">
                     <select name="menu_type" class="form-control">
+                    <option value="">Select Menu Type</option>
                       <?php
-                      foreach ([1 => 'Page', 'External', 'Pdf', 'Dropdown'] as $key => $value) :
+                      foreach ([1 =>'Page', 'External', 'Pdf', 'Dropdown'] as $key => $value) :
                         //foreach ([1 => 'Page', 'Internal', 'External', 'Pdf'] as $key => $value) :
                         $selected = "";
                         if ($current_menu['menu_type']  == $key) {
