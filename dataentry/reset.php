@@ -206,7 +206,7 @@ if (!isset($_SERVER['HTTP_REFERER']) && empty($_SERVER['HTTP_REFERER']) || !isse
         // Custom validation rule for a strong password
         $.validator.addMethod("strongPassword", function (value) {
             // Password must contain at least one uppercase letter, one lowercase letter, one digit, and one special character
-            return /^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/.test(value);
+            return /^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[@$!%*?#&])[A-Za-z\d@$!%*?#&]{8,}$/.test(value);
         }, "Password must contain at least one uppercase letter, one lowercase letter, one digit, and one special character.");
         $("#togglePassword").click(function () {
             togglePasswordVisibility("pass");
