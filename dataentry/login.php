@@ -2,13 +2,11 @@
 require_once("config/db.php");
 require_once("functions.php");
 session_start();
-
 // Generate a CSRF token and store it in the session
 if (!isset($_SESSION['csrf_token']) || !isset($_POST['submit'])) {
-    // Generate a new CSRF token and store it in the session
-    $_SESSION['csrf_token'] = bin2hex(random_bytes(32));
+	// Generate a new CSRF token and store it in the session
+	$_SESSION['csrf_token'] = bin2hex(random_bytes(32));
 }
-
 $csrf_token = $_SESSION['csrf_token'];
 ?>
 <!doctype html>
@@ -23,10 +21,7 @@ $csrf_token = $_SESSION['csrf_token'];
 <script src="js/jquery-3.6.0.min.js"></script>
 <!-- Include jQuery Validation plugin -->
 <script src="js/jquery.validate.min.js"></script>
-
-
 <script src="js/sweetalert2.all.min.js"></script>
-
 <style>
 	@import "css/fontawesome/css/all.css";
 	body {
@@ -106,20 +101,17 @@ $csrf_token = $_SESSION['csrf_token'];
 		color: red;
 		font-weight: bold;
 	}
-	.error{
-		color:red;
+	.error {
+		color: red;
 		font-size: 13px;
 	}
 </style>
 </head>
 <body>
-
-<?php
-// echo "<pre>";
-// print_r($_SESSION);
-
-?>
-
+	<?php
+	// echo "<pre>";
+	// print_r($_SESSION);
+	?>
 	<div class="container" style="margin-top:10%">
 		<div class="row">
 			<div class="col-lg-4">
@@ -155,11 +147,10 @@ $csrf_token = $_SESSION['csrf_token'];
 					<div class="containerred">
 						<img src="captcha.php" alt="CAPTCHA" id="captcha_code">
 						<div>
-						<button name='submit' class="btnRefresh" onClick="refreshCaptcha();"><i class="fa fa-refresh" aria-hidden="true"></i></button>
-					</div>
+							<button name='submit' class="btnRefresh" onClick="refreshCaptcha();"><i class="fa fa-refresh" aria-hidden="true"></i></button>
+						</div>
 					</div>
 					<input type="hidden" name="csrf_token" value="<?php echo $csrf_token; ?>">
-
 					<input value="Submit" class="btn" type="submit" name="submit">
 				</form>
 			</div>
@@ -167,20 +158,18 @@ $csrf_token = $_SESSION['csrf_token'];
 			</div>
 		</div>
 	</div>
-
-
 	<?php
 	if (isset($_POST['submit'])) {
 		if (!hash_equals($_SESSION['csrf_token'], $_POST['csrf_token'])) {
 			//Token mismatch, handle the error (e.g., log it or display an error message)
-			$errorMsg="CSRF token verification failed.";
+			$errorMsg = "CSRF token verification failed.";
 		}
 		$user = trim($_POST["user"]);
 		$user = htmlspecialchars(cleanData($user));
 		$pass = trim($_POST["pass"]);
-		$pass = htmlspecialchars(cleanData($pass));
-		$pass = md5($pass);
-		
+		$enteredPassword = htmlspecialchars(cleanData($pass));
+		//$enteredPasswordEnc = password_hash($enteredPassword, PASSWORD_DEFAULT);
+		//$pass = md5($pass);
 		$userEnteredCaptcha = $_POST['captcha'];
 		$actualCaptcha = $_SESSION['captcha_code'];
 		if ($user == "") {
@@ -190,142 +179,152 @@ $csrf_token = $_SESSION['csrf_token'];
 			$errorMsg = "error : Please Enter Password.";
 			$code = "2";
 		} else {
-			if (strcasecmp($userEnteredCaptcha, $actualCaptcha) != 0) {//Captcha not correct
+			if (strcasecmp($userEnteredCaptcha, $actualCaptcha) != 0) { //Captcha not correct
 				echo "<p class='err_msg'>CAPTCHA validation failed.</p>";
-			}//Captcha not correct
-			else{ //Captcha correct
-			$sql2 = "SELECT * FROM erp_login_details WHERE  u_name =:u_name AND u_pass =:u_pass ";
-			$stmt2 = $pdo->prepare($sql2);
-			$stmt2->execute(['u_name' => $user, 'u_pass' => $pass]);
-			$number_of_rows = $stmt2->fetchColumn();
-			$stmt2 = $pdo->prepare($sql2);
-			$stmt2->execute(['u_name' => $user, 'u_pass' => $pass]);
-			$row = $stmt2->fetchAll();
-			if ($number_of_rows != 0) {
-				$dbusername = $row[0]->u_name;
-				$dbpassword = $row[0]->u_pass;
-				// Check the loginflag value for this user
-				$checkLoginFlagSql = "SELECT loginflag FROM public.erp_login_details WHERE u_name = :u_name";
-				$stmtCheckFlag = $pdo->prepare($checkLoginFlagSql);
-				$stmtCheckFlag->execute(['u_name' => $user]);
-				$loginflag = $stmtCheckFlag->fetchColumn();
-				if ($loginflag == 1) { //already logged in
-
-					$_SESSION['sess_user'] = $user;
-//$errorMsg = "error : Already Logged in.";
-					echo "<p class='message err_msg' style='text-align:center; width: 50%;
-					margin-left: 24%;'>This user is already logged in some other system.</p>";
-
-					
-					
-					echo '<div class="container">
-					<div class="row">
-					  <div class="col-sm-5" >
-						
-					  </div>
-					  <div class="col-sm-2">
-						
-				  <button type="button" class="btn btn-info force_logout">Force log out</button>
-					  </div>
-					  <div class="col-sm-5" style="">
-					  
-					  </div>
-					</div>
-				  </div>';
-				} //already logged in
-				else { // logged in
-					if ($user == $dbusername && $pass == $dbpassword) {
-						session_start();
-						if (session_status() == PHP_SESSION_ACTIVE) {
-							session_regenerate_id();
-						}
-						$_SESSION['sess_user'] = $user;
-						// Update the loginflag column to 1 for this user
-						$updateSql = "UPDATE public.erp_login_details SET loginflag = 1 WHERE u_name = :u_name";
-						$stmtUpdate = $pdo->prepare($updateSql);
-						$stmtUpdate->execute(['u_name' => $user]);
-						//Redirect Browser
-						header("Location:add_exam.php");
-					} else {
-						$errorMsg = "error : Invalid Username or Password!.";
-						$code = "3";
-					}
-				} //logged in
-			} else {
-				$errorMsg = "<p class='err_msg'> Invalid Username or Password!.</p>";
+			} //Captcha not correct
+			else { //Captcha correct
+				$userDataSql = "SELECT u_pass FROM erp_login_details WHERE u_name =:u_name";
+				$stmt2 = $pdo->prepare($userDataSql);
+				$stmt2->execute(['u_name' => $user]);
+				$hashedPasswordResult = $stmt2->fetch();
+				if (!$hashedPasswordResult) {
+					// Username does not exist
+					$errorMsg = "<p class='err_msg'>Invalid Username!.</p>";
 	?>
-				<br>
-				<div class="row">
-					<div class="col-lg-4">
+					<br>
+					<div class="container">
+						<div class="row">
+							<div class="col-lg-4"></div>
+							<div class="col-lg-4"><?php echo $errorMsg; ?></div>
+							<div class="col-lg-4"></div>
+						</div>
 					</div>
-					<div class="col-lg-4">
-						<?php echo $errorMsg; ?>
-					</div>
-					<div class="col-lg-4">
-					</div>
-				</div>
+					<?php
+				} else {  //username else start
+					$hashedPassword = $hashedPasswordResult->u_pass;
+					if (password_verify($enteredPassword, $hashedPassword)) { // Password Verify If start
+						$sql2 = "SELECT * FROM erp_login_details WHERE  u_name =:u_name AND u_pass =:u_pass ";
+						$stmt2 = $pdo->prepare($sql2);
+						$stmt2->execute(['u_name' => $user, 'u_pass' => $hashedPassword]);
+						$number_of_rows = $stmt2->fetchColumn();
+						$stmt2 = $pdo->prepare($sql2);
+						$stmt2->execute(['u_name' => $user, 'u_pass' => $hashedPassword]);
+						$row = $stmt2->fetchAll();
+						if ($number_of_rows != 0) { // Number of Rows if start
+							$dbusername = $row[0]->u_name;
+							$dbpassword = $row[0]->u_pass;
+							$checkLoginFlagSql = "SELECT loginflag FROM public.erp_login_details WHERE u_name = :u_name";
+							$stmtCheckFlag = $pdo->prepare($checkLoginFlagSql);
+							$stmtCheckFlag->execute(['u_name' => $user]);
+							$loginflag = $stmtCheckFlag->fetchColumn();
+							if ($loginflag == 1) { //already logged in
+								$_SESSION['sess_user'] = $user;
+								echo "<p class='message err_msg' style='text-align:center; width: 50%;
+							margin-left: 24%;'>This user is already logged in some other system.</p>";
+								echo '<div class="container">
+							<div class="row">
+							  <div class="col-sm-5" >
+							  </div>
+							  <div class="col-sm-2">
+						  <button type="button" class="btn btn-info force_logout">Force log out</button>
+							  </div>
+							  <div class="col-sm-5" style="">
+							  </div>
+							</div>
+						  </div>';
+							} //already logged in
+							else {  // logged in
+								if ($user == $dbusername && password_verify($enteredPassword, $hashedPassword)) {
+									session_start();
+									if (session_status() == PHP_SESSION_ACTIVE) {
+										session_regenerate_id();
+									}
+									$_SESSION['sess_user'] = $user;
+									// Update the loginflag column to 1 for this user
+									$updateSql = "UPDATE public.erp_login_details SET loginflag = 1 WHERE u_name = :u_name";
+									$stmtUpdate = $pdo->prepare($updateSql);
+									$stmtUpdate->execute(['u_name' => $user]);
+									//Redirect Browser
+									header("Location:add_exam.php");
+								} else {
+									$errorMsg = "error : Invalid Username or Password!.";
+									$code = "3";
+								}
+							}  // logged in
+						} // Number of Rows if End
+						else { // Number of Rows else start
+							$errorMsg = "<p class='err_msg'> Invalid Username or Password!.</p>";
+					?>
+							<br>
+							<div class="container">
+								<div class="row">
+									<div class="col-lg-4">
+									</div>
+									<div class="col-lg-4">
+										<?php echo $errorMsg; ?>
+									</div>
+									<div class="col-lg-4">
+									</div>
+								</div>
+							</div>
+						<?php
+						} // Number of Rows else  end
+					} // Password Verify IF End
+					else { // Password Verify Else Start
+						$errorMsg = "<p class='err_msg'> Password is not Correct .</p>";
+						?>
+						<br>
+						<div class="row">
+							<div class="col-lg-4">
+							</div>
+							<div class="col-lg-4">
+								<?php echo $errorMsg; ?>
+							</div>
+							<div class="col-lg-4">
+							</div>
+						</div>
 	<?php
-			}
-		}
-	   }//captcha 
-	   $_SESSION['csrf_token'] = bin2hex(random_bytes(32));
+					} // Password Verify Else	 End
+				} //username else end
+			} // Captcha is correct
+		} //captcha 
+		$_SESSION['csrf_token'] = bin2hex(random_bytes(32));
 	}
 	?>
 </body>
 <script type="text/javascript" language="javascript">
 	function refreshCaptcha() {
-		$('#captcha_code').attr('src','captcha.php');
+		$('#captcha_code').attr('src', 'captcha.php');
 	}
- $(document).ready(function (){
-
-	$("button.force_logout").on("click", function() {
-
-	 // Show a SweetAlert confirmation box
-	 Swal.fire({
-            title: 'Are you sure you want to log out?',
-            text: 'You will be logged out from your account.',
-            icon: 'warning',
-            showCancelButton: true,
-            confirmButtonColor: '#3085d6',
-            cancelButtonColor: '#d33',
-            confirmButtonText: 'OK'
-        }).then((result) => {
-            if (result.isConfirmed) {
-                // If the user clicks "OK" in the SweetAlert box, make an AJAX call to log out
-                $.ajax({
-                    url: 'force_logout.php',
-                    type: 'POST',
-                    success: function(response) {
-						debugger;
-                        // Upon success, redirect or handle UI changes
-                        window.location.href = 'index.php'; // Redirect to login page or any suitable page
-                    },
-                    error: function(xhr, status, error) {
-                        // Handle errors or failed log-out attempts
-                        console.error(error);
-                    }
-                });
-            }
-        });
-
-	});
-
-	// $("button.force_logout").on("click", function() {
-    //     $.ajax({
-    //         url: 'force_logout.php',
-    //         type: 'POST',
-    //         success: function(response) {
-    //             // Upon success (optional), handle any UI changes or redirects
-    //             window.location.href = 'index.php'; // Redirect to login page or any suitable page
-    //         },
-    //         error: function(xhr, status, error) {
-    //             // Handle any errors or failed log-out attempts
-    //             console.error(error);
-    //         }
-    //     });
-    // });
-
-
+	$(document).ready(function() {
+		$("button.force_logout").on("click", function() {
+			// Show a SweetAlert confirmation box
+			Swal.fire({
+				title: 'Are you sure you want to log out?',
+				text: 'You will be logged out from your account.',
+				icon: 'warning',
+				showCancelButton: true,
+				confirmButtonColor: '#3085d6',
+				cancelButtonColor: '#d33',
+				confirmButtonText: 'OK'
+			}).then((result) => {
+				if (result.isConfirmed) {
+					// If the user clicks "OK" in the SweetAlert box, make an AJAX call to log out
+					$.ajax({
+						url: 'force_logout.php',
+						type: 'POST',
+						success: function(response) {
+							// Upon success, redirect or handle UI changes
+							window.location.href = 'index.php'; // Redirect to login page or any suitable page
+						},
+						error: function(xhr, status, error) {
+							// Handle errors or failed log-out attempts
+							console.error(error);
+						}
+					});
+				}
+			});
+		});
 		$("#dataentry_login").validate({
 			rules: {
 				user: {
@@ -351,13 +350,13 @@ $csrf_token = $_SESSION['csrf_token'];
 					strongPassword: "Password must contain at least one uppercase letter, one lowercase letter, one digit, and one special character."
 				},
 			}
-			});
-			// Custom rule for letters only
-		$.validator.addMethod("lettersOnly", function (value, element) {
+		});
+		// Custom rule for letters only
+		$.validator.addMethod("lettersOnly", function(value, element) {
 			return this.optional(element) || /^[a-zA-Z]+$/.test(value);
 		}, "Username must contain only letters");
 		// Custom validation rule for a strong password
-		$.validator.addMethod("strongPassword", function (value) {
+		$.validator.addMethod("strongPassword", function(value) {
 			// Password must contain at least one uppercase letter, one lowercase letter, one digit, and one special character
 			return /^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/.test(value);
 		}, "Password must contain at least one uppercase letter, one lowercase letter, one digit, and one special character.");
@@ -365,22 +364,23 @@ $csrf_token = $_SESSION['csrf_token'];
 </script>
 <style>
 	.containerred {
- margin-left:26%;
-}
-.containerred img{
-	width: 105px; /* Ensure the image doesn't exceed the container's width */
-	margin-left: 27px;/* Ensure the image doesn't exceed the container's height */
-    border-radius: 30px;
-}
-
-.btnRefresh {
-    background-color: #fff;
-    border: #fff solid 2px;
-    font-size: 27px;
-    margin-top: -44px;
-    position: absolute;
-    margin-left: 128px;
-    /* margin-bottom: -49px; */
-}
+		margin-left: 26%;
+	}
+	.containerred img {
+		width: 105px;
+		/* Ensure the image doesn't exceed the container's width */
+		margin-left: 27px;
+		/* Ensure the image doesn't exceed the container's height */
+		border-radius: 30px;
+	}
+	.btnRefresh {
+		background-color: #fff;
+		border: #fff solid 2px;
+		font-size: 27px;
+		margin-top: -44px;
+		position: absolute;
+		margin-left: 128px;
+		/* margin-bottom: -49px; */
+	}
 </style>
 </html>
