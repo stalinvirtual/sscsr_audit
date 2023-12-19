@@ -265,7 +265,15 @@ $( "#menu_parent_id" ).append( menus );
 }
 
 $(document).ready(function () {
-  //$('#menu_parent_id option[value="1"]').prop('disabled', true);
+ // $('#menu_parent_id option[value="1"]').prop('disabled', true);
+ $('#menu_parent_id option[value="0"]').remove();
+ $('#menu_parent_id option[value="1"]').remove();
+
+  $('#menu_parent_id option').each(function () {
+            if ($(this).text().startsWith('|---')) {
+                $(this).prop('disabled', true);
+            }
+        });
 var myfile = "";
      
         $('.pdfmenu').on('change', function () {
