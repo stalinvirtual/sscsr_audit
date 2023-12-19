@@ -201,7 +201,8 @@ $csrf_token = $_SESSION['csrf_token'];
 					</div>
 					<?php
 				} else {  //username else start
-					$hashedPassword = $hashedPasswordResult->u_pass;
+					 $hashedPassword = $hashedPasswordResult->u_pass;
+
 					if (password_verify($enteredPassword, $hashedPassword)) { // Password Verify If start
 						$sql2 = "SELECT * FROM erp_login_details WHERE  u_name =:u_name AND u_pass =:u_pass ";
 						$stmt2 = $pdo->prepare($sql2);

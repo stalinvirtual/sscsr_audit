@@ -9,8 +9,8 @@ if (isset($_SERVER['HTTP_X_REQUESTED_WITH']) && ($_SERVER['HTTP_X_REQUESTED_WITH
 	}
 	$username = cleanData($_POST['user']);
 	$password = cleanData($_POST['pass']);
-	$confirmpassword = cleanData($_POST['cpass']);
-	$encpassword = password_hash($confirmpassword, PASSWORD_DEFAULT);
+	$confirmpassword = htmlspecialchars($_POST['cpass'],ENT_QUOTES);
+	$encpassword = password_hash($confirmpassword, PASSWORD_BCRYPT);
 	// $cpass = md5($confirmpassword);
 	$sql2 = "SELECT * FROM erp_login_details WHERE  u_name =:u_name ";
 	$stmt2 = $pdo->prepare($sql2);
