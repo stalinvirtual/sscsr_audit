@@ -3,12 +3,14 @@ namespace App\Controllers;
 use App\System\Route;
 use App\Helpers\securityService as securityService;
 echo $this->get_header();
+
 if (!isset($_SESSION)) {
 	session_start();
 }
 $csrfToken = bin2hex(random_bytes(32));
 $_SESSION['csrf_token'] = $csrfToken;
 ?>
+  
 <section class="buttons">
 	<div class="container">
 		<div class="row breadcrumbruler">
@@ -39,7 +41,11 @@ $_SESSION['csrf_token'] = $csrfToken;
 								//unset($errorMsg);
 							}
 							$route = new Route();
-							//$loadcaptcha = $route->site_url("Api/loadcaptcha");
+							$loadcaptcha = $route->site_url("Api/loadcaptcha");
+
+							
+
+
 							$token = $_SESSION['token'];
 							?>
 							<form class="form-signin" id="dept_login"
@@ -55,15 +61,14 @@ $_SESSION['csrf_token'] = $csrfToken;
 									id="user_pass" oncopy="return false" onpaste="return false" />
 								<br>
 								<!-- Captcha Start-->
-								<!-- <label for="exampleInputEmail1">Captcha</label>
+								<label for="exampleInputEmail1">Captcha</label>
 								<input type="text" name="captcha_code" id="captcha" class="demoInputBox form-control" placeholder="Captcha" required="" autocomplete="off">
 								<br>
-								<img src="<?php //echo $loadcaptcha;?>" style="width:100px;border-radius: 22px;margin-left: 70px;"  id="captcha_code" alt="captcha"/>
+								<img src="<?php echo $loadcaptcha;?>" style="width:100px;border-radius: 22px;margin-left: 70px;"  id="captcha_code" alt="captcha"/>
 								<button name="submit" class="btnRefresh" onClick="refreshCaptcha();"><i class="fa fa-refresh" aria-hidden="true"></i></button>
-							  <br> -->
+							  <br>
 								<!-- Captcha End -->
-								<!-- onClick="return Validate();" -->
-								<!-- <input type="hidden" name="csrf_token" value="<?php //echo $csrfToken; ?>"> -->
+								
 								<?php $antiCSRF = new securityService();
 								$antiCSRF->insertHiddenToken();
 								?>

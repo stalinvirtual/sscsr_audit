@@ -343,9 +343,9 @@ body a:hover{
 			left: -1px;
 			display: table-cell;
 			vertical-align: middle;
-      width: 210px;
+      width: 220px;
 			/* visibility: hidden; */
-			padding: .7em 0;
+			padding: 7px 0;
 		}
 		nav.main-menu .icon-angle-right,.icon-angle-down{display:table-cell;width:20px;vertical-align:middle;font-size:16px}
 		.no-touch nav.main-menu:hover,nav.main-menu.expanded{

@@ -26,7 +26,16 @@ if (!isset($_SERVER['HTTP_REFERER']) && empty($_SERVER['HTTP_REFERER']) || !isse
                             <form class="form-horizontal" action="#" method="post" id="reset_password">
                                 <input type="hidden" name="user" value="<?php echo $username; ?>">
                                 <div class="form-group">
-                                    <label for="password" class="col-sm-2 control-label">Password<font style="color:red" ;>*
+                                    <label for="password" class="col-sm-2 control-label">Old Password<font style="color:red" ;>*
+                                        </font> </label>
+                                    <div class="col-sm-6">
+                                        <input type="password" class="form-control" name="opass" id='opass'
+                                            placeholder="Old Password">
+                                        <span class="toggle-opassword" id="toggleOPassword">&#128065;</span>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="password" class="col-sm-2 control-label">New Password<font style="color:red" ;>*
                                         </font> </label>
                                     <div class="col-sm-6">
                                         <input type="password" class="form-control" name="pass" id='pass'
@@ -35,7 +44,7 @@ if (!isset($_SERVER['HTTP_REFERER']) && empty($_SERVER['HTTP_REFERER']) || !isse
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <label for="cpassword" class="col-sm-2 control-label">Confirm Password<font
+                                    <label for="cpassword" class="col-sm-2 control-label">Confirm New Password<font
                                             style="color:red" ;>*</font> </label>
                                     <div class="col-sm-6">
                                         <input type="password" class="form-control" name="cpass" id='cpass'
@@ -64,6 +73,16 @@ if (!isset($_SERVER['HTTP_REFERER']) && empty($_SERVER['HTTP_REFERER']) || !isse
             cursor: pointer;
         }
         .toggle-cpassword {
+            position: absolute;
+            right: 21px;
+            margin-top: -16px;
+            /* width: 3%; */
+            font-size: 33px;
+            color: #a94442;
+            transform: translateY(-50%);
+            cursor: pointer;
+        }
+        .toggle-opassword {
             position: absolute;
             right: 21px;
             margin-top: -16px;
@@ -129,6 +148,11 @@ if (!isset($_SERVER['HTTP_REFERER']) && empty($_SERVER['HTTP_REFERER']) || !isse
         // })
         $("#reset_password").validate({
             rules: {
+                opass: {
+                    required: true,
+                    minlength: 8, // Minimum length of 8 characters
+                    strongPassword: true // Custom rule for strong password
+                },
                 pass: {
                     required: true,
                     minlength: 8, // Minimum length of 8 characters
@@ -142,14 +166,19 @@ if (!isset($_SERVER['HTTP_REFERER']) && empty($_SERVER['HTTP_REFERER']) || !isse
                 },
             },
             messages: {
+                opass: {
+                    required: "Please enter your old password",
+                    minlength: "Old Password must be at least 8 characters long.",
+                    strongPassword: "Password must contain at least one uppercase letter, one lowercase letter, one digit, and one special character."
+                },
                 pass: {
-                    required: "Please enter your password",
-                    minlength: "Password must be at least 8 characters long.",
+                    required: "Please enter your new password",
+                    minlength: "New Password must be at least 8 characters long.",
                     strongPassword: "Password must contain at least one uppercase letter, one lowercase letter, one digit, and one special character."
                 },
                 cpass: {
                     required: "Please enter your Confirm Password",
-                    minlength: "Password must be at least 8 characters long.",
+                    minlength: "Confirm Password must be at least 8 characters long.",
                     strongPassword: "Password must contain at least one uppercase letter, one lowercase letter, one digit, and one special character.",
                     equalTo: 'Passwords do not match.'
                 }
@@ -160,15 +189,19 @@ if (!isset($_SERVER['HTTP_REFERER']) && empty($_SERVER['HTTP_REFERER']) || !isse
                 } else if (element.attr("name") === "cpass") {
                     // Place the error message after the Select2 element
                     error.insertAfter(element.next("span.toggle-cpassword"));
-                } else {
+                } else if (element.attr("name") === "opass") {
+                    // Place the error message after the Select2 element
+                    error.insertAfter(element.next("span.toggle-opassword"));
+                }else {
                     // Use the default error placement for other fields
                     error.insertAfter(element);
                 }
             },
             submitHandler: function (form) {
+                var opassword = $('#opass').val();
                 var password = $('#pass').val();
                 var confirmpassword = $('#cpass ').val();
-                if (password != '' && confirmpassword != '') {
+                if (password != '' && password != '' && confirmpassword != '') {
                     $('#overlay').fadeIn();
                     $.ajax({
                         url: "reset_password_ajax.php",
@@ -210,6 +243,9 @@ if (!isset($_SERVER['HTTP_REFERER']) && empty($_SERVER['HTTP_REFERER']) || !isse
         }, "Password must contain at least one uppercase letter, one lowercase letter, one digit, and one special character.");
         $("#togglePassword").click(function () {
             togglePasswordVisibility("pass");
+        });
+        $("#toggleOPassword").click(function () {
+            togglePasswordVisibility("opass");
         });
         $("#toggleCPassword").click(function () {
             togglePasswordVisibility("cpass");

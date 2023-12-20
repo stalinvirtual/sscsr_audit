@@ -7,6 +7,10 @@ if (isset($_SERVER['HTTP_X_REQUESTED_WITH']) && ($_SERVER['HTTP_X_REQUESTED_WITH
 		// Token mismatch, handle the error (e.g., log it or display an error message)
 		die("CSRF token verification failed.");
 	}
+	// echo '<pre>';
+	// print_r($_POST);
+
+	$opassword =htmlspecialchars($_POST['opass']);
 	$username = cleanData($_POST['user']);
 	$password = cleanData($_POST['pass']);
 	$confirmpassword = htmlspecialchars($_POST['cpass'],ENT_QUOTES);
@@ -19,8 +23,9 @@ if (isset($_SERVER['HTTP_X_REQUESTED_WITH']) && ($_SERVER['HTTP_X_REQUESTED_WITH
 	$count = count($row);
 	if ($count != 0) {
 		$dbusername = $row[0]->u_name;
-		// Check the loginflag value for this user
-		if ($username == $dbusername) {
+	     $dbpassword = $row[0]->u_pass;
+	// Check the loginflag value for this user
+		if ($username == $dbusername && password_verify($opassword,  $dbpassword) ) {
 			if (session_status() == PHP_SESSION_ACTIVE) {
 				session_regenerate_id();
 			}
@@ -43,7 +48,7 @@ if (isset($_SERVER['HTTP_X_REQUESTED_WITH']) && ($_SERVER['HTTP_X_REQUESTED_WITH
 				'response' => array(
 					'status' => 'error',
 					'code' => '0', // whatever you want
-					'message' => "No such user occurs",
+					'message' => "Please Check your Old Password",
 					'title' => 'Error'
 				)
 			);
