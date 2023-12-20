@@ -23,21 +23,20 @@
       msLeft = endTime - (+new Date);
       if (msLeft < 3600) {
         // // logout();
-        Swal.fire({
-          title: 'Your session is about to expire. Do you want to stay logged in?',
-          icon: 'Warning',
-          showCancelButton: true,
-          confirmButtonColor: '#3085d6',
-          cancelButtonColor: '#d33',
-          confirmButtonText: 'OK'
-        }).then((result) => {
-          if (result.isConfirmed) {
-           // debugger;
-           location.reload();
-          } else if (!result.isConfirmed) {
-            window.location.href = "logout.php";
-          }
-        });
+       Swal.fire({
+        title: 'Your session is about to expire. Do you want to stay logged in?',
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'OK',
+      }).then((result) => {
+        if (result.value) {
+          window.location.href = 'add_exam.php';
+        } else {
+          window.location.href = 'logout.php';
+        }
+      });
         // Set an additional timeout to log out if the user doesn't interact with Swal
       setTimeout(function() {
         window.location.href = "logout.php";

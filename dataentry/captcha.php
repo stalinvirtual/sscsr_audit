@@ -4,7 +4,7 @@ session_start();
 
 $captcha_code = '';
 $captcha_image_height = 50;
-$captcha_image_width = 130;
+$captcha_image_width = 160;
 $total_characters_on_image = 6;
 
 //The characters that can be used in the CAPTCHA code.
@@ -27,7 +27,7 @@ while ($count < $total_characters_on_image) {
 	$count++;
 }
 
-$captcha_font_size = $captcha_image_height * 0.65;
+$captcha_font_size = $captcha_image_height * 0.95;
 $captcha_image = @imagecreate(
 	$captcha_image_width,
 	$captcha_image_height

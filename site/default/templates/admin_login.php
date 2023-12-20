@@ -3,14 +3,12 @@ namespace App\Controllers;
 use App\System\Route;
 use App\Helpers\securityService as securityService;
 echo $this->get_header();
-
 if (!isset($_SESSION)) {
 	session_start();
 }
 $csrfToken = bin2hex(random_bytes(32));
 $_SESSION['csrf_token'] = $csrfToken;
 ?>
-  
 <section class="buttons">
 	<div class="container">
 		<div class="row breadcrumbruler">
@@ -42,10 +40,6 @@ $_SESSION['csrf_token'] = $csrfToken;
 							}
 							$route = new Route();
 							$loadcaptcha = $route->site_url("Api/loadcaptcha");
-
-							
-
-
 							$token = $_SESSION['token'];
 							?>
 							<form class="form-signin" id="dept_login"
@@ -54,21 +48,24 @@ $_SESSION['csrf_token'] = $csrfToken;
 								<h2 class="form-signin-heading">Department Login</h2>
 								<label for="exampleInputEmail1">User Name</label>
 								<input type="text" class="form-control" placeholder="Username " name="uname"
-									id="username" oncopy="return false" onpaste="return false" />
+									id="username" maxlength="20" oncopy="return false" onpaste="return false" />
 								<br>
 								<label for="exampleInputEmail1">Password</label>
 								<input type="password" class="form-control" placeholder="Password " name="currentword"
-									id="user_pass" oncopy="return false" onpaste="return false" />
+									id="user_pass" oncopy="return false" onpaste="return false" maxlength="20" />
+								<span class="toggle-password" id="togglePassword">&#128065;</span>
 								<br>
 								<!-- Captcha Start-->
 								<label for="exampleInputEmail1">Captcha</label>
-								<input type="text" name="captcha_code" id="captcha" class="demoInputBox form-control" placeholder="Captcha" required="" autocomplete="off">
+								<input type="text" name="captcha_code" id="captcha" class="demoInputBox form-control"
+									placeholder="Captcha" required="" autocomplete="off">
 								<br>
-								<img src="<?php echo $loadcaptcha;?>" style="width:45%;margin-left: 70px;"  id="captcha_code" alt="captcha"/>
-								<button name="submit" class="btnRefresh" onClick="refreshCaptcha();"><i class="fa fa-refresh" aria-hidden="true"></i></button>
-							  <br>
+								<img src="<?php echo $loadcaptcha; ?>" style="width:45%;margin-left: 70px;"
+									id="captcha_code" alt="captcha" />
+								<button name="submit" class="btnRefresh" onClick="refreshCaptcha();"><i
+										class="fa fa-refresh" aria-hidden="true"></i></button>
+								<br>
 								<!-- Captcha End -->
-								
 								<?php $antiCSRF = new securityService();
 								$antiCSRF->insertHiddenToken();
 								?>
@@ -111,6 +108,34 @@ $_SESSION['csrf_token'] = $csrfToken;
 		margin-left: 13px;
 		/* margin-bottom: -49px; */
 	}
+	.toggle-password {
+		position: relative;
+		/* right: 144px;
+	margin-top: -40px; */
+		right: 4px;
+		margin-top: -24px;
+		float: right;
+		font-size: 33px;
+		color: #223a7e;
+		transform: translateY(-50%);
+		cursor: pointer;
+	}
+	
+	input[type="password"] {
+		margin-bottom: 0px !important;
+		border-bottom-left-radius: 0;
+		border-bottom-right-radius: 0;
+	
+	}
+	input[type="password"]:focus {
+		z-index: 0 !important;
+	}
+	label {
+		display: inline-block;
+		max-width: 100%;
+		margin-bottom: 0px !important;
+		font-weight: 700;
+	}
 </style>
 <?php include "footer2.php"; ?>
 <!-- <script src="js/jquery.min.js"></script>  -->
@@ -143,6 +168,17 @@ $_SESSION['csrf_token'] = $csrfToken;
 		$('#captcha_code').attr('src', url);
 	}
 	$(document).ready(function () {
+		$("#togglePassword").click(function () {
+			togglePasswordVisibility("user_pass");
+		});
+		function togglePasswordVisibility(inputId) {
+			var inputType = $("#" + inputId).attr("type");
+			if (inputType === "password") {
+				$("#" + inputId).attr("type", "text");
+			} else {
+				$("#" + inputId).attr("type", "password");
+			}
+		}
 		$("#dept_login").validate({
 			rules: {
 				uname: {
@@ -164,9 +200,18 @@ $_SESSION['csrf_token'] = $csrfToken;
 				},
 				currentword: {
 					required: "Please enter your password",
-					minlength: "Password must be at least 8 characters long.",
+					minlength: "Password mustbe at least 8 characters long.",
 					// strongPassword: "Password must contain at least one uppercase letter, one lowercase letter, one digit, and one special character."
 				},
+			},
+			errorPlacement: function (error, element) {
+				if (element.attr("name") === "currentword") {
+					// Place the error message after the Select2 element
+					error.insertAfter(element.next("span.toggle-password"));
+				} else {
+					// Use the default error placement for other fields
+					error.insertAfter(element);
+				}
 			},
 			submitHandler: function (form) { //submit handler start
 				//using salt

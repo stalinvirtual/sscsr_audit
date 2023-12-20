@@ -60,6 +60,8 @@
  <script src="<?php echo $this->theme_url; ?>/plugins/datatables-buttons/js/buttons.print.min.js"></script>
  <script src="<?php echo $this->theme_url; ?>/plugins/datatables-buttons/js/buttons.colVis.min.js"></script>
  <script src="<?php echo $this->theme_url; ?>/dist/js/sweetalert.min.js"></script>
+ <link rel="stylesheet" href="<?php echo $this->theme_url; ?>/dist/css/sweetalert2.min.css">
+ <script src="<?php echo $this->theme_url; ?>/dist/js/sweetalert2.all.min.js"></script>
  <link rel="stylesheet" href="<?php echo $this->theme_url; ?>/dist/css/custom.css">
  <link rel="stylesheet" href="<?php echo $this->theme_url; ?>/dist/css/jquery-ui.css">
  <link rel="stylesheet" href="<?php echo $this->theme_url; ?>/dist/css/mdtimepicker.css">
@@ -1384,5 +1386,58 @@
          });
      });
  </script>
+
+<script type="text/javascript">
+  endTime = 0;
+  countdown("ten-countdown", 1, 20);
+  function countdown(elementName, minutes, seconds) {
+    var element, hours, mins, msLeft, time;
+    function twoDigits(n) {
+      return (n <= 9 ? "0" + n : n);
+    }
+    function updateTimer() {
+      //debugger;
+      msLeft = endTime - (+new Date);
+      if (msLeft < 3600) {
+        // // logout();
+        Swal.fire({
+          title: 'Your session is about to expire. Do you want to stay logged in?',
+          icon: 'Warning',
+          showCancelButton: true,
+          confirmButtonColor: '#3085d6',
+          cancelButtonColor: '#d33',
+          confirmButtonText: 'OK'
+        }).then((result) => {
+          if (result.value) {
+                    
+           location.reload();
+          } else {
+            
+            window.location.href = "<?php echo $this->route->site_url("Admin/logout"); ?>";
+          }
+        });
+        // Set an additional timeout to log out if the user doesn't interact with Swal
+      setTimeout(function() {
+        window.location.href = "<?php echo $this->route->site_url("Admin/logout"); ?>";
+      }, 30000); // This timeout is set to 30 seconds (adjust as needed)
+      } else {
+        time = new Date(msLeft);
+        hours = time.getUTCHours();
+        mins = time.getUTCMinutes();
+        element.innerHTML = 'Session Time: ' + (hours ? hours + ':' + twoDigits(mins) : mins) + ':' + twoDigits(time.getUTCSeconds());
+        setTimeout(updateTimer, time.getUTCMilliseconds() + 500);
+      }
+    }
+   
+    element = document.getElementById('so');
+    //endTime = (+new Date) + 3600 * (60 * minutes + seconds) + 500;
+    endTime = (+new Date) + (15 * 60 * 1000);
+    updateTimer();
+  }
+  // window.addEventListener('mousemove', e => endTime = (+new Date) + 3600 * (60 * 1 + 20) + 500)
+  window.addEventListener('mousemove', e => {
+    endTime = (+new Date) + (15 * 60 * 1000);
+  });
+</script>
  </body>
  </html>

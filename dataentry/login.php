@@ -147,14 +147,14 @@ $csrf_token = $_SESSION['csrf_token'];
 					<div class="textbox">
 						<i class="fas fa-user"></i>
 						<input type="text" class="form-control" name="user" id="user" placeholder="Username"
-							required="">
+							required="" maxlength="20">
 						<?php if (isset($code) && $code == 1) {
 							echo "class=errorMsg";
 						} ?>
 					</div>
 					<div class="textbox">
 						<i class="fas fa-lock"></i>
-						<input type="password" class="form-control" name="pass" id="pass" placeholder="Password" required="">
+						<input type="password" class="form-control" name="pass" id="pass" placeholder="Password" required="" maxlength="20">
 						<span class="toggle-password" id="togglePassword">&#128065;</span>
 						<?php if (isset($code) && $code == 3) {
 							echo "class=errorMsg";
@@ -430,7 +430,7 @@ $csrf_token = $_SESSION['csrf_token'];
 		/* Ensure the image doesn't exceed the container's width */
 		margin-left: 27px;
 		/* Ensure the image doesn't exceed the container's height */
-		border-radius: 30px;
+		/* border-radius: 30px; */
 	}
 
 	.btnRefresh {

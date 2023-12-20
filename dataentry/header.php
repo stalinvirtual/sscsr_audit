@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+
 <head>
 	<title>SSCSR</title>
 	<meta name="viewport" content="width=device-width, initial-scale=1">
@@ -23,7 +24,7 @@
 	<!-- font-awesome icons -->
 	<link rel="stylesheet" href="css/font.css" type="text/css" />
 	<!-- //datatable -->
-	
+
 	<script src="js/jquery.js"></script>
 	<script src="js/modernizr.js"></script>
 	<script src="js/jquery.cookie.js"></script>
@@ -39,12 +40,14 @@
 		.canvasjs-chart-credit {
 			display: none;
 		}
+
 		.toolbar {
 			float: right;
 		}
-		 nav.main-menu {
-   overflow-y: scroll !important;
-} 
+
+		nav.main-menu {
+			overflow-y: scroll !important;
+		}
 	</style>
 	<link href="css/select2.min.css" rel="stylesheet" />
 	<!-- <script src="js/select2.js"></script>
@@ -74,8 +77,8 @@
 	<!-- //dashboard links-->
 	<link rel="stylesheet" href="css/dashboard.css">
 	<link rel="stylesheet" href="css/Chart.css">
-	<link rel="stylesheet" href="css/fontawesome/css/all.css"> 
-	 
+	<link rel="stylesheet" href="css/fontawesome/css/all.css">
+
 	<script src="js/bootstrap.bundle.min.js"></script>
 	<script src="js/Chart.min.js"></script>
 	<style>
@@ -84,18 +87,22 @@
 			bottom: 0;
 			width: 100%;
 		}
+
 		.table tfoot input {
 			width: 100%;
 			box-sizing: border-box;
 		}
+
 		.table tfoot {
 			display: table-header-group;
 		}
+
 		.brand {
 			float: left;
 			font-size: 18px;
 			line-height: 20px;
 		}
+
 		.close {
 			float: right;
 			font-size: 21px;
@@ -132,6 +139,7 @@
 	<script src="js/skycons.js"></script>
 	<!--//skycons-icons-->
 </head>
+
 <body class="dashboard-page">
 	<!--//theme-style-->
 	<nav class="main-menu scrollable">
@@ -181,27 +189,27 @@
 			</li> -->
 			<li>
 				<a href="add_exam.php">
-				
+
 					<span class="nav-text">
-					<img class="menu-icon" src="images/icons/add_exam.png"></i>
+						<img class="menu-icon" src="images/icons/add_exam.png"></i>
 						Add Exam
 					</span>
 				</a>
 			</li>
 			<li>
 				<a href="create_table.php">
-					
+
 					<span class="nav-text">
-					<img class="menu-icon" src="images/icons/create_table.png"></i>
+						<img class="menu-icon" src="images/icons/create_table.png"></i>
 						Create Table
 					</span>
 				</a>
 			</li>
 			<li>
 				<a href="upload_excel_file.php">
-					
+
 					<span class="nav-text">
-					<img class="menu-icon" src="images/icons/excel_upload.png"></i>
+						<img class="menu-icon" src="images/icons/excel_upload.png"></i>
 						Excel Upload
 					</span>
 				</a>
@@ -216,45 +224,45 @@
 			</li>  -->
 			<li>
 				<a href="kyas_status_master.php">
-					
+
 					<span class="nav-text">
-					<img class="menu-icon" src="images/icons/application_status.png">
+						<img class="menu-icon" src="images/icons/application_status.png">
 						Publish App. Status
 					</span>
 				</a>
 			</li>
 			<li>
 				<a href="know_your_city_master.php">
-					
+
 					<span class="nav-text">
-					<img class="menu-icon" src="images/icons/application_status.png">
+						<img class="menu-icon" src="images/icons/application_status.png">
 						Publish City. Status
 					</span>
 				</a>
 			</li>
 			<li>
 				<a href="admitcard_preview.php">
-					
+
 					<span class="nav-text">
-					<img class="menu-icon" src="images/icons/admitcard_preview.png"></i>
+						<img class="menu-icon" src="images/icons/admitcard_preview.png"></i>
 						Admit Card Preview
 					</span>
 				</a>
 			</li>
 			<li>
 				<a href="exam_tier_master.php">
-					
+
 					<span class="nav-text">
-					<img class="menu-icon" src="images/icons/publish_admitcard.png"></i>
+						<img class="menu-icon" src="images/icons/publish_admitcard.png"></i>
 						Publish Admit Card
 					</span>
 				</a>
 			</li>
 			<li>
 				<a href="upload_admitcard_important_instructions.php">
-					
+
 					<span class="nav-text">
-					<img class="menu-icon" src="images/icons/add_instruction.png"></i>
+						<img class="menu-icon" src="images/icons/add_instruction.png"></i>
 						Add Instruction
 					</span>
 				</a>
@@ -262,9 +270,9 @@
 			<li>
 				<a href="admit_card_download_datatable.php">
 					<!-- <a href="list_download_admitcard.php"> -->
-					
+
 					<span class="nav-text">
-					<img class="menu-icon" src="images/icons/application_status.png"></i>
+						<img class="menu-icon" src="images/icons/application_status.png"></i>
 						Admit card downloaded data
 					</span>
 				</a>
@@ -273,25 +281,25 @@
 				<a href="admitcard_mail.php">
 
 					<span class="nav-text">
-					<img class="menu-icon" src="images/icons/send_mail.png"></i>
+						<img class="menu-icon" src="images/icons/send_mail.png"></i>
 						Send Mail
 					</span>
 				</a>
 			</li>
 			<li>
 				<a href="logout.php">
-					
+
 					<span class="nav-text">
-					<img class="menu-icon" src="images/icons/logout.png"></i>
+						<img class="menu-icon" src="images/icons/logout.png"></i>
 						Logout
 					</span>
 				</a>
 			</li>
 			<li>
 				<a href="reset.php">
-					
+
 					<span class="nav-text">
-					<img class="menu-icon" src="images/icons/reset.png"></i>
+						<img class="menu-icon" src="images/icons/reset.png"></i>
 						Reset Password
 					</span>
 				</a>
@@ -299,8 +307,8 @@
 		</ul>
 	</nav>
 	<section class="wrapper scrollable">
-	<div style=" font-size: 12px;position: relative;
-    top: 17px;
-    left: 88%;"><span class="material-icons" id="so" style="color: #a94442;font-size:14px;font-weight: bold; ">
-						</span>
+		<div style=" font-size: 12px;position: relative;
+	top: 17px;
+	left: 88%;"><span class="material-icons" id="so" style="color: #a94442;font-size:14px;font-weight: bold; ">
+			</span>
 		</div>
