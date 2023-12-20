@@ -64,7 +64,7 @@ $_SESSION['csrf_token'] = $csrfToken;
 								<label for="exampleInputEmail1">Captcha</label>
 								<input type="text" name="captcha_code" id="captcha" class="demoInputBox form-control" placeholder="Captcha" required="" autocomplete="off">
 								<br>
-								<img src="<?php echo $loadcaptcha;?>" style="width:100px;border-radius: 22px;margin-left: 70px;"  id="captcha_code" alt="captcha"/>
+								<img src="<?php echo $loadcaptcha;?>" style="width:45%;margin-left: 70px;"  id="captcha_code" alt="captcha"/>
 								<button name="submit" class="btnRefresh" onClick="refreshCaptcha();"><i class="fa fa-refresh" aria-hidden="true"></i></button>
 							  <br>
 								<!-- Captcha End -->

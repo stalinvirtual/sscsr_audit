@@ -30,6 +30,7 @@ use App\Models\ImportantLinks as ImportantLinks;
 use App\Models\Knowyourstatus as Knowyourstatus;
 use App\Models\Nominationchild as Nominationchild;
 use App\Models\Selectionpostschild as Selectionpostschild;
+
 // ini_set('display_errors', 1);
 // ini_set('display_startup_errors', 1);
 // error_reporting(E_ALL);
@@ -129,7 +130,7 @@ class IndexController extends FrontEndController
 		str_replace("'", "", str_replace('"', '', strip_tags($newChars)));
 		return $newChars;
 	}
-	public function killChars($strWords)
+		public function killChars($strWords)
 	{
 		$strWords = htmlentities(trim(stripslashes(strip_tags($strWords))));
 		$badChars = array("alert", ";", "--", "alter", "alter routine", "create", "create routine", "create table", "create temporary tables", "create view", "delete", "drop", "event", "execute", "index", "insert", "lock tables", "references", "select", "show view", "trigger", "update", "xp_", "union", "|", "&", ";", "$", "%", "'", '"', "\'", '\"', "<>", "+");
@@ -348,7 +349,7 @@ class IndexController extends FrontEndController
 					if ($admitcard_model->updateAcPrint($tablename, $acprint_data, $updateId)) {
 						PdfHelperDVExam::genereateAndDVDownloadAdminCard($data);
 					}
-					//if exam type is DV -endf
+				//if exam type is DV -endf
 			}
 		}
 		$data['ilinkforFirstFourRow'] = Helpers::getImporantLinksFirstFourRow();
@@ -382,7 +383,7 @@ class IndexController extends FrontEndController
 				default:
 					//if exam type is DV -start
 					PdfHelperDVExam::genereateAndDVDownloadAdminCard($data);
-					//if exam type is DV -end
+				//if exam type is DV -end
 			}
 		}
 		$data['ilinkforFirstFourRow'] = Helpers::getImporantLinksFirstFourRow();
@@ -562,11 +563,11 @@ class IndexController extends FrontEndController
 	public function getExamDetails()
 	{
 		if (!isset($_SERVER['HTTP_REFERER'])) {
-			$url = $_SERVER['REQUEST_SCHEME'] . "://" . $_SERVER['HTTP_HOST'] .  $_SERVER['REQUEST_URI'];
+			$url = $_SERVER['REQUEST_SCHEME'] . "://" . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
 			$parsedUrl = parse_url($url);
 			if (isset($parsedUrl['scheme'], $parsedUrl['host'], $parsedUrl['path'])) {
-				$pUrl =  explode('/', $parsedUrl['path']);
-				$base =  $pUrl['1'] . '/' . $pUrl['2'] . '/';
+				$pUrl = explode('/', $parsedUrl['path']);
+				$base = $pUrl['1'] . '/' . $pUrl['2'] . '/';
 				$baseUrl = $parsedUrl['scheme'] . '://' . $parsedUrl['host'] . "/" . $base;
 				header("Location: $baseUrl");
 				exit;
@@ -595,11 +596,11 @@ class IndexController extends FrontEndController
 	public function getTierBasedExamDetailsCity()
 	{
 		if (!isset($_SERVER['HTTP_REFERER'])) {
-			$url = $_SERVER['REQUEST_SCHEME'] . "://" . $_SERVER['HTTP_HOST'] .  $_SERVER['REQUEST_URI'];
+			$url = $_SERVER['REQUEST_SCHEME'] . "://" . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
 			$parsedUrl = parse_url($url);
 			if (isset($parsedUrl['scheme'], $parsedUrl['host'], $parsedUrl['path'])) {
-				$pUrl =  explode('/', $parsedUrl['path']);
-				$base =  $pUrl['1'] . '/' . $pUrl['2'] . '/';
+				$pUrl = explode('/', $parsedUrl['path']);
+				$base = $pUrl['1'] . '/' . $pUrl['2'] . '/';
 				$baseUrl = $parsedUrl['scheme'] . '://' . $parsedUrl['host'] . "/" . $base;
 				header("Location: $baseUrl");
 				exit;
@@ -615,7 +616,7 @@ class IndexController extends FrontEndController
 		foreach ($exam_details as $insdata) {
 			$examname = $insdata->exam_name . ',' . $insdata->table_exam_year . '(' . $insdata->table_type . ') (' . $insdata->tier_name . ')';
 			$response[] = array(
-				'id' =>  $insdata->tableid,
+				'id' => $insdata->tableid,
 				'text' => $examname
 			);
 		}
@@ -625,11 +626,11 @@ class IndexController extends FrontEndController
 	public function getTierBasedExamDetailsCardPreview()
 	{
 		if (!isset($_SERVER['HTTP_REFERER'])) {
-			$url = $_SERVER['REQUEST_SCHEME'] . "://" . $_SERVER['HTTP_HOST'] .  $_SERVER['REQUEST_URI'];
+			$url = $_SERVER['REQUEST_SCHEME'] . "://" . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
 			$parsedUrl = parse_url($url);
 			if (isset($parsedUrl['scheme'], $parsedUrl['host'], $parsedUrl['path'])) {
-				$pUrl =  explode('/', $parsedUrl['path']);
-				$base =  $pUrl['1'] . '/' . $pUrl['2'] . '/';
+				$pUrl = explode('/', $parsedUrl['path']);
+				$base = $pUrl['1'] . '/' . $pUrl['2'] . '/';
 				$baseUrl = $parsedUrl['scheme'] . '://' . $parsedUrl['host'] . "/" . $base;
 				header("Location: $baseUrl");
 				exit;
@@ -645,7 +646,7 @@ class IndexController extends FrontEndController
 		foreach ($exam_details as $insdata) {
 			$examname = $insdata->exam_name . ',' . $insdata->table_exam_year . '(' . $insdata->table_type . ') (' . $insdata->tier_name . ')';
 			$response[] = array(
-				'id'   => $insdata->tableid,
+				'id' => $insdata->tableid,
 				'text' => $examname,
 			);
 		}
@@ -655,11 +656,11 @@ class IndexController extends FrontEndController
 	public function getTierBasedExamDetailsCard()
 	{
 		if (!isset($_SERVER['HTTP_REFERER'])) {
-			$url = $_SERVER['REQUEST_SCHEME'] . "://" . $_SERVER['HTTP_HOST'] .  $_SERVER['REQUEST_URI'];
+			$url = $_SERVER['REQUEST_SCHEME'] . "://" . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
 			$parsedUrl = parse_url($url);
 			if (isset($parsedUrl['scheme'], $parsedUrl['host'], $parsedUrl['path'])) {
-				$pUrl =  explode('/', $parsedUrl['path']);
-				$base =  $pUrl['1'] . '/' . $pUrl['2'] . '/';
+				$pUrl = explode('/', $parsedUrl['path']);
+				$base = $pUrl['1'] . '/' . $pUrl['2'] . '/';
 				$baseUrl = $parsedUrl['scheme'] . '://' . $parsedUrl['host'] . "/" . $base;
 				header("Location: $baseUrl");
 				exit;
@@ -688,11 +689,11 @@ class IndexController extends FrontEndController
 	public function getTierMaster()
 	{
 		if (!isset($_SERVER['HTTP_REFERER'])) {
-			$url = $_SERVER['REQUEST_SCHEME'] . "://" . $_SERVER['HTTP_HOST'] .  $_SERVER['REQUEST_URI'];
+			$url = $_SERVER['REQUEST_SCHEME'] . "://" . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
 			$parsedUrl = parse_url($url);
 			if (isset($parsedUrl['scheme'], $parsedUrl['host'], $parsedUrl['path'])) {
-				$pUrl =  explode('/', $parsedUrl['path']);
-				$base =  $pUrl['1'] . '/' . $pUrl['2'] . '/';
+				$pUrl = explode('/', $parsedUrl['path']);
+				$base = $pUrl['1'] . '/' . $pUrl['2'] . '/';
 				$baseUrl = $parsedUrl['scheme'] . '://' . $parsedUrl['host'] . "/" . $base;
 				header("Location: $baseUrl");
 				exit;
@@ -718,11 +719,11 @@ class IndexController extends FrontEndController
 	public function getPhaseDetails()
 	{
 		if (!isset($_SERVER['HTTP_REFERER'])) {
-			$url = $_SERVER['REQUEST_SCHEME'] . "://" . $_SERVER['HTTP_HOST'] .  $_SERVER['REQUEST_URI'];
+			$url = $_SERVER['REQUEST_SCHEME'] . "://" . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
 			$parsedUrl = parse_url($url);
 			if (isset($parsedUrl['scheme'], $parsedUrl['host'], $parsedUrl['path'])) {
-				$pUrl =  explode('/', $parsedUrl['path']);
-				$base =  $pUrl['1'] . '/' . $pUrl['2'] . '/';
+				$pUrl = explode('/', $parsedUrl['path']);
+				$base = $pUrl['1'] . '/' . $pUrl['2'] . '/';
 				$baseUrl = $parsedUrl['scheme'] . '://' . $parsedUrl['host'] . "/" . $base;
 				header("Location: $baseUrl");
 				exit;
@@ -1082,7 +1083,7 @@ class IndexController extends FrontEndController
 				default:
 					//if exam type is DV -start
 					PdfHelperDVExam::genereateAndDVDownloadAdminCard($data);
-					//if exam type is DV -end
+				//if exam type is DV -end
 			}
 		}
 	}
@@ -1164,14 +1165,14 @@ class IndexController extends FrontEndController
 			$dob = $this->validateAndSanitize($_POST['dob']);
 		}
 		$data_array = array(
-			'examname'        => $examname,
+			'examname' => $examname,
 			'register_number' => $register_number,
-			'roll_number'     => $roll_number,
-			'dob'             => $dob
+			'roll_number' => $roll_number,
+			'dob' => $dob
 		);
 		$admit_card_model = new Admitcard();
 		$admit_card_model_details = $admit_card_model->getAdmitcardforTierCount($data_array);
-		$response =  $admit_card_model_details;
+		$response = $admit_card_model_details;
 		$json_response = json_encode($response);
 		header('Content-Type: application/json');
 		echo $json_response;

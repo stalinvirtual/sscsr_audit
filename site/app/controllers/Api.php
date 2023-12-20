@@ -52,7 +52,82 @@ class Api extends FrontEndController
         imagedestroy($target_layer);
         exit;
     }
-    public function loadcaptcha()
+    public function loadcaptchanew()
+    {
+
+        // $captcha_code  = strtoupper(bin2hex(random_bytes(3)));
+        $captchanumber = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789'; // Initializing PHP variable with string
+        $captcha_code = substr(str_shuffle($captchanumber), 0, 6);
+        // $random_alpha = md5($rand); //generation of random string
+// /** Generate a captcha of length 6 */
+// $captcha_code = substr($random_alpha, 0, 6);
+        $_SESSION["captcha_code"] = $captcha_code;
+        $rand = random_int(0, 10);
+        /* Width and Height of captcha */
+        $target_layer = imagecreatetruecolor(170, 50);
+        /* Background color of captcha */
+        $captcha_background = imagecolorallocate($target_layer, 240, 255, 255);
+        imagefill($target_layer, 0, 0, $captcha_background);
+        /* Captcha Text Color RGB */
+        $captcha_text_color = imagecolorallocate($target_layer, 39, 55, 70);
+
+        /* Text size and properties */
+        $font_size = 18;
+        $img_width = 80;
+        $img_height = 0;
+        /** For Lines */
+        $line_color = imagecolorallocate($target_layer, 64, 60, 64);
+        for ($i = 0; $i < 6; $i++) {
+            imageline($target_layer, 0, 0, 840, 250, $line_color);
+        }
+
+        /* For pixels */
+        $pixel_color = imagecolorallocate($target_layer, 0, 0, 255);
+        for ($i = 0; $i < 1000; $i++) {
+            imagesetpixel($target_layer, random_int(0, 170), random_int(0, 50), $pixel_color);
+        }
+
+        /* Text Size */
+        /* you are the one is a font file */
+        imagettftext($target_layer, $font_size, 0, 10, 33, $captcha_text_color, './default/templates/captcha/code2002.ttf', $captcha_code);
+        $target_layer;
+
+        header("Content-type: image/jpeg");
+        imagejpeg($target_layer);
+    }
+public function loadcaptcha()
+{
+    $captchanumber = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789';
+    $captcha_code = substr(str_shuffle($captchanumber), 0, 6);
+    $_SESSION["captcha_code"] = $captcha_code;
+
+    $target_layer = imagecreatetruecolor(170, 50);
+    $captcha_background = imagecolorallocate($target_layer, 240, 255, 255);
+    imagefill($target_layer, 0, 0, $captcha_background);
+
+    $captcha_text_color = imagecolorallocate($target_layer, 39, 55, 70);
+
+    $font_size = 18;
+    $img_width = 80;
+    $img_height = 0;
+
+    $line_color = imagecolorallocate($target_layer, 64, 60, 64);
+    for ($i = 0; $i < 6; $i++) {
+        imageline($target_layer, 0, 0, 170, 50, $line_color);
+    }
+
+    $pixel_color = imagecolorallocate($target_layer, 0, 0, 255);
+    for ($i = 0; $i < 1000; $i++) {
+        imagesetpixel($target_layer, random_int(0, 170), random_int(0, 50), $pixel_color);
+    }
+
+    imagettftext($target_layer, $font_size, 0, 10, 33, $captcha_text_color, './default/templates/captcha/code2002.ttf', $captcha_code);
+
+    header("Content-type: image/jpeg");
+    imagejpeg($target_layer);
+    imagedestroy($target_layer);
+}
+    public function loadcaptcha3()
     {
 
         $captcha_code = '';
@@ -63,7 +138,7 @@ class Api extends FrontEndController
         //The characters that can be used in the CAPTCHA code.
 //avoid all confusing characters and numbers (For example: l, 1 and i)
         $possible_captcha_letters = 'bcdfghjkmnpqrstvwxyz23456789';
-        $captcha_font = './monofont.ttf';
+        $captcha_font = 'C:\xampp\htdocs\sscsr_audit\site\default\templates\monofont.ttf';
 
         $random_captcha_dots = 50;
         $random_captcha_lines = 25;
@@ -158,8 +233,8 @@ class Api extends FrontEndController
         // defining the image type to be shown in browser widow
         header('Content-Type: image/jpeg');
         imagejpeg($captcha_image); //showing the image
-        imagedestroy($captcha_image); //destroying the image instance
-        $_SESSION['captcha_code'] = $captcha_code;
+       // imagedestroy($captcha_image); //destroying the image instance
+      //  $_SESSION['captcha_code'] = $captcha_code;
 
 
     }
