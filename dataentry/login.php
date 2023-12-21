@@ -437,7 +437,7 @@ $csrf_token = $_SESSION['csrf_token'];
 		background-color: #fff;
 		border: #fff solid 2px;
 		font-size: 27px;
-		margin-top: -44px;
+		margin-top: -38px;
 		position: absolute;
 		margin-left: 128px;
 		/* margin-bottom: -49px; */

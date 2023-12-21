@@ -64,6 +64,7 @@ $encodedUserId = base64_encode($userId);
 <script src="js/jquery-ui_new.js"></script>
 <script src="js/jquery.validate.min.js" crossorigin="anonymous"></script>
 <script>
+
 	function isNumber(evt) {
 		evt = (evt) ? evt : window.event;
 		var charCode = (evt.which) ? evt.which : evt.keyCode;

@@ -188,6 +188,9 @@ $csrf_token = $_SESSION['csrf_token']; ?>
 @keyframes p3 {
     100% {background-size:100%}
 }
+.errormsg {
+    width: 33% !important;
+}
 #overlay {
   background: #000000;
   color: #FFFFFF;
@@ -341,6 +344,7 @@ var current_yearabove5 = d.getFullYear() + 5;	// Day		[dd]	(1 - 31)
 				$('#year_exists').html("<i class='fa fa-exclamation-triangle' aria-hidden='true'> <span  style='color: red;font-size:15px;'>Please type year between <b>"+current_yearbelow5+"-"+current_yearabove5+"</b></span></i>");
 			}
 	  });
+
 	   $("#exam_year").keydown(function(){
 			$('#table_exits').removeClass("successmsg");
 			$('#table_exits').removeClass("errormsg");
@@ -432,9 +436,11 @@ var current_yearabove5 = d.getFullYear() + 5;	// Day		[dd]	(1 - 31)
 				processData:false,  
 				success:function (response) {
 					if(response == 1){
+						
 						$('#table_exits').removeClass("errormsg");
 						$('#table_exits').addClass("successmsg");
-						$('#table_exits').html("<i class='fa fa-check-circle' aria-hidden='true'> <span  style='color: green;font-size:15px;'><b>Application Status Table Is Exists</span></i>");
+						$('#table_exits').html("<i class='fa fa-check-circle' aria-hidden='true'> <span  style='color: green;font-size:12px;'><b>Application Status Table Is Exists</span></i>");
+						$('#upload_excel').show();
 						$('.selectedtier').hide();
 						$('.excel_file_attachment').show();
 						//to get and show the uploded data and photos and signs counts
@@ -446,16 +452,17 @@ var current_yearabove5 = d.getFullYear() + 5;	// Day		[dd]	(1 - 31)
 							contentType:false,  
 							processData:false,  
 							success:function (response) {
+								debugger;
 								if(response.complition == 'new'){
 									$('.kyas_status').show();
-									$('.kyas_status').html("<label  class='col-sm-2 control-label'>Uploaded Status </label> <div class='col-sm-6 kyas_status_form'><div class='form-group'><div class='col-sm-4 status_card'><p>DATA</p><p class='count'>"+response.row_count+"</p></div> <div class='col-sm-4 status_card'><p>PHOTO</p><p class='count'>"+response.photo_count+"</p></div><div class='col-sm-4 status_card'><p>SIGN</p><p class='count'>"+response.sign_count+"</p></div></div></div><div id='table_exits' class='col-sm-4 successmsg'><i class='fa fa-check-circle' aria-hidden='true'> <span style='color: green;font-size:15px;'><b> Please upload some data </b></span></i></div> ");
+									$('.kyas_status').html("<label  class='col-sm-2 control-label'>Uploaded Status </label> <div class='col-sm-6 kyas_status_form'><div class='form-group'><div class='col-sm-4 status_card'><p>DATA</p><p class='count'>"+response.row_count+"</p></div> <div class='col-sm-4 status_card'><p>PHOTO</p><p class='count'>"+response.photo_count+"</p></div><div class='col-sm-4 status_card'><p>SIGN</p><p class='count'>"+response.sign_count+"</p></div></div></div><div id='table_exits' class='col-sm-4 successmsg'><i class='fa fa-check-circle' aria-hidden='true'> <span style='color: green;font-size:12px;'><b> Please upload some data </b></span></i></div> ");
 								}
 								else if(response.complition == 'complited'){
 									$('.kyas_status').show();
-									$('.kyas_status').html("<label  class='col-sm-2 control-label'>Uploaded Status </label> <div class='col-sm-6 kyas_status_form'><div class='form-group'><div class='col-sm-4 status_card'><p>DATA</p><p class='count'>"+response.row_count+"</p></div> <div class='col-sm-4 status_card'><p>PHOTO</p><p class='count'>"+response.photo_count+"</p></div><div class='col-sm-4 status_card'><p>SIGN</p><p class='count'>"+response.sign_count+"</p></div></div></div><div id='table_exits' class='col-sm-4 successmsg'><i class='fa fa-check-circle' aria-hidden='true'> <span style='color: green;font-size:15px;'><b> Uploading Data Completed </b></span></i></div> ");
+									$('.kyas_status').html("<label  class='col-sm-2 control-label'>Uploaded Status </label> <div class='col-sm-6 kyas_status_form'><div class='form-group'><div class='col-sm-4 status_card'><p>DATA</p><p class='count'>"+response.row_count+"</p></div> <div class='col-sm-4 status_card'><p>PHOTO</p><p class='count'>"+response.photo_count+"</p></div><div class='col-sm-4 status_card'><p>SIGN</p><p class='count'>"+response.sign_count+"</p></div></div></div><div id='table_exits' class='col-sm-4 successmsg'><i class='fa fa-check-circle' aria-hidden='true'> <span style='color: green;font-size:12px;'><b> Uploading Data Completed </b></span></i></div> ");
 								}else{
 									$('.kyas_status').show();
-									$('.kyas_status').html("<label  class='col-sm-2 control-label'>Uploaded Status </label> <div class='col-sm-6 kyas_status_form'><div class='form-group'><div class='col-sm-4 status_card'><p>DATA</p><p class='count'>"+response.row_count+"</p></div> <div class='col-sm-4 status_card'><p>PHOTO</p><p class='count'>"+response.photo_count+"</p></div><div class='col-sm-4 status_card'><p>SIGN</p><p class='count'>"+response.sign_count+"</p></div></div></div><div id='table_exits' class='col-sm-4 errormsg'><i class='fa fa-check-circle' aria-hidden='true'> <span style='color: red;font-size:15px;'><b> Uploading Data Not Completed</b></span></i></div> ");
+									$('.kyas_status').html("<label  class='col-sm-2 control-label'>Uploaded Status </label> <div class='col-sm-6 kyas_status_form'><div class='form-group'><div class='col-sm-4 status_card'><p>DATA</p><p class='count'>"+response.row_count+"</p></div> <div class='col-sm-4 status_card'><p>PHOTO</p><p class='count'>"+response.photo_count+"</p></div><div class='col-sm-4 status_card'><p>SIGN</p><p class='count'>"+response.sign_count+"</p></div></div></div><div id='table_exits' class='col-sm-4 errormsg'><i class='fa fa-check-circle' aria-hidden='true'> <span style='color: red;font-size:12px;'><b> Uploading Data Not Completed</b></span></i></div> ");
 								}
 							}
 						});
@@ -463,7 +470,8 @@ var current_yearabove5 = d.getFullYear() + 5;	// Day		[dd]	(1 - 31)
 					else if(response == 2){
 						$('#table_exits').removeClass("successmsg");
 						$('#table_exits').addClass("errormsg");
-						$('#table_exits').html("<i class='fa fa-exclamation-triangle' aria-hidden='true'> <span  style='color: red;font-size:15px;'><b>Application Status Table Not Exists</span></i>");
+						$('#table_exits').html("<i class='fa fa-exclamation-triangle' aria-hidden='true'> <span  style='color: red;font-size:12px;'><b>Application Status Table Not Exists</span></i>");
+						$('#upload_excel').hide();
 						$('.selectedtier').hide();
 						$('.excel_file_attachment').hide();
 						$('.kyas_status').hide();
@@ -472,7 +480,8 @@ var current_yearabove5 = d.getFullYear() + 5;	// Day		[dd]	(1 - 31)
 					else if(response == 3){
 						$('#table_exits').removeClass("errormsg");
 						$('#table_exits').addClass("successmsg");
-						$('#table_exits').html("<i class='fa fa-check-circle' aria-hidden='true'> <span  style='color: green;font-size:15px;'><b>Written Examination/CBE Table Is Exists</span></i>");
+						$('#table_exits').html("<i class='fa fa-check-circle' aria-hidden='true'> <span  style='color: green;font-size:12px;'><b>Written Examination/CBE Table Is Exists</span></i>");
+						$('#upload_excel').show();
 						$('.selectedtier').show();
 						$('.kyas_status').hide();
 						$('.excel_file_attachment').hide();
@@ -480,7 +489,8 @@ var current_yearabove5 = d.getFullYear() + 5;	// Day		[dd]	(1 - 31)
 					else if(response == 4){
 						$('#table_exits').removeClass("successmsg");
 						$('#table_exits').addClass("errormsg");
-						$('#table_exits').html("<i class='fa fa-exclamation-triangle' aria-hidden='true'> <span  style='color: red;font-size:15px;'><b>Written Examination/CBE Table Not Exists</span></i>");
+						$('#table_exits').html("<i class='fa fa-exclamation-triangle' aria-hidden='true'> <span  style='color: red;font-size:12px;'><b>Written Examination/CBE Table Not Exists</span></i>");
+						$('#upload_excel').hide();
 						$('.selectedtier').hide();
 						$('.excel_file_attachment').hide();
 						$('.kyas_status').hide();
@@ -489,7 +499,8 @@ var current_yearabove5 = d.getFullYear() + 5;	// Day		[dd]	(1 - 31)
 					else if(response == 5){
 						$('#table_exits').removeClass("errormsg");
 						$('#table_exits').addClass("successmsg");
-						$('#table_exits').html("<i class='fa fa-check-circle' aria-hidden='true'> <span  style='color: green;font-size:15px;'><b>Skill Exam Table Is Exists</span></i>");
+						$('#table_exits').html("<i class='fa fa-check-circle' aria-hidden='true'> <span  style='color: green;font-size:12px;'><b>Skill Exam Table Is Exists</span></i>");
+						$('#upload_excel').show();
 						$('.selectedtier').show();
 						$('.kyas_status').hide();
 						$('.tier1_status').hide();
@@ -497,7 +508,8 @@ var current_yearabove5 = d.getFullYear() + 5;	// Day		[dd]	(1 - 31)
 					else if(response == 6){
 						$('#table_exits').removeClass("successmsg");
 						$('#table_exits').addClass("errormsg");
-						$('#table_exits').html("<i class='fa fa-exclamation-triangle' aria-hidden='true'> <span  style='color: red;font-size:15px;'><b>Skill Exam Table Not Exists</span></i>");
+						$('#table_exits').html("<i class='fa fa-exclamation-triangle' aria-hidden='true'> <span  style='color: red;font-size:12px;'><b>Skill Exam Table Not Exists</span></i>");
+						$('#upload_excel').hide();
 						$('.selectedtier').hide();
 						$('.excel_file_attachment').hide();
 						$('.kyas_status').hide();
@@ -506,7 +518,8 @@ var current_yearabove5 = d.getFullYear() + 5;	// Day		[dd]	(1 - 31)
 					else if(response == 7){
 						$('#table_exits').removeClass("errormsg");
 						$('#table_exits').addClass("successmsg");
-						$('#table_exits').html("<i class='fa fa-check-circle' aria-hidden='true'> <span  style='color: green;font-size:15px;'><b>PET Exam Table Is Exists</span></i>");
+						$('#table_exits').html("<i class='fa fa-check-circle' aria-hidden='true'> <span  style='color: green;font-size:12px;'><b>PET Exam Table Is Exists</span></i>");
+						$('#upload_excel').show();
 						$('.selectedtier').show();
 						$('.excel_file_attachment').hide();
 						$('.kyas_status').hide();
@@ -515,7 +528,8 @@ var current_yearabove5 = d.getFullYear() + 5;	// Day		[dd]	(1 - 31)
 					else if(response == 8){
 						$('#table_exits').removeClass("successmsg");
 						$('#table_exits').addClass("errormsg");
-						$('#table_exits').html("<i class='fa fa-exclamation-triangle' aria-hidden='true'> <span  style='color: red;font-size:15px;'><b>PET Exam Table Not Exists</span></i>");
+						$('#table_exits').html("<i class='fa fa-exclamation-triangle' aria-hidden='true'> <span  style='color: red;font-size:12px;'><b>PET Exam Table Not Exists</span></i>");
+						$('#upload_excel').hide();
 						$('.selectedtier').hide();
 						$('.excel_file_attachment').hide();
 						$('.kyas_status').hide();
@@ -524,7 +538,8 @@ var current_yearabove5 = d.getFullYear() + 5;	// Day		[dd]	(1 - 31)
 					else if(response == 9){
 						$('#table_exits').removeClass("errormsg");
 						$('#table_exits').addClass("successmsg");
-						$('#table_exits').html("<i class='fa fa-check-circle' aria-hidden='true'> <span  style='color: green;font-size:15px;'><b>DV Exam Table Is Exists</span></i>");
+						$('#table_exits').html("<i class='fa fa-check-circle' aria-hidden='true'> <span  style='color: green;font-size:12px;'><b>DV Exam Table Is Exists</span></i>");
+						$('#upload_excel').show();
 						$('.selectedtier').show();
 						$('.excel_file_attachment').hide();
 						$('.kyas_status').hide();
@@ -533,7 +548,8 @@ var current_yearabove5 = d.getFullYear() + 5;	// Day		[dd]	(1 - 31)
 					else if(response == 10){
 						$('#table_exits').removeClass("successmsg");
 						$('#table_exits').addClass("errormsg");
-						$('#table_exits').html("<i class='fa fa-exclamation-triangle' aria-hidden='true'> <span  style='color: red;font-size:15px;'><b>DV Exam Table Not Exists</span></i>");
+						$('#table_exits').html("<i class='fa fa-exclamation-triangle' aria-hidden='true'> <span  style='color: red;font-size:12px;'><b>DV Exam Table Not Exists</span></i>");
+						$('#upload_excel').hide();
 						$('.selectedtier').hide();
 						$('.excel_file_attachment').hide();
 						$('.kyas_status').hide();
@@ -542,7 +558,8 @@ var current_yearabove5 = d.getFullYear() + 5;	// Day		[dd]	(1 - 31)
 					else if(response == 11){
 						$('#table_exits').removeClass("errormsg");
 						$('#table_exits').addClass("successmsg");
-						$('#table_exits').html("<i class='fa fa-check-circle' aria-hidden='true'> <span  style='color: green;font-size:15px;'><b>DME Exam Table Is Exists</span></i>");
+						$('#table_exits').html("<i class='fa fa-check-circle' aria-hidden='true'> <span  style='color: green;font-size:12px;'><b>DME Exam Table Is Exists</span></i>");
+						$('#upload_excel').show();
 						$('.selectedtier').show();
 						$('.excel_file_attachment').hide();
 						$('.kyas_status').hide();
@@ -551,7 +568,8 @@ var current_yearabove5 = d.getFullYear() + 5;	// Day		[dd]	(1 - 31)
 					else if(response == 12){
 						$('#table_exits').removeClass("successmsg");
 						$('#table_exits').addClass("errormsg");
-						$('#table_exits').html("<i class='fa fa-exclamation-triangle' aria-hidden='true'> <span  style='color: red;font-size:15px;'><b>DME Exam Table Not Exists</span></i>");
+						$('#table_exits').html("<i class='fa fa-exclamation-triangle' aria-hidden='true'> <span  style='color: red;font-size:12px;'><b>DME Exam Table Not Exists</span></i>");
+						$('#upload_excel').hide();
 						$('.selectedtier').hide();
 						$('.excel_file_attachment').hide();
 						$('.kyas_status').hide();
@@ -565,6 +583,7 @@ var current_yearabove5 = d.getFullYear() + 5;	// Day		[dd]	(1 - 31)
 						$('.excel_file_attachment').hide();
 						$('.kyas_status').hide();
 						$('.tier1_status').hide();
+						$('#upload_excel').show();
 					}
 					}
 				});
@@ -634,6 +653,7 @@ var current_yearabove5 = d.getFullYear() + 5;	// Day		[dd]	(1 - 31)
 				}
 			},
 			submitHandler: function(form) {
+				
         var examname = $('#examname option:selected').val();
         var exam_year = $('#exam_year').val();
         var table_format = $('#selectedTableFormat option:selected').val();
