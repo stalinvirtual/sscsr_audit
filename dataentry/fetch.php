@@ -11,11 +11,24 @@ if (isset($_SERVER['HTTP_X_REQUESTED_WITH']) && ($_SERVER['HTTP_X_REQUESTED_WITH
     $exam_type = sanitize_string_value($_GET['exam_type']);
     $status = strtoupper($exam_type);
 
-    $sql_query = "SELECT reg_no,cand_name,gender FROM $table_name WHERE status_accept_reject ='$status' ";
+   /* $sql_query = "SELECT reg_no,cand_name,gender FROM $table_name WHERE status_accept_reject ='$status' ";
 
     $stmt = $pdo->query($sql_query);
     $stmt->execute();
+
+    
     $result = $stmt->fetchAll();
+    */
+
+    $sql_query = "SELECT reg_no, cand_name, gender FROM $table_name WHERE status_accept_reject = :status";
+$stmt = $pdo->prepare($sql_query);
+
+
+
+$stmt->bindParam(':status', $status, PDO::PARAM_STR);
+$stmt->execute();
+$result = $stmt->fetchAll();
+
 
     foreach ($result as $key => $value) {
 
