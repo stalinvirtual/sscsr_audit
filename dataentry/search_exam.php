@@ -12,7 +12,7 @@ if (isset($_SERVER['HTTP_X_REQUESTED_WITH']) && ($_SERVER['HTTP_X_REQUESTED_WITH
 
         */
 
-        $q = ...; // Assume $q is defined and contains the search term
+       // $q = ...; // Assume $q is defined and contains the search term
 
 // Using a prepared statement to prevent SQL injection
 $sql = "SELECT exam_name, exam_short_name FROM exam_master WHERE exam_name LIKE ? ORDER BY exam_id DESC";
