@@ -12,10 +12,23 @@ if( isset( $_SERVER['HTTP_X_REQUESTED_WITH'] ) && ( $_SERVER['HTTP_X_REQUESTED_W
 	$exam_short_name=$_POST['exam_short_name'];
 
   
-	$sql = "UPDATE exam_master SET exam_name= '$exam_name',exam_short_name='$exam_short_name' WHERE exam_name = '$exam_id'";
+	/*$sql = "UPDATE exam_master SET exam_name= '$exam_name',exam_short_name='$exam_short_name' WHERE exam_name = '$exam_id'";
 	 $state1 = $pdo->prepare($sql);
 	
      $res = $state1->execute();
+		*/
+
+		$sql = "UPDATE exam_master SET exam_name = ?, exam_short_name = ? WHERE exam_name = ?";
+$state1 = $pdo->prepare($sql);
+
+
+
+$state1->bindParam(1, $exam_name, PDO::PARAM_STR);
+$state1->bindParam(2, $exam_short_name, PDO::PARAM_STR);
+$state1->bindParam(3, $exam_id, PDO::PARAM_STR);
+
+$res = $state1->execute();
+
 	 echo $res;
 	 exit;
      if(!empty($res))
