@@ -11,6 +11,7 @@ if (isset($_SERVER['HTTP_X_REQUESTED_WITH']) && ($_SERVER['HTTP_X_REQUESTED_WITH
         $result = $stmt->fetchAll();
 
         */
+        
 
        // $q = ...; // Assume $q is defined and contains the search term
 
