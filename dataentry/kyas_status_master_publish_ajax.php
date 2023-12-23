@@ -3,6 +3,7 @@ require_once("config/db.php");
 
 if (isset($_SERVER['HTTP_X_REQUESTED_WITH']) && ($_SERVER['HTTP_X_REQUESTED_WITH'] == 'XMLHttpRequest')) {
     require_once("functions.php");
+    
 
     $id = $_POST['sscsr_db_table_master_id'];
     $iconid_id = $_POST['iconid'];
