@@ -1,5 +1,6 @@
 <?php
 require_once("config/db.php");
+
 require_once("functions.php");
 if( isset( $_SERVER['HTTP_X_REQUESTED_WITH'] ) && ( $_SERVER['HTTP_X_REQUESTED_WITH'] == 'XMLHttpRequest' ) )
 {
