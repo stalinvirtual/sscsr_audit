@@ -130,10 +130,39 @@ if (isset($_SERVER['HTTP_X_REQUESTED_WITH']) && ($_SERVER['HTTP_X_REQUESTED_WITH
         }
 
         try {
-            $sql = "UPDATE column_master SET col_name='" . $column_name_update . "',col_datatype='text',col_description='" . $column_description_update . "',is_kyas='" . $is_kyas . "',is_tier='" . $is_tier . "',is_skill='" . $is_skill . "',is_dme='" . $is_dme . "',is_pet='" . $is_pet . "',is_dv='" . $is_dv . "',status='0' WHERE col_id=" . $id;
+           /* $sql = "UPDATE column_master SET col_name='" . $column_name_update . "',col_datatype='text',col_description='" . $column_description_update . "',is_kyas='" . $is_kyas . "',is_tier='" . $is_tier . "',is_skill='" . $is_skill . "',is_dme='" . $is_dme . "',is_pet='" . $is_pet . "',is_dv='" . $is_dv . "',status='0' WHERE col_id=" . $id;
 
             $stmt = $pdo->prepare($sql);
-            $stmt->execute();
+            $stmt->execute();*/
+            $sql = "UPDATE 
+	column_master SET 
+	col_name=?, 
+	col_datatype='text', 
+	col_description=?,
+	is_kyas=?, 
+	is_tier=?, 
+	is_skill=?, 
+	is_dme=?, 
+	is_pet=?, 
+	is_dv=?, 
+	status='0' 
+	WHERE col_id=?";
+$stmt = $pdo->prepare($sql);
+
+
+
+$stmt->bindParam(1, $column_name_update, PDO::PARAM_STR);
+$stmt->bindParam(2, $column_description_update, PDO::PARAM_STR);
+$stmt->bindParam(3, $is_kyas, PDO::PARAM_INT);
+$stmt->bindParam(4, $is_tier, PDO::PARAM_INT);
+$stmt->bindParam(5, $is_skill, PDO::PARAM_INT);
+$stmt->bindParam(6, $is_dme, PDO::PARAM_INT);
+$stmt->bindParam(7, $is_pet, PDO::PARAM_INT);
+$stmt->bindParam(8, $is_dv, PDO::PARAM_INT);
+$stmt->bindParam(9, $id, PDO::PARAM_INT);
+
+$stmt->execute();
+
             $message = array(
                 'response' => array(
                     'status' => 'success',
