@@ -166,11 +166,11 @@ error_reporting(0);
 								<button type="button" class="btn btn-default headergigw">&nbsp;SSCSR | GOVERMENT OF
 									INDIA</button>
 								<button class="btn btn-default headergigw dropdown"><a data-toggle="tooltip"
-										data-placement="left" title="Admin Login"
+										 title="Admin Login"
 										href="<?php echo htmlentities($this->base_url); ?>IndexController/admin_login" rel = "noopener noreferrer"
 										target="_blank"><i class="fa fa-user" style="color:#fff" aria-hidden="true"></i></a></button>
 								<button class="btn btn-default headergigw dropdown"><a
-										style='text-decoration: underline;color:#fff' data-toggle="tooltip" data-placement="right"
+										style='text-decoration: underline;color:#fff' data-toggle="tooltip" 
 										title="SSCSR old website" href="http://www.sscsr.gov.in/" rel = "noopener noreferrer" target="_blank">SSCSR
 										old website</a></button>
 							</div>

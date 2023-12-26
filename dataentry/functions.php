@@ -70,61 +70,85 @@ function executeSQl($sql, $params)
 	$result = $stmt->fetch();
 	return $result;
 }
-function getAccecptedCandidates($year)
+function getAcceptedCandidates($year)
 {
 	global $pdo;
-	$like_value = $year . '_kyas';
-	$sql_query = "
-					SELECT
-					table_name,
-					cnt_rows(table_schema, table_name) as total_count
-					FROM
-					information_schema.tables
-					WHERE
-					table_type = 'BASE TABLE' and table_name  LIKE '%$like_value%'
-					AND
-					table_schema NOT IN ('pg_catalog', 'information_schema')";
-	$stmt = $pdo->query($sql_query);
-	$stmt->execute();
-	$result = $stmt->fetchAll();
-	foreach ($result as $key => $value) {
-		if ($value->total_count > 0) {
-			$table_name = $value->table_name;
-			$sql_query = "SELECT  count(*) as accepted, exam_code, $value->total_count as total FROM $table_name where status_accept_reject ='ACCEPTED'  group by exam_code";
-			$stmt = $pdo->query($sql_query);
-			$stmt->execute();
-			$accepted_count[] = $stmt->fetch();
+	$likeValue = $year . '_kyas';
+	$tableQuery = "
+        SELECT
+            table_name,
+            cnt_rows(table_schema, table_name) as total_count
+        FROM
+            information_schema.tables
+        WHERE
+            table_type = 'BASE TABLE' and table_name LIKE :like_value
+            AND table_schema NOT IN ('pg_catalog', 'information_schema')";
+	$tableStmt = $pdo->prepare($tableQuery);
+	$tableStmt->bindParam(':like_value', '%' . $likeValue . '%', PDO::PARAM_STR);
+	$tableStmt->execute();
+	$tables = $tableStmt->fetchAll();
+	$acceptedCount = [];
+	foreach ($tables as $table) {
+		if ($table->total_count > 0) {
+			$tableName = $table->table_name;
+			$dataQuery = "
+                SELECT
+                    count(*) as accepted,
+                    exam_code,
+                    :total_count as total
+                FROM
+                    $tableName
+                WHERE
+                    status_accept_reject = 'ACCEPTED'
+                GROUP BY
+                    exam_code";
+			$dataStmt = $pdo->prepare($dataQuery);
+			$dataStmt->bindParam(':total_count', $table->total_count, PDO::PARAM_INT);
+			$dataStmt->execute();
+			$acceptedCount[] = $dataStmt->fetch();
 		}
 	}
-	return $accepted_count;
+	return $acceptedCount;
 }
 function getRejectedCandidates($year)
 {
 	global $pdo;
-	$like_value = $year . '_kyas';
-	$sql_query = "
-					SELECT
-					table_name,
-					cnt_rows(table_schema, table_name) as total_count
-					FROM
-					information_schema.tables
-					WHERE
-					table_type = 'BASE TABLE' and table_name  LIKE '%$like_value%'
-					AND
-					table_schema NOT IN ('pg_catalog', 'information_schema')";
-	$stmt = $pdo->query($sql_query);
-	$stmt->execute();
-	$result = $stmt->fetchAll();
-	foreach ($result as $key => $value) {
-		if ($value->total_count > 0) {
-			$table_name = $value->table_name;
-			$sql_query = "SELECT  count(*) as rejected, exam_code, $value->total_count as total FROM $table_name where status_accept_reject ='REJECTED'  group by exam_code";
-			$stmt = $pdo->query($sql_query);
-			$stmt->execute();
-			$accepted_count[] = $stmt->fetch();
+	$likeValue = $year . '_kyas';
+	$tableQuery = "
+        SELECT
+            table_name,
+            cnt_rows(table_schema, table_name) as total_count
+        FROM
+            information_schema.tables
+        WHERE
+            table_type = 'BASE TABLE' and table_name LIKE :like_value
+            AND table_schema NOT IN ('pg_catalog', 'information_schema')";
+	$tableStmt = $pdo->prepare($tableQuery);
+	$tableStmt->bindParam(':like_value', '%' . $likeValue . '%', PDO::PARAM_STR);
+	$tableStmt->execute();
+	$tables = $tableStmt->fetchAll();
+	$rejectedCount = [];
+	foreach ($tables as $table) {
+		if ($table->total_count > 0) {
+			$tableName = $table->table_name;
+			$dataQuery = "
+                SELECT
+                    count(*) as rejected,
+                    exam_code,
+                    :total_count as total
+                FROM
+                    $tableName
+                WHERE
+                    status_accept_reject = 'REJECTED'
+                GROUP BY
+                    exam_code";
+			$dataStmt = $pdo->prepare($dataQuery);
+			$dataStmt->bindParam(':total_count', $table->total_count, PDO::PARAM_INT);
+			$dataStmt->execute();
+			$rejectedCount[] = $dataStmt->fetch();
 		}
 	}
-	return $accepted_count;
+	return $rejectedCount;
 }
 function getKyasTableCount($kyas_table)
 {
@@ -236,61 +260,62 @@ function getTierTableCount($tier_table)
 	}
 	return $tablecount;
 }
-function getKyasAllTableCount($exam_name)
+function getKyasAllTableCount($examName)
 {
 	global $pdo;
-	$sql_query = "
-SELECT
-     table_name,
-	 cnt_rows(table_schema, table_name)
-FROM
-    information_schema.tables
-WHERE
-    table_type = 'BASE TABLE' and table_name  LIKE '%_kyas%'
-AND
-    table_schema NOT IN ('pg_catalog', 'information_schema')";
-	$stmt = $pdo->query($sql_query);
-	$stmt->execute();
-	$result = $stmt->fetchAll();
-	//print_r($result);
-	$sum = 0;
-	foreach ($result as $key => $value) {
-		$sum += $value->cnt_rows;
+	$tableQuery = "
+        SELECT
+            table_name,
+            cnt_rows(table_schema, table_name) as total_count
+        FROM
+            information_schema.tables
+        WHERE
+            table_type = 'BASE TABLE' and table_name LIKE :exam_name
+            AND table_schema NOT IN ('pg_catalog', 'information_schema')";
+	$tableStmt = $pdo->prepare($tableQuery);
+	$tableStmt->bindParam(':exam_name', '%_kyas%', PDO::PARAM_STR);
+	$tableStmt->execute();
+	$tables = $tableStmt->fetchAll();
+	$totalCount = 0;
+	foreach ($tables as $table) {
+		$totalCount += $table->total_count;
 	}
-	$array = array(
-		"kyas_records" => $result,
-		"kyas_count" => $sum
-	);
-	return $array;
+	$resultArray = [
+		"kyas_records" => $tables,
+		"kyas_count" => $totalCount
+	];
+	return $resultArray;
 }
 function getKyasAllTableCountByYear($year)
 {
 	global $pdo;
-	$like_value = $year . '_kyas';
-	$sql_query = "
-					SELECT
-					table_name,
-					cnt_rows(table_schema, table_name), 0 as photo, 0 as signature
-					FROM
-					information_schema.tables
-					WHERE
-					table_type = 'BASE TABLE' and table_name  LIKE '%$like_value%'
-					AND
-					table_schema NOT IN ('pg_catalog', 'information_schema')";
-	$stmt = $pdo->query($sql_query);
-	$stmt->execute();
-	$result = $stmt->fetchAll();
-	foreach ($result as $key => $value) {
-		$foldername = explode('_kyas', $value->table_name);
-		$asset_path = getcwd() . "/ftp/" . $foldername[0] . $foldername[1];
-		$photo_path = $asset_path . "/photo/";
-		$sign_path = $asset_path . "/sign/";
-		$photo_count = checkFileCount($photo_path);
-		$sign_count = checkFileCount($sign_path);
-		$value->photo = $photo_count;
-		$value->signature = $sign_count;
+	$likeValue = $year . '_kyas';
+	$tableQuery = "
+        SELECT
+            table_name,
+            cnt_rows(table_schema, table_name) as total_count,
+            0 as photo,
+            0 as signature
+        FROM
+            information_schema.tables
+        WHERE
+            table_type = 'BASE TABLE' and table_name LIKE :like_value
+            AND table_schema NOT IN ('pg_catalog', 'information_schema')";
+	$tableStmt = $pdo->prepare($tableQuery);
+	$tableStmt->bindParam(':like_value', '%' . $likeValue . '%', PDO::PARAM_STR);
+	$tableStmt->execute();
+	$tables = $tableStmt->fetchAll();
+	foreach ($tables as $value) {
+		$folderName = explode('_kyas', $value->table_name);
+		$assetPath = getcwd() . "/ftp/" . $folderName[0] . $folderName[1];
+		$photoPath = $assetPath . "/photo/";
+		$signPath = $assetPath . "/sign/";
+		$photoCount = checkFileCount($photoPath);
+		$signCount = checkFileCount($signPath);
+		$value->photo = $photoCount;
+		$value->signature = $signCount;
 	}
-	return $result;
+	return $tables;
 }
 //get table row count
 function getkyasRowCount($exam_name, $exam_year, $table_subname)
@@ -334,31 +359,64 @@ function isTableAlreadyExists($table_name)
 	$result = executeSQl($sql, $params);
 	return $result->count;
 }
-function getSingleRowBasedTier($table_name, $kyas_table_name, $tier_id)
+function getSingleRowBasedTier($tableName, $kyasTableName, $tierId)
 {
 	global $pdo;
-	$sql = "SELECT kd.reg_no,kd.exam_code,kd.cand_name,kd.dob,kd.photo_id,kd.sign_id, kd.gender,kd.category,
-	CONCAT(kd.present_address,kd.present_district,kd.present_state,kd.present_pincode) as candidate_address, 
-	CONCAT(ted.venue_name,ted.venue_address) as examvenue1, 
-	CONCAT(ted.venue_district,ted.venue_state) as examvenue2, 
-	ted.scribe_opted_medium,ted.roll_no,ted.ticket_no,ted.repotime,ted.gateclose,
-	ted.paper1 as paper1,ted.subject1 as subject1,
-	ted.date1 as date1,ted.time1 as time1,
-	ted.shift1 as shift1,ted.mark1 as mark1,
-	ted.paper2 as paper2,ted.subject2 as subject2,
-	ted.date2 as date2,ted.time2 as time2,
-	ted.shift2 as shift2,ted.mark2 as mark2,
-	ted.paper3 as paper3,ted.subject3 as subject3,
-	ted.date3 as date3,ted.time3 as time3,
-	ted.shift3 as shift3,ted.mark3 as mark3,
-	ted.paper4 as paper4,ted.subject4 as subject4,
-	ted.date4 as date4,ted.time4 as time4,
-	ted.shift4 as shift4,ted.mark1 as mark4,
-	t.tier_name, t.tier_id FROM $kyas_table_name  kd 
-	JOIN $table_name ted ON kd.reg_no = ted.reg_no and kd.exam_code = ted.exam_code
-	JOIN tier_master t ON ted.tier_id = cast(t.tier_id as char(255))
-			where ted.tier_id = '$tier_id' LIMIT 1";
-	$stmt = $pdo->query($sql);
+	$sql = "
+        SELECT
+            kd.reg_no,
+            kd.exam_code,
+            kd.cand_name,
+            kd.dob,
+            kd.photo_id,
+            kd.sign_id,
+            kd.gender,
+            kd.category,
+            CONCAT(kd.present_address, kd.present_district, kd.present_state, kd.present_pincode) as candidate_address,
+            CONCAT(ted.venue_name, ted.venue_address) as examvenue1,
+            CONCAT(ted.venue_district, ted.venue_state) as examvenue2,
+            ted.scribe_opted_medium,
+            ted.roll_no,
+            ted.ticket_no,
+            ted.repotime,
+            ted.gateclose,
+            ted.paper1 as paper1,
+            ted.subject1 as subject1,
+            ted.date1 as date1,
+            ted.time1 as time1,
+            ted.shift1 as shift1,
+            ted.mark1 as mark1,
+            ted.paper2 as paper2,
+            ted.subject2 as subject2,
+            ted.date2 as date2,
+            ted.time2 as time2,
+            ted.shift2 as shift2,
+            ted.mark2 as mark2,
+            ted.paper3 as paper3,
+            ted.subject3 as subject3,
+            ted.date3 as date3,
+            ted.time3 as time3,
+            ted.shift3 as shift3,
+            ted.mark3 as mark3,
+            ted.paper4 as paper4,
+            ted.subject4 as subject4,
+            ted.date4 as date4,
+            ted.time4 as time4,
+            ted.shift4 as shift4,
+            ted.mark1 as mark4,
+            t.tier_name,
+            t.tier_id
+        FROM
+            $kyasTableName kd
+        JOIN
+            $tableName ted ON kd.reg_no = ted.reg_no and kd.exam_code = ted.exam_code
+        JOIN
+            tier_master t ON ted.tier_id = cast(t.tier_id as char(255))
+        WHERE
+            ted.tier_id = :tier_id
+        LIMIT 1";
+	$stmt = $pdo->prepare($sql);
+	$stmt->bindParam(':tier_id', $tierId, PDO::PARAM_STR);
 	$stmt->execute();
 	$result = $stmt->fetch();
 	return $result;

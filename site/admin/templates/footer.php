@@ -1431,12 +1431,12 @@
    
     element = document.getElementById('so');
     //endTime = (+new Date) + 3600 * (60 * minutes + seconds) + 500;
-    endTime = (+new Date) + (15 * 60 * 1000);
+    endTime = (+new Date) + (20 * 60 * 1000);
     updateTimer();
   }
   // window.addEventListener('mousemove', e => endTime = (+new Date) + 3600 * (60 * 1 + 20) + 500)
   window.addEventListener('mousemove', e => {
-    endTime = (+new Date) + (15 * 60 * 1000);
+    endTime = (+new Date) + (20 * 60 * 1000);
   });
 </script>
  </body>
