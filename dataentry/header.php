@@ -1,3 +1,21 @@
+<?php
+ header("Access-Control-Allow-Origin: 10.163.2.181:8080");
+header("Access-Control-Allow-Methods: GET, POST");
+header("Access-Control-Allow-Headers: Content-Type, Authorization");
+
+header('Content-Type: text/html; charset=utf-8');
+header("X-Frame-Options:DENY");
+header("X-Content-Type-Options: nosniff");
+
+header("X-XSS-Protection:1; mode=block");
+// header("Content-Security-Policy: default-src 'self';");
+header("Set-Cookie: HttpOnly");
+header("Set-Cookie: name=value; HttpOnly");
+header_remove("X-Powered-By");
+ini_set('expose_php', 'off');
+
+
+?>
 <!DOCTYPE html>
 
 <head>

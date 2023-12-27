@@ -8,7 +8,7 @@ use App\System\Route;
  * 
  */
 //header("Content-Security-Policy: default-src 'self'; style-src 'self' https://fonts.googleapis.com;");
-header("Access-Control-Allow-Origin: 10.163.2.51");
+header("Access-Control-Allow-Origin: 10.163.2.181:8080");
 header("Access-Control-Allow-Methods: GET, POST, OPTIONS");
 header("Access-Control-Allow-Headers: Content-Type, Authorization");
 
