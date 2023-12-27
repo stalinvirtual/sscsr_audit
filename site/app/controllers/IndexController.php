@@ -31,7 +31,6 @@ use App\Models\ImportantLinks as ImportantLinks;
 use App\Models\Knowyourstatus as Knowyourstatus;
 use App\Models\Nominationchild as Nominationchild;
 use App\Models\Selectionpostschild as Selectionpostschild;
-
 // ini_set('display_errors', 1);
 // ini_set('display_startup_errors', 1);
 // error_reporting(E_ALL);
@@ -131,7 +130,7 @@ class IndexController extends FrontEndController
 		str_replace("'", "", str_replace('"', '', strip_tags($newChars)));
 		return $newChars;
 	}
-		public function killChars($strWords)
+	public function killChars($strWords)
 	{
 		$strWords = htmlentities(trim(stripslashes(strip_tags($strWords))));
 		$badChars = array("alert", ";", "--", "alter", "alter routine", "create", "create routine", "create table", "create temporary tables", "create view", "delete", "drop", "event", "execute", "index", "insert", "lock tables", "references", "select", "show view", "trigger", "update", "xp_", "union", "|", "&", ";", "$", "%", "'", '"', "\'", '\"', "<>", "+");
@@ -143,13 +142,13 @@ class IndexController extends FrontEndController
 		return $newChars;
 		// return $strWords;
 	}
-	public function decryptPassword($userEnteredPassword) {
+	public function decryptPassword($userEnteredPassword)
+	{
 		echo $userEnteredPassword;
 		echo '-------------';
 		try {
 			$key = hex2bin("0123456789abcdef0123456789abcdef0123456789abcdef0123456789ab");
 			$iv = hex2bin("abcdef9876543210abcdef9876543210");  // Update to 16 bytes
-	
 			$decrypted = openssl_decrypt($userEnteredPassword, 'aes-256-cbc', $key, 0, $iv);
 			echo $decrypted;
 			exit;
@@ -159,45 +158,28 @@ class IndexController extends FrontEndController
 			return null;
 		}
 	}
-	
 	public function login()
 	{
 		$antiCSRF = new securityService();
 		$csrfResponse = $antiCSRF->validate();
 		$usr_name = '';
 		try {
-
-			
 			if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-				
-				//exit;
 				if (!empty($csrfResponse)) {
-					// echo "#$#$$#";
-					// echo '<pre>';
-					// print_r($_POST);
-					// exit;
-					//exit;
-					//$_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_FULL_SPECIAL_CHARS);
-					$usr_name = $this->killChars($_POST['uname']);	
+					$_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+					$usr_name = $this->killChars($_POST['uname']);
 					$userEnteredPassword      = $this->killChars_pass($_POST['currentword']);
 					$Encryption =  new EncryptionSecurity();
-    				$nonceValue = 'sscsr';
-    				$decryptedPwd = $Encryption->decrypt($userEnteredPassword  , $nonceValue);
-					
-
-
-
-					//$decryptedPwd = $this->decryptPassword($userEnteredPassword);
+					$nonceValue = 'sscsr';
+					$decryptedPwd = $Encryption->decrypt($userEnteredPassword, $nonceValue);
 					$data = [
 						'usr_name' => $usr_name,
 						'usr_pass' => $decryptedPwd,
 						//'Captcha_text' => trim($_POST['Captcha_text'])
 					];
-					
 					$user = new User();
 					$loggedInUser = $user->authenticate($data['usr_name'], trim($data['usr_pass']));
 					if ($loggedInUser) {
-						
 						//   if ($data['Captcha_text'] == $_SESSION['captcha']) {
 						//   } else {
 						// 	throw new \Exception('Captcha Not Found !!!', '402');
@@ -206,10 +188,8 @@ class IndexController extends FrontEndController
 						$_SESSION['session_check'] = session_id();
 						//$data['acc_session'] = $_SESSION['session_check'];
 						$login_status = $user->loginStatus($usr_name);
-						
 						// 
 						if ($login_status) {
-							
 							//$this->createUserSession($loggedInUser);
 							//unset($user['hashedPassword']);
 							// $_SESSION['user'] = $user;
@@ -220,7 +200,6 @@ class IndexController extends FrontEndController
 							// $route = new Route();
 							// $route->redirect($route->site_url("Admin/dashboard/?action=listnominations"));
 							throw new \Exception('Login Success', '200');
-					
 						} else {
 							throw new \Exception('Already Login', '402');
 						}
@@ -247,73 +226,6 @@ class IndexController extends FrontEndController
 		unset($user['hashedPassword']);
 		$_SESSION['user'] = $user;
 	}
-	// public function login()
-	// {
-	// 	$errorMsg = "";
-	// 	//if (!isset($_SESSION)) {
-	// 	//session_start();
-	// 	//}
-	// 	$_POST = filter_input_array(INPUT_POST, FILTER_DEFAULT);
-	// 	if (isset($_POST['login'])) {
-	// 		if (hash_equals($_SESSION['csrf_token'], $_POST['csrf_token'])) {
-	// 			// // check captcha here
-	// 			//if (true == $this->checkCaptcha($_POST['captcha_code'])) {
-	// 			try {
-	// 				echo '<pre>';
-	// 				print_r($_POST);
-	// 			//	exit;
-	// 				if (!empty(Helpers::cleanData($_POST['uname'])) && !empty(Helpers::cleanData($_POST['currentword']))) {
-	// 					echo $decyptedusername = Helpers::encrypt_with_cryptoJS_and_decrypt_with_php(Helpers::cleanData($_POST['uname']))."<br>";
-	// 					echo $decyptedpassword = Helpers::encrypt_with_cryptoJS_and_decrypt_with_php(Helpers::cleanData($_POST['currentword']));
-	// 					exit;
-	// 					$username = Helpers::cleanData(trim($decyptedusername));
-	// 					$username = htmlspecialchars($username, ENT_QUOTES, 'UTF-8');
-	// 					$password = Helpers::cleanData(trim($decyptedpassword));
-	// 					$hashedPassword = password_hash($password, PASSWORD_BCRYPT);
-	// 					if (password_verify($password, $hashedPassword)) { //password verify check
-	// 						// Password is correct
-	// 						$user = new User();
-	// 						if ($user->authenticate($username, $password)) {
-	// 							session_regenerate_id();
-	// 							$route = new Route();
-	// 							http_response_code(200);
-	// 							$route->redirect($route->site_url("Admin/dashboard/?action=listnominations"));
-	// 						} else {
-	// 							http_response_code(402); // Unauthorized
-	// 							$errorMsg = "Wrong Username or password";
-	// 							http_response_code(402);
-	// 						}
-	// 					} else { //password verify check 
-	// 						http_response_code(402); // Unauthorized
-	// 						$errorMsg = "Wrong Password";
-	// 						http_response_code(402);
-	// 					}
-	// 				} else {
-	// 					$errorMsg = "Invalid credentials";
-	// 					http_response_code(402);
-	// 				}
-	// 			} catch (\Exception $e) {
-	// 				header('HTTP/1.1 ' . $e->getCode() . ' Internal Server Booboo');
-	// 				header('Content-Type: application/json');
-	// 				echo json_encode(array('message' => $e->getMessage(), 'code' => $e->getCode()));
-	// 			}
-	// 			// }else{
-	// 			// 	$errorMsg = "Invalid Captcha";
-	// 			// 	http_response_code(402); 
-	// 			// }
-	// 		}
-	// 	}
-	// 	//CSRF Token else end
-	// 	if (isset($_GET['logout']) && $_GET['logout'] == true) {
-	// 		session_destroy();
-	// 		$route = new Route();
-	// 		$route->redirect($route->get_app_url());
-	// 	}
-	// 	if (isset($_GET['lmsg']) && $_GET['lmsg'] == true) {
-	// 		$errorMsg = "Login required to access dashboard";
-	// 	}
-	// 	return ['errorMsg' => $errorMsg];
-	// }
 	public function admitcard($data = array())
 	{
 		$data = Helpers::getAdmitCardDetails();
@@ -389,7 +301,7 @@ class IndexController extends FrontEndController
 					if ($admitcard_model->updateAcPrint($tablename, $acprint_data, $updateId)) {
 						PdfHelperDVExam::genereateAndDVDownloadAdminCard($data);
 					}
-				//if exam type is DV -endf
+					//if exam type is DV -endf
 			}
 		}
 		$data['ilinkforFirstFourRow'] = Helpers::getImporantLinksFirstFourRow();
@@ -423,7 +335,7 @@ class IndexController extends FrontEndController
 				default:
 					//if exam type is DV -start
 					PdfHelperDVExam::genereateAndDVDownloadAdminCard($data);
-				//if exam type is DV -end
+					//if exam type is DV -end
 			}
 		}
 		$data['ilinkforFirstFourRow'] = Helpers::getImporantLinksFirstFourRow();
@@ -1123,7 +1035,7 @@ class IndexController extends FrontEndController
 				default:
 					//if exam type is DV -start
 					PdfHelperDVExam::genereateAndDVDownloadAdminCard($data);
-				//if exam type is DV -end
+					//if exam type is DV -end
 			}
 		}
 	}
