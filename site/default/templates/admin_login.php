@@ -1,7 +1,10 @@
 <?php
+
 namespace App\Controllers;
+
 use App\System\Route;
 use App\Helpers\securityService as securityService;
+
 echo $this->get_header();
 if (!isset($_SESSION)) {
 	session_start();
@@ -42,36 +45,28 @@ $_SESSION['csrf_token'] = $csrfToken;
 							$loadcaptcha = $route->site_url("Api/loadcaptcha");
 							$token = $_SESSION['token'];
 							?>
-							<form class="form-signin" id="dept_login"
-								action="<?php echo htmlentities($_SERVER['PHP_SELF']); ?>" method="post"
-								autocomplete="off">
+							<form class="form-signin" id="dept_login" action="<?php echo htmlentities($_SERVER['PHP_SELF']); ?>" method="post" autocomplete="off">
 								<h2 class="form-signin-heading">Department Login</h2>
 								<label for="exampleInputEmail1">User Name</label>
-								<input type="text" class="form-control" placeholder="Username " name="uname"
-									id="username" maxlength="20" oncopy="return false" onpaste="return false" />
+								<input type="text" class="form-control" placeholder="Username " name="uname" id="username" maxlength="20" oncopy="return false" onpaste="return false" />
 								<br>
 								<label for="exampleInputEmail1">Password</label>
-								<input type="password" class="form-control" placeholder="Password " name="currentword"
-									id="user_pass" oncopy="return false" onpaste="return false" maxlength="20" />
+								<input type="password" class="form-control" placeholder="Password " name="currentword" id="user_pass" oncopy="return false" onpaste="return false" maxlength="20" />
 								<span class="toggle-password" id="togglePassword">&#128065;</span>
 								<br>
 								<!-- Captcha Start-->
 								<label for="exampleInputEmail1">Captcha</label>
-								<input type="text" name="captcha_code" id="captcha" class="demoInputBox form-control"
-									placeholder="Captcha" required="" autocomplete="off">
+								<input type="text" name="captcha_code" id="captcha" class="demoInputBox form-control" placeholder="Captcha" required="" autocomplete="off">
 								<br>
-								<img src="<?php echo $loadcaptcha; ?>" style="width:45%;margin-left: 70px;"
-									id="captcha_code" alt="captcha" />
-								<button name="submit" class="btnRefresh" onClick="refreshCaptcha();"><i
-										class="fa fa-refresh" aria-hidden="true"></i></button>
+								<img src="<?php echo $loadcaptcha; ?>" style="width:45%;margin-left: 70px;" id="captcha_code" alt="captcha" />
+								<button name="submit" class="btnRefresh" onClick="refreshCaptcha();"><i class="fa fa-refresh" aria-hidden="true"></i></button>
 								<br>
 								<!-- Captcha End -->
 								<?php $antiCSRF = new securityService();
 								$antiCSRF->insertHiddenToken();
 								?>
 								<br>
-								<button class="btn btn-lg btn-sscsrthemecolor btn-block" type="submit" name="login"
-									id='submit'>Login</button>
+								<button class="btn btn-lg btn-sscsrthemecolor btn-block" type="submit" name="login" id='submit'>Login</button>
 								<p class="pt-1 text-danger text-center" id="err_msg"></p>
 							</form>
 						</div>
@@ -96,9 +91,11 @@ $_SESSION['csrf_token'] = $csrfToken;
 	.error {
 		color: red;
 	}
+
 	.errormsg {
 		margin-left: 171px !important;
 	}
+
 	.btnRefresh {
 		background-color: #fff;
 		border: #fff solid 2px;
@@ -108,6 +105,7 @@ $_SESSION['csrf_token'] = $csrfToken;
 		margin-left: 13px;
 		/* margin-bottom: -49px; */
 	}
+
 	.toggle-password {
 		position: relative;
 		/* right: 144px;
@@ -120,16 +118,17 @@ $_SESSION['csrf_token'] = $csrfToken;
 		transform: translateY(-50%);
 		cursor: pointer;
 	}
-	
+
 	input[type="password"] {
 		margin-bottom: 0px !important;
 		border-bottom-left-radius: 0;
 		border-bottom-right-radius: 0;
-	
 	}
+
 	input[type="password"]:focus {
 		z-index: 0 !important;
 	}
+
 	label {
 		display: inline-block;
 		max-width: 100%;
@@ -143,15 +142,9 @@ $_SESSION['csrf_token'] = $csrfToken;
 <script src="js/jquery.validate.min.js" crossorigin="anonymous"></script>
 <script src="assets/datatable/common/Encryption.js"></script>
 <script src="js/sweetalert_for_login.js"></script>
- <script src="assets/datatable/common/CryptoJS.js"></script> 
+<script src="assets/datatable/common/CryptoJS.js"></script>
 <script>
-	// $('#submit').click(function () {
-		
-	// 	// var p1 = document.getElementById('usr_pass');
-	// 	// p1.id = pass;
-	// })
 	function encryptPwd(strPwd, strSalt) {
-		debugger;
 		var strNewSalt = new String(strSalt);
 		if (strPwd == "" || strSalt == "") {
 			return null;
@@ -162,25 +155,16 @@ $_SESSION['csrf_token'] = $csrfToken;
 		var strMerged1 = SHA512(strMerged);
 		return strMerged1;
 	}
-	function stalin(curpwd){
-		debugger;
 
-		var strSalt = 'sscsr';
-		var strEncPwd = new String(encryptPwd(curpwd, strSalt));
-		// alert(strEncPwd);
-		$("#user_pass").val(strEncPwd);
-		return strEncPwd ;
-
-	}
-		
 	function refreshCaptcha() {
 		var url = '<?php echo $loadcaptcha; ?>';
 		$('#captcha_code').attr('src', url);
 	}
-	$(document).ready(function () {
-		$("#togglePassword").click(function () {
+	$(document).ready(function() {
+		$("#togglePassword").click(function() {
 			togglePasswordVisibility("user_pass");
 		});
+
 		function togglePasswordVisibility(inputId) {
 			var inputType = $("#" + inputId).attr("type");
 			if (inputType === "password") {
@@ -189,38 +173,18 @@ $_SESSION['csrf_token'] = $csrfToken;
 				$("#" + inputId).attr("type", "password");
 			}
 		}
-// 		function encryptPassword(password) {
-//     // Generate a random key and IV
-//     var key = CryptoJS.lib.WordArray.random(32);  // 256 bits
-//     var iv = CryptoJS.lib.WordArray.random(16);   // 128 bits
-
-//     // Encrypt the password
-//     var hashValue = CryptoJS.AES.encrypt(password, key, {
-//         iv: iv,
-//         padding: CryptoJS.pad.Pkcs7
-//     });
-
-//     // Securely clear the sensitive data
-//     password = null;
-
-//     // Update the password input field (assuming 'user_pass' is the ID of the input field)
-//     document.getElementById('user_pass').value = hashValue;
-
-//     // Return the encrypted password as a Base64-encoded string
-//     return hashValue.toString(CryptoJS.enc.Base64);
-// }
 
 		function encryptPassword(password) {
-		var key = CryptoJS.enc.Hex.parse("0123456789abcdef0123456789abcdef0123456789abcdef0123456789ab");
-				var iv = CryptoJS.enc.Hex.parse("abcdef9876543210abcdef9876543210");
-				var pass = password;
-				var hashValue = CryptoJS.AES.encrypt(pass, key, {
-					iv: iv,
-					padding: CryptoJS.pad.Pkcs7
-				});
-				document.getElementById('user_pass').value = hashValue;
-				return hashValue.toString(CryptoJS.enc.Base64);
-	}
+			var key = CryptoJS.enc.Hex.parse("0123456789abcdef0123456789abcdef0123456789abcdef0123456789ab");
+			var iv = CryptoJS.enc.Hex.parse("abcdef9876543210abcdef9876543210");
+			var pass = password;
+			var hashValue = CryptoJS.AES.encrypt(pass, key, {
+				iv: iv,
+				padding: CryptoJS.pad.Pkcs7
+			});
+			document.getElementById('user_pass').value = hashValue;
+			return hashValue.toString(CryptoJS.enc.Base64);
+		}
 		$("#dept_login").validate({
 			rules: {
 				uname: {
@@ -246,7 +210,7 @@ $_SESSION['csrf_token'] = $csrfToken;
 					// strongPassword: "Password must contain at least one uppercase letter, one lowercase letter, one digit, and one special character."
 				},
 			},
-			errorPlacement: function (error, element) {
+			errorPlacement: function(error, element) {
 				if (element.attr("name") === "currentword") {
 					// Place the error message after the Select2 element
 					error.insertAfter(element.next("span.toggle-password"));
@@ -255,34 +219,25 @@ $_SESSION['csrf_token'] = $csrfToken;
 					error.insertAfter(element);
 				}
 			},
-			submitHandler: function (form) { //submit handler start
-
-				debugger;
-
-
+			submitHandler: function(form) { //submit handler start
 				let encryption = new Encryption();
-                let nonceValue = 'sscsr';
+				let nonceValue = 'sscsr';
 				let password = $('#user_pass').val();
-                var encrypted = encryption.encrypt(password, nonceValue);
-
-				
-				
+				var encrypted = encryption.encrypt(password, nonceValue);
 				//using salt
 				$.ajax({
 					type: 'post',
 					url: '<?php echo $loginUrl; ?>',
-				
 					//data: $('#dept_login').serialize(),
 					data: {
-							uname: $('#username').val(),
-							currentword: encrypted, // Encrypt the password
-							captcha_code: $('#captcha').val(),
-							eg_csrf_token_label: $('#eg_csrf_token_label').val(),
-							//login: $('#submit').val()
-						},
+						uname: $('#username').val(),
+						currentword: encrypted, // Encrypt the password
+						captcha_code: $('#captcha').val(),
+						eg_csrf_token_label: $('#eg_csrf_token_label').val(),
+						//login: $('#submit').val()
+					},
 					dataType: 'json',
-					error: function (jqXHR, textStatus, errorThrown) {
-						debugger;
+					error: function(jqXHR, textStatus, errorThrown) {
 						var responseText = jQuery.parseJSON(jqXHR.responseText);
 						if (jqXHR.status == '402') {
 							$('#error-message').text(responseText.message);
@@ -299,64 +254,27 @@ $_SESSION['csrf_token'] = $csrfToken;
 								text: 'Invalid Credentials!',
 							});
 						} else {
-							setTimeout(function () { // wait for 5 secs(2)
+							setTimeout(function() { // wait for 5 secs(2)
 								// location.reload(); // then reload the page.(3)
 								logout();
 							}, 1500);
 						}
 					},
-					success: function (response) {
-						//debugger;
+					success: function(response) {
 						if (response.code == 200) {
-							//debugger;
 							var redirectUrl = '<?php echo $redirectPath; ?>';
-							///console.log(redirectUrl);
-							//debugger;
 							window.location.href = redirectUrl;
 						}
-						//debugger;
-						//  $('#error-message').text('success');
-						//window.location.href = redirectUrl;
 					},
 				});
-				//using salt
-				//alert("Have anice day")
-				// var username = $('#username').val();
-				// var password = $('#user_pass').val();
-				// if (username == '' || username == undefined) {
-				// 	$('#err_msg').text('Enter Username');
-				// 	return false;
-				// } else if (password == '' || password == undefined) {
-				// 	$('#err_msg').text('Enter Password');
-				// 	return false;
-				// } else {
-				// 	// var key = CryptoJS.enc.Hex.parse("0123456789abcdef0123456789abcdef");
-				// 	// var iv = CryptoJS.enc.Hex.parse("abcdef9876543210abcdef9876543210");
-				// 	var key = CryptoJS.enc.Utf8.parse("0123456789abcdef@#0123456789abcdef");
-				// 	var iv = CryptoJS.enc.Utf8.parse("abcdef45")
-				// 	var pass = document.getElementById('user_pass').value;
-				// 	var hash = CryptoJS.AES.encrypt(pass, key, {
-				// 		iv: iv
-				// 	});
-				// 	document.getElementById('user_pass').value = hash;
-				// 	var user_nm = document.getElementById('username').value;
-				// 	var user_hash = CryptoJS.AES.encrypt(user_nm, key, {
-				// 		iv: iv
-				// 	});
-				// 	document.getElementById('username').value = user_hash;
-				// 	var uname = document.getElementById('username').value;
-				// 	var upass = document.getElementById('user_pass').value;
-				// 	$("#username").attr('type', 'password');
-				// 	return true;
-				// }
-			}//submit handler start
+			} //submit handler start
 		});
 		// Custom rule for letters only
-		$.validator.addMethod("lettersOnly", function (value, element) {
+		$.validator.addMethod("lettersOnly", function(value, element) {
 			return this.optional(element) || /^[a-zA-Z]+$/.test(value);
 		}, "Username must contain only letters");
 		// Custom validation rule for a strong password
-		$.validator.addMethod("strongPassword1", function (value) {
+		$.validator.addMethod("strongPassword1", function(value) {
 			// Password must contain at least one uppercase letter, one lowercase letter, one digit, and one special character
 			return /^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/.test(value);
 		}, "Password must contain at least one uppercase letter, one lowercase letter, one digit, and one special character.");

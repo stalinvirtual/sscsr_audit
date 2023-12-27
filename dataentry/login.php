@@ -1,6 +1,7 @@
 <?php
 require_once("config/db.php");
 require_once("functions.php");
+require_once("EncryptionSecurity.php");
 session_start();
 // Generate a CSRF token and store it in the session
 if (!isset($_SESSION['csrf_token']) || !isset($_POST['submit'])) {
@@ -22,22 +23,21 @@ $csrf_token = $_SESSION['csrf_token'];
 <!-- Include jQuery Validation plugin -->
 <script src="js/jquery.validate.min.js"></script>
 <script src="js/sweetalert2.all.min.js"></script>
+<script src="js/Encryption.js"></script>
+<script src="js/CryptoJS.js"></script>
 <style>
 	@import "css/fontawesome/css/all.css";
-
 	body {
 		margin: 0;
 		padding: 0;
 		font-family: sans-serif;
 		background-size: cover;
 	}
-
 	img {
 		border-radius: 8px;
 		padding: 5px;
 		width: 125px;
 	}
-
 	.login-box h1 {
 		float: center;
 		font-size: 40px;
@@ -46,7 +46,6 @@ $csrf_token = $_SESSION['csrf_token'];
 		text-align: center;
 		color: #8a6d3b;
 	}
-
 	.textbox {
 		width: 100%;
 		overflow: hidden;
@@ -54,13 +53,11 @@ $csrf_token = $_SESSION['csrf_token'];
 		padding: 8px 0;
 		margin: 8px 0;
 	}
-
 	.textbox i {
 		width: 26px;
 		float: left;
 		text-align: center;
 	}
-
 	.textbox input {
 		color: black;
 		font-size: 18px;
@@ -68,7 +65,6 @@ $csrf_token = $_SESSION['csrf_token'];
 		float: left;
 		margin: 0 10px;
 	}
-
 	.btn {
 		width: 100%;
 		/* background: none; */
@@ -80,48 +76,40 @@ $csrf_token = $_SESSION['csrf_token'];
 		margin: 12px 0;
 		background-color: #223a7e;
 	}
-
 	.form-control:focus {
 		border-color: #223a7e !important;
 		outline: 0;
 		box-shadow: inset 0 1px 1px rgb(0 0 0 / 8%), 0 0 8px rgb(34 58 126) !important;
 	}
-
 	@media (min-width: 768px) and (max-width: 1024px) and (orientation: landscape) {
 		/* CSS */
 	}
-
 	.col-lg-4.loginbox1 {
 		border-top: 2px solid;
 		border-left: 2px solid;
 		border-right: 2px solid;
 	}
-
 	.col-lg-4.loginbox2 {
 		border-bottom: 2px solid;
 		border-left: 2px solid;
 		border-right: 2px solid;
 	}
-
 	.err_msg {
 		/* border: 1px solid red; */
 		color: red;
 		font-weight: bold;
 		text-align: center
 	}
-
 	.message {
 		color: red;
 		font-weight: bold;
 	}
-
 	.error {
 		color: red;
 		font-size: 13px;
 	}
 </style>
 </head>
-
 <body>
 	<?php
 	// echo "<pre>";
@@ -146,8 +134,7 @@ $csrf_token = $_SESSION['csrf_token'];
 				<form action="" method="POST" name="registration" autocomplete="off" id="dataentry_login">
 					<div class="textbox">
 						<i class="fas fa-user"></i>
-						<input type="text" class="form-control" name="user" id="user" placeholder="Username"
-							required="" maxlength="20">
+						<input type="text" class="form-control" name="user" id="user" placeholder="Username" required="" maxlength="20">
 						<?php if (isset($code) && $code == 1) {
 							echo "class=errorMsg";
 						} ?>
@@ -160,13 +147,11 @@ $csrf_token = $_SESSION['csrf_token'];
 							echo "class=errorMsg";
 						} ?>
 					</div>
-					<input type="text" id="captcha" name="captcha" placeholder="Enter captcha" required
-						style="margin-left: 85px;">
+					<input type="text" id="captcha" name="captcha" placeholder="Enter captcha" required style="margin-left: 85px;">
 					<div class="containerred">
 						<img src="captcha.php" alt="CAPTCHA" id="captcha_code">
 						<div>
-							<button name='submit' class="btnRefresh" onClick="refreshCaptcha();"><i
-									class="fa fa-refresh" aria-hidden="true"></i></button>
+							<button name='submit' class="btnRefresh" onClick="refreshCaptcha();"><i class="fa fa-refresh" aria-hidden="true"></i></button>
 						</div>
 					</div>
 					<input type="hidden" name="csrf_token" value="<?php echo $csrf_token; ?>">
@@ -187,8 +172,10 @@ $csrf_token = $_SESSION['csrf_token'];
 		$user = htmlspecialchars(cleanData($user));
 		$pass = trim($_POST["pass"]);
 		$enteredPassword = htmlspecialchars(cleanData($pass));
-		//$enteredPasswordEnc = password_hash($enteredPassword, PASSWORD_DEFAULT);
-		//$pass = md5($pass);
+		$Encryption =  new EncryptionSecurity();
+		$nonceValue = 'sscsr';
+		$decryptedPwd = $Encryption->decrypt($enteredPassword, $nonceValue);
+		
 		$userEnteredCaptcha = $_POST['captcha'];
 		$actualCaptcha = $_SESSION['captcha_code'];
 		if ($user == "") {
@@ -209,7 +196,7 @@ $csrf_token = $_SESSION['csrf_token'];
 				if (!$hashedPasswordResult) {
 					// Username does not exist
 					$errorMsg = "<p class='err_msg'>Invalid Username!.</p>";
-					?>
+	?>
 					<br>
 					<div class="container">
 						<div class="row">
@@ -222,9 +209,13 @@ $csrf_token = $_SESSION['csrf_token'];
 					</div>
 					<?php
 				} else {  //username else start
-					$hashedPassword = $hashedPasswordResult->u_pass;
-					
-					if (password_verify($enteredPassword, $hashedPassword)) { // Password Verify If start
+					 $hashedPassword = $hashedPasswordResult->u_pass;
+					//  echo "HashedPassword" . $hashedPassword;
+					//  echo '-----------------------';
+					// echo "Decrypted Pwd".$decryptedPwd;
+					// exit;
+					if (password_verify($decryptedPwd, $hashedPassword)) { // Password Verify If start
+						
 						$sql2 = "SELECT * FROM erp_login_details WHERE  u_name =:u_name AND u_pass =:u_pass ";
 						$stmt2 = $pdo->prepare($sql2);
 						$stmt2->execute(['u_name' => $user, 'u_pass' => $hashedPassword]);
@@ -256,8 +247,7 @@ $csrf_token = $_SESSION['csrf_token'];
 						  </div>';
 							} //already logged in
 							else {  // logged in
-								if ($user == $dbusername && password_verify($enteredPassword, $hashedPassword)) {
-									
+								if ($user == $dbusername && password_verify($decryptedPwd, $hashedPassword)) {
 									if (session_status() == PHP_SESSION_ACTIVE) {
 										session_regenerate_id();
 									}
@@ -276,7 +266,7 @@ $csrf_token = $_SESSION['csrf_token'];
 						} // Number of Rows if End
 						else { // Number of Rows else start
 							$errorMsg = "<p class='err_msg'> Invalid Username or Password!.</p>";
-							?>
+					?>
 							<br>
 							<div class="container">
 								<div class="row">
@@ -289,7 +279,7 @@ $csrf_token = $_SESSION['csrf_token'];
 									</div>
 								</div>
 							</div>
-							<?php
+						<?php
 						} // Number of Rows else  end
 					} // Password Verify IF End
 					else { // Password Verify Else Start
@@ -305,7 +295,7 @@ $csrf_token = $_SESSION['csrf_token'];
 							<div class="col-lg-4">
 							</div>
 						</div>
-						<?php
+	<?php
 					} // Password Verify Else	 End
 				} //username else end
 			} // Captcha is correct
@@ -318,20 +308,19 @@ $csrf_token = $_SESSION['csrf_token'];
 	function refreshCaptcha() {
 		$('#captcha_code').attr('src', 'captcha.php');
 	}
-	$(document).ready(function () {
-		$("#togglePassword").click(function () {
-		togglePasswordVisibility("pass");
-	});
-	function togglePasswordVisibility(inputId) {
-		var inputType = $("#" + inputId).attr("type");
-		
-		if (inputType === "password") {
-			$("#" + inputId).attr("type", "text");
-		} else {
-			$("#" + inputId).attr("type", "password");
+	$(document).ready(function() {
+		$("#togglePassword").click(function() {
+			togglePasswordVisibility("pass");
+		});
+		function togglePasswordVisibility(inputId) {
+			var inputType = $("#" + inputId).attr("type");
+			if (inputType === "password") {
+				$("#" + inputId).attr("type", "text");
+			} else {
+				$("#" + inputId).attr("type", "password");
+			}
 		}
-	}
-		$("button.force_logout").on("click", function () {
+		$("button.force_logout").on("click", function() {
 			// Show a SweetAlert confirmation box
 			Swal.fire({
 				title: 'Are you sure you want to log out?',
@@ -347,11 +336,11 @@ $csrf_token = $_SESSION['csrf_token'];
 					$.ajax({
 						url: 'force_logout.php',
 						type: 'POST',
-						success: function (response) {
+						success: function(response) {
 							// Upon success, redirect or handle UI changes
 							window.location.href = 'index.php'; // Redirect to login page or any suitable page
 						},
-						error: function (xhr, status, error) {
+						error: function(xhr, status, error) {
 							// Handle errors or failed log-out attempts
 							console.error(error);
 						}
@@ -384,7 +373,7 @@ $csrf_token = $_SESSION['csrf_token'];
 					strongPassword: "Password must contain at least one uppercase letter, one lowercase letter, one digit, and one special character."
 				},
 			},
-			errorPlacement: function (error, element) {
+			errorPlacement: function(error, element) {
 				if (element.attr("name") === "pass") {
 					// Place the error message after the Select2 element
 					error.insertAfter(element.next("span.toggle-password"));
@@ -393,38 +382,42 @@ $csrf_token = $_SESSION['csrf_token'];
 					error.insertAfter(element);
 				}
 			},
+			submitHandler: function(form) { //submit handler start
+				// debugger;
+				let encryption = new Encryption();
+				let nonceValue = 'sscsr';
+				let password = $('#pass').val();
+				var encrypted = encryption.encrypt(password, nonceValue);
+				console.log(encrypted);
+				$('#pass').val(encrypted);
+				return true;
+			},
 		});
 		// Custom rule for letters only
-		$.validator.addMethod("lettersOnly", function (value, element) {
+		$.validator.addMethod("lettersOnly", function(value, element) {
 			return this.optional(element) || /^[a-zA-Z]+$/.test(value);
 		}, "Username must contain only letters");
 		// Custom validation rule for a strong password
-		$.validator.addMethod("strongPassword", function (value) {
+		$.validator.addMethod("strongPassword", function(value) {
 			// Password must contain at least one uppercase letter, one lowercase letter, one digit, and one special character
 			return /^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/.test(value);
 		}, "Password must contain at least one uppercase letter, one lowercase letter, one digit, and one special character.");
-
-
 	});
-	
 </script>
 <style>
 	.toggle-password {
 		position: relative;
 		right: 40px;
 		margin-top: -17px;
-
 		float: right;
 		font-size: 33px;
 		color: #223a7e;
 		transform: translateY(-50%);
 		cursor: pointer;
 	}
-
 	.containerred {
 		margin-left: 26%;
 	}
-
 	.containerred img {
 		width: 105px;
 		/* Ensure the image doesn't exceed the container's width */
@@ -432,7 +425,6 @@ $csrf_token = $_SESSION['csrf_token'];
 		/* Ensure the image doesn't exceed the container's height */
 		/* border-radius: 30px; */
 	}
-
 	.btnRefresh {
 		background-color: #fff;
 		border: #fff solid 2px;
@@ -443,5 +435,4 @@ $csrf_token = $_SESSION['csrf_token'];
 		/* margin-bottom: -49px; */
 	}
 </style>
-
 </html>
