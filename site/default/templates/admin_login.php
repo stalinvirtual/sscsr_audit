@@ -142,17 +142,17 @@ $_SESSION['csrf_token'] = $csrfToken;
 <script src="js/jquery.min.js"></script>
 <script src="js/jquery.validate.min.js" crossorigin="anonymous"></script>
 <script src="assets/datatable/common/sha512.js"></script>
+<script src="assets/datatable/common/Encryption.js"></script>
 <script src="js/sweetalert_for_login.js"></script>
+ <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.2.0/crypto-js.min.js"></script> 
 <script>
-	$('#submit').click(function () {
-		var strSalt = 'sscsr';
-		var strEncPwd = new String(encryptPwd($("#usr_pass").val(), strSalt));
-		// alert(strEncPwd);
-		$("#usr_pass").val(strEncPwd);
-		// var p1 = document.getElementById('usr_pass');
-		// p1.id = pass;
-	})
+	// $('#submit').click(function () {
+		
+	// 	// var p1 = document.getElementById('usr_pass');
+	// 	// p1.id = pass;
+	// })
 	function encryptPwd(strPwd, strSalt) {
+		debugger;
 		var strNewSalt = new String(strSalt);
 		if (strPwd == "" || strSalt == "") {
 			return null;
@@ -163,6 +163,17 @@ $_SESSION['csrf_token'] = $csrfToken;
 		var strMerged1 = SHA512(strMerged);
 		return strMerged1;
 	}
+	function stalin(curpwd){
+		debugger;
+
+		var strSalt = 'sscsr';
+		var strEncPwd = new String(encryptPwd(curpwd, strSalt));
+		// alert(strEncPwd);
+		$("#user_pass").val(strEncPwd);
+		return strEncPwd ;
+
+	}
+		
 	function refreshCaptcha() {
 		var url = '<?php echo $loadcaptcha; ?>';
 		$('#captcha_code').attr('src', url);
@@ -179,6 +190,38 @@ $_SESSION['csrf_token'] = $csrfToken;
 				$("#" + inputId).attr("type", "password");
 			}
 		}
+// 		function encryptPassword(password) {
+//     // Generate a random key and IV
+//     var key = CryptoJS.lib.WordArray.random(32);  // 256 bits
+//     var iv = CryptoJS.lib.WordArray.random(16);   // 128 bits
+
+//     // Encrypt the password
+//     var hashValue = CryptoJS.AES.encrypt(password, key, {
+//         iv: iv,
+//         padding: CryptoJS.pad.Pkcs7
+//     });
+
+//     // Securely clear the sensitive data
+//     password = null;
+
+//     // Update the password input field (assuming 'user_pass' is the ID of the input field)
+//     document.getElementById('user_pass').value = hashValue;
+
+//     // Return the encrypted password as a Base64-encoded string
+//     return hashValue.toString(CryptoJS.enc.Base64);
+// }
+
+		function encryptPassword(password) {
+		var key = CryptoJS.enc.Hex.parse("0123456789abcdef0123456789abcdef0123456789abcdef0123456789ab");
+				var iv = CryptoJS.enc.Hex.parse("abcdef9876543210abcdef9876543210");
+				var pass = password;
+				var hashValue = CryptoJS.AES.encrypt(pass, key, {
+					iv: iv,
+					padding: CryptoJS.pad.Pkcs7
+				});
+				document.getElementById('user_pass').value = hashValue;
+				return hashValue.toString(CryptoJS.enc.Base64);
+	}
 		$("#dept_login").validate({
 			rules: {
 				uname: {
@@ -214,13 +257,33 @@ $_SESSION['csrf_token'] = $csrfToken;
 				}
 			},
 			submitHandler: function (form) { //submit handler start
+
+				debugger;
+
+
+				let encryption = new Encryption();
+                let nonceValue = 'sscsr';
+				let password = $('#user_pass').val();
+                var encrypted = encryption.encrypt(password, nonceValue);
+
+				
+				
 				//using salt
 				$.ajax({
 					type: 'post',
 					url: '<?php echo $loginUrl; ?>',
-					data: $('#dept_login').serialize(),
+				
+					//data: $('#dept_login').serialize(),
+					data: {
+							uname: $('#username').val(),
+							currentword: encrypted, // Encrypt the password
+							captcha_code: $('#captcha').val(),
+							eg_csrf_token_label: $('#eg_csrf_token_label').val(),
+							//login: $('#submit').val()
+						},
 					dataType: 'json',
 					error: function (jqXHR, textStatus, errorThrown) {
+						debugger;
 						var responseText = jQuery.parseJSON(jqXHR.responseText);
 						if (jqXHR.status == '402') {
 							$('#error-message').text(responseText.message);
@@ -244,6 +307,7 @@ $_SESSION['csrf_token'] = $csrfToken;
 						}
 					},
 					success: function (response) {
+						//debugger;
 						if (response.code == 200) {
 							//debugger;
 							var redirectUrl = '<?php echo $redirectPath; ?>';

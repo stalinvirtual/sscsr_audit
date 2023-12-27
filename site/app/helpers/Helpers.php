@@ -1692,7 +1692,7 @@ $hexIV = bin2hex($iv);
 class securityService
 {
 
-    private $formTokenLabel = 'eg-csrf-token-label';
+    private $formTokenLabel = 'eg_csrf_token_label';
 
     private $sessionTokenLabel = 'EG_CSRF_TOKEN_SESS_IDX';
 
@@ -1757,7 +1757,9 @@ class securityService
     {
         $csrfToken = $this->getCSRFToken();
 
-        echo "<!--\n--><input type=\"hidden\"" . " name=\"" . $this->xssafe($this->formTokenLabel) . "\"" . " value=\"" . $this->xssafe($csrfToken) . "\"" . " />";
+        //echo "<!--\n--><input type=\"hidden\"" . " name=\"" . $this->xssafe($this->formTokenLabel) . "\"" . " value=\"" . $this->xssafe($csrfToken) . "\"" . " />";
+		echo "<!--\n--><input type=\"hidden\" id=\"eg_csrf_token_label\" name=\"" . $this->xssafe($this->formTokenLabel) . "\" value=\"" . $this->xssafe($csrfToken) . "\" />";
+
     }
 
     // xss mitigation functions
@@ -1911,4 +1913,8 @@ class securityService
         return $filedata;
     }
 }
+
+
+
+
 

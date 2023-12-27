@@ -6,6 +6,7 @@ use App\System\Route;
 use App\Helpers\Helpers;
 use App\Helpers\PdfHelper;
 use App\Helpers\securityService as securityService;
+use App\Helpers\EncryptionSecurity as EncryptionSecurity;
 use App\Models\Exam as Exam;
 use App\Models\Menu as Menu;
 use App\Models\Users as User;
@@ -142,25 +143,61 @@ class IndexController extends FrontEndController
 		return $newChars;
 		// return $strWords;
 	}
+	public function decryptPassword($userEnteredPassword) {
+		echo $userEnteredPassword;
+		echo '-------------';
+		try {
+			$key = hex2bin("0123456789abcdef0123456789abcdef0123456789abcdef0123456789ab");
+			$iv = hex2bin("abcdef9876543210abcdef9876543210");  // Update to 16 bytes
+	
+			$decrypted = openssl_decrypt($userEnteredPassword, 'aes-256-cbc', $key, 0, $iv);
+			echo $decrypted;
+			exit;
+			return $decrypted;
+		} catch (\Exception $e) {
+			error_log("Decryption error: " . $e->getMessage());
+			return null;
+		}
+	}
+	
 	public function login()
 	{
 		$antiCSRF = new securityService();
 		$csrfResponse = $antiCSRF->validate();
 		$usr_name = '';
 		try {
+
+			
 			if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+				
 				//exit;
 				if (!empty($csrfResponse)) {
-					$_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_FULL_SPECIAL_CHARS);
-					$usr_name = $this->killChars($_POST['uname']);
+					// echo "#$#$$#";
+					// echo '<pre>';
+					// print_r($_POST);
+					// exit;
+					//exit;
+					//$_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+					$usr_name = $this->killChars($_POST['uname']);	
+					$userEnteredPassword      = $this->killChars_pass($_POST['currentword']);
+					$Encryption =  new EncryptionSecurity();
+    				$nonceValue = 'sscsr';
+    				$decryptedPwd = $Encryption->decrypt($userEnteredPassword  , $nonceValue);
+					
+
+
+
+					//$decryptedPwd = $this->decryptPassword($userEnteredPassword);
 					$data = [
 						'usr_name' => $usr_name,
-						'usr_pass' => $this->killChars_pass($_POST['currentword']),
+						'usr_pass' => $decryptedPwd,
 						//'Captcha_text' => trim($_POST['Captcha_text'])
 					];
+					
 					$user = new User();
-					$loggedInUser = $user->authenticate($data['usr_name'], $data['usr_pass']);
+					$loggedInUser = $user->authenticate($data['usr_name'], trim($data['usr_pass']));
 					if ($loggedInUser) {
+						
 						//   if ($data['Captcha_text'] == $_SESSION['captcha']) {
 						//   } else {
 						// 	throw new \Exception('Captcha Not Found !!!', '402');
@@ -169,8 +206,10 @@ class IndexController extends FrontEndController
 						$_SESSION['session_check'] = session_id();
 						//$data['acc_session'] = $_SESSION['session_check'];
 						$login_status = $user->loginStatus($usr_name);
+						
 						// 
-						if (($login_status)) {
+						if ($login_status) {
+							
 							//$this->createUserSession($loggedInUser);
 							//unset($user['hashedPassword']);
 							// $_SESSION['user'] = $user;
@@ -178,9 +217,10 @@ class IndexController extends FrontEndController
 							// //http_response_code(200);
 							// 	$t = $route->redirect($route->site_url("Admin/dashboard/?action=listnominations"));
 							// echo json_encode(array('message' =>$t));
-							//$route = new Route();
-							//$route->redirect($route->site_url("Admin/dashboard/?action=listnominations"));
+							// $route = new Route();
+							// $route->redirect($route->site_url("Admin/dashboard/?action=listnominations"));
 							throw new \Exception('Login Success', '200');
+					
 						} else {
 							throw new \Exception('Already Login', '402');
 						}
