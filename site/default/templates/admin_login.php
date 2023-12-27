@@ -141,10 +141,9 @@ $_SESSION['csrf_token'] = $csrfToken;
 <!-- <script src="js/jquery.min.js"></script>  -->
 <script src="js/jquery.min.js"></script>
 <script src="js/jquery.validate.min.js" crossorigin="anonymous"></script>
-<script src="assets/datatable/common/sha512.js"></script>
 <script src="assets/datatable/common/Encryption.js"></script>
 <script src="js/sweetalert_for_login.js"></script>
- <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.2.0/crypto-js.min.js"></script> 
+ <script src="assets/datatable/common/CryptoJS.js"></script> 
 <script>
 	// $('#submit').click(function () {
 		
