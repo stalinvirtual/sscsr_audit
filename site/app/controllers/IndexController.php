@@ -971,8 +971,8 @@ class IndexController extends FrontEndController
 					// "post_preference" => $post_preference
 				);
 				$admitcard = new Admitcard();
-				if ($admitcard->getAdmitcardforTierPreview($data_array)) {
-					$admitcardresults = $admitcard->getAdmitcardforTierPreview($data_array);
+				if ($admitcard->getknowyourdetails($data_array)) {
+					$admitcardresults = $admitcard->getknowyourdetails($data_array);
 					$kyas = new Exam();
 					$table_name = trim($exam_value);
 					$examname_by_year = $kyas->examNamebyYear($table_name);
