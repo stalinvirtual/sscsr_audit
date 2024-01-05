@@ -253,7 +253,18 @@ $_SESSION['csrf_token'] = $csrfToken;
 								title: 'Oops...',
 								text: 'Invalid Credentials!',
 							});
-						} else {
+						} 
+						else if (jqXHR.status == '405') {
+							$('#username').val('');
+							$('#user_pass').val('');
+							$('#captcha').val('');
+							Swal.fire({
+								icon: 'error',
+								title: 'Oops...',
+								text: 'Captcha is not Correct!',
+							});
+						} 
+						else {
 							setTimeout(function() { // wait for 5 secs(2)
 								// location.reload(); // then reload the page.(3)
 								logout();

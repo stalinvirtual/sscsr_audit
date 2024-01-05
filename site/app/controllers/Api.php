@@ -234,7 +234,7 @@ public function loadcaptcha()
         header('Content-Type: image/jpeg');
         imagejpeg($captcha_image); //showing the image
        // imagedestroy($captcha_image); //destroying the image instance
-      //  $_SESSION['captcha_code'] = $captcha_code;
+       $_SESSION['captcha_code'] = $captcha_code;
 
 
     }

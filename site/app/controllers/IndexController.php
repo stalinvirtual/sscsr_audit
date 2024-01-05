@@ -160,6 +160,7 @@ class IndexController extends FrontEndController
 	}
 	public function login()
 	{
+
 		$antiCSRF = new securityService();
 		$csrfResponse = $antiCSRF->validate();
 		$usr_name = '';
@@ -175,15 +176,20 @@ class IndexController extends FrontEndController
 					$data = [
 						'usr_name' => $usr_name,
 						'usr_pass' => $decryptedPwd,
-						//'Captcha_text' => trim($_POST['Captcha_text'])
+						'Captcha_text' => trim($_POST['captcha_code'])
 					];
+					// echo '<pre>';
+					// print_r($_SESSION);
+					// echo '<pre>';
+					// print_r($_POST);
+					// exit;
 					$user = new User();
 					$loggedInUser = $user->authenticate($data['usr_name'], trim($data['usr_pass']));
 					if ($loggedInUser) {
-						//   if ($data['Captcha_text'] == $_SESSION['captcha']) {
-						//   } else {
-						// 	throw new \Exception('Captcha Not Found !!!', '402');
-						//   }
+						  if ($data['Captcha_text'] == $_SESSION['captcha_code']) {
+						  } else {
+							throw new \Exception('Captcha Not Found !!!', '405');
+						  }
 						session_regenerate_id();
 						$_SESSION['session_check'] = session_id();
 						//$data['acc_session'] = $_SESSION['session_check'];
